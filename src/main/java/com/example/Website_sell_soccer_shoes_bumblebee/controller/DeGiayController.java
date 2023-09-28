@@ -68,8 +68,8 @@ public class DeGiayController {
         }
 
         deGiayService.add(degiay);
-        model.addAttribute("view", "../de_giay/add_update.jsp");
-        return "/admin/index";
+        model.addAttribute("view", "../de_giay/list.jsp");
+        return "redirect:/de-giay/hien-thi";
     }
 
     @GetMapping("/de-giay/view-update/{id}")
@@ -90,8 +90,8 @@ public class DeGiayController {
         }
 
         deGiayService.add(degiay);
-        model.addAttribute("view", "../de_giay/add_update.jsp");
-        return "/admin/index";
+        model.addAttribute("view", "../de_giay/list.jsp");
+        return "redirect:/de-giay/hien-thi";
 
     }
 

@@ -20,7 +20,7 @@
         width: 700px;
         height: 600px;
         margin: 0 auto;
-        background-color: #34B6D3;
+        background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
         font-family: "Nunito";
@@ -48,7 +48,7 @@
         text-align: center;
     }
     .buttonSubmit>button{
-        background-color: #D9D9D9;
+        background-color: #FFFFFF;
         color: black;
         font-weight: bold;
         width: 120px;
