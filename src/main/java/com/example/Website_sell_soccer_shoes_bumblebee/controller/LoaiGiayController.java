@@ -44,7 +44,7 @@ public class LoaiGiayController {
         Page<LoaiGiay> page = repo.getAll(pageable);
         model.addAttribute("page", page);
         model.addAttribute("view", "../loai-giay/list.jsp");
-        return "loai-giay/list";
+        return "/admin/index";
     }
 
     @RequestMapping("/admin/loai-giay")
@@ -63,7 +63,7 @@ public class LoaiGiayController {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("view", "../loai-giay/list.jsp");
-        return "loai-giay/list";
+        return "/admin/index";
     }
 
     @RequestMapping("/admin/loai-giay/add")
@@ -77,6 +77,10 @@ public class LoaiGiayController {
             }
             if (list.get(i).getMa().equals(loaiGiay.getMa())) {
                 model.addAttribute("errorMa", "Ma loai giay da ton tai");
+                hasE = true;
+            }
+            if (loaiGiay.getMa().length() > 0 && loaiGiay.getMa().length() <4) {
+                model.addAttribute("errorMa", "Ma loai giay nhieu hon 4 ki tu");
                 hasE = true;
             }
             if (loaiGiay.getMa().length() > 10) {
@@ -101,11 +105,11 @@ public class LoaiGiayController {
         if (hasE) {
             model.addAttribute("loaiGiay", new LoaiGiay());
             model.addAttribute("view", "../loai-giay/form.jsp");
-            return "loai-giay/form";
+            return "/admin/index";
         }
         loaiGiay.setTrangthai(true);
         repo.addLG(loaiGiay);
-        return "redirect:/admin/loai-giay";
+        return "redirect:/admin/index";
     }
 
     @RequestMapping("/admin/loai-giay/update/{id}")
@@ -134,8 +138,8 @@ public class LoaiGiayController {
         }
         if (hasE) {
             model.addAttribute("loaiGiay", new LoaiGiay());
-            model.addAttribute("view", "../loai-giay/view-update.jsp");
-            return "loai-giay/update";
+            model.addAttribute("view", "../loai-giay/update.jsp");
+            return "/admin/index";
         }
         repo.updateLG(loaiGiay);
         return "redirect:/admin/loai-giay";
@@ -146,17 +150,17 @@ public class LoaiGiayController {
         model.addAttribute("id", id);
         model.addAttribute("loaiGiay", repo.getOne(id));
         model.addAttribute("listLG", repository.findAll());
-//        model.addAttribute("view", "../loai-giay/view-update.jsp");
-//        return "/admin/index";
-        return "loai-giay/update";
+        model.addAttribute("view", "../loai-giay/update.jsp");
+        return "/admin/index";
+//        return "loai-giay/update";
 
     }
 
     @RequestMapping("/loai-giay/form")
     public String form(Model model) {
         model.addAttribute("loaiGiay", new LoaiGiay());
-//        model.addAttribute("view", "../loai-giay/form.jsp");
-//        return "/admin/index";
-        return "loai-giay/form";
+        model.addAttribute("view", "../loai-giay/form.jsp");
+        return "/admin/index";
+//        return "loai-giay/form";
     }
 }
