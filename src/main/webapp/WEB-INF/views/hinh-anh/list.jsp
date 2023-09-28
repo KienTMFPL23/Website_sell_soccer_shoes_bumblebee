@@ -75,10 +75,10 @@
 </style>
 <div class="container">
 
-    <h2 STYLE="text-align: center;padding-top: 30px">DANH SÁCH LOẠI GIÀY</h2>
+    <h2 STYLE="text-align: center;padding-top: 30px">DANH SÁCH HÌNH ẢNH</h2>
     <div class="header">
         <div class="themSP">
-            <a href="/loai-giay/form">
+            <a href="/hinh-anh/form">
                 <img src="https://cdn.pixabay.com/photo/2017/03/19/03/51/material-icon-2155448_1280.png" width="50px">
                 <span>Thêm mới</span>
 
@@ -86,7 +86,7 @@
         </div>
         <form:form modelAttribute="searchForm">
             <div class="search">
-                <button formaction="/admin/loai-giay" class="btn btn-success btn-timkiem">Tìm Kiếm</button>
+                <button formaction="/admin/hinh-anh" class="btn btn-success btn-timkiem">Tìm Kiếm</button>
                 <form:input path="keyword" cssClass="inputSearch"
                             placeholder="bạn đang tìm kiếm sản phẩm..."></form:input>
             </div>
@@ -98,9 +98,7 @@
         <tr class="row1" style="background-color:#34B6D3 ">
             <th scope="col">STT</th>
             <th scope="col">ID</th>
-            <th scope="col">Mã
-            </th>
-            <th scope="col">Loại Giày
+            <th scope="col">Ảnh
                 <a href="/loai-giay/sort" style="text-decoration: none; color: #FFFFFF">
                     <img src="https://icons.veryicon.com/png/o/internet--web/industrial-icon/sort-2.png" width="20px"
                          height="20px">
