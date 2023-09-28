@@ -18,7 +18,6 @@
         border-radius: 10px;
         border: none;
         height: 30px;
-
     }
     .input {
         display: flex;
