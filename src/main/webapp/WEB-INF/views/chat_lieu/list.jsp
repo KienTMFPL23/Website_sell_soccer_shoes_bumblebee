@@ -68,7 +68,7 @@
 
     .search input {
         margin-left: 6px;
-        width: 320px;
+        width: 304px;
         border-radius: 15px;
         border: none;
     }
