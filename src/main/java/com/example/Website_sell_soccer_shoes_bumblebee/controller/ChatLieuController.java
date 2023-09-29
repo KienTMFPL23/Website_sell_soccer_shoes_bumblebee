@@ -39,7 +39,7 @@ public class ChatLieuController {
         model.addAttribute("list", list);
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("view", "../chat_lieu/list.jsp");
-        return "/chat_lieu/list";
+        return "/admin/index";
     }
 
 
@@ -48,7 +48,7 @@ public class ChatLieuController {
         model.addAttribute("vm", cl);
         model.addAttribute("action", "/chat-lieu/add");
         model.addAttribute("view", "../chat_lieu/add_update.jsp");
-        return "/chat_lieu/add_update";
+        return "/admin/index";
     }
 
     @PostMapping("add")
@@ -62,12 +62,12 @@ public class ChatLieuController {
             hasError = true;
             model.addAttribute("maspError", "Vui lòng không nhập trùng mã");
             model.addAttribute("view", "../chat_lieu/add_update.jsp");
-            return "/chat_lieu/add_update";
+            return "/admin/index";
         }
         if (hasError) {
             // Báo lỗi
             model.addAttribute("view", "../chat_lieu/add_update.jsp");
-            return "/chat_lieu/add_update";
+            return "/admin/index";
         }
         this.chatLieuRepo.save(cl);
         model.addAttribute("view", "../chat_lieu/list.jsp");
@@ -80,7 +80,7 @@ public class ChatLieuController {
         model.addAttribute("vm", cl);
         model.addAttribute("action", "/chat-lieu/update/" + cl.getId());
         model.addAttribute("view", "../chat_lieu/add_update.jsp");
-        return "/chat_lieu/add_update";
+        return "/admin/index";
     }
 
     @PostMapping("update/{id}")
@@ -92,7 +92,7 @@ public class ChatLieuController {
         if (hasError) {
             // Báo lỗi
             model.addAttribute("view", "../chat_lieu/add_update.jsp");
-            return "/chat_lieu/add_update";
+            return "/admin/index";
         }
 
         this.chatLieuRepo.save(cl);
@@ -109,7 +109,7 @@ public class ChatLieuController {
         model.addAttribute("list", list);
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("view", "../chat_lieu/list.jsp");
-        return "/chat_lieu/list";
+        return "/admin/index";
     }
 
     @GetMapping("sort")
@@ -121,6 +121,6 @@ public class ChatLieuController {
         model.addAttribute("list", list);
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("view", "../chat_lieu/list.jsp");
-        return "/chat_lieu/list";
+        return "/admin/index";
     }
 }
