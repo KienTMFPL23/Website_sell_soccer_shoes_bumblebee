@@ -62,15 +62,19 @@ public class DeGiayController {
     @PostMapping("/de-giay/add")
     public String add(Model model, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
 
-        if (result.hasErrors()) {
-            return "/de_giay/add_update";
-        }
-
-        if (deGiayService.findByMa(degiay.getMa()) != null) {
-            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
-
-            return "/de_giay/add_update";
-        }
+//        if (result.hasErrors()) {
+//            model.addAttribute("view", "../de_giay/add_update.jsp");
+//
+//            return "/admin/index";
+//        }
+//
+//
+//        if (deGiayService.findByMa(degiay.getMa()) != null) {
+//            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
+//            model.addAttribute("view", "../de_giay/add_update.jsp");
+//
+//            return "/admin/index";
+//        }
 
         deGiayService.add(degiay);
         return "redirect:/de-giay/hien-thi";
@@ -86,10 +90,9 @@ public class DeGiayController {
 
     @PostMapping("/de-giay/update/{id}")
     public String update(Model model, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
-        if (result.hasErrors()) {
-
-            return "/de_giay/add_update";
-        }
+//        if (result.hasErrors()) {
+//            return "/de_giay/add_update";
+//        }
 
         deGiayService.add(degiay);
         return "redirect:/de-giay/hien-thi";

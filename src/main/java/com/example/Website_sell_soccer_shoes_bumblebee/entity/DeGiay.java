@@ -21,7 +21,7 @@ public class DeGiay {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "Id")
+    @Column(name="Id")
     private UUID id;
 
     @Column(name="Ma")
@@ -29,16 +29,16 @@ public class DeGiay {
     @NotBlank(message = "Mã không được để trống")
     private String ma;
 
-    @Column(name = "LoaiDe")
+    @Column(name="LoaiDe")
     @NotBlank(message = "Loại đế không được để trống")
     @Size(max = 150, message = "Loại đế không được quá 150 kí tự")
     private String loaiDe;
 
-    @Column(name = "MoTa")
+    @Column(name="MoTa")
     @NotBlank(message = "Mô tả không được để trống")
     private String moTa;
 
-    @Column(name = "TrangThai")
+    @Column(name="TrangThai")
     @NotNull(message = "Trạng thái không được để trống")
     private Integer trangThai;
 }
