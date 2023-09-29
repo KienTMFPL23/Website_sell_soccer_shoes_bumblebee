@@ -13,41 +13,23 @@
 />
 <style>
 
-    body{
+    body {
         background-color: #D9D9D9;
     }
-    .formAdd{
+
+    .formAdd {
         width: 700px;
         height: 600px;
-        margin: 0 auto;
         background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
         font-family: "Nunito";
     }
 
-    form{
-        margin-left: 50px;
+    .row.mb-3{
+        margin-top: 30px;
     }
-
-    .formAdd>form>.mb-3>.col-sm-8{
-        margin-top: 20px;
-    }
-
-    .formAdd>h1{
-        text-align: center;
-        padding-top: 40px;
-    }
-    .formAdd>form>.mb-3>label{
-        margin-top: 20px;
-    }
-
-    .buttonSubmit{
-        margin-top: 50px;
-        margin-left: -50px;
-        text-align: center;
-    }
-    .buttonSubmit>button{
+    .button {
         background-color: #FFFFFF;
         color: black;
         font-weight: bold;
@@ -55,17 +37,19 @@
         height: 40px;
         border-radius: 10px;
         border: 0px;
+        margin-top: 30px;
+        margin: auto;
+        display: block;
+
     }
 
-    .radioButton{
-        margin-top: 10px;
-    }
+
 </style>
 <br>
 
 <body>
 <div class="formAdd">
-    <h1>THÊM/SỬA ĐẾ GIÀY</h1>
+    <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA ĐẾ GIÀY</h1>
 
     <form:form action="${action}" modelAttribute="degiay" method="post">
 
@@ -76,8 +60,11 @@
         </div>
 
         <div class="row mb-3">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Mã:</label>
-            <div class="col-sm-8">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Mã:</label>
+            </div>
+            <div class="col-lg-8">
                 <form:input type="text" class="form-control" id="inputEmail3" path="ma"/>
                 <form:errors path="ma" cssStyle="color: crimson"></form:errors>
                 <p style="color: crimson">${mess_Ma}</p>
@@ -85,32 +72,43 @@
         </div>
 
         <div class="row mb-3">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Loại đế:</label>
-            <div class="col-sm-8">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Loại đế:</label>
+            </div>
+            <div class="col-lg-8">
                 <form:input type="text" class="form-control" id="inputEmail3" path="loaiDe"/>
                 <form:errors path="loaiDe" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Mô tả:</label>
-            <div class="col-sm-8">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Mô tả:</label>
+            </div>
+            <div class="col-lg-8">
                 <form:input type="text" class="form-control" id="inputEmail3" path="moTa"/>
                 <form:errors path="moTa" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
 
         <div class="row mb-3">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Trạng thái:</label>
-            <div class="col-sm-8">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Trạng thái:</label>
+            </div>
+            <div class="col-lg-8">
                 <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton"/>
                 <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
 
+
         <div class="buttonSubmit">
-            <button type="submit">SUBMIT</button>
+            <button class="button" type="submit">SUBMIT</button>
         </div>
+
 
     </form:form>
 </div>
