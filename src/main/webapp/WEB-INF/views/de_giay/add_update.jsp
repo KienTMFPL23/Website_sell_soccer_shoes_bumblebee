@@ -43,6 +43,17 @@
 
     }
 
+    label{
+        font-size: 17px;
+    }
+
+    .error{
+        color: red;
+        font-size: 15px;
+        padding-left: 190px;
+        padding-top: 15px;
+    }
+
 
 </style>
 <br>
@@ -51,11 +62,12 @@
 <div class="formAdd">
     <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA ĐẾ GIÀY</h1>
 
-    <form:form action="${action}" modelAttribute="degiay" method="post">
+    <form:form action="${action}" modelAttribute="degiay" method="post" id="formAddUpdate">
 
         <div class="row mb-3">
             <div class="col-sm-6">
                 <form:input type="hidden" class="form-control" id="inputEmail3" path="id"/>
+
             </div>
         </div>
 
@@ -65,9 +77,9 @@
                 <label>Mã:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" id="inputEmail3" path="ma"/>
+                <form:input type="text" class="form-control"  path="ma" name="ma"/>
                 <form:errors path="ma" cssStyle="color: crimson"></form:errors>
-                <p style="color: crimson">${mess_Ma}</p>
+                    ${mess_Ma}
             </div>
         </div>
 
@@ -77,7 +89,7 @@
                 <label>Loại đế:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" id="inputEmail3" path="loaiDe"/>
+                <form:input type="text" class="form-control" path="loaiDe" name="loaiDe"/>
                 <form:errors path="loaiDe" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
@@ -88,7 +100,7 @@
                 <label>Mô tả:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" id="inputEmail3" path="moTa"/>
+                <form:input type="text" class="form-control"  path="moTa" name="moTa"/>
                 <form:errors path="moTa" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
@@ -99,14 +111,14 @@
                 <label>Trạng thái:</label>
             </div>
             <div class="col-lg-8">
-                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton"/>
+                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton" name="trangThai"/>
                 <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
 
 
         <div class="buttonSubmit">
-            <button class="button" type="submit">SUBMIT</button>
+            <button class="button" type="submit" onclick="return Validate();">SUBMIT</button>
         </div>
 
 

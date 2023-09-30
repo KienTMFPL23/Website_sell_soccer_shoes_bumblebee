@@ -28,9 +28,14 @@
     .icon-add {
         border: 1px solid #D9D9D9;
         border-radius: 13px;
+        margin-left: 30px;
     }
     .icon-add:hover{
         background: #37517E;
+    }
+
+    #add-icon-id{
+        margin: auto;
     }
 
     .add-text {
@@ -51,27 +56,14 @@
         height: 35px;
     }
 
-    .search {
-        margin-top: 3px;
-        border: 1px solid black;
-        border-radius: 25px;
-
-    }
-
-    .search button {
-        border: none;
-        background: #37517E;
-        font-weight: bold;
+    .search input{
+        padding: 10px;
+        border: 1px solid #D9D9D9;
+        width: 410px;
+        background: #D9D9D9;
         border-radius: 15px;
-        color: #D9D9D9;
     }
 
-    .search input {
-        margin-left: 6px;
-        width: 320px;
-        border-radius: 15px;
-        border: none;
-    }
     .text{
         font-weight: bold;
         color: black;
@@ -84,16 +76,13 @@
     <div class="row" id="icon-class-add">
         <h3 class="title-h3">Danh Sách Chất Liệu</h3>
         <div class="col-lg-1">
-
         </div>
-        <div class="col-lg-3">
-            <button class="icon-add"><a href="/chat-lieu/view-add" style="text-decoration: none">
+        <div class="col-lg-6">
+            <button class="icon-add" id="add-icon-id"><a href="/chat-lieu/view-add" style="text-decoration: none">
                 <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png" alt=""/>
                     <span class="text">Thêm mới</span></div>
             </a>
             </button>
-        </div>
-        <div class="col-lg-2">
             <button class="icon-add">
                 <a href="/chat-lieu/sort" method="get" style="text-decoration: none">
                     <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/11463/11463063.png" alt=""/>
@@ -102,14 +91,11 @@
                 </a>
             </button>
         </div>
-        <div class="col-lg-1">
-        </div>
         <div class="col-lg-4">
-            <div class="form">
+            <div>
                 <sf:form  action="/chat-lieu/search" method="get" modelAttribute="searchForm">
                     <div class="search">
-                        <button>Tìm Kiếm</button>
-                        <sf:input path="keyword"/>
+                        <sf:input path="keyword" placeholder="Tìm Kiếm..."/>
                     </div>
                 </sf:form>
             </div>

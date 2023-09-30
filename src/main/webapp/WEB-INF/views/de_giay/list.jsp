@@ -52,22 +52,25 @@
         margin-right: 10px;
     }
 
-    .ui.table>thead>tr>th {
+    .ui.table > thead > tr > th {
         background-color: #37517E;
         color: #FFFFFF;
         font-size: 18px;
 
     }
+
     .ui.form input[type=search] {
         background: #fff;
         border: 2px solid #37517E;
         border-radius: 20px;
         width: 400px;
     }
-    .ui input{
+
+    .ui input {
         border-radius: 20px;
     }
-    .ui.table>tbody>tr>td {
+
+    .ui.table > tbody > tr > td {
         font-size: 16px;
     }
 
@@ -84,27 +87,12 @@
             <p>Thêm mới</p>
         </a>
     </div>
-<div class="row">
-    <div class="col-lg-6">
-        <a href="/de-giay/view-add" class="btnAdd">
-            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/> <p>Thêm mới</p>
-        </a>
-    </div>
-
-    <%--        <div class="col-lg-6">--%>
-    <%--            <form action="/de-giay/search" method="get" >--%>
-    <%--                <div class="row mb-3">--%>
-    <%--                    <button type="submit" class="btnSearch">Tìm kiếm</button>--%>
-    <%--                    <input type="text" class="inputSearch" id="inputEmail3" name="keyword">--%>
-    <%--                </div>--%>
-    <%--            </form>--%>
-    <%--        </div>--%>
 </div>
 
 
 <table id="table" class="ui celled table" width="100%">
     <thead>
-    <tr style="color: #FFFFFF; background-color: #37517E; text-decoration: none;">
+    <tr>
         <th scope="col">Mã</th>
         <th scope="col">Loại Đế</th>
         <th scope="col">Mô tả</th>
