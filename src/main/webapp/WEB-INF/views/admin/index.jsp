@@ -28,6 +28,7 @@
 
     <!-- Custom styles for this template-->
     <link href="../../../css/sb-admin-2.min.css" rel="stylesheet"/>
+    <link href="../../../css/san-pham.css" rel="stylesheet">
     <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
@@ -99,10 +100,10 @@
                     data-parent="#accordionSidebar"
             >
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Sản phẩm</a>
-                    <a class="collapse-item" href="#">Kích cỡ</a>
+                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
-                    <a class="collapse-item" href="#">Loại giày</a>
+                    <a class="collapse-item" href="/admin/loai-giay">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
                     <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
                 </div>
@@ -371,7 +372,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.semanticui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
-
+<script src=".."></script>
 <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
