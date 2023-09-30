@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,7 +53,7 @@ public class SanPhamController {
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
         dsTrangThai.put(1, "Hoạt động");
-        dsTrangThai.put(0, "Ngừng Hoạt động");
+        dsTrangThai.put(0, "Ngừng hoạt động");
         return dsTrangThai;
     }
 
@@ -62,7 +63,8 @@ public class SanPhamController {
         String keyword = "";
     }
     @GetMapping("/san-pham/hien-thi")
-    public String hienThi(Model model, @RequestParam(defaultValue = "0")int p){
+    public String hienThi(Model model,@RequestParam(defaultValue = "0")int p){
+       model.addAttribute("view","../san_pham/list_san_pham.jsp");
         if (p < 0){
             p =0;
         }
@@ -70,11 +72,13 @@ public class SanPhamController {
         Page<SanPham> page = sanPhamService.findAllSP(pageable);
         model.addAttribute("search", new SearchForm());
         model.addAttribute("page",page);
-        return "san_pham/list_san_pham";
+        return "admin/index";
     }
+
 
     @RequestMapping("/san-pham/search")
     public String search(Model model, @ModelAttribute("search") SearchForm searchForm, @RequestParam(defaultValue = "0") int p) {
+        model.addAttribute("view","../san_pham/list_san_pham.jsp");
         if (p < 0) {
             p = 0;
         }
@@ -82,22 +86,24 @@ public class SanPhamController {
         Page<SanPham> page = sanPhamService.findByKeyword(searchForm.keyword, pageable);
         model.addAttribute("page", page);
 //        model.addAttribute("view", "../san_pham/index.jsp");
-        return "san_pham/list_san_pham";
+        return "admin/index";
     }
 
     @GetMapping("/san-pham/view-add")
     public String viewAdd(Model model, @ModelAttribute("SP") SanPham sanPham) {
         model.addAttribute("action", "/san-pham/add");
-        return "san_pham/view_add_update";
+        model.addAttribute("view","../san_pham/view_add_update.jsp");
+        return "admin/index";
     }
 
     @GetMapping("/san-pham/view-update/{id}")
     public String viewUpdate(Model model, @PathVariable("id") UUID id, @ModelAttribute("SP") SanPham sanPham) {
+        model.addAttribute("view","../san_pham/view_add_update.jsp");
         SanPham product = sanPhamService.getOne(id);
         model.addAttribute("action", "/san-pham/update/" + product.getId());
         model.addAttribute("SP",product);
         SanPham sp = sanPhamService.getOne(id);
-        return "san_pham/view_add_update";
+        return "admin/index";
     }
     @PostMapping("/san-pham/add")
     public String add(Model model,@Valid @ModelAttribute("SP")SanPham sanPham, BindingResult result){
@@ -120,17 +126,17 @@ public class SanPhamController {
     @PostMapping("/san-pham/update/{id}")
     public String udpate(@PathVariable("id") UUID id, Model model, @Valid @ModelAttribute("SP") SanPham sanPham,
                          BindingResult result){
-//        Boolean hasError = result.hasErrors();
-//        if (sanPham.getMaSanPham().trim().length() < 5) {
-//            hasError = true;
-//            model.addAttribute("erorLenghMa", "Mã sản phẩm phải lớn hơn hoặc bằng 5");
-//            model.addAttribute("view", "../san_pham/view_add_update.jsp");
-//            return "admin/index";
-//        }
-//        if (hasError) {
-//            model.addAttribute("view", "../san_pham/view_add_update.jsp");
-//            return "admin/index";
-//        }
+        Boolean hasError = result.hasErrors();
+        if (sanPham.getMaSanPham().trim().length() < 5) {
+            hasError = true;
+            model.addAttribute("erorLenghMa", "Mã sản phẩm phải lớn hơn hoặc bằng 5");
+            model.addAttribute("view", "../san_pham/view_add_update.jsp");
+            return "admin/index";
+        }
+        if (hasError) {
+            model.addAttribute("view", "../san_pham/view_add_update.jsp");
+            return "admin/index";
+        }
         SanPham sp = sanPhamService.getOne(id);
         sp.setMaSanPham(sanPham.getMaSanPham());
         sp.setTenSanPham(sanPham.getTenSanPham());
