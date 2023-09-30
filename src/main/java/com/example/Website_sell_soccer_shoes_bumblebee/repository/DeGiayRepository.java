@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 @Repository
 public interface DeGiayRepository extends JpaRepository<DeGiay, UUID> {
@@ -15,8 +16,8 @@ public interface DeGiayRepository extends JpaRepository<DeGiay, UUID> {
     @Query(value = "select d.Id, d.Ma, d.LoaiDe,d.MoTa, d.TrangThai from DeGiay d ", nativeQuery = true)
     Page<DeGiay> getPage(Pageable pageable);
 
-    @Query(value = "select d from DeGiay d where d.ma LIKE :keyword or d.loaiDe LIKE :keyword or d.moTa LIKE :keyword")
-    Page<DeGiay> search(@Param("keyword") String keyword, Pageable pageable);
+    @Query(value = "select d from DeGiay d where d.loaiDe LIKE :keyword")
+    List<DeGiay> search(@Param("keyword") String keyword);
 
     @Query(value = "select d from DeGiay d order by d.ma asc ")
     Page<DeGiay> sort(Pageable pageable);
