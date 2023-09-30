@@ -104,7 +104,7 @@
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="#">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
-                    <a class="collapse-item" href="#">Chất liệu</a>
+                    <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
                 </div>
             </div>
         </li>
