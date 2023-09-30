@@ -32,7 +32,6 @@
         text-align: center;
     }
 
-
     .btnAdd:hover {
         background-color: #37517E;
         border: 2px solid #FFFFFF;
@@ -82,13 +81,12 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <a onclick="PopupForm('/de-giay/view-add')" class="btnAdd">
+        <a href="/de-giay/view-add" class="btnAdd">
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
             <p>Thêm mới</p>
         </a>
     </div>
 </div>
-
 
 <table id="table" class="ui celled table" width="100%">
     <thead>
