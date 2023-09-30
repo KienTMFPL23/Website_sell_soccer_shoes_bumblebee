@@ -21,7 +21,8 @@
         margin-top: 150px;
         background-color: #37517E;
     }
-    #icon-class-add{
+
+    #icon-class-add {
         margin-bottom: 40px;
     }
 
@@ -30,11 +31,12 @@
         border-radius: 13px;
         margin-left: 30px;
     }
-    .icon-add:hover{
+
+    .icon-add:hover {
         background: #37517E;
     }
 
-    #add-icon-id{
+    #add-icon-id {
         margin: auto;
     }
 
@@ -56,7 +58,7 @@
         height: 35px;
     }
 
-    .search input{
+    .search input {
         padding: 10px;
         border: 1px solid #D9D9D9;
         width: 410px;
@@ -64,7 +66,7 @@
         border-radius: 15px;
     }
 
-    .text{
+    .text {
         font-weight: bold;
         color: black;
     }
@@ -73,6 +75,7 @@
 
 <body>
 <div class="container">
+
     <div class="row" id="icon-class-add">
         <h3 class="title-h3">Danh Sách Chất Liệu</h3>
         <div class="col-lg-1">
@@ -83,82 +86,21 @@
                     <span class="text">Thêm mới</span></div>
             </a>
             </button>
-            <button class="icon-add">
-                <a href="/chat-lieu/sort" method="get" style="text-decoration: none">
-                    <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/11463/11463063.png" alt=""/>
-                        <span class="text">Sắp xếp</span>
-                    </div>
-                </a>
-            </button>
-        </div>
-        <div class="col-lg-4">
-            <div>
-                <sf:form  action="/chat-lieu/search" method="get" modelAttribute="searchForm">
-                    <div class="search">
-                        <sf:input path="keyword" placeholder="Tìm Kiếm..."/>
-                    </div>
-                </sf:form>
-            </div>
         </div>
         <div class="col-lg-1">
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-10">
-            <table class="table">
-                <thead class="thead-form">
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Mã Chất Liệu</th>
-                    <th scope="col">Tên Chất Liệu</th>
-                    <th scope="col">Trạng Thái</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${list.content}" var="cl" varStatus="stt">
-                        <tr>
-                            <th scope="row">${stt.index +1}</th>
-                            <td>${cl.id}</td>
-                            <td>${cl.ma}</td>
-                            <td>${cl.ten}</td>
-                            <td>${cl.trangThai == 1? "Còn" : "Hết"}</td>
-                            <td>
-                                <button class="icon-update">
-                                    <a href="/chat-lieu/edit/${cl.id}">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCYRg6-Wukvj4tChzvnqe0FHoB2eDbrKN0-g&usqp=CAU"
-                                        style="height: 25px;width: 25px"   alt=""/>
-                                    </a>
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-lg-1"></div>
-        <div class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" style="padding-left: 500px">
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=0&keyword=${param.keyword}"
-                                             >Previous</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=${list.number-1}&keyword=${param.keyword}"
-                                             >1</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=${list.number+1}&keyword=${param.keyword}"
-                                             >2</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=${list.totalPages-1}&keyword=${param.keyword}"
-                                             >Next</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <table id="tableChatLieu" class="ui celled table" width="100%">
+        <thead>
+        <tr>
+            <th scope="col">Mã</th>
+            <th scope="col">Tên Chất Liệu</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+    </table>
 </div>
 
 

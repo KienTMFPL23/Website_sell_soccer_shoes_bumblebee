@@ -60,7 +60,7 @@
         </div>
         <div class="col-lg-5" id="form">
             <h3 style="margin-top: 30px">Thêm / Sửa Chất Liệu</h3>
-            <sf:form class="was-validated" method="post" modelAttribute="vm" action="${action}">
+            <sf:form class="was-validated" method="post" modelAttribute="cl" action="${action}">
                 <div class="input">
                     <label>Mã</label>
                     <sf:input path="ma"/> <br/>
