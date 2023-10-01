@@ -56,7 +56,6 @@
         background-color: #37517E;
         color: #FFFFFF;
         font-size: 18px;
-
     }
 
     .ui.form input[type=search] {

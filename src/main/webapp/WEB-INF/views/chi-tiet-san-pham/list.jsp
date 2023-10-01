@@ -6,10 +6,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <br>
 <br>
+
 <div class="container">
+<%--    <div class="row-cols-6">--%>
+<%--        <select type="text" id="searchName"></select>--%>
+<%--    </div>--%>
     <div class="row">
         <div class="col-6 col-md-6 col-sm-6">
-            <a href="/san-pham/view-add" class="btn" style="background: #0d6efd; color: whitesmoke"><i
+            <a href="/san-pham/hien-thi" class="btn" style="background: #0d6efd; color: whitesmoke"><i
                     class="bi bi-plus-circle-fill"></i>Thêm
                 Sản Phẩm</a>
             <br>
@@ -152,4 +156,5 @@
             document.getElementById('searchMauSac').submit();
         }
     </script>
+
 </div>

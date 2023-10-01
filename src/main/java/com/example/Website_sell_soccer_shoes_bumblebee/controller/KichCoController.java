@@ -9,13 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,21 +47,25 @@ public class KichCoController {
 
 
     }
-
-    @RequestMapping("/kich-co/hien-thi")
-    public String hienthi(@ModelAttribute("kichco") KichCo kichCo, @RequestParam(defaultValue = "0") int p, Model model) {
-        List<KichCo> listKC = service.getList();
-        if (p < 0) {
-            p = 0;
-        }
-        Pageable pageable = PageRequest.of(p, 5);
-        Page<KichCo> page = service.getListKC(pageable);
-        model.addAttribute("page", page);
-        model.addAttribute("listKC", listKC);
-        model.addAttribute("searchForm", new SearchForm());
+    @GetMapping("/kich-co/hien-thi")
+    public String hienThi(Model model){
         model.addAttribute("view", "../kich-co/list.jsp");
         return "/admin/index";
+    }
 
+    @GetMapping("/kich-co/hien-thi/list")
+    public ResponseEntity<?> hienthi(@ModelAttribute("kichco") KichCo kichCo, @RequestParam(defaultValue = "0") int p, Model model) {
+//        List<KichCo> listKC = service.getList();
+//        if (p < 0) {
+//            p = 0;
+//        }
+//        Pageable pageable = PageRequest.of(p, 5);
+//        Page<KichCo> page = service.getListKC(pageable);
+//        model.addAttribute("page", page);
+//        model.addAttribute("listKC", listKC);
+//        model.addAttribute("searchForm", new SearchForm());
+//        model.addAttribute("view", "../kich-co/list.jsp");
+        return ResponseEntity.ok(service.getList());
     }
 
     @RequestMapping("/kich-co/search")
