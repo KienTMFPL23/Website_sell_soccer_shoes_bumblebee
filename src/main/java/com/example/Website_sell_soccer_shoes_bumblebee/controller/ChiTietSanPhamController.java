@@ -167,12 +167,13 @@ public class ChiTietSanPhamController {
 
     // search 2 kích cỡ
     @GetMapping("/search2-kich-co")
-    public ResponseEntity<?> search2KichCo(@RequestParam(name = "sizeKC") Integer size) {
-
-        if (size == null || size.equals("")) {
-            return ResponseEntity.ok(service.getListKC());
-        } else {
+    public ResponseEntity<?> search2KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
+        if (size != null) {
+            // Xử lý khi 'size' có giá trị
             return ResponseEntity.ok(service.search2KC(size));
+        } else {
+            // Xử lý khi 'size' là null (không được truyền vào)
+            return ResponseEntity.ok(kichCoService.getList());
         }
     }
 
@@ -181,7 +182,7 @@ public class ChiTietSanPhamController {
     public ResponseEntity<?> search2MS(@RequestParam(name = "keyword") String ten) {
 
         if (ten == null || ten.equals("")) {
-            return ResponseEntity.ok(mauSacReponsitories.findAll());
+            return ResponseEntity.ok(listMauSac());
         } else {
             return ResponseEntity.ok(chiTietSanPhamRepo.searchMS("%"+ten+"%"));
         }

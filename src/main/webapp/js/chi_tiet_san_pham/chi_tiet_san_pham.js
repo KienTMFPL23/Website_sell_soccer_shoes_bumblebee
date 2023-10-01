@@ -1,7 +1,7 @@
 
     $(document).ready(function () {
     $('#searchName').select2({
-        width: 200,
+        width: 150,
         placeholder: "Search Loai Giay ....",
         ajax: {
             type: 'GET',
@@ -28,7 +28,7 @@
 
  $(document).ready(function () {
     $('#searchName1').select2({
-        width: 200,
+        width: 150,
         placeholder: "Search Size ....",
         ajax: {
             type: 'GET',
@@ -54,7 +54,7 @@
 });
 $(document).ready(function () {
     $('#searchName2').select2({
-        width: 200,
+        width: 150,
         placeholder: "Search Mau Sac ....",
         ajax: {
             type: 'GET',
@@ -80,7 +80,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#searchName3').select2({
-        width: 200,
+        width: 150,
         placeholder: "Search De Giay ....",
         ajax: {
             type: 'GET',
@@ -108,7 +108,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#searchName4').select2({
-        width: 200,
+        width: 150,
         placeholder: "Search Chat Lieu ....",
         ajax: {
             type: 'GET',

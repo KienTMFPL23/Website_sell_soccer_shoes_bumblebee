@@ -60,8 +60,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select k from KichCo k")
     List<KichCo> listKC();
 
-    @Query(value = "select k from KichCo k where k.size =:sizeKC ")
-    List<KichCo> search2KC(@Param("sizeKC") Integer size);
+    @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword)")
+    List<KichCo> search2KC(@Param("keyword") Integer size);
 
 
 //    @Query("select ctsp from ChiTietSanPham  ctsp where  ctsp.sanPham.tenSanPham =? 1")

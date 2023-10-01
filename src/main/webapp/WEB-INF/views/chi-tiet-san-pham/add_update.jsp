@@ -150,7 +150,7 @@
                 </div>
                 <div class="item-right">
                     <form:select type="text" id="searchName2" path="mauSac" cssClass=".searchName2">
-                        <form:options items="${listMauSac}" itemLabel="ten" itemValue="id"/>
+                        <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="mauSac" cssStyle="color: crimson"/></span>
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i class="bi bi-plus-circle-fill"></i></a>

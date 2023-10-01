@@ -38,37 +38,40 @@
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select path="idLG" class="form-control" onchange="submit()">
+                    <form:select  type="text" id="searchName"  path="idLG"  onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
+
                 </form:form>
             </div>
 
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form modelAttribute="searchChatLieu" action="/chi-tiet-san-pham/search-by-chatlieu">
                     <label class="form-label">Chất liệu: </label>
-                    <form:select path="idChatLieu" class="form-control" onchange="submit()">
+                    <form:select  type="text" id="searchName4"  path="idChatLieu"  onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
+
                 </form:form>
             </div>
 
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form action="/chi-tiet-san-pham/search-by-degiay" modelAttribute="searchDG">
                     <label class="form-label">Đế giày: </label>
-                    <form:select path="idDe" class="form-control" onchange="submit()">
+                    <form:select  type="text" id="searchName3"  path="idDe"  onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
+
                 </form:form>
             </div>
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form action="/chi-tiet-san-pham/search-by-kichco" modelAttribute="searchKC">
 
                     <label class="form-label">Kích cỡ: </label>
-                    <form:select path="idKC" class="form-control" onchange="submit()">
+                    <form:select  type="text" id="searchName1"  path="idKC"  onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
@@ -79,7 +82,7 @@
                 <form:form action="/chi-tiet-san-pham/search-by-mausac" modelAttribute="searchFormByMau">
 
                     <label class="form-label">Màu sắc:</label>
-                    <form:select path="idMau" class="form-control" onchange="this.form.submit()">
+                    <form:select  type="text" id="searchName2"  path="idMau"  onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -93,8 +96,8 @@
                     <label class="form-label">Sắp xếp:</label>
                     <form:select path="key" onchange="submit()" class="form-control">
                         <option value="0">---</option>
-                        <form:option value="dongia">Đơn giá</form:option>
-                        <form:option value="sl">Số lượng</form:option>
+                        <form:option value="giaBan">Đơn giá</form:option>
+                        <form:option value="giaGoc">Số lượng</form:option>
                     </form:select>
                 </form:form>
             </div>
