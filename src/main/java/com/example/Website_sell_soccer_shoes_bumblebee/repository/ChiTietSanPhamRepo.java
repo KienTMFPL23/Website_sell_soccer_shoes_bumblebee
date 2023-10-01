@@ -75,6 +75,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 //
 //    @Query("select ctsp from ChiTietSanPham  ctsp where  ctsp.loaiGiay.tentheloai =? 1")
 //    List<ChiTietSanPham> filterByLoaiGiay(String loaiGiay);
+    @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword)")
+    List<KichCo> search2KC(@Param("keyword") Integer size);
 
 
 }

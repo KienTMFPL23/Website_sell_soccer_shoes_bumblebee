@@ -35,7 +35,7 @@
             url: '/chi-tiet-san-pham/search2-kich-co',
             data: function (params) {
                 return {
-                    sizeKC: params.term || '',
+                    keyword: params.term || '',
 
                 };
             },

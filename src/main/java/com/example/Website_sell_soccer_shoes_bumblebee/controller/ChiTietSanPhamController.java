@@ -182,7 +182,7 @@ public class ChiTietSanPhamController {
     public ResponseEntity<?> search2MS(@RequestParam(name = "keyword") String ten) {
 
         if (ten == null || ten.equals("")) {
-            return ResponseEntity.ok(listMauSac());
+            return ResponseEntity.ok(mauSacReponsitories.findAll());
         } else {
             return ResponseEntity.ok(chiTietSanPhamRepo.searchMS("%"+ten+"%"));
         }
