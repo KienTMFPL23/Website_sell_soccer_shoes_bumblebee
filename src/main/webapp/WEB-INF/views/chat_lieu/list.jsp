@@ -23,13 +23,17 @@
     }
 
     #icon-class-add {
-        margin-bottom: 40px;
+        margin-bottom: 30px;
+        margin-left: 43px;
     }
 
     .icon-add {
         border: 1px solid #D9D9D9;
         border-radius: 13px;
         margin-left: 30px;
+        padding: 5px;
+        width: 150px;
+        float: left;
     }
 
     .icon-add:hover {
@@ -49,9 +53,6 @@
         height: 35px;
     }
 
-    .icon-update {
-        border: none;
-    }
 
     .icon-update img {
         width: 35px;
@@ -77,17 +78,14 @@
 <div class="container">
 
     <div class="row" id="icon-class-add">
-        <h3 class="title-h3">Danh Sách Chất Liệu</h3>
-        <div class="col-lg-1">
-        </div>
+        <h3 class="title-h3" style="text-align: center; font-family: Nunito;font-size: 2.5rem">Danh Sách Chất Liệu</h3>
         <div class="col-lg-6">
             <button class="icon-add" id="add-icon-id"><a href="/chat-lieu/view-add" style="text-decoration: none">
                 <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png" alt=""/>
-                    <span class="text">Thêm mới</span></div>
+                    <span class="text">Thêm mới</span>
+                </div>
             </a>
             </button>
-        </div>
-        <div class="col-lg-1">
         </div>
     </div>
 
