@@ -100,10 +100,8 @@
                 <div class="item inp">
                     <label class="form-label">Giá Gốc: </label>
 
-
                     <form:input path="giaGoc" cssStyle="margin-left: 50px"/>
                     <form:errors path="giaGoc" cssStyle="color: crimson"/>
-
 
                 </div>
                 <div class="item inp">

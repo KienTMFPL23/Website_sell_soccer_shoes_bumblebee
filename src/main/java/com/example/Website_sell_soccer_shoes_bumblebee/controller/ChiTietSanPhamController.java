@@ -167,12 +167,11 @@ public class ChiTietSanPhamController {
 
     // search 2 kích cỡ
     @GetMapping("/search2-kich-co")
-    public ResponseEntity<?> search2KichCo(@RequestParam(name = "sizeKC") Integer size) {
-
-        if (size == null || size.equals("")) {
-            return ResponseEntity.ok(service.getListKC());
+    public ResponseEntity<?> search2KichCo(@RequestParam(name = "keyword",required = false) Integer keyword) {
+        if (keyword != null) {
+            return ResponseEntity.ok(service.search2KC(keyword));
         } else {
-            return ResponseEntity.ok(service.search2KC(size));
+            return ResponseEntity.ok(kichCoService.getList());
         }
     }
 
