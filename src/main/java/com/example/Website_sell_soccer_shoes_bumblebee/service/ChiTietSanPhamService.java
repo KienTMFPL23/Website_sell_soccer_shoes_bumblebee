@@ -1,6 +1,8 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.KichCo;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.QLSanPham;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,5 +35,10 @@ public interface ChiTietSanPhamService {
 
     Page<ChiTietSanPham> searchCTSP(String keyword, Pageable pageable);
 
+    List<LoaiGiay> search2(String keyword);
+
+    List<KichCo> search2KC(Integer size);
+
+    List<KichCo> getListKC();
 
 }

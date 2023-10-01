@@ -55,8 +55,8 @@
                     <a href="/san-pham/view-update/${sp.id}" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
                         <b>Chi tiết</b>
                     </a>
-                    <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
-                        <b>Quản lý thuộc tính</b>
+                    <a href="/chi-tiet-san-pham/view-add/${sp.id}" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
+                        <b>Thêm chi tiết sản phẩm</b>
                     </a>
                 </td>
             </tr>
