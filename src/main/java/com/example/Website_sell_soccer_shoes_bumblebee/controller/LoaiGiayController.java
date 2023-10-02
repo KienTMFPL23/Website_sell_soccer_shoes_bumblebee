@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.DeGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.LoaiGiayRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
@@ -10,13 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -45,6 +44,11 @@ public class LoaiGiayController {
         model.addAttribute("page", page);
         model.addAttribute("view", "../loai-giay/list.jsp");
         return "/admin/index";
+    }
+
+    @GetMapping("/loai-giay/hien-thi/list")
+    public ResponseEntity<?> hienThi(Model model, @ModelAttribute("loaiGiay") LoaiGiay loaiGiay, @RequestParam(defaultValue = "0") int pageNum){
+        return ResponseEntity.ok(repository.findAll());
     }
 
     @RequestMapping("/admin/loai-giay")
