@@ -96,7 +96,7 @@ public class QLSanPham {
         this.setDeGiay(domain.getDeGiay());
         this.setGiaGoc(domain.getGiaGoc());
         this.setGiaBan(domain.getGiaBan());
-        this.setDangGiay(domain.getDangGiay());
+//        this.setDangGiay(domain.getDangGiay());
         this.setKichCo(domain.getKichCo());
         this.setSanPham(domain.getSanPham());
         this.setTrangThai(domain.getTrangThai());

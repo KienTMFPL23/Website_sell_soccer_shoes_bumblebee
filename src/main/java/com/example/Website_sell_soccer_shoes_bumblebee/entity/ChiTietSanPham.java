@@ -71,9 +71,9 @@ public class ChiTietSanPham {
     @Column(name = "MoTaCT")
     @NotBlank(message = "không để trống")
     String moTaCT;
-    @Column(name = "DangGiay")
-    @NotBlank(message = "không để trống")
-    String dangGiay;
+//    @Column(name = "DangGiay")
+//    @NotBlank(message = "không để trống")
+//    String dangGiay;
 
 
     @Column(name = "Trangthai")
@@ -87,7 +87,7 @@ public class ChiTietSanPham {
         this.setGiaGoc(vm.getGiaGoc());
         this.setGiaBan(vm.getGiaBan());
         this.setKichCo(vm.getKichCo());
-        this.setDangGiay(vm.getDangGiay());
+//        this.setDangGiay(vm.getDangGiay());
         this.setSanPham(vm.getSanPham());
         this.setTrangThai(vm.getTrangThai());
         this.setMoTaCT(vm.getMoTaCT());
