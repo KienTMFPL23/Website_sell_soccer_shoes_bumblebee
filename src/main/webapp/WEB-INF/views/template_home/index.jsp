@@ -1,6 +1,6 @@
+<%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" pageEncoding="UTF-8" %>
 <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700%7CMontserrat:300,400,500,600,700,800,900"
       rel="stylesheet">
 <link rel="stylesheet" href="../../../plugins/font-awesome/css/font-awesome.min.css">

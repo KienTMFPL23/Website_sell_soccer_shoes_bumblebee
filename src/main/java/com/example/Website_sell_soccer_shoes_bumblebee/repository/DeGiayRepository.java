@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface DeGiayRepository extends JpaRepository<DeGiay, UUID> {
 
-    @Query(value = "select d.Id, d.Ma, d.LoaiDe,d.MoTa, d.TrangThai from DeGiay d ", nativeQuery = true)
+    @Query(value = "select d.Id, d.Ma, d.LoaiDe, d.TrangThai from DeGiay d ", nativeQuery = true)
     Page<DeGiay> getPage(Pageable pageable);
 
     @Query(value = "select d from DeGiay d where d.loaiDe LIKE :keyword")

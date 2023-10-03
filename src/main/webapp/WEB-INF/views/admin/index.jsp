@@ -99,12 +99,12 @@
                     data-parent="#accordionSidebar"
             >
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Sản phẩm</a>
-                    <a class="collapse-item" href="#">Kích cỡ</a>
+                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
-                    <a class="collapse-item" href="#">Loại giày</a>
+                    <a class="collapse-item" href="/admin/loai-giay">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
-                    <a class="collapse-item" href="#">Chất liệu</a>
+                    <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
                 </div>
             </div>
         </li>
