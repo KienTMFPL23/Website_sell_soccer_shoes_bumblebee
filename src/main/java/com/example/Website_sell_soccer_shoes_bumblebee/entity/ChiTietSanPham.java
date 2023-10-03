@@ -63,6 +63,7 @@ public class ChiTietSanPham {
     @NotBlank(message = "không để trống")
     String moTaCT;
 
+
     @Column(name = "Trangthai")
     @NotNull(message = "không để trống")
     Integer trangThai;
@@ -72,6 +73,7 @@ public class ChiTietSanPham {
         this.setDeGiay(vm.getDeGiay());
         this.setGiaBan(vm.getGiaBan());
         this.setKichCo(vm.getKichCo());
+
         this.setSanPham(vm.getSanPham());
         this.setTrangThai(vm.getTrangThai());
         this.setMoTaCT(vm.getMoTaCT());

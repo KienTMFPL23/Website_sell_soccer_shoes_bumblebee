@@ -11,11 +11,12 @@
 <style>
 
     #form {
-        width: 500px;
-        height: 330px;
+        width: 600px;
+        height: 400px;
         background-color: #37517E;
         color: white;
         margin: 150px auto 0;
+        border-radius: 10px;
     }
 
     .input {
@@ -25,8 +26,12 @@
 
     }
 
+    .input label{
+        padding-left: 20px;
+    }
+
     input {
-        width: 350px;
+        width: 400px;
         margin-right: 20px;
         border-radius: 10px;
         border: none;
@@ -48,7 +53,9 @@
     #tt {
         display: flex;
         margin-top: 20px;
-
+    }
+    #tt label{
+        margin-left: 20px;
     }
 
 </style>
@@ -56,9 +63,9 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-2">
         </div>
-        <div class="col-lg-5" id="form">
+        <div class="col-lg-6" id="form">
             <h3 style="margin-top: 30px">Thêm / Sửa Chất Liệu</h3>
             <sf:form class="was-validated" method="post" modelAttribute="cl" action="${action}">
                 <div class="input">

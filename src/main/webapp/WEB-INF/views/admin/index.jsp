@@ -28,7 +28,7 @@
 
     <!-- Custom styles for this template-->
     <link href="../../../css/sb-admin-2.min.css" rel="stylesheet"/>
-    <link href="../../../css/san-pham.css" rel="stylesheet">
+    <link href="../../../css/ban-hang/ban-hang.css" rel="stylesheet">
     <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
@@ -36,10 +36,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.semanticui.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <%--    <style>--%>
-<%--        .nav-item--%>
-<%--    </style>--%>
+    <%--        .nav-item--%>
+    <%--    </style>--%>
 
 </head>
 
@@ -101,16 +100,22 @@
                     data-parent="#accordionSidebar"
             >
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
-                    <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
+                    <a class="collapse-item" href="/chi-tiet-hinh-anh/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="#">Kích cỡ</a>
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
-                    <a class="collapse-item" href="/admin/loai-giay">Loại giày</a>
+                    <a class="collapse-item" href="#">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
-                    <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
+                    <a class="collapse-item" href="#">Chất liệu</a>
                 </div>
             </div>
         </li>
-
+        <!-- Nav Item - Bán hàng tại quầy -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/ban-hang-tai-quay/sell">
+                <i class="bx bxs-cart-add"></i>
+                <b>Bán hàng tại quầy</b></a
+            >
+        </li>
         <!-- Nav Item - Quản lý tài khoản -->
         <li class="nav-item">
             <a
@@ -151,14 +156,6 @@
             <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <b>Quản lý hóa đơn</b></a
-            >
-        </li>
-
-        <!-- Nav Item - Bán hàng tại quầy -->
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bx bxs-cart-add"></i>
-                <b>Bán hàng tại quầy</b></a
             >
         </li>
 
@@ -365,8 +362,6 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -375,7 +370,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.semanticui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -391,6 +386,8 @@
 <script src="../../../js/demo/chart-area-demo.js"></script>
 <script src="../../../js/demo/chart-pie-demo.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
+
+<script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="../../../js/kich_co/kich_co.js"></script>
 </body>
