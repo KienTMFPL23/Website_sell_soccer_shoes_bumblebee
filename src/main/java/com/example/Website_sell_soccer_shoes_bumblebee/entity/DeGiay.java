@@ -34,10 +34,6 @@ public class DeGiay {
     @Size(max = 150, message = "Loại đế không được quá 150 kí tự")
     private String loaiDe;
 
-//    @Column(name="MoTa")
-//    @NotBlank(message = "Mô tả không được để trống")
-//    private String moTa;
-
     @Column(name="TrangThai")
     @NotNull(message = "Trạng thái không được để trống")
     private Integer trangThai;

@@ -81,7 +81,8 @@ CREATE TABLE TaiKhoan(
     Id  UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     Username VARCHAR(100) UNIQUE,
     Password VARCHAR(100),
-    Role     Integer
+    Role     INT
+
 )
 GO
 

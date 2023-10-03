@@ -11,7 +11,6 @@ $(document).ready(function () {
         columns: [
             {"data": "ma"},
             {"data": "loaiDe"},
-            // {"data": "moTa"},
             {
                 "data": "trangThai",
                 "render": function (data) {

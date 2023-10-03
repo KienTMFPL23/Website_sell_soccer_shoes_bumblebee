@@ -19,7 +19,7 @@
 
     .formAdd {
         width: 700px;
-        height: 600px;
+        height: 500px;
         background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
@@ -90,7 +90,6 @@
                 <form:errors path="loaiDe" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
