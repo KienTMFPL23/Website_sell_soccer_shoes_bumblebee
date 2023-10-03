@@ -306,29 +306,29 @@ public class SanPhamController {
     }
 
     @RequestMapping("/san-pham/kich-co/add/{id}")
-    public String addKC(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("kichco") KichCo kichCo, BindingResult resultt) {
-        SanPham sanPham2 = sanPhamService.getOne(id);
-        model.addAttribute("idsp", sanPham2.getId());
-        model.addAttribute("tensp", sanPham2.getTenSanPham());
+    public String addKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, @PathVariable("id") UUID id, BindingResult resultt) {
+        SanPham sanPham22 = sanPhamService.getOne(id);
+        Boolean hasError = resultt.hasErrors();
+        model.addAttribute("idsp", sanPham22.getId());
+        model.addAttribute("tensp", sanPham22.getTenSanPham());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("lg", new LoaiGiay());
-        if (resultt.hasErrors()) {
-            model.addAttribute("sanpham", new QLSanPham());
-            model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
+        if (kichCo != null) {
+            hasError = true;
+            model.addAttribute("maspError", "Vui lòng không nhập trùng mã");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
         }
-        if (kichCo.getMaKichCo() != null) {
-            model.addAttribute("sanpham", new QLSanPham());
-            model.addAttribute("messMa", "Lỗi! Vui lòng kiểm tra mã không được trùng !");
+        if (hasError) {
+            // Báo lỗi
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
         }
-        kichCoService.addKC(kichCo);
+        this.kichCoService.addKC(kichCo);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
     }
 
     @PostMapping("/san-pham/mau-sac/add/{id}")

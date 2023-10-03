@@ -30,10 +30,6 @@ public class KichCo {
     @Column(name = "Size")
     private Integer size;
 
-    @NotBlank(message = "Không để trống")
-    @Column(name = "Loaisize")
-    private String loaiSize;
-
     @NotNull(message = "Mời chọn giới tính")
     @Column(name = "Gioitinh")
     private Boolean gioiTinh;

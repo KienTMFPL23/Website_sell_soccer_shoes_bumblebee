@@ -92,18 +92,7 @@
                     <form:input path="giaBan" cssStyle="margin-left: 50px"/>
                     <form:errors path="giaBan" cssStyle="color: crimson"/>
                 </div>
-                <div class="item inp">
-                    <label class="form-label">Dáng giầy: </label>
-                    <form:input path="dangGiay" cssStyle="margin-left: 50px"/>
-                    <form:errors path="dangGiay" cssStyle="color: crimson"/>
-                </div>
-                <div class="item inp">
-                    <label class="form-label">Giá Gốc: </label>
 
-                    <form:input path="giaGoc" cssStyle="margin-left: 50px"/>
-                    <form:errors path="giaGoc" cssStyle="color: crimson"/>
-
-                </div>
                 <div class="item inp">
                     <label class="form-label">Số lượng: </label>
                     <form:input path="soLuong" cssStyle="margin-left: 44px"/>
@@ -115,11 +104,6 @@
                                    cssStyle="border: none; width: 280px;height: 100px;border-radius: 15px;margin-left: 65px;margin-top: 20px"/>
                     <form:errors path="moTaCT" cssStyle="color: crimson"/>
                 </div>
-                    <%--                <div class="item img">--%>
-                    <%--                    <label class="form-label">Hình ảnh: </label>--%>
-                    <%--                    <form:input type="file" path="hinhAnh" cssStyle="margin-left: 43px"/>--%>
-                    <%--                    <img src="/src/main/resources/static/image/${photo}"/>--%>
-                    <%--                </div>--%>
 
                 <div class="item form-check-inline">
                     <label class="form-label">Trạng Thái</label>
@@ -234,7 +218,7 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form:input path="id" class="form-control" type="hidden"/>
+<%--                    <form:input path="id" class="form-control" type="hidden"/>--%>
                     <div class="mb-3">
                         <label class="form-label">Mã Kích Cỡ: </label>
 
@@ -252,12 +236,6 @@
                         <form:errors path="size" cssStyle="color: crimson"/>
                     </div>
 
-
-                        <%--                            <div class="mb-3">--%>
-                        <%--                                <label class="form-label">Loại size</label>--%>
-                        <%--                                <form:input path="loaiSize" class="form-control"/>--%>
-                        <%--                                <form:errors path="loaiSize" cssStyle="color: crimson"/>--%>
-                        <%--                            </div>--%>
                     <div class="mb-3 form-check-inline">
                         <label class="form-label">Trạng Thái</label>
                         <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"/>
@@ -380,13 +358,6 @@
                         <form:input type="text" class="form-control" id="inputEmail3" path="loaiDe"/>
                         <form:errors path="loaiDe" cssStyle="color: crimson"></form:errors>
                     </div>
-
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Mô tả</label>
-                    <div class="mb-3">
-                        <form:input type="text" class="form-control" id="inputEmail3" path="moTa"/>
-                        <form:errors path="moTa" cssStyle="color: crimson"></form:errors>
-                    </div>
-
 
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Trạng thái</label>
                     <div class="mb-3 form-check-inline">
