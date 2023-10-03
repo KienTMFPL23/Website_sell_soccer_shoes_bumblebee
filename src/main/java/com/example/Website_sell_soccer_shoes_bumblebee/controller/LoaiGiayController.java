@@ -61,7 +61,7 @@ public class LoaiGiayController {
         return ResponseEntity.ok(repository.findAll());
     }
 
-    @RequestMapping("/admin/loai-giay")
+    @RequestMapping("/loai-giay/hien-thi")
     public String index(Model model, @ModelAttribute SearchForm searchForm, @RequestParam(defaultValue = "0") int p) {
         if (p < 0) {
             p = 0;
@@ -156,7 +156,7 @@ public class LoaiGiayController {
             return "/admin/index";
         }
         repo.updateLG(loaiGiay);
-        return "redirect:/admin/loai-giay";
+        return "redirect:/loai-giay/hien-thi";
     }
 
     @RequestMapping("/loai-giay/edit/{id}")

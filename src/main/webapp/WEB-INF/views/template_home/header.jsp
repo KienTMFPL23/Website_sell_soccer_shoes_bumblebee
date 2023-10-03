@@ -1,37 +1,5 @@
 <div class="header--sidebar"></div>
 <header class="header">
-    <div class="header__top">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
-                    <p>460 West 34th Street, 15th floor, New York - Hotline: 804-377-3580 - 804-399-3580</p>
-                </div>
-                <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="header__actions"><a href="#">Login & Regiser</a>
-                        <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"
-                                                              aria-haspopup="true" aria-expanded="false">USD<i
-                                class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><img src="../../../images_template/flag/usa.svg" alt=""> USD</a></li>
-                                <li><a href="#"><img src="../../../images_template/flag/singapore.svg" alt=""> SGD</a>
-                                </li>
-                                <li><a href="#"><img src="../../../images_template/flag/japan.svg" alt=""> JPN</a></li>
-                            </ul>
-                        </div>
-                        <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"
-                                                              aria-haspopup="true" aria-expanded="false">Language<i
-                                class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Japanese</a></li>
-                                <li><a href="#">Chinese</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <nav class="navigation">
         <div class="container-fluid">
             <div class="navigation__column left">
@@ -41,14 +9,14 @@
             </div>
             <div class="navigation__column center">
                 <ul class="main-menu menu">
-                    <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Home</a>
+                    <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Trang Chủ</a>
                         <ul class="sub-menu">
                             <li class="menu-item"><a href="index.html">Homepage #1</a></li>
                             <li class="menu-item"><a href="#">Homepage #2</a></li>
                             <li class="menu-item"><a href="#">Homepage #3</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Men</a>
+                    <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Giới Thiệu</a>
                         <div class="mega-menu">
                             <div class="mega-wrap">
                                 <div class="mega-column">
@@ -110,25 +78,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="menu-item"><a href="#">Women</a></li>
-                    <li class="menu-item"><a href="#">Kids</a></li>
-                    <li class="menu-item menu-item-has-children dropdown"><a href="#">News</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html">Blog-grid</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item"><a href="blog-grid.html">Blog Grid 1</a></li>
-                                    <li class="menu-item"><a href="blog-grid-2.html">Blog Grid 2</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item"><a href="blog-list.html">Blog List</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item menu-item-has-children dropdown"><a href="#">Contact</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item"><a href="contact-us.html">Contact Us #1</a></li>
-                            <li class="menu-item"><a href="contact-us.html">Contact Us #2</a></li>
-                        </ul>
-                    </li>
+                    <li class="menu-item"><a href="#">Liên Hệ</a></li>
                 </ul>
             </div>
             <div class="navigation__column right">
