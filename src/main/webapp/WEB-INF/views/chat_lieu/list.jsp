@@ -21,16 +21,27 @@
         margin-top: 150px;
         background-color: #37517E;
     }
-    #icon-class-add{
-        margin-bottom: 40px;
+
+    #icon-class-add {
+        margin-bottom: 30px;
+        margin-left: 43px;
     }
 
     .icon-add {
         border: 1px solid #D9D9D9;
         border-radius: 13px;
+        margin-left: 30px;
+        padding: 5px;
+        width: 150px;
+        float: left;
     }
-    .icon-add:hover{
+
+    .icon-add:hover {
         background: #37517E;
+    }
+
+    #add-icon-id {
+        margin: auto;
     }
 
     .add-text {
@@ -42,37 +53,21 @@
         height: 35px;
     }
 
-    .icon-update {
-        border: none;
-    }
 
     .icon-update img {
         width: 35px;
         height: 35px;
     }
 
-    .search {
-        margin-top: 3px;
-        border: 1px solid black;
-        border-radius: 25px;
-
-    }
-
-    .search button {
-        border: none;
-        background: #37517E;
-        font-weight: bold;
-        border-radius: 15px;
-        color: #D9D9D9;
-    }
-
     .search input {
-        margin-left: 6px;
-        width: 304px;
+        padding: 10px;
+        border: 1px solid #D9D9D9;
+        width: 410px;
+        background: #D9D9D9;
         border-radius: 15px;
-        border: none;
     }
-    .text{
+
+    .text {
         font-weight: bold;
         color: black;
     }
@@ -81,98 +76,29 @@
 
 <body>
 <div class="container">
-    <div class="row" id="icon-class-add">
-        <h3 class="title-h3">Danh Sách Chất Liệu</h3>
-        <div class="col-lg-1">
 
-        </div>
-        <div class="col-lg-3">
-            <button class="icon-add"><a href="/chat-lieu/view-add" style="text-decoration: none">
+    <div class="row" id="icon-class-add">
+        <h3 class="title-h3" style="text-align: center; font-family: Nunito;font-size: 2.5rem">Danh Sách Chất Liệu</h3>
+        <div class="col-lg-6">
+            <button class="icon-add" id="add-icon-id"><a href="/chat-lieu/view-add" style="text-decoration: none">
                 <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png" alt=""/>
-                    <span class="text">Thêm mới</span></div>
+                    <span class="text">Thêm mới</span>
+                </div>
             </a>
             </button>
         </div>
-        <div class="col-lg-2">
-            <button class="icon-add">
-                <a href="/chat-lieu/sort" method="get" style="text-decoration: none">
-                    <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/11463/11463063.png" alt=""/>
-                        <span class="text">Sắp xếp</span>
-                    </div>
-                </a>
-            </button>
-        </div>
-        <div class="col-lg-1">
-        </div>
-        <div class="col-lg-4">
-            <div class="form">
-                <sf:form  action="/chat-lieu/search" method="get" modelAttribute="searchForm">
-                    <div class="search">
-                        <button>Tìm Kiếm</button>
-                        <sf:input path="keyword"/>
-                    </div>
-                </sf:form>
-            </div>
-        </div>
-        <div class="col-lg-1">
-        </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-10">
-            <table class="table">
-                <thead class="thead-form">
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Mã Chất Liệu</th>
-                    <th scope="col">Tên Chất Liệu</th>
-                    <th scope="col">Trạng Thái</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${list.content}" var="cl" varStatus="stt">
-                        <tr>
-                            <th scope="row">${stt.index +1}</th>
-                            <td>${cl.id}</td>
-                            <td>${cl.ma}</td>
-                            <td>${cl.ten}</td>
-                            <td>${cl.trangThai == 1? "Còn" : "Hết"}</td>
-                            <td>
-                                <button class="icon-update">
-                                    <a href="/chat-lieu/edit/${cl.id}">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCYRg6-Wukvj4tChzvnqe0FHoB2eDbrKN0-g&usqp=CAU"
-                                        style="height: 25px;width: 25px"   alt=""/>
-                                    </a>
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-lg-1"></div>
-        <div class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" style="padding-left: 500px">
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=0&keyword=${param.keyword}"
-                                             >Previous</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=${list.number-1}&keyword=${param.keyword}"
-                                             >1</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=${list.number+1}&keyword=${param.keyword}"
-                                             >2</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/chat-lieu/hien-thi?page=${list.totalPages-1}&keyword=${param.keyword}"
-                                             >Next</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <table id="tableChatLieu" class="ui celled table" width="100%">
+        <thead>
+        <tr>
+            <th scope="col">Mã</th>
+            <th scope="col">Tên Chất Liệu</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+    </table>
 </div>
 
 

@@ -27,7 +27,7 @@ public class ChatLieu {
 
     @Column(name = "TenChatLieu")
     @NotBlank(message = "không để trống")
-    @Length(min = 4,max = 100, message = "Không dưới 5 kí tự và quá 100 kí tự")
+    @Length(max = 100, message = "Không quá 100 kí tự")
     private String ten;
 
     @Column(name = "TrangThai")

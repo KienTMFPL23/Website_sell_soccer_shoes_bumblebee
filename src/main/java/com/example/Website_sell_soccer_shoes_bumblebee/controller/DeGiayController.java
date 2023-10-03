@@ -4,17 +4,16 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.DeGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.DeGiayServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,40 +40,30 @@ public class DeGiayController {
 
     @GetMapping("/de-giay/hien-thi/list")
     public ResponseEntity<?> hienThi(Model model, @ModelAttribute("degiay") DeGiay degiay, @RequestParam(defaultValue = "0") int pageNum){
-//        if (pageNum < 0){
-//            pageNum = 0;
-//        }
-//
-//        Pageable pageable = PageRequest.of(pageNum, 5);
-//        Page<DeGiay> page = deGiayService.getListPage(pageable);
-//        model.addAttribute("listDeGiay", page);
-//        model.addAttribute("view", "../de_giay/list.jsp");
+
         return ResponseEntity.ok(deGiayService.getList());
     }
 
     @GetMapping("/de-giay/view-add")
     public String viewAdd(Model model, @ModelAttribute("degiay") DeGiay degiay){
         model.addAttribute("action", "/de-giay/add");
-
-        return "/de_giay/add_update";
+        model.addAttribute("view", "../de_giay/add_update.jsp");
+        return "/admin/index";
     }
 
     @PostMapping("/de-giay/add")
     public String add(Model model, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
 
-//        if (result.hasErrors()) {
-//            model.addAttribute("view", "../de_giay/add_update.jsp");
-//
-//            return "/admin/index";
-//        }
-//
-//
-//        if (deGiayService.findByMa(degiay.getMa()) != null) {
-//            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
-//            model.addAttribute("view", "../de_giay/add_update.jsp");
-//
-//            return "/admin/index";
-//        }
+        if (result.hasErrors()) {
+            model.addAttribute("view", "../de_giay/add_update.jsp");
+            return "/admin/index";
+        }
+
+        if (deGiayService.findByMa(degiay.getMa()) != null) {
+            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
+            model.addAttribute("view", "../de_giay/add_update.jsp");
+            return "/admin/index";
+        }
 
         deGiayService.add(degiay);
         return "redirect:/de-giay/hien-thi";
@@ -85,31 +74,25 @@ public class DeGiayController {
         DeGiay deGiay = deGiayService.findById(id);
         model.addAttribute("degiay", deGiay);
         model.addAttribute("action", "/de-giay/update/" + deGiay.getId());
-        return "/de_giay/add_update";
+
+        model.addAttribute("view", "../de_giay/add_update.jsp");
+        return "/admin/index";
     }
 
     @PostMapping("/de-giay/update/{id}")
     public String update(Model model, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "/de_giay/add_update";
-//        }
+        if (result.hasErrors()) {
+            model.addAttribute("view", "../de_giay/add_update.jsp");
+
+            return "/admin/index";
+        }
 
         deGiayService.add(degiay);
         return "redirect:/de-giay/hien-thi";
 
     }
 
-//    @RequestMapping("/de-giay/search")
-//    public String search(Model model, @RequestParam(name = "keyword") String keyword, @RequestParam(defaultValue = "0") int pageNum){
-//        if (pageNum < 0){
-//            pageNum = 0;
-//        }
-//        Pageable pageable = PageRequest.of(pageNum, 5);
-//        Page<DeGiay> listSearch = deGiayService.search("%" +keyword +"%", pageable);
-//        model.addAttribute("listSearch", listSearch);
-//        model.addAttribute("view", "../de_giay/search.jsp");
-//        return "/admin/index";
-//    }
+
 //
 //    @RequestMapping("/de-giay/sort")
 //    public <SearchForm> String Sort(@RequestParam(defaultValue = "0") int pageNum, Model model) {
@@ -121,6 +104,36 @@ public class DeGiayController {
 //        model.addAttribute("listDeGiay", page);
 //        model.addAttribute("view", "../de_giay/list.jsp");
 //        return "/admin/index";
+//    }
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "/de_giay/uploadPage";
+//    }
+//
+//    @PostMapping("/uploadFile")
+//    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+//
+//        deGiayService.uploadFile(file);
+//
+//        redirectAttributes.addFlashAttribute("message",
+//                "You have successfully uploaded '"+ file.getOriginalFilename()+"' !");
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        return "redirect:/";
+//    }
+//
+//    @GetMapping("/saveData")
+//    public String saveExcelData(Model model) {
+//
+//        List<DeGiay> excelDataAsList = deGiayService.getExcelDataAsList();
+//        int noOfRecords = deGiayService.saveExcelData(excelDataAsList);
+//        model.addAttribute("noOfRecords",noOfRecords);
+//        return "/de_giay/thanhCong";
 //    }
 
 }

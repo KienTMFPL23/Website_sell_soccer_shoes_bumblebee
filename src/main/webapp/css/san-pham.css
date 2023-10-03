@@ -4,11 +4,12 @@ body{
 
 .btnAdd {
     background-color: #EEEDED;
-    margin-left: 50px;
-    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-bottom: 15px;
     border: 2px solid #37517E;
     border-radius: 10px;
-    width: 150px;
+    width: 180px;
     float: left;
     height: 40px;
     font-size: 18px;
@@ -17,14 +18,46 @@ body{
     color: black;
     text-align: center;
 }
-
-
+.btn-search{
+    background-color: #34B6D3;
+    width: 130px;
+    border: none;
+    border-radius: 15px 0px 0px 15px;
+    font-weight: bold;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+}
+.form{
+    width: 700px;
+    height: 600px;
+    border-radius: 20px;
+    margin:  0 auto;
+}
+.inputSearch {
+    padding-left: 16px;
+    border: none;
+    width: 370px;
+    background-color: #fff;
+    border-radius: 15px;
+    outline: 0;
+}
+.search {
+    float: right;
+    margin-top: 30px;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+}
 .btnAdd:hover{
     background-color: #37517E;
     border: 2px solid #FFFFFF;
     color: #FFFFFF;
     text-decoration: none;
-;
+
 }
 
 .btnAdd > img {
@@ -34,29 +67,10 @@ body{
     float: left;
 }
 
-.btnAdd > p{
+.btnAdd > p {
     margin-top: 5px;
     margin-right: 10px;
 }
-.ui.table>thead>tr>th {
-    background-color: #37517E;
-    color: #FFFFFF;
-    font-size: 18px;
-
-}
-.ui.form input[type=search] {
-    background: #fff;
-    border: 2px solid #37517E;
-    border-radius: 20px;
-    width: 400px;
-}
-.ui input{
-    border-radius: 20px;
-}
-.ui.table>tbody>tr>td {
-    font-size: 16px;
-}
-
 .form-add-update{
     width: 700px;
     height: 600px;

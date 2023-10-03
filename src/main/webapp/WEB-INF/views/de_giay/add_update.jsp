@@ -24,6 +24,7 @@
         border-radius: 20px;
         color: #FFFFFF;
         font-family: "Nunito";
+        margin: 0 auto;
     }
 
     .row.mb-3 {
@@ -41,7 +42,6 @@
         margin-top: 30px;
         margin: auto;
         display: block;
-
     }
 
     label {
@@ -113,7 +113,6 @@
         <div class="buttonSubmit">
             <button class="button" type="submit" onclick="return Validate();">SUBMIT</button>
         </div>
-
 
     </form:form>
 </div>

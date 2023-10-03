@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,11 +49,44 @@ public class SanPhamController {
     @Autowired
     SanPhamService sanPhamService;
 
+    @ModelAttribute("listDeGiay")
+    List<DeGiay> listDeGiay() {
+        return deGiayRepo.findAll();
+    }
+
+    @ModelAttribute("listChatLieu")
+    List<ChatLieu> listChatLieu() {
+        return chatLieuRepo.findAll();
+    }
+
+    @ModelAttribute("listKichCo")
+    List<KichCo> listKichCo() {
+        return kichCoService.getList();
+    }
+
+    @ModelAttribute("listMau")
+    List<MauSac> listMauSac() {
+        return mauSacReponsitories.findAll();
+    }
+
+    @ModelAttribute("listLoaiGiay")
+    List<LoaiGiay> listLoaiGiay() {
+        return loaiGiayRepo.findAll();
+    }
+
+    @ModelAttribute("dsGioiTinh")
+    public Map<Boolean, String> getDsGioiTinh() {
+        Map<Boolean, String> dsGT = new HashMap<>();
+        dsGT.put(true, "Nam");
+        dsGT.put(false, "Nữ");
+        return dsGT;
+    }
+
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
         dsTrangThai.put(1, "Hoạt động");
-        dsTrangThai.put(0, "Ngừng Hoạt động");
+        dsTrangThai.put(0, "Ngừng hoạt động");
         return dsTrangThai;
     }
 
@@ -61,20 +95,24 @@ public class SanPhamController {
     public static class SearchForm {
         String keyword = "";
     }
+
     @GetMapping("/san-pham/hien-thi")
-    public String hienThi(Model model, @RequestParam(defaultValue = "0")int p){
-        if (p < 0){
-            p =0;
+    public String hienThi(Model model, @RequestParam(defaultValue = "0") int p) {
+        model.addAttribute("view", "../san_pham/list_san_pham.jsp");
+        if (p < 0) {
+            p = 0;
         }
-        Pageable pageable = PageRequest.of(p,5);
+        Pageable pageable = PageRequest.of(p, 5);
         Page<SanPham> page = sanPhamService.findAllSP(pageable);
         model.addAttribute("search", new SearchForm());
-        model.addAttribute("page",page);
-        return "san_pham/list_san_pham";
+        model.addAttribute("page", page);
+        return "admin/index";
     }
+
 
     @RequestMapping("/san-pham/search")
     public String search(Model model, @ModelAttribute("search") SearchForm searchForm, @RequestParam(defaultValue = "0") int p) {
+        model.addAttribute("view", "../san_pham/list_san_pham.jsp");
         if (p < 0) {
             p = 0;
         }
@@ -82,25 +120,28 @@ public class SanPhamController {
         Page<SanPham> page = sanPhamService.findByKeyword(searchForm.keyword, pageable);
         model.addAttribute("page", page);
 //        model.addAttribute("view", "../san_pham/index.jsp");
-        return "san_pham/list_san_pham";
+        return "admin/index";
     }
 
     @GetMapping("/san-pham/view-add")
     public String viewAdd(Model model, @ModelAttribute("SP") SanPham sanPham) {
         model.addAttribute("action", "/san-pham/add");
-        return "san_pham/view_add_update";
+        model.addAttribute("view", "../san_pham/view_add_update.jsp");
+        return "admin/index";
     }
 
     @GetMapping("/san-pham/view-update/{id}")
     public String viewUpdate(Model model, @PathVariable("id") UUID id, @ModelAttribute("SP") SanPham sanPham) {
+        model.addAttribute("view", "../san_pham/view_add_update.jsp");
         SanPham product = sanPhamService.getOne(id);
         model.addAttribute("action", "/san-pham/update/" + product.getId());
-        model.addAttribute("SP",product);
+        model.addAttribute("SP", product);
         SanPham sp = sanPhamService.getOne(id);
-        return "san_pham/view_add_update";
+        return "admin/index";
     }
+
     @PostMapping("/san-pham/add")
-    public String add(Model model,@Valid @ModelAttribute("SP")SanPham sanPham, BindingResult result){
+    public String add(Model model, @Valid @ModelAttribute("SP") SanPham sanPham, BindingResult result) {
         Boolean hasError = result.hasErrors();
         SanPham product = sanPhamService.getByMa(sanPham.getMaSanPham());
         if (product != null) {
@@ -119,18 +160,18 @@ public class SanPhamController {
 
     @PostMapping("/san-pham/update/{id}")
     public String udpate(@PathVariable("id") UUID id, Model model, @Valid @ModelAttribute("SP") SanPham sanPham,
-                         BindingResult result){
-//        Boolean hasError = result.hasErrors();
-//        if (sanPham.getMaSanPham().trim().length() < 5) {
-//            hasError = true;
-//            model.addAttribute("erorLenghMa", "Mã sản phẩm phải lớn hơn hoặc bằng 5");
-//            model.addAttribute("view", "../san_pham/view_add_update.jsp");
-//            return "admin/index";
-//        }
-//        if (hasError) {
-//            model.addAttribute("view", "../san_pham/view_add_update.jsp");
-//            return "admin/index";
-//        }
+                         BindingResult result) {
+        Boolean hasError = result.hasErrors();
+        if (sanPham.getMaSanPham().trim().length() < 5) {
+            hasError = true;
+            model.addAttribute("erorLenghMa", "Mã sản phẩm phải lớn hơn hoặc bằng 5");
+            model.addAttribute("view", "../san_pham/view_add_update.jsp");
+            return "admin/index";
+        }
+        if (hasError) {
+            model.addAttribute("view", "../san_pham/view_add_update.jsp");
+            return "admin/index";
+        }
         SanPham sp = sanPhamService.getOne(id);
         sp.setMaSanPham(sanPham.getMaSanPham());
         sp.setTenSanPham(sanPham.getTenSanPham());
@@ -138,8 +179,9 @@ public class SanPhamController {
         sanPhamService.udpateSanPham(sp);
         return "redirect:/san-pham/hien-thi";
     }
+
     @RequestMapping("/chi-tiet-san-pham/view-add/{id}")
-    public String viewAdd(@ModelAttribute("sanpham") QLSanPham sp, @PathVariable("id") UUID id, Model model) {
+    public String viewAdd(Model model, @ModelAttribute("sanpham") QLSanPham sp, @PathVariable("id") UUID id) {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("vm", new ChatLieu());
@@ -154,12 +196,20 @@ public class SanPhamController {
 
     // add ctsp
     @PostMapping("/chi-tiet-san-pham/add/{id}")
-    public String AddSanPham(Model model, @PathVariable("id") UUID id, @ModelAttribute("sanpham") QLSanPham sp
+    public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp, BindingResult result) throws WriterException, IOException {
+        model.addAttribute("lg", new LoaiGiay());
+        model.addAttribute("degiay", new DeGiay());
+        model.addAttribute("vm", new ChatLieu());
 
-            , BindingResult result) throws WriterException, IOException {
+        model.addAttribute("ms", new MauSac());
+        model.addAttribute("kichco", new KichCo());
+        if (result.hasErrors()) {
+            model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
+            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+            return "/admin/index";
+        }
         SanPham sanPham1 = sanPhamService.getOne(id);
         sp.setSanPham(sanPham1);
-
         ChiTietSanPham ctsp = new ChiTietSanPham();
         ctsp.loadFromViewModel(sp);
 //        MultipartFile multipartFile = sp.getHinhAnh();
@@ -182,12 +232,7 @@ public class SanPhamController {
 //        }
 //        ctsp.setHinhAnh(fileName);
         //
-        model.addAttribute("lg", new LoaiGiay());
-        model.addAttribute("degiay", new DeGiay());
-        model.addAttribute("vm", new ChatLieu());
 
-        model.addAttribute("ms", new MauSac());
-        model.addAttribute("kichco", new KichCo());
         model.addAttribute("tensp", sanPham1.getTenSanPham());
         service.addKC(ctsp);
 

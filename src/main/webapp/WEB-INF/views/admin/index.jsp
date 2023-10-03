@@ -387,7 +387,5 @@
 <script src="../../../js/demo/chart-area-demo.js"></script>
 <script src="../../../js/demo/chart-pie-demo.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
-<script src="../../../js/loai_giay/loai_giay.js"></script>
-
 </body>
 </html>

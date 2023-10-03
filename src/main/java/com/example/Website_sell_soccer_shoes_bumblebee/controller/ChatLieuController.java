@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,19 +34,25 @@ public class ChatLieuController {
     }
 
     @GetMapping("hien-thi")
-    public String index(@RequestParam(defaultValue = "0", name = "page") Integer page, Model model) {
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<ChatLieu> list = this.chatLieuRepo.findAll(pageable);
-        model.addAttribute("list", list);
-        model.addAttribute("searchForm", new SearchForm());
+    public String index(Model model) {
+
         model.addAttribute("view", "../chat_lieu/list.jsp");
         return "/admin/index";
     }
 
+    @GetMapping("hien-thi/list")
+    public ResponseEntity<?> index(@RequestParam(defaultValue = "0", name = "page") Integer page, Model model) {
+//        Pageable pageable = PageRequest.of(page, 5);
+//        Page<ChatLieu> list = this.chatLieuRepo.findAll(pageable);
+//        model.addAttribute("list", list);
+//        model.addAttribute("searchForm", new SearchForm());
+
+        return ResponseEntity.ok(chatLieuRepo.findAll());
+    }
+
 
     @GetMapping("view-add")
-    public String viewAdd(Model model, ChatLieu cl) {
-        model.addAttribute("vm", cl);
+    public String viewAdd(Model model, @ModelAttribute("cl") ChatLieu cl) {
         model.addAttribute("action", "/chat-lieu/add");
         model.addAttribute("view", "../chat_lieu/add_update.jsp");
         return "/admin/index";
@@ -53,7 +60,7 @@ public class ChatLieuController {
 
     @PostMapping("add")
     public String store(Model model,
-                        @Valid @ModelAttribute("vm") ChatLieu cl,
+                        @Valid @ModelAttribute("cl") ChatLieu cl,
                         BindingResult result
     ) {
         Boolean hasError = result.hasErrors();
@@ -76,8 +83,7 @@ public class ChatLieuController {
     }
 
     @GetMapping("edit/{id}")
-    public String edit(@PathVariable("id") ChatLieu cl, Model model) {
-        model.addAttribute("vm", cl);
+    public String edit(@PathVariable("id") UUID id, Model model, @ModelAttribute("cl") ChatLieu cl) {
         model.addAttribute("action", "/chat-lieu/update/" + cl.getId());
         model.addAttribute("view", "../chat_lieu/add_update.jsp");
         return "/admin/index";
@@ -85,7 +91,7 @@ public class ChatLieuController {
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, Model model,
-                         @Valid @ModelAttribute("vm") ChatLieu cl,
+                         @Valid @ModelAttribute("cl") ChatLieu cl,
                          BindingResult result
     ) {
         Boolean hasError = result.hasErrors();
