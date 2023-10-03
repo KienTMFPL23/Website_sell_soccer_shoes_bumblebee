@@ -36,7 +36,7 @@ public class QLSanPham {
     MauSac mauSac;
 
     @ManyToOne()
-    @JoinColumn(name = "Idloaigiay")
+    @JoinColumn(name = "Idtheloai")
     @NotNull(message = "Mời chọn loại giày")
     LoaiGiay loaiGiay;
 
@@ -55,15 +55,6 @@ public class QLSanPham {
     @NotNull(message = "Mời chọn đế giày")
     DeGiay deGiay;
 
-    @ManyToOne()
-    @JoinColumn(name = "Idhinhanh")
-//    @NotNull(message = "Mời chọn hình ảnh")
-    HinhAnh hinhAnh;
-
-    @Column(name = "Giagoc")
-    @NotNull(message = "không để trống")
-    Double giaGoc;
-
     @Column(name = "Giaban")
     @NotNull(message = "không để trống")
     Double giaBan;
@@ -80,9 +71,6 @@ public class QLSanPham {
     @Column(name = "Trangthai")
     @NotNull(message = "không để trống")
     Integer trangThai;
-    @Column(name = "DangGiay")
-    @NotBlank(message = "không để trống")
-    String dangGiay;
 
 
     @Override
@@ -91,12 +79,10 @@ public class QLSanPham {
     }
 
     public void loadFromDomainModel(ChiTietSanPham domain) {
-        this.setHinhAnh(hinhAnh);
+
         this.setChatLieu(domain.getChatLieu());
         this.setDeGiay(domain.getDeGiay());
-        this.setGiaGoc(domain.getGiaGoc());
         this.setGiaBan(domain.getGiaBan());
-        this.setDangGiay(domain.getDangGiay());
         this.setKichCo(domain.getKichCo());
         this.setSanPham(domain.getSanPham());
         this.setTrangThai(domain.getTrangThai());

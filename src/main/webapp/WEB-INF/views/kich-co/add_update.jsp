@@ -69,17 +69,13 @@
             <form:input path="size" class="form-control"/>
             <form:errors path="size" cssStyle="color: crimson"/>
         </div>
+
         <div class="mb-3">
             <label class="form-label">Giới Tính</label>
             <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>
             <form:errors path="gioiTinh" cssStyle="color: crimson"/>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Loại size</label>
-            <form:input path="loaiSize" class="form-control"/>
-            <form:errors path="loaiSize" cssStyle="color: crimson"/>
-        </div>
         <div class="mb-3">
             <label class="form-label">Trạng Thái</label>
             <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"/>

@@ -108,7 +108,7 @@
             </a>
         </th>
         <th scope="col">Loại Đế</th>
-        <th scope="col">Mô tả</th>
+<%--        <th scope="col">Mô tả</th>--%>
         <th scope="col">Trạng thái</th>
         <th scope="col">Action</th>
     </tr>
@@ -120,7 +120,7 @@
             <td>${de.id}</td>
             <td>${de.ma}</td>
             <td>${de.loaiDe}</td>
-            <td>${de.moTa}</td>
+<%--            <td>${de.moTa}</td>--%>
             <td>
                 <c:if test="${de.trangThai == 1}">
                     Còn hàng

@@ -95,16 +95,16 @@
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
-                <label>Mô tả:</label>
-            </div>
-            <div class="col-lg-8">
-                <form:input type="text" class="form-control"  path="moTa" name="moTa"/>
-                <form:errors path="moTa" cssStyle="color: crimson"></form:errors>
-            </div>
-        </div>
+<%--        <div class="row mb-3">--%>
+<%--            <div class="col-lg-1"></div>--%>
+<%--            <div class="col-lg-2">--%>
+<%--                <label>Mô tả:</label>--%>
+<%--            </div>--%>
+<%--            <div class="col-lg-8">--%>
+<%--                <form:input type="text" class="form-control"  path="moTa" name="moTa"/>--%>
+<%--                <form:errors path="moTa" cssStyle="color: crimson"></form:errors>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
         <div class="row mb-3">
             <div class="col-lg-1"></div>
