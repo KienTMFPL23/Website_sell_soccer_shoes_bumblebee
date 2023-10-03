@@ -28,6 +28,7 @@
 
     <!-- Custom styles for this template-->
     <link href="../../../css/sb-admin-2.min.css" rel="stylesheet"/>
+    <link href="../../../css/ban-hang/ban-hang.css" rel="stylesheet">
     <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
@@ -35,9 +36,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.semanticui.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" rel="stylesheet"/>
-<%--    <style>--%>
-<%--        .nav-item--%>
-<%--    </style>--%>
+    <%--    <style>--%>
+    <%--        .nav-item--%>
+    <%--    </style>--%>
 
 </head>
 
@@ -99,7 +100,7 @@
                     data-parent="#accordionSidebar"
             >
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Sản phẩm</a>
+                    <a class="collapse-item" href="/chi-tiet-hinh-anh/hien-thi">Sản phẩm</a>
                     <a class="collapse-item" href="#">Kích cỡ</a>
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="#">Loại giày</a>
@@ -108,7 +109,13 @@
                 </div>
             </div>
         </li>
-
+        <!-- Nav Item - Bán hàng tại quầy -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/ban-hang-tai-quay/sell">
+                <i class="bx bxs-cart-add"></i>
+                <b>Bán hàng tại quầy</b></a
+            >
+        </li>
         <!-- Nav Item - Quản lý tài khoản -->
         <li class="nav-item">
             <a
@@ -149,14 +156,6 @@
             <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <b>Quản lý hóa đơn</b></a
-            >
-        </li>
-
-        <!-- Nav Item - Bán hàng tại quầy -->
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bx bxs-cart-add"></i>
-                <b>Bán hàng tại quầy</b></a
             >
         </li>
 
