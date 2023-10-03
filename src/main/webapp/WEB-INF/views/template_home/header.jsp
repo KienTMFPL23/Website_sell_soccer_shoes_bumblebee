@@ -35,7 +35,7 @@
     <nav class="navigation">
         <div class="container-fluid">
             <div class="navigation__column left">
-                <div class="header__logo"><a class="ps-logo" href="index.html"><img
+                <div class="header__logo"><a class="ps-logo" href="/home/bumblebee"><img
                         src="../../../images_template/logo.png" alt=""></a>
                 </div>
             </div>
