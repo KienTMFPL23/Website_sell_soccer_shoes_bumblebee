@@ -1,7 +1,7 @@
 var PopupForm, dataTable;
 
 $(document).ready(function () {
-    dataTable = $("#table").DataTable({
+    dataTable = $("#tableLoaiGiay").DataTable({
         ajax: {
             "url": "/loai-giay/hien-thi/list",
             "type": "GET",
@@ -10,11 +10,21 @@ $(document).ready(function () {
         },
         columns: [
             {"data": "ma"},
-            {"data": "loaiGiay"},
+            {"data": "tentheloai"},
+            {
+                "data": "trangThai",
+                "render": function (data) {
+                    if (data == 1) {
+                        return '<td>Còn hàng</td>'
+                    } else {
+                        return '<td>Hết hàng</td>'
+                    }
+                }
+            },
             {
                 "data": "id",
                 "render": function (data) {
-                    return "<a  onclick=PopupFormEdit('/de-giay/update/" + data + "')> <img src='../../img/Edit_Notepad_Icon.svg' style='width: 30px; height: 30'/> </a>";
+                    return "<a  onclick=PopupFormEdit('/loai-giay/edit/" + data + "')> <img src='../../img/Edit_Notepad_Icon.svg' style='width: 30px; height: 30'/> </a>";
                 },
                 "orderable": false,
             }
@@ -44,50 +54,50 @@ function PopupForm(url) {
         });
     });
 }
-
-
-// Load Form Edit
-function PopupFormEdit(url) {
-    var formDiv = $('<div/>');
-    $.get(url).done(function (response) {
-        formDiv.html(response);
-
-        Popup = formDiv.dialog({
-            autoOpen: true,
-            resizable: false,
-            height: 700,
-            width: 750,
-            close: function () {
-                Popup.dialog('destroy').remove();
-            }
-        });
-    });
-}
-
-// Submit Form
-function SubmitForm(form) {
-    $.validator.unobtrusive.parse(form);
-    if ($(from).valid()) {
-
-        $.ajax({
-            type: "POST",
-            url: form.action,
-            data: $(form).serialize(),
-            success: function (data) {
-                if (data.success) {
-                    Popup.dialog('close');
-                    dataTable.ajax.reload();
-
-                    $.notify(data.message, {
-                        globalPosition: "top center",
-                        className: "success"
-                    });
-                }
-            }
-        });
-    }
-    return false;
-}
+//
+//
+// // Load Form Edit
+// // function PopupFormEdit(url) {
+// //     var formDiv = $('<div/>');
+// //     $.get(url).done(function (response) {
+// //         formDiv.html(response);
+// //
+// //         Popup = formDiv.dialog({
+// //             autoOpen: true,
+// //             resizable: false,
+// //             height: 700,
+// //             width: 750,
+// //             close: function () {
+// //                 Popup.dialog('destroy').remove();
+// //             }
+// //         });
+// //     });
+// // }
+//
+// // Submit Form
+// function SubmitForm(form) {
+//     $.validator.unobtrusive.parse(form);
+//     if ($(from).valid()) {
+//
+//         $.ajax({
+//             type: "POST",
+//             url: form.action,
+//             data: $(form).serialize(),
+//             success: function (data) {
+//                 if (data.success) {
+//                     Popup.dialog('close');
+//                     dataTable.ajax.reload();
+//
+//                     $.notify(data.message, {
+//                         globalPosition: "top center",
+//                         className: "success"
+//                     });
+//                 }
+//             }
+//         });
+//     }
+//     return false;
+// }
 
 
 

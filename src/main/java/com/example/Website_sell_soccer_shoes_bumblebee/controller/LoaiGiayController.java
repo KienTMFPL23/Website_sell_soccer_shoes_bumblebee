@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -31,6 +33,14 @@ public class LoaiGiayController {
     @Data
     public static class SearchForm {
         String keyword = "";
+    }
+
+    @ModelAttribute("dsTrangThai")
+    public Map<Integer, String> getDsTrangThai() {
+        Map<Integer, String> dsTrangThai = new HashMap<>();
+        dsTrangThai.put(0, "Hết hàng");
+        dsTrangThai.put(1, "Còn hàng");
+        return dsTrangThai;
     }
 
     @RequestMapping("/loai-giay/sort")
@@ -154,17 +164,15 @@ public class LoaiGiayController {
         model.addAttribute("id", id);
         model.addAttribute("loaiGiay", repo.getOne(id));
         model.addAttribute("listLG", repository.findAll());
-        model.addAttribute("view", "../loai-giay/update.jsp");
-        return "/admin/index";
-//        return "loai-giay/update";
+        return "loai-giay/update";
 
     }
 
     @RequestMapping("/loai-giay/form")
     public String form(Model model) {
         model.addAttribute("loaiGiay", new LoaiGiay());
-        model.addAttribute("view", "../loai-giay/form.jsp");
-        return "/admin/index";
-//        return "loai-giay/form";
+//        model.addAttribute("view", "../loai-giay/form.jsp");
+//        return "/admin/index";
+        return "loai-giay/form";
     }
 }
