@@ -93,18 +93,6 @@ public class DeGiayController {
     }
 
 
-//
-//    @RequestMapping("/de-giay/sort")
-//    public <SearchForm> String Sort(@RequestParam(defaultValue = "0") int pageNum, Model model) {
-//        if (pageNum < 0){
-//            pageNum = 0;
-//        }
-//        Pageable pageable = PageRequest.of(pageNum, 5);
-//        Page<DeGiay> page = deGiayService.sort(pageable);
-//        model.addAttribute("listDeGiay", page);
-//        model.addAttribute("view", "../de_giay/list.jsp");
-//        return "/admin/index";
-//    }
 
 //    @GetMapping("/")
 //    public String index() {

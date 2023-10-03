@@ -77,12 +77,12 @@ CREATE TABLE ChiTietSanPham(
     TrangThai INT
 )
 GO
-
 CREATE TABLE TaiKhoan(
     Id  UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     Username VARCHAR(100) UNIQUE,
     Password VARCHAR(100),
-    Role     BIT
+    Role     INT
+
 )
 GO
 

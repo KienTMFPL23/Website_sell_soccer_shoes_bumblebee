@@ -8,9 +8,9 @@
 <br>
 
 <div class="container">
-<%--    <div class="row-cols-6">--%>
-<%--        <select type="text" id="searchName"></select>--%>
-<%--    </div>--%>
+    <%--    <div class="row-cols-6">--%>
+    <%--        <select type="text" id="searchName"></select>--%>
+    <%--    </div>--%>
     <div class="row">
         <div class="col-6 col-md-6 col-sm-6">
             <a href="/san-pham/hien-thi" class="btn" style="background: #0d6efd; color: whitesmoke"><i
@@ -38,7 +38,7 @@
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select  type="text" id="searchName"  path="idLG"  onchange="submit()">
+                    <form:select type="text" id="searchName" path="idLG" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
@@ -49,7 +49,7 @@
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form modelAttribute="searchChatLieu" action="/chi-tiet-san-pham/search-by-chatlieu">
                     <label class="form-label">Chất liệu: </label>
-                    <form:select  type="text" id="searchName4"  path="idChatLieu"  onchange="submit()">
+                    <form:select type="text" id="searchName4" path="idChatLieu" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -60,7 +60,7 @@
             <div class="col-2 col-md-2 col-sm-2">
                 <form:form action="/chi-tiet-san-pham/search-by-degiay" modelAttribute="searchDG">
                     <label class="form-label">Đế giày: </label>
-                    <form:select  type="text" id="searchName3"  path="idDe"  onchange="submit()">
+                    <form:select type="text" id="searchName3" path="idDe" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
@@ -71,7 +71,7 @@
                 <form:form action="/chi-tiet-san-pham/search-by-kichco" modelAttribute="searchKC">
 
                     <label class="form-label">Kích cỡ: </label>
-                    <form:select  type="text" id="searchName1"  path="idKC"  onchange="submit()">
+                    <form:select type="text" id="searchName1" path="idKC" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
@@ -82,7 +82,7 @@
                 <form:form action="/chi-tiet-san-pham/search-by-mausac" modelAttribute="searchFormByMau">
 
                     <label class="form-label">Màu sắc:</label>
-                    <form:select  type="text" id="searchName2"  path="idMau"  onchange="submit()">
+                    <form:select type="text" id="searchName2" path="idMau" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -97,7 +97,7 @@
                     <form:select path="key" onchange="submit()" class="form-control">
                         <option value="0">---</option>
                         <form:option value="giaBan">Đơn giá</form:option>
-                        <form:option value="giaGoc">Số lượng</form:option>
+
                     </form:select>
                 </form:form>
             </div>
@@ -109,11 +109,8 @@
                 <th>STT</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá Bán</th>
-                <th>Giá Gốc</th>
                 <th>Số lượng</th>
                 <th>Trạng Thái</th>
-                <th>Hình ảnh</th>
-                <th>Dáng giầy</th>
                 <th>Mô Tả Chi tiết</th>
                 <td>Action</td>
             </tr>
@@ -124,13 +121,9 @@
                     <td>${i.index+1}</td>
                     <td>${sp.sanPham.tenSanPham}</td>
                     <td>${sp.giaBan}</td>
-                    <td>${sp.giaGoc}</td>
+
                     <td>${sp.soLuong}</td>
                     <td>${sp.trangThai==1?"Hoạt động":"Không hoạt động"}</td>
-                    <td>
-                        <img src="${pageContext.request.contextPath}/image/${sp.hinhAnh}" height="70px;" width="70px;">
-                    </td>
-                    <td>${sp.dangGiay}</td>
                     <td>${sp.moTaCT}</td>
                     <td>
                         <a href="/chi-tiet-san-pham/view-update/${sp.id}" class="btn btn-warning"><i
