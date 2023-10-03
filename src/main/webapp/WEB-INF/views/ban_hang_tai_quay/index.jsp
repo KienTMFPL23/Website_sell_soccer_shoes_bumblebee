@@ -3,21 +3,53 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
       integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<style>
+    *{
+        font-family: Nunito;
+    }
+    .navHoaDon {
+        background-color: #37517E;
+        height: 45px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .hoaDonCho{
 
+        background-color: #fff;
+        height: 30px;
+        width: 150px;
+        font-weight: 600;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+    }
+    .btndele{
+        position: absolute;
+        top: 2px;
+        right: 5px;
+    }
+    .btnTimKiem{
+        background-color: #37517E;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+</style>
 <div class="container">
     <div class="header">
-        <nav class="navbar navHoaDon navbar-expand-lg" style="background-color: #e3f2fd;">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link nameHoaDon" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nameHoaDon" href="#">AAA</a>
-                        </li>
-                    </ul>
-                </div>
+        <nav class="navbar navHoaDon navbar-expand-lg" >
+            <div class="themSanPham">
+
+            </div>
+            <%-- list hóa đơn chờ--%>
+            <div class="hoaDonCho">
+                <span style="margin-left: 5px">HD1 - 13.11.2003</span>
+                <a href="#deleteHoaDonCho" class="btndele"><img src="/images_template/deleteHD.png"></a>
+            </div>
+            <div style="margin-left: 20px">
+                <a href="#themHD"><img src="/images_template/add.png"></a>
             </div>
         </nav>
     </div>
@@ -26,7 +58,7 @@
             <div class="col-lg-6">
                 <form>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btnTimKiem" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Tìm kiếm sản phẩm
                     </button>
 
@@ -43,7 +75,7 @@
                                 <div class="modal-body">
                                     <input placeholder="Tìm kiếm sản phẩm">
                                     <table class="table">
-                                        <tr class="row1" style="background-color:#34B6D3 ">
+                                        <tr class="row1 active">
                                             <th scope="col">STT</th>
                                             <th scope="col">Tên sản phẩm</th>
                                             <th scope="col">Số lượng</th>
