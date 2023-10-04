@@ -6,6 +6,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.ChatLieuService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.SanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +30,6 @@ import java.util.UUID;
 
 @Controller
 public class SanPhamController {
-
 
     @Autowired
     ChiTietSanPhamService service;
@@ -237,12 +238,12 @@ public class SanPhamController {
         service.addKC(ctsp);
 
         //generate code qr
-//        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
-//        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
-//        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
+        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
+        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
+        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
 //
 //        // Lưu QR code vào thư mục "QRCode" trong "Documents"
-//        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
+        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
 //        List<ChiTietSanPham> qlSanPhams = service.getList();
 //        if (qlSanPhams.size() != 0) {
 //            for (ChiTietSanPham ct : qlSanPhams
@@ -301,7 +302,7 @@ public class SanPhamController {
         }
         loaiGiay.setTrangthai(true);
         loaiGiayRepo.save(loaiGiay);
-        model.addAttribute("view", "../chi-tiet-san-pham/index.jsp");
+        model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 
@@ -309,6 +310,7 @@ public class SanPhamController {
     public String addKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, @PathVariable("id") UUID id, BindingResult resultt) {
         SanPham sanPham22 = sanPhamService.getOne(id);
         Boolean hasError = resultt.hasErrors();
+
         model.addAttribute("idsp", sanPham22.getId());
         model.addAttribute("tensp", sanPham22.getTenSanPham());
         model.addAttribute("vm", new ChatLieu());
@@ -323,6 +325,18 @@ public class SanPhamController {
         }
         if (hasError) {
             // Báo lỗi
+            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
+        }
+
+        for (int i = 0; i < kichCoService.getList().size(); i++) {
+            if (listKichCo().get(i).getMaKichCo().equals(kichCo.getMaKichCo())) {
+                model.addAttribute("errorMa", "Ma loai giay da ton tai");
+                hasError = true;
+            }
+        }
+        if (hasError) {
+            model.addAttribute("maspError", "kích cỡ đã tồn tại vui lòng nhập lại !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
         }
