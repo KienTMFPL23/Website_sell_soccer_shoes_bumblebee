@@ -17,7 +17,7 @@ public class DangNhapController {
 
     @GetMapping("/bumblebee/login")
     public String dangNhap(Model model){
-        model.addAttribute("taikhoan", new TaiKhoan());
+//        model.addAttribute("taikhoan", new TaiKhoan());
         return "/dang_nhap/dang_nhap";
     }
 

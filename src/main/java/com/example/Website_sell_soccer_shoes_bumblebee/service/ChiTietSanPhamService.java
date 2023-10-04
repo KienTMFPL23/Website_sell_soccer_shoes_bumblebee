@@ -41,4 +41,6 @@ public interface ChiTietSanPhamService {
 
     List<KichCo> getListKC();
 
+    ChiTietSanPham updateSoLuongTon(UUID id,int soLuong);
+
 }

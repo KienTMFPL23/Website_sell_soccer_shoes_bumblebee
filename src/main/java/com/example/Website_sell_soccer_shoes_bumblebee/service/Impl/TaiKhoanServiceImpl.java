@@ -10,8 +10,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Autowired
     private TaiKhoanRepository taiKhoanRepository;
-    @Override
-    public TaiKhoan findByUsernameAndPassword(String username, String password) {
-        return taiKhoanRepository.findUsernameAndPassword(username, password);
-    }
+//    @Override
+//    public TaiKhoan findByUsernameAndPassword(String username, String password) {
+//        return taiKhoanRepository.findUsernameAndPassword(username, password);
+//    }
 }
