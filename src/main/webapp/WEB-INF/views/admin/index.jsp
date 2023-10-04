@@ -387,6 +387,8 @@
 <script src="../../../js/demo/chart-pie-demo.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
 
+<script src="../../../js/mau_sac/mau_sac.js"></script>
+
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="../../../js/kich_co/kich_co.js"></script>
