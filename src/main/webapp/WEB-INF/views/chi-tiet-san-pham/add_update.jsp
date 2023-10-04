@@ -116,6 +116,7 @@
                 <div class="item-right">
 
                     <form:select type="text" id="searchName" path="loaiGiay">
+                        <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="loaiGiay" cssStyle="color: crimson"/></span>
@@ -125,6 +126,7 @@
 
                 <div class="item-right">
                     <form:select type="text" id="searchName1" path="kichCo" cssClass=".searchName1">
+                        <form:option value="">Chọn kích cỡ</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="kichCo" cssStyle="color: crimson"/></span>
@@ -132,6 +134,7 @@
                 </div>
                 <div class="item-right">
                     <form:select type="text" id="searchName2" path="mauSac" cssClass=".searchName2">
+                        <form:option value="">Chọn màu sắc</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="mauSac" cssStyle="color: crimson"/></span>
@@ -140,6 +143,7 @@
                 </div>
                 <div class="item-right">
                     <form:select type="text" id="searchName4" path="chatLieu">
+                        <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="chatLieu" cssStyle="color: crimson"/></span>
@@ -147,6 +151,7 @@
                 </div>
                 <div class="item-right">
                     <form:select type="text" id="searchName3" path="deGiay" cssClass=".searchName4">
+                        <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="deGiay" cssStyle="color: crimson"/></span>
@@ -223,6 +228,7 @@
                         <label class="form-label">Mã Kích Cỡ: </label>
 
                         <form:input path="maKichCo" class="form-control"/>
+                        <span id="maKichCoError" class="text-danger"></span>
                         <form:errors path="maKichCo" cssStyle="color: crimson"/>
                     </div>
                     <div class="mb-3 form-check-inline">

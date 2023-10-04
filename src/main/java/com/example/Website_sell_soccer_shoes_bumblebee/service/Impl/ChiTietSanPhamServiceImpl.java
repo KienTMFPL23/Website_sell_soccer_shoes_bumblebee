@@ -104,4 +104,9 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         return repo.listKC();
     }
 
+    @Override
+    public UUID getOneToAddModal(UUID id) {
+        return repo.getOneToAddModal(id);
+    }
+
 }
