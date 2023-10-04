@@ -35,6 +35,7 @@ public class HoaDon {
 
     @Column(name = "SoDienThoai")
     private String sdt;
+
     @Column(name = "TenNguoiNhan")
     private String tenNguoiNhan;
 
