@@ -11,102 +11,101 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 <style>
-    .title-h3 {
-        text-align: center;
-        margin: 35px 0px;
-        padding-top: 50px;
+
+    body {
+        font-family: Nunito;
     }
 
-    .thead-form tr th {
-        margin-top: 150px;
-        background-color: #37517E;
-    }
-
-    #icon-class-add {
+    .btnAdd {
+        background-color: #EEEDED;
+        margin-left: 50px;
         margin-bottom: 30px;
-        margin-left: 43px;
-    }
-
-    .icon-add {
-        border: 1px solid #D9D9D9;
-        border-radius: 13px;
-        margin-left: 30px;
-        padding: 5px;
+        border: 2px solid #37517E;
+        border-radius: 10px;
         width: 150px;
         float: left;
+        height: 40px;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+        color: black;
+        text-align: center;
     }
 
-    .icon-add:hover {
-        background: #37517E;
-    }
-
-    #add-icon-id {
-        margin: auto;
-    }
-
-    .add-text {
+    .btnAdd:hover {
+        background-color: #37517E;
+        border: 2px solid #FFFFFF;
+        color: #FFFFFF;
         text-decoration: none;
     }
 
-    .icon-add img {
-        width: 35px;
-        height: 35px;
+    .btnAdd > img {
+        margin-right: 10px;
+        margin-top: 3px;
+        margin-left: 15px;
+        float: left;
     }
 
-
-    .icon-update img {
-        width: 35px;
-        height: 35px;
+    .btnAdd > p {
+        margin-top: 5px;
+        margin-right: 10px;
     }
 
-    .search input {
-        padding: 10px;
-        border: 1px solid #D9D9D9;
-        width: 410px;
-        background: #D9D9D9;
-        border-radius: 15px;
+    .ui.table > thead > tr > th {
+        background-color: #37517E;
+        color: #FFFFFF;
+        font-size: 18px;
     }
 
-    .text {
-        font-weight: bold;
-        color: black;
+    .ui.form input[type=search] {
+        background: #fff;
+        border: 2px solid #37517E;
+        border-radius: 20px;
+        width: 400px;
+    }
+
+    .ui input {
+        border-radius: 20px;
+    }
+
+    .ui.table > tbody > tr > td {
+        font-size: 16px;
     }
 
 </style>
 
 <body>
-<div class="container">
+<h1 style="text-align: center; font-family: Nunito">QUẢN LÝ CHẤT LIỆU</h1>
 
-    <div class="row" id="icon-class-add">
-        <h3 class="title-h3" style="text-align: center; font-family: Nunito;font-size: 2.5rem">Danh Sách Chất Liệu</h3>
-        <div class="col-lg-6">
-            <button class="icon-add" id="add-icon-id"><a href="/chat-lieu/view-add" style="text-decoration: none">
-                <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png" alt=""/>
-                    <span class="text">Thêm mới</span>
-                </div>
-            </a>
-            </button>
-        </div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <a href="/chat-lieu/view-add" class="btnAdd">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
+            <p>Thêm mới</p>
+        </a>
     </div>
-
-    <table id="tableChatLieu" class="ui celled table" width="100%">
-        <thead>
-        <tr>
-            <th scope="col">Mã</th>
-            <th scope="col">Tên Chất Liệu</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-    </table>
 </div>
 
+<table id="table" class="ui celled table" width="100%">
+    <thead>
+    <tr>
+        <th scope="col">Mã</th>
+        <th scope="col">Tên Chất liệu</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+</table>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+/>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </body>
 
 </html>

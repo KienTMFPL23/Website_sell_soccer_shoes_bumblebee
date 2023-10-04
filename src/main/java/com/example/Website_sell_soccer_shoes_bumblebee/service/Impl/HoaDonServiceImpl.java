@@ -22,6 +22,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     HoaDonChiTietRepository hoaDonChiTietRepository;
 
     @Override
+    public List<HoaDon> findAll() {
+        return hoaDonRepository.findAll();
+    }
+
+    @Override
     public List<HoaDon> listHoaDonCho() {
         return hoaDonRepository.getListByTrangThai();
     }

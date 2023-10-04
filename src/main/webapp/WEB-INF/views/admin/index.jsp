@@ -100,12 +100,14 @@
                     aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
+
+                    <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a
                     <a class="collapse-item" href="#">Kích cỡ</a>
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
-                    <a class="collapse-item" href="#">Chất liệu</a>
+                    <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
                 </div>
             </div>
         </li>
@@ -153,7 +155,7 @@
 
         <!-- Nav Item - Quản lý hóa đơn -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/hoa-don/hien-thi">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <b>Quản lý hóa đơn</b></a
             >
