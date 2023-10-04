@@ -1,12 +1,13 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -16,6 +17,9 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    HoaDonChiTietRepository hoaDonChiTietRepository;
 
     @Override
     public List<HoaDon> listHoaDonCho() {
@@ -27,9 +31,11 @@ public class HoaDonServiceImpl implements HoaDonService {
         HoaDon hoaDon = new HoaDon();
         Random random = new Random();
         hoaDon.setMaHoaDon("HD" + random.nextInt(999999));
-        long millis = System.currentTimeMillis();
-        Date date = new Date(millis);
-        hoaDon.setNgayTao(date);
+
+//        Date date = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        String dateFormat = sdf.format(date);
+//        hoaDon.setNgayTao(date);
         hoaDon.setTrangThai(0);
         return hoaDonRepository.save(hoaDon);
     }
@@ -42,9 +48,15 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon deleteHoaDon(UUID id) {
         HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
+//        hoaDonChiTietRepository.deleteHDCTById(id);
         if (hoaDon != null){
             hoaDonRepository.delete(hoaDon);
         }
         return hoaDon;
+    }
+
+    @Override
+    public HoaDon getOne(UUID id) {
+        return hoaDonRepository.findById(id).orElse(null);
     }
 }

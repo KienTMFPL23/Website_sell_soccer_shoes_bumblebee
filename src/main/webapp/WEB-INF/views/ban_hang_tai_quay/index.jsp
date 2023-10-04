@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -22,9 +23,11 @@
 
             </div>
             <%-- list hóa đơn chờ--%>
-            <c:forEach items="${listHoaDonCho}" var="hd">
+            <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
                 <div class="hoaDonCho">
-                    <a href="/hoa-don-chi-tiet/${hd.id}" style="margin-left: 5px">HD1 - ${hd.ngayTao}</a>
+                    <a href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
+                       style="margin-left: 5px">HD${i.count}
+                        - ${hd.ngayTao}</a>
                     <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
                             src="/images_template/deleteHD.png"></a>
                 </div>
@@ -33,7 +36,8 @@
                 <a form href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img src="/images_template/add.png"></a>
             </div>
         </nav>
-        <c:if test="${listHoaDonCho.size() > 5}">
+        <c:if test="${soLuongHD >= 5}">
+            <p>Toi da </p>>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
@@ -79,8 +83,9 @@
                                             <th scope="col">STT</th>
                                             <th scope="col">Tên</th>
                                             <th scope="col">Số lượng</th>
+                                            <th scope="col">Màu sắc</th>
+                                            <th scope="col">Kích cỡ</th>
                                             <th scope="col">Giá bán</th>
-                                            <th scope="col">Hình ảnh</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -89,18 +94,16 @@
                                             <tr>
                                                 <td>${i.count}</td>
                                                 <td>${sp.sanPham.tenSanPham}</td>
-                                                <td>${sp.sanPham.soLuong}</td>
-                                                    <%--                                                <td>${sp.sanPham.giaBan}</td>--%>
-                                                <td><a href="">add</a>></td>
+                                                <td>${sp.soLuong}</td>
+                                                <td>${sp.mauSac.ten}</td>
+                                                <td>${sp.kichCo.size}</td>
+                                                <td>${sp.giaBan}</td>
+                                                <td><a href="/bumblebee/ban-hang-tai-quay/add-gio-hang/${sp.id}"
+                                                       class="btn btn-primary">add</a></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                    </button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -127,18 +130,38 @@
                 <th scope="col">Thành tiền</th>
                 <th scope="col"></th>
             </tr>
-            <%--        <c:forEach items="${page.content}" var="item" varStatus="i">--%>
-            <tr style="background-color: #fff">
-                <td>1</td>
-                <td>Giày puma view model</td>
-                <td>5</td>
-                <td>1500000</td>
-                <td>250000000</td>
-                <td><a href="#"><img src="../../../img/delete.png"></a></td>
-            </tr>
-            <%--        </c:forEach>--%>
+            <c:forEach items="${listHDCT}" var="hdct" varStatus="i">
+                <form:form action="/bumblebee/ban-hang-tai-quay/update-cart/${hdct.id}" method="post">
+                    <tr style="background-color: #fff">
+                        <td>${i.count}</td>
+                        <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>
+                            <input type="number" class="form-control"
+                                   min="1"
+                                   name="soLuong"
+                                   value="${hdct.soLuong}"
+                                   onblur="this.form.submit()"
+                                   style="width:100px;">
+                        </td>
+                        <td>
+                            <fmt:formatNumber value="${hdct.chiTietSanPham.giaBan}" type="number"/>
+                        </td>
+                        <td>
+                            <fmt:formatNumber
+                                    value="${hdct.soLuong * hdct.chiTietSanPham.giaBan}" type="number"/></td>
+                        <td>
+                            <a onclick="return confirm('Bạn có muốn xóa không')"
+                               href="/bumblebee/ban-hang-tai-quay/delete-hdct/${hdct.id}">
+                                <img src="../../../img/delete.png">
+                            </a>
+                        </td>
+                    </tr>
+                </form:form>
+            </c:forEach>
         </table>
-        <b class="name">Tổng tiền : 1 trịu đô</b>
+        <div>
+            <b style="float: right;margin-right: 20px" class="name">Tổng tiền : <fmt:formatNumber value="${sumMoney}" type="number" /></b>
+        </div>
         <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
            aria-controls="offcanvasExample">
             Thanh toán
@@ -147,24 +170,36 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample"
              aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Thanh Toán</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <div>
-                    Some text as placeholder. In real life you can have the elements you have chosen. Like,
-                    text, images, lists, etc.
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
+                <form:form method="post" action="/ban-hang/thanhtoan/">
+                    <%--                    <input value="${idHoaDon}" name="id" type="hidden">--%>
+                    <div class="row">
+                            <%--                        <p>Khách hàng: <form:input path="tenNguoiNhan" id="phoneNumber"--%>
+                            <%--                                                   onchange="getTenKhachHang()" class="form-control"/><a--%>
+                            <%--                                href="#"><img--%>
+                            <%--                                src="/images/plus.png"></a></p>--%>
+                            <%--                        <p>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>--%>
+                            <%--                        </p>--%>
+                        <p>Tổng tiền : <fmt:formatNumber value="${sumMoney}" type="number" groupingUsed="false"/>
+                            đ</p>
+                            <%--                        <p>Giảm giá : 0đ</p>--%>
+                        <p>Tổng tiền phải thu : <fmt:formatNumber value="${sum}" type="number"
+                                                                  groupingUsed="false"/> đ</p>
+                        <p>Tiền khách đưa: <input class="form-control" type="number" id="change"
+                                                  onchange="getMoneyChange()"></p>
+                        <p>Tiền thừa: <label type="number" id="tienThua"
+                                             groupingUsed="false"></label>đ</p>
+                    </div>
+                    <div class="dropdown mt-3">
+                        <button class="btn btn-primary">In hóa đơn</button>
+                        <button type="submit" class="btn btn-primary"
+                                onclick="return confirm('Bạn có muốn thanh toán không')">Thanh toán
+                        </button>
+                    </div>
+                </form:form>
             </div>
         </div>
     </div>

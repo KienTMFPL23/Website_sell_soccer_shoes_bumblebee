@@ -20,36 +20,42 @@
             </form:form>
         </div>
     </div>
-    <table class="table" border="border 1 px solid">
-        <thead>
-        <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Mã sản phẩm</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${page.content}" varStatus="index" var="sp">
+    <c:if test="${not empty page.content}">
+        <table class="table" border="border 1 px solid">
+            <thead>
             <tr>
-                <td>${index.count}</td>
-                <td>${sp.maSanPham}</td>
-                <td>${sp.tenSanPham}</td>
-                <td>${sp.trangThai == 1 ? 'Hoạt động' : 'Ngừng hoạt động'}</td>
-                <td>
-                    <a href="/san-pham/view-update/${sp.id}" class="btn btn-primary"><i class="bi bi-pencil-square"></i>
-                        <b>Chi tiết</b>
-                    </a>
-                    <a href="/chi-tiet-san-pham/view-add/${sp.id}" class="btn btn-primary"><i
-                            class="bi bi-pencil-square"></i>
-                        <b>Thêm chi tiết sản phẩm</b>
-                    </a>
-                </td>
+                <th scope="col">STT</th>
+                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col"></th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <c:forEach items="${page.content}" varStatus="index" var="sp">
+                <tr>
+                    <td>${index.count}</td>
+                    <td>${sp.maSanPham}</td>
+                    <td>${sp.tenSanPham}</td>
+                    <td>${sp.trangThai == 1 ? 'Hoạt động' : 'Ngừng hoạt động'}</td>
+                    <td>
+                        <a href="/san-pham/view-update/${sp.id}" class="btn btn-primary"><i
+                                class="bi bi-pencil-square"></i>
+                            <b>Chi tiết</b>
+                        </a>
+                        <a href="/chi-tiet-san-pham/view-add/${sp.id}" class="btn btn-primary"><i
+                                class="bi bi-pencil-square"></i>
+                            <b>Thêm chi tiết sản phẩm</b>
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+    <c:if test="${empty page.content}">
+        <p>Không có sản phẩm.</p>
+    </c:if>
     <div>
         <nav aria-label="Page navigation example" style="text-align: center">
             <ul class="pagination">
