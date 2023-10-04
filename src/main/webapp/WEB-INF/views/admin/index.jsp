@@ -36,6 +36,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.semanticui.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <%--    <style>--%>
     <%--        .nav-item--%>
     <%--    </style>--%>
@@ -56,8 +57,8 @@
                 class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="index.html"
         >
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+            <div class="sidebar-brand-icon">
+                <img src="../../../img/logoBumblebee.png" width="60" height="60">
             </div>
             <div class="sidebar-brand-text mx-3">Bumblebee</div>
         </a>
@@ -97,10 +98,11 @@
                     id="collapseTwo"
                     class="collapse"
                     aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar"
-            >
+                    data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+
                     <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a
                     <a class="collapse-item" href="#">Kích cỡ</a>
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
@@ -257,9 +259,9 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                         >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                  >Douglas McGee</span
-                  >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 15px;">
+                      ${userLogged.username}
+                  </span>
                             <img
                                     class="img-profile rounded-circle"
                                     src="../../../img/undraw_profile.svg"
@@ -285,7 +287,7 @@
                             <div class="dropdown-divider"></div>
                             <a
                                     class="dropdown-item"
-                                    href="#"
+                                    href="/bumblebee/logout"
                                     data-toggle="modal"
                                     data-target="#logoutModal"
                             >
@@ -357,7 +359,7 @@
                 >
                     Cancel
                 </button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="/bumblebee/logout">Logout</a>
             </div>
         </div>
     </div>
@@ -370,7 +372,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.semanticui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -386,6 +388,8 @@
 <script src="../../../js/demo/chart-area-demo.js"></script>
 <script src="../../../js/demo/chart-pie-demo.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
+
+<script src="../../../js/mau_sac/mau_sac.js"></script>
 
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>

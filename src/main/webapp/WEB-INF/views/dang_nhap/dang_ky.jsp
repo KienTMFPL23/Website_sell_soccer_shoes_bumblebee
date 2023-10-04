@@ -28,33 +28,47 @@
     />
 
     <!-- Custom styles for this template-->
+    <link
+            href="/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css"
+            rel="stylesheet"
+    />
     <link href="../../../css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
 
-<body class="bg-gradient-primary" style="background-color: #FFFFFF">
+<body class="bg-gradient-primary" style="background-color: #ffffff">
 <div class="container">
     <!-- Outer Row -->
     <div class="row justify-content-center">
         <div class="col-xl-10 col-lg-12 col-md-9">
             <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0" >
+                <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-block">
                             <img
-                                    src="../../../img/logoBumblebee.png" height="500" width="470"
+                                    src="../../../img/logoBumblebee.png"
+                                    height="500"
+                                    width="470"
                                     alt=""
                             />
                         </div>
-                        <div class="col-lg-6" >
+                        <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4" style="margin-top: -20px;">
+                                    <h1
+                                            class="h4 text-gray-900 mb-4"
+                                            style="margin-top: -20px"
+                                    >
                                         Bumblebee Shop!
                                     </h1>
-                                    <p style="color: red; text-align: center; font-size: 19px;">${message1} <br> ${message2}</p>
                                 </div>
-                                <form:form action="/bumblebee/login" class="user" modelAttribute="taikhoan" method="post">
+                                <form:form
+                                        action="/bumblebee/register"
+                                        class="user"
+                                        modelAttribute="taikhoan"
+                                        method="post"
+                                >
+
                                     <div class="form-group">
                                         <form:input
                                                 type="text"
@@ -63,6 +77,7 @@
                                                 placeholder="Tên đăng nhập"
                                                 path="username"
                                         />
+                                        <form:errors path="username" cssStyle="color: crimson"></form:errors>
                                     </div>
                                     <div class="form-group">
                                         <form:input
@@ -72,34 +87,29 @@
                                                 placeholder="Mật khẩu"
                                                 path="password"
                                         />
+                                        <form:errors path="password" cssStyle="color: crimson"></form:errors>
+
                                     </div>
                                     <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input
-                                                    type="checkbox"
-                                                    class="custom-control-input"
-                                                    id="customCheck"
-                                            />
-                                            <label class="custom-control-label" for="customCheck"
-                                            >Ghi nhớ mật khẩu</label
-                                            >
-                                        </div>
+                                        <input
+                                                type="password"
+                                                class="form-control form-control-user"
+                                                id="exampleInputPassword"
+                                                placeholder="Nhập lại mật khẩu"
+                                                name="confirmpassword"
+                                        />
+                                        <p style="color: crimson; font-size: 16px;">${messageConfirmPass}</p>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Đăng nhập
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary btn-user btn-block"
+                                    >
+                                        Đăng ký
                                     </button>
-
-                                </form:form>
-                                <hr />
+                                    </form:form>
+                                    <hr />
                                 <div class="text-center">
-                                    <a class="small" href="forgot-password.html"
-                                    >Quên mật khẩu?</a
-                                    >
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="register.html"
-                                    >Tạo tài khoản!</a
-                                    >
+                                    <a class="small" href="/bumblebee/login">Bạn đã có tài khoản? Đăng nhập!</a>
                                 </div>
                             </div>
                         </div>

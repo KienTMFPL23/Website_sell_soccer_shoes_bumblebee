@@ -64,19 +64,18 @@
             <form:input path="maKichCo" class="form-control"/>
             <form:errors path="maKichCo" cssStyle="color: crimson"/>
         </div>
+        <div class="mb-3 form-check-inline">
+            <label class="form-label">Giới Tính</label>
+            <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>
+            <form:errors path="gioiTinh" cssStyle="color: crimson"/>
+        </div>
         <div class="mb-3">
             <label class="form-label">Size</label>
             <form:input path="size" class="form-control"/>
             <form:errors path="size" cssStyle="color: crimson"/>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Giới Tính</label>
-            <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>
-            <form:errors path="gioiTinh" cssStyle="color: crimson"/>
-        </div>
-
-        <div class="mb-3">
+        <div class="mb-3 form-check-inline">
             <label class="form-label">Trạng Thái</label>
             <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"/>
             <form:errors path="trangThai" cssStyle="color: crimson"/>
