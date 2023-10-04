@@ -56,8 +56,8 @@
                 class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="index.html"
         >
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+            <div class="sidebar-brand-icon">
+                <img src="../../../img/logoBumblebee.png" width="60" height="60">
             </div>
             <div class="sidebar-brand-text mx-3">Bumblebee</div>
         </a>
@@ -257,9 +257,9 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                         >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                  >Douglas McGee</span
-                  >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 15px;">
+                      ${userLogged.username}
+                  </span>
                             <img
                                     class="img-profile rounded-circle"
                                     src="../../../img/undraw_profile.svg"
@@ -285,7 +285,7 @@
                             <div class="dropdown-divider"></div>
                             <a
                                     class="dropdown-item"
-                                    href="#"
+                                    href="/bumblebee/logout"
                                     data-toggle="modal"
                                     data-target="#logoutModal"
                             >
@@ -357,7 +357,7 @@
                 >
                     Cancel
                 </button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="/bumblebee/logout">Logout</a>
             </div>
         </div>
     </div>
