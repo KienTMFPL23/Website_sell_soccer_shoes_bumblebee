@@ -40,5 +40,7 @@ public interface ChiTietSanPhamService {
     List<KichCo> search2KC(Integer size);
 
     List<KichCo> getListKC();
+// v3 updatectsp modal
+    UUID getOneToAddModal(UUID id);
 
 }
