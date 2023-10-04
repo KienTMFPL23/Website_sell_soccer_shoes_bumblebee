@@ -25,10 +25,10 @@ public class HoaDonChiTiet {
     private Integer soLuong;
 
     @Column(name = "DonGia")
-    private BigDecimal donGia;
+    private Double donGia;
 
     @Column(name = "DonGiaKhiGiam")
-    private BigDecimal donGiaKhiGiam;
+    private Double donGiaKhiGiam;
 
     @Column(name = "TrangThai")
     private Integer trangThai;

@@ -98,8 +98,7 @@
                     id="collapseTwo"
                     class="collapse"
                     aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar"
-            >
+                    data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
                     <a class="collapse-item" href="#">Kích cỡ</a>
