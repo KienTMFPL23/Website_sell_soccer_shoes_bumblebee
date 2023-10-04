@@ -1,12 +1,18 @@
-//package com.example.Website_sell_soccer_shoes_bumblebee.repository;
-//
-//import org.springframework.data.jpa.repository.Query;
-//import org.springframework.stereotype.Repository;
-//import org.springframework.web.bind.annotation.RequestParam;
-//
-//@Repository
-//public interface TaiKhoanRepository {
-//
-//    @Query( value = "select tk TaiKhoan form tk where tk.Username LIKE := username and tk.Password LIKE := password ", nativeQuery = true)
-//    TaiKhoan findUsernameAndPassword (@RequestParam(name = "username") String username, @RequestParam(name = "password") String password);
-//}
+
+package com.example.Website_sell_soccer_shoes_bumblebee.repository;
+
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.TaiKhoan;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, UUID> {
+
+    @Query("select tk from TaiKhoan tk where tk.username LIKE :username and tk.password LIKE :password ")
+    TaiKhoan findUsernameAndPassword (String username, String password);
+
+}
