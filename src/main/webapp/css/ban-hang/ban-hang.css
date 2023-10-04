@@ -1,0 +1,57 @@
+/*.name{*/
+/*    font-family: Nunito;*/
+/*    font-size: 20px;*/
+/*    color: red;*/
+/*}*/
+/*.navHoaDon{*/
+/*    height: 40px;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+/*.nameHoaDon{*/
+/*    color: black;*/
+/*    font-weight: bold;*/
+/*    font-size: 15px;*/
+/*}*/
+/*.hd{*/
+/*    background-color: wheat;*/
+/*    border-radius: 10px;*/
+/*    width: 150px;*/
+/*    height: 25px;*/
+/*    margin-left: 10px;*/
+/*}*/
+* {
+    font-family: Nunito;
+}
+
+.navHoaDon {
+    background-color: #37517E;
+    height: 45px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.hoaDonCho {
+
+    background-color: #fff;
+    height: 30px;
+    width: 150px;
+    font-weight: 600;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-left: 15px;
+}
+
+.btndele {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+}
+
+.btnTimKiem {
+    background-color: #37517E;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 10px;
+}

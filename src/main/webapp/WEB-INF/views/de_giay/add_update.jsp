@@ -19,7 +19,7 @@
 
     .formAdd {
         width: 700px;
-        height: 600px;
+        height: 500px;
         background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
@@ -27,7 +27,7 @@
         margin: 0 auto;
     }
 
-    .row.mb-3{
+    .row.mb-3 {
         margin-top: 30px;
     }
 
@@ -44,11 +44,11 @@
         display: block;
     }
 
-    label{
+    label {
         font-size: 17px;
     }
 
-    .error{
+    .error {
         color: red;
         font-size: 15px;
         padding-left: 190px;
@@ -62,28 +62,24 @@
 <body>
 <div class="formAdd">
     <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA ĐẾ GIÀY</h1>
-
     <form:form action="${action}" modelAttribute="degiay" method="post" id="formAddUpdate">
-
         <div class="row mb-3">
             <div class="col-sm-6">
                 <form:input type="hidden" class="form-control" id="inputEmail3" path="id"/>
 
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label>Mã:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control"  path="ma" name="ma"/>
+                <form:input type="text" class="form-control" path="ma" name="ma"/>
                 <form:errors path="ma" cssStyle="color: crimson"></form:errors>
                     ${mess_Ma}
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
@@ -94,18 +90,6 @@
                 <form:errors path="loaiDe" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
-        <div class="row mb-3">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
-                <label>Mô tả:</label>
-            </div>
-            <div class="col-lg-8">
-                <form:input type="text" class="form-control"  path="moTa" name="moTa"/>
-                <form:errors path="moTa" cssStyle="color: crimson"></form:errors>
-            </div>
-        </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
@@ -116,8 +100,6 @@
                 <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
-
         <div class="buttonSubmit">
             <button class="button" type="submit" onclick="return Validate();">SUBMIT</button>
         </div>

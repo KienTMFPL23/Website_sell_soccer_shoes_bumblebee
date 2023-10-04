@@ -55,7 +55,6 @@
         background-color: #37517E;
         color: #FFFFFF;
         font-size: 18px;
-
     }
 
     .ui.form input[type=search] {
@@ -93,7 +92,6 @@
     <tr>
         <th scope="col">Mã</th>
         <th scope="col">Loại Đế</th>
-        <th scope="col">Mô tả</th>
         <th scope="col">Trạng thái</th>
         <th scope="col">Action</th>
     </tr>

@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChatLieu;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.DeGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChatLieuRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.ChatLieuServiceImpl;
 import jakarta.validation.Valid;
@@ -84,7 +85,9 @@ public class ChatLieuController {
 
     @GetMapping("edit/{id}")
     public String edit(@PathVariable("id") UUID id, Model model, @ModelAttribute("cl") ChatLieu cl) {
-        model.addAttribute("action", "/chat-lieu/update/" + cl.getId());
+        ChatLieu chatLieu = clService.findById(id);
+        model.addAttribute("cl", chatLieu);
+        model.addAttribute("action", "/chat-lieu/update/" + chatLieu.getId());
         model.addAttribute("view", "../chat_lieu/add_update.jsp");
         return "/admin/index";
     }

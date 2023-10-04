@@ -6,6 +6,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamSer
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.service.SanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -46,6 +48,8 @@ public class ChiTietSanPhamController {
     MauSacReponsitory mauSacReponsitories;
     @Autowired
     SanPhamRepository sanPhamRepo;
+    @Autowired
+    ChiTietSanPhamRepo chiTietSanPhamRepo;
 
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
@@ -107,6 +111,7 @@ public class ChiTietSanPhamController {
     public static class SearchKC {
         UUID idKC;
     }
+
     @Data
     public static class SearchLoaiGiay {
         UUID idLG;
@@ -140,7 +145,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("page", qlSanPhamPage);
         model.addAttribute("searchChatLieu", new SearchChatlieu());
         model.addAttribute("lg", new SearchLoaiGiay());
-
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         model.addAttribute("searchForm", new SearchFormSP());
         model.addAttribute("searchFormByMau", new SearchFormSPByMau());
@@ -148,6 +153,74 @@ public class ChiTietSanPhamController {
         model.addAttribute("searchDG", new SearchDeGiay());
 
         return "/admin/index";
+    }
+
+    // search 2 loại giầy
+    @GetMapping("/search2-loai-giay")
+    public ResponseEntity<?> search2LoaiGiay(@RequestParam(name = "keyword") String keyword) {
+
+        if (keyword == null || keyword == "") {
+            return ResponseEntity.ok(chiTietSanPhamRepo.listLoaiGiay());
+        } else {
+            return ResponseEntity.ok(service.search2("%" + keyword + "%"));
+        }
+    }
+
+    // search 2 kích cỡ
+//    @GetMapping("/search2-kich-co")
+//    public ResponseEntity<?> search2KichCo(@RequestParam(name = "keyword") Integer size) {
+//        if (size != null) {
+//            // Xử lý khi 'size' có giá trị
+//            return ResponseEntity.ok(service.search2KC(size));
+//        } else {
+//            // Xử lý khi 'size' là null (không được truyền vào)
+//            return ResponseEntity.ok(kichCoService.getList());
+//        }
+//    }
+    @GetMapping("/search2-kich-co")
+    public ResponseEntity<List<KichCo>> search2KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
+        List<KichCo> result;
+        if (size != null) {
+            // Xử lý khi 'size' có giá trị
+            result = service.search2KC(size);
+        } else {
+            // Xử lý khi 'size' là null (không được truyền vào)
+            result = kichCoService.getList();
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    // search 2 màu sắc
+    @GetMapping("/search2-mau-sac")
+    public ResponseEntity<?> search2MS(@RequestParam(name = "keyword") String ten) {
+
+        if (ten == null || ten.equals("")) {
+            return ResponseEntity.ok(mauSacReponsitories.findAll());
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.searchMS("%" + ten + "%"));
+        }
+    }
+
+    // search 2 đế giầy
+    @GetMapping("/search2-de-giay")
+    public ResponseEntity<?> search2DG(@RequestParam(name = "keyword") String loaiDe) {
+
+        if (loaiDe == null || loaiDe.equals("")) {
+            return ResponseEntity.ok(deGiayRepo.findAll());
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.searchDG("%" + loaiDe + "%"));
+        }
+    }
+
+    // search 2 chất liệu
+    @GetMapping("/search2-chat-lieu")
+    public ResponseEntity<?> search2CL(@RequestParam(name = "keyword") String ten) {
+
+        if (ten == null || ten.equals("")) {
+            return ResponseEntity.ok(chatLieuRepo.findAll());
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.searchCL("%" + ten + "%"));
+        }
     }
 
     @RequestMapping("/search")
@@ -163,7 +236,7 @@ public class ChiTietSanPhamController {
             qlSanPhamPage = service.getListSP(pageable);
         }
         model.addAttribute("lg", new SearchLoaiGiay());
-
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchDG", new SearchDeGiay());
         model.addAttribute("searchChatLieu", new SearchChatlieu());
         model.addAttribute("searchKC", new SearchKC());
@@ -189,7 +262,7 @@ public class ChiTietSanPhamController {
             qlSanPhamPage = service.getListSP(pageable);
         }
         model.addAttribute("lg", new SearchLoaiGiay());
-
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchDG", new SearchDeGiay());
         model.addAttribute("searchChatLieu", new SearchChatlieu());
         model.addAttribute("page", qlSanPhamPage);
@@ -215,7 +288,7 @@ public class ChiTietSanPhamController {
             qlSanPhamPage = service.getListSP(pageable);
         }
         model.addAttribute("lg", new SearchLoaiGiay());
-
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchChatLieu", new SearchChatlieu());
         model.addAttribute("searchFormByMau", new SearchFormSPByMau());
         model.addAttribute("page", qlSanPhamPage);
@@ -241,7 +314,7 @@ public class ChiTietSanPhamController {
             qlSanPhamPage = service.getListSP(pageable);
         }
         model.addAttribute("lg", new SearchLoaiGiay());
-
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchKC", new SearchKC());
         model.addAttribute("searchChatLieu", new SearchChatlieu());
         model.addAttribute("searchFormByMau", new SearchFormSPByMau());
@@ -266,6 +339,7 @@ public class ChiTietSanPhamController {
         } else {
             qlSanPhamPage = service.getListSP(pageable);
         }
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchKC", new SearchKC());
         model.addAttribute("searchDG", new SearchDeGiay());
         model.addAttribute("lg", new SearchLoaiGiay());
@@ -278,6 +352,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("sortForm", new SortFormSP());
         return "/admin/index";
     }
+
     // filer with combobox loai giay
     @RequestMapping("/search-by-loaigiay")
     public String searchByLoaiGiay(@ModelAttribute("lg") SearchLoaiGiay searchLoaiGiay, @RequestParam(defaultValue = "0") int p, Model model) {
@@ -291,6 +366,7 @@ public class ChiTietSanPhamController {
         } else {
             qlSanPhamPage = service.getListSP(pageable);
         }
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchKC", new SearchKC());
         model.addAttribute("searchDG", new SearchDeGiay());
         model.addAttribute("searchChatLieu", new SearchChatlieu());
@@ -313,7 +389,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("searchChatLieu", new SearchChatlieu());
         model.addAttribute("searchKC", new SearchKC());
         model.addAttribute("lg", new SearchLoaiGiay());
-
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("searchFormByMau", new SearchFormSPByMau());
         sort = sortFormSP.key.equals("giaBan") ? Sort.by(Sort.Direction.DESC, "giaBan") : Sort.by(Sort.Direction.DESC, "giaGoc");
         Pageable pageable = PageRequest.of(p, 5, sort);
@@ -328,10 +404,11 @@ public class ChiTietSanPhamController {
 
 
     @RequestMapping("/update/{id}")
-    public String updateKC(Model model, @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result) throws IOException, WriterException {
+    public String updateKC(Model model, @Valid @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result) throws IOException, WriterException {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
         if (result.hasErrors()) {
@@ -339,6 +416,11 @@ public class ChiTietSanPhamController {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/admin/index";
         }
+
+        UUID idSP=service.getOneToAddModal(qlSanPham.getId());
+        SanPham sp2= sanPhamRepo.findById(idSP).orElse(null);
+        model.addAttribute("tensp",sp2.getTenSanPham());
+
         ChiTietSanPham ctsp = service.getOne(qlSanPham.getId());
         ctsp.loadFromViewModel(qlSanPham);
 
@@ -356,21 +438,13 @@ public class ChiTietSanPhamController {
 //        ctsp.setHinhAnh(fileName);
         service.addKC(ctsp);
         //generate code qr
-//        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
-//        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
-//        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
+        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
+        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
+        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
 
         // Lưu QR code vào thư mục "QRCode" trong "Documents"
-//        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
+        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
 
-        //generate code qr
-//        List<ChiTietSanPham> qlSanPhams = service.getList();
-//        if (qlSanPhams.size() != 0) {
-//            for (ChiTietSanPham ct : qlSanPhams
-//            ) {
-//                QRCodeGenerator.generatorQRCode(ct);
-//            }
-//        }
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/hien-thi";
     }
@@ -378,11 +452,18 @@ public class ChiTietSanPhamController {
     @RequestMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id") UUID id, Model model) {
         ChiTietSanPham sp = service.getOne(id);
+
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
+        model.addAttribute("SP", new SanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
+
+        UUID idSP=service.getOneToAddModal(id);
+        SanPham sp2= sanPhamRepo.findById(idSP).orElse(null);
+        model.addAttribute("tensp",sp2.getTenSanPham());
+
         model.addAttribute("action", "/chi-tiet-san-pham/update/" + sp.getId());
         model.addAttribute("sanpham", sp);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");

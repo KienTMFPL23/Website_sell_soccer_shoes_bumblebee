@@ -6,6 +6,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.ChatLieuService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.SanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +30,6 @@ import java.util.UUID;
 
 @Controller
 public class SanPhamController {
-
 
     @Autowired
     ChiTietSanPhamService service;
@@ -49,6 +50,39 @@ public class SanPhamController {
     @Autowired
     SanPhamService sanPhamService;
 
+    @ModelAttribute("listDeGiay")
+    List<DeGiay> listDeGiay() {
+        return deGiayRepo.findAll();
+    }
+
+    @ModelAttribute("listChatLieu")
+    List<ChatLieu> listChatLieu() {
+        return chatLieuRepo.findAll();
+    }
+
+    @ModelAttribute("listKichCo")
+    List<KichCo> listKichCo() {
+        return kichCoService.getList();
+    }
+
+    @ModelAttribute("listMau")
+    List<MauSac> listMauSac() {
+        return mauSacReponsitories.findAll();
+    }
+
+    @ModelAttribute("listLoaiGiay")
+    List<LoaiGiay> listLoaiGiay() {
+        return loaiGiayRepo.findAll();
+    }
+
+    @ModelAttribute("dsGioiTinh")
+    public Map<Boolean, String> getDsGioiTinh() {
+        Map<Boolean, String> dsGT = new HashMap<>();
+        dsGT.put(true, "Nam");
+        dsGT.put(false, "Nữ");
+        return dsGT;
+    }
+
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
@@ -62,23 +96,24 @@ public class SanPhamController {
     public static class SearchForm {
         String keyword = "";
     }
+
     @GetMapping("/san-pham/hien-thi")
-    public String hienThi(Model model,@RequestParam(defaultValue = "0")int p){
-       model.addAttribute("view","../san_pham/list_san_pham.jsp");
-        if (p < 0){
-            p =0;
+    public String hienThi(Model model, @RequestParam(defaultValue = "0") int p) {
+        model.addAttribute("view", "../san_pham/list_san_pham.jsp");
+        if (p < 0) {
+            p = 0;
         }
-        Pageable pageable = PageRequest.of(p,5);
+        Pageable pageable = PageRequest.of(p, 5);
         Page<SanPham> page = sanPhamService.findAllSP(pageable);
         model.addAttribute("search", new SearchForm());
-        model.addAttribute("page",page);
+        model.addAttribute("page", page);
         return "admin/index";
     }
 
 
     @RequestMapping("/san-pham/search")
     public String search(Model model, @ModelAttribute("search") SearchForm searchForm, @RequestParam(defaultValue = "0") int p) {
-        model.addAttribute("view","../san_pham/list_san_pham.jsp");
+        model.addAttribute("view", "../san_pham/list_san_pham.jsp");
         if (p < 0) {
             p = 0;
         }
@@ -92,21 +127,22 @@ public class SanPhamController {
     @GetMapping("/san-pham/view-add")
     public String viewAdd(Model model, @ModelAttribute("SP") SanPham sanPham) {
         model.addAttribute("action", "/san-pham/add");
-        model.addAttribute("view","../san_pham/view_add_update.jsp");
+        model.addAttribute("view", "../san_pham/view_add_update.jsp");
         return "admin/index";
     }
 
     @GetMapping("/san-pham/view-update/{id}")
     public String viewUpdate(Model model, @PathVariable("id") UUID id, @ModelAttribute("SP") SanPham sanPham) {
-        model.addAttribute("view","../san_pham/view_add_update.jsp");
+        model.addAttribute("view", "../san_pham/view_add_update.jsp");
         SanPham product = sanPhamService.getOne(id);
         model.addAttribute("action", "/san-pham/update/" + product.getId());
-        model.addAttribute("SP",product);
+        model.addAttribute("SP", product);
         SanPham sp = sanPhamService.getOne(id);
         return "admin/index";
     }
+
     @PostMapping("/san-pham/add")
-    public String add(Model model,@Valid @ModelAttribute("SP")SanPham sanPham, BindingResult result){
+    public String add(Model model, @Valid @ModelAttribute("SP") SanPham sanPham, BindingResult result) {
         Boolean hasError = result.hasErrors();
         SanPham product = sanPhamService.getByMa(sanPham.getMaSanPham());
         if (product != null) {
@@ -125,7 +161,7 @@ public class SanPhamController {
 
     @PostMapping("/san-pham/update/{id}")
     public String udpate(@PathVariable("id") UUID id, Model model, @Valid @ModelAttribute("SP") SanPham sanPham,
-                         BindingResult result){
+                         BindingResult result) {
         Boolean hasError = result.hasErrors();
         if (sanPham.getMaSanPham().trim().length() < 5) {
             hasError = true;
@@ -144,8 +180,9 @@ public class SanPhamController {
         sanPhamService.udpateSanPham(sp);
         return "redirect:/san-pham/hien-thi";
     }
+
     @RequestMapping("/chi-tiet-san-pham/view-add/{id}")
-    public String viewAdd(@ModelAttribute("sanpham") QLSanPham sp, @PathVariable("id") UUID id, Model model) {
+    public String viewAdd(Model model, @ModelAttribute("sanpham") QLSanPham sp, @PathVariable("id") UUID id) {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("vm", new ChatLieu());
@@ -160,12 +197,20 @@ public class SanPhamController {
 
     // add ctsp
     @PostMapping("/chi-tiet-san-pham/add/{id}")
-    public String AddSanPham(Model model, @PathVariable("id") UUID id, @ModelAttribute("sanpham") QLSanPham sp
+    public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp, BindingResult result) throws WriterException, IOException {
+        model.addAttribute("lg", new LoaiGiay());
+        model.addAttribute("degiay", new DeGiay());
+        model.addAttribute("vm", new ChatLieu());
 
-            , BindingResult result) throws WriterException, IOException {
+        model.addAttribute("ms", new MauSac());
+        model.addAttribute("kichco", new KichCo());
+        if (result.hasErrors()) {
+            model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
+            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+            return "/admin/index";
+        }
         SanPham sanPham1 = sanPhamService.getOne(id);
         sp.setSanPham(sanPham1);
-
         ChiTietSanPham ctsp = new ChiTietSanPham();
         ctsp.loadFromViewModel(sp);
 //        MultipartFile multipartFile = sp.getHinhAnh();
@@ -188,22 +233,17 @@ public class SanPhamController {
 //        }
 //        ctsp.setHinhAnh(fileName);
         //
-        model.addAttribute("lg", new LoaiGiay());
-        model.addAttribute("degiay", new DeGiay());
-        model.addAttribute("vm", new ChatLieu());
 
-        model.addAttribute("ms", new MauSac());
-        model.addAttribute("kichco", new KichCo());
         model.addAttribute("tensp", sanPham1.getTenSanPham());
         service.addKC(ctsp);
 
         //generate code qr
-//        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
-//        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
-//        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
+        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
+        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
+        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
 //
 //        // Lưu QR code vào thư mục "QRCode" trong "Documents"
-//        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
+        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
 //        List<ChiTietSanPham> qlSanPhams = service.getList();
 //        if (qlSanPhams.size() != 0) {
 //            for (ChiTietSanPham ct : qlSanPhams
@@ -262,34 +302,47 @@ public class SanPhamController {
         }
         loaiGiay.setTrangthai(true);
         loaiGiayRepo.save(loaiGiay);
-        model.addAttribute("view", "../chi-tiet-san-pham/index.jsp");
+        model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 
     @RequestMapping("/san-pham/kich-co/add/{id}")
-    public String addKC(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("kichco") KichCo kichCo, BindingResult resultt) {
-        SanPham sanPham2 = sanPhamService.getOne(id);
-        model.addAttribute("idsp", sanPham2.getId());
-        model.addAttribute("tensp", sanPham2.getTenSanPham());
+    public String addKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, @PathVariable("id") UUID id, BindingResult resultt) {
+        SanPham sanPham22 = sanPhamService.getOne(id);
+        Boolean hasError = resultt.hasErrors();
+
+        model.addAttribute("idsp", sanPham22.getId());
+        model.addAttribute("tensp", sanPham22.getTenSanPham());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("lg", new LoaiGiay());
-        if (resultt.hasErrors()) {
-            model.addAttribute("sanpham", new QLSanPham());
-            model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
+        if (kichCo != null) {
+            hasError = true;
+            model.addAttribute("maspError", "Vui lòng không nhập trùng mã");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
         }
-        if (kichCo.getMaKichCo() != null) {
-            model.addAttribute("sanpham", new QLSanPham());
-            model.addAttribute("messMa", "Lỗi! Vui lòng kiểm tra mã không được trùng !");
+        if (hasError) {
+            // Báo lỗi
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
         }
-        kichCoService.addKC(kichCo);
+
+        for (int i = 0; i < kichCoService.getList().size(); i++) {
+            if (listKichCo().get(i).getMaKichCo().equals(kichCo.getMaKichCo())) {
+                model.addAttribute("errorMa", "Ma loai giay da ton tai");
+                hasError = true;
+            }
+        }
+        if (hasError) {
+            model.addAttribute("maspError", "kích cỡ đã tồn tại vui lòng nhập lại !");
+            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
+        }
+        this.kichCoService.addKC(kichCo);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
     }
 
     @PostMapping("/san-pham/mau-sac/add/{id}")

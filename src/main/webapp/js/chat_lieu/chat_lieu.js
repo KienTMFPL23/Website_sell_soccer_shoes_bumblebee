@@ -24,7 +24,7 @@ $(document).ready(function () {
             {
                 "data": "id",
                 "render": function (data) {
-                    return "<a  onclick=PopupFormEdit('/de-giay/view-update/" + data + "')> <img src='../../img/Edit_Notepad_Icon.svg' style='width: 30px; height: 30'/> </a>";
+                    return "<a  href='/chat-lieu/edit/" + data + "')> <img src='../../img/Edit_Notepad_Icon.svg' style='width: 30px; height: 30'/> </a>";
                 },
                 "orderable": false,
             }
