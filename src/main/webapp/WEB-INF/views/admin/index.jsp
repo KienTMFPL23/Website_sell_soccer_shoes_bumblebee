@@ -391,5 +391,6 @@
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="../../../js/kich_co/kich_co.js"></script>
+<script src="../../../js/loai_giay/loai_giay.js.js"></script>
 </body>
 </html>
