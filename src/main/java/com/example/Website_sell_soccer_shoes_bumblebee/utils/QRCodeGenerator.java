@@ -34,9 +34,7 @@ public class QRCodeGenerator {
             Path path = FileSystems.getDefault().getPath(existingQRCodeFile.getAbsolutePath());
             MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
         } else {
-
 //            String qrCodeData = String.valueOf(sp.getId()+ sp.getSanPham().getTenSanPham());
-
 
             String qrCodeData = String.valueOf(sp.getId());            // Cấu hình mã QR code
             Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);

@@ -64,7 +64,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<KichCo> search2KC(@Param("keyword") Integer keyword);
 
 // update ctsp modal add
-    @Query(value = "select s.Id from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1",nativeQuery = true)
+    @Query(value = "select c.IdSP from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1",nativeQuery = true)
     UUID getOneToAddModal(UUID id);
 
 }

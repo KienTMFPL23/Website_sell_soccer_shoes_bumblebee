@@ -16,6 +16,7 @@ public interface HinhAnhRepository extends JpaRepository<HinhAnh, UUID> {
     @Query(value = "select h from HinhAnh h where h.id = ?1")
     HinhAnh findId(UUID id);
 
+
     @Query("select ctsp from ChiTietSanPham ctsp")
     List<ChiTietSanPham> getAllCSP();
 
