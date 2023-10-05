@@ -8,6 +8,9 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -27,22 +30,21 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public HoaDon createHoaDon() {
+    public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
         Random random = new Random();
         hoaDon.setMaHoaDon("HD" + random.nextInt(999999));
-
-//        Date date = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//        String dateFormat = sdf.format(date);
-//        hoaDon.setNgayTao(date);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String format = sdf.format(date);
+        hoaDon.setNgayTao(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
         hoaDon.setTrangThai(0);
         return hoaDonRepository.save(hoaDon);
     }
 
     @Override
     public HoaDon saveHoaDon(HoaDon hoaDon) {
-        return null;
+        return hoaDonRepository.save(hoaDon);
     }
 
     @Override
