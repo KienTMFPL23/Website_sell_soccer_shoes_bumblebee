@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -67,6 +68,7 @@ public class ChiTietSanPham {
     @Column(name = "Trangthai")
     @NotNull(message = "không để trống")
     Integer trangThai;
+
 
     public void loadFromViewModel(QLSanPham vm) {
         this.setChatLieu(vm.getChatLieu());

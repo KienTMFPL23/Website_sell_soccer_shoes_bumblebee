@@ -102,14 +102,14 @@
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
 
-                    <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
-                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a
+                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
                     <a class="collapse-item" href="#">Kích cỡ</a>
 
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
                     <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
+                    <a class="collapse-item" href="/hinh-anh/hien-thi">Hình ảnh</a>
                 </div>
             </div>
         </li>
@@ -398,12 +398,13 @@
 <script src="../../../js/demo/chart-area-demo.js"></script>
 <script src="../../../js/demo/chart-pie-demo.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
-
 <script src="../../../js/mau_sac/mau_sac.js"></script>
-
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="../../../js/kich_co/kich_co.js"></script>
+<script src="../../../js/hinh_anh/hinh_anh.js"></script>
+<script src="../../../js/hinh_anh/select2.js"></script>
 <script src="../../../js/loai_giay/loai_giay.js.js"></script>
+
 </body>
 </html>

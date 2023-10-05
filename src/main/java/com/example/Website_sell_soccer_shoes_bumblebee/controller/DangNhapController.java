@@ -1,7 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.TaiKhoan;
-//import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.TaiKhoanServiceImpl;
+
 import com.example.Website_sell_soccer_shoes_bumblebee.service.TaiKhoanService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -91,8 +91,6 @@ public class DangNhapController {
         taiKhoanService.dangKy(taikhoan);
         session.setAttribute("userLogged", taikhoan);
         return "redirect:/bumblebee/home";
-
-
     }
 
     @GetMapping("/bumblebee/logout")
