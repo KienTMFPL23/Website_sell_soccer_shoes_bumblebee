@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $('#searchName').select2({
-        width: 400,
-        placeholder: "Search Name ....",
+    $('#selectCTSP').select2({
+        width: 460,
+        placeholder: " ",
         ajax: {
             type: 'GET',
-            url: '/de-giay/tim-kiem',
+            url: '/ctsp/search',
             data: function (params) {
                 return {
                     keyword: params.term || '',
@@ -15,7 +15,7 @@ $(document).ready(function () {
                 return {
                     results: $.map(data, function (item) {
                         return {
-                            text: item.loaiDe,
+                            text: item.id,
                             id: item.id
                         }
                     })

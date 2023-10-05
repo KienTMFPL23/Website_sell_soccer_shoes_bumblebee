@@ -1,30 +1,30 @@
 var PopupForm, dataTable;
 
 $(document).ready(function () {
-    dataTable = $("#table").DataTable({
+    dataTable = $("#tableMauSac").DataTable({
         ajax: {
-            "url": "/de-giay/hien-thi/list",
+            "url": "/mau-sac/hien-thi/list",
             "type": "GET",
             "datatype": "json",
             "dataSrc": ""
         },
         columns: [
             {"data": "ma"},
-            {"data": "loaiDe"},
+            {"data": "ten"},
             {
                 "data": "trangThai",
                 "render": function (data) {
                     if (data == 1) {
-                        return '<td>Còn hàng</td>'
+                        return '<td>Không hoạt động</td>'
                     } else {
-                        return '<td>Hết hàng</td>'
+                        return '<td>Hoạt động</td>'
                     }
                 }
             },
             {
                 "data": "id",
                 "render": function (data) {
-                    return "<a href='/de-giay/view-update/" + data + "')> <img src='../../img/Edit_Notepad_Icon.svg' style='width: 30px; height: 30'/> </a>";
+                    return "<a href= '/mau-sac/update/" + data + "'> <img src='../../img/Edit_Notepad_Icon.svg' style='width: 30px; height: 30'/> </a>";
                 },
                 "orderable": false,
             }
@@ -41,6 +41,3 @@ $(document).ready(function () {
         // }
     });
 });
-
-
-

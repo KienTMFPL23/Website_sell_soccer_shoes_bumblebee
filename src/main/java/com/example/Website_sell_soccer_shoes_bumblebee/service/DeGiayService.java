@@ -17,7 +17,7 @@ public interface DeGiayService {
     DeGiay findByMa(String ma);
     List<DeGiay> search(String keyword);
     Page<DeGiay> sort(Pageable pageable);
-//    List<DeGiay> getExcelDataAsList();
-//    int saveExcelData(List<DeGiay> deGiay);
-//    void uploadFile(MultipartFile file);
+    List<DeGiay> getExcelDataAsList();
+    int saveExcelData(List<DeGiay> deGiay);
+    void uploadFile(MultipartFile file);
 }

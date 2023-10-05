@@ -97,7 +97,7 @@
                                     >
                                 </div>
                                 <div class="text-center">
-                                    <a class="small" href="register.html"
+                                    <a class="small" href="/bumblebee/register"
                                     >Tạo tài khoản!</a
                                     >
                                 </div>
