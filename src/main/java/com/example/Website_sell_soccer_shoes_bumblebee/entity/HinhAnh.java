@@ -18,7 +18,14 @@ public class HinhAnh {
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
 
+    @ManyToOne()
+    @JoinColumn(name = "IdCTSP")
+    ChiTietSanPham ctsp;
+    @Column(name = "Tenanh")
     String tenanh;
 
+    @Column(name = "Duongdananh")
+    String duongdan;
+    @Column(name = "Trangthai")
     int trangthai;
 }

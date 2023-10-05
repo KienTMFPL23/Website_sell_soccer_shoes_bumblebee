@@ -13,6 +13,46 @@
 
 <style>
 
+    body {
+        font-family: Nunito;
+
+    }
+
+    .btnAdd {
+        background-color: #EEEDED;
+        margin-left: 50px;
+        margin-bottom: 30px;
+        border: 2px solid #37517E;
+        border-radius: 10px;
+        width: 150px;
+        float: left;
+        height: 40px;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+    }
+
+    .btnAdd:hover {
+        background-color: #37517E;
+        border: 2px solid #FFFFFF;
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    .btnAdd > img {
+        margin-right: 10px;
+        margin-top: 3px;
+        margin-left: 15px;
+        float: left;
+    }
+
+    .btnAdd > p {
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+
     .ui.table > thead > tr > th {
         background-color: #37517E;
         color: #FFFFFF;
@@ -34,43 +74,14 @@
         font-size: 16px;
     }
 
-    .btnAdd {
-        background-color: #EEEDED;
-        border: 2px solid #37517E;
-        border-radius: 10px;
-        width: 150px;
-        float: left;
-        height: 40px;
-        font-size: 18px;
-        font-weight: 500;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-    }
-
-    .btnAdd:hover {
-        background-color: #37517E;
-        border: 2px solid #FFFFFF;
-        color: #FFFFFF;
-        text-decoration: none;
-    }
-
-    .btnAdd>i{
-        float: left;
-        margin-top: 3px;
-    }
-
-
 </style>
 
-
-<div class="container">
     <div class="row">
-        <div class="col-6 col-md-6 col-sm-6">
-            <a href="/kich-co/view-add" class="btnAdd">
-                <i class="bi bi-plus-circle-fill"></i> <p>Thêm Kích
-                Cỡ</p></a>
-            <br>
+        <div class="col-lg-6">
+            <a href="/de-giay/view-add" class="btnAdd">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
+                <p>Thêm mới</p>
+            </a>
         </div>
 <%--        <div class="col-6 col-md-6 col-sm-6">--%>
 
@@ -145,4 +156,3 @@
 <%--            </ul>--%>
 <%--        </nav>--%>
 <%--    </div>--%>
-</div>

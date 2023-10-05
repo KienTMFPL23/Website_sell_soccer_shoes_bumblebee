@@ -48,7 +48,6 @@
 </style>
 
 
-<div class="container-sm">
     <div class="row">
         <div class="col-6 col-md-6 col-sm-6">
             <%--            <a href="/kich-co/hien-thi" class="btn btn-primary"><i class="bi bi-house-fill"></i></a>--%>
@@ -88,4 +87,3 @@
         </div>
     </form:form>
     <div class="text-center" style="color: crimson">${mess}</div>
-</div>
