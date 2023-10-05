@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
-    @Query("select hd from HoaDon  hd where hd.trangThai = 0")
+    @Query("select hd from HoaDon  hd where hd.trangThai = 0 order by hd.ngayTao")
     List<HoaDon> getListByTrangThai();
 
 }
