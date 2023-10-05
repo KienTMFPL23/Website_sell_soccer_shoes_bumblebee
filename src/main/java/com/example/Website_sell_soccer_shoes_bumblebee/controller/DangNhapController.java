@@ -1,7 +1,7 @@
-
+package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.TaiKhoan;
-import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.TaiKhoanServiceImpl;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.TaiKhoanService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class DangNhapController {
 
     @Autowired
-    private TaiKhoanServiceImpl taiKhoanService;
+    private TaiKhoanService taiKhoanService;
 
     @ModelAttribute("dsRole")
     public Map<Integer, String> getDsTrangThai() {
@@ -90,8 +90,6 @@ public class DangNhapController {
         taiKhoanService.dangKy(taikhoan);
         session.setAttribute("userLogged", taikhoan);
         return "redirect:/bumblebee/home";
-
-
     }
 
     @GetMapping("/bumblebee/logout")

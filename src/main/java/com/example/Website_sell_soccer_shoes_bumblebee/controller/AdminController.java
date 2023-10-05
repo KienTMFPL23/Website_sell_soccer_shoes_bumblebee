@@ -16,7 +16,7 @@ public class AdminController {
     private TaiKhoanServiceImpl taiKhoanService;
 
     @RequestMapping("/admin/dashboard")
-    public String hienthi( HttpSession session) {
+    public String hienthi(HttpSession session) {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         if (taiKhoan == null) {
