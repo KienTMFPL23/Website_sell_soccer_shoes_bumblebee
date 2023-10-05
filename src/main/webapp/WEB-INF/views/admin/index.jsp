@@ -101,8 +101,11 @@
                     aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
-                    <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
+
+                    <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a
+                    <a class="collapse-item" href="#">Kích cỡ</a>
+
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
                     <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
@@ -154,7 +157,7 @@
 
         <!-- Nav Item - Quản lý hóa đơn -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/hoa-don/hien-thi">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <b>Quản lý hóa đơn</b></a
             >
@@ -395,6 +398,8 @@
 <script src="../../../js/demo/chart-area-demo.js"></script>
 <script src="../../../js/demo/chart-pie-demo.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
+
+<script src="../../../js/mau_sac/mau_sac.js"></script>
 
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
