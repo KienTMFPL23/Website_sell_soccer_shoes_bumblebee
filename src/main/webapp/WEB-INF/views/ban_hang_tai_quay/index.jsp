@@ -235,15 +235,18 @@
                        action="/bumblebee/ban-hang-tai-quay/thanhtoan/${idHoaDon}">
                 <%--                    <input value="${idHoaDon}" name="id" type="hidden">--%>
                 <div class="row">
-                    <p>Khách hàng: <form:input path="tenNguoiNhan" id="phoneNumber"
-                                               onchange="getTenKhachHang()" class="form-control"/>
+                    <b>Khách hàng:</b>
+                    <div class="col-sm-10">
+                        <input id="phoneNumber" type="number" onchange="getTenKhachHang(this.value)" class="form-control"/>
+<%--                        <form:input path="tenNguoiNhan" id="tenKhachHang" readonly="true" class="form-control"/>--%>
+                    </div>
+                    <b style="color: red" id="tenKhachHang"></b></p>
                     <b>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>
                     </b>
                     <p><b>Tổng tiền :</b> <fmt:formatNumber value="${sumMoney}" type="number"/>
                         đ</p>
                         <%--                    <p><b>Giảm giá :</b> 0đ</p>--%>
-                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"
-                    /> đ</p>
+                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
                                                      onchange="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly
@@ -460,7 +463,22 @@
         }
     }
 </script>
+<script>
+    var data = {
+        <c:forEach items="${listKhachHang}" var="k">
+        "${k.soDienThoai}": "${k.ho} ${k.tenDem} ${k.ten}",
+        </c:forEach>
+    };
 
+    function getTenKhachHang(sdt) {
+        var textName = document.getElementById("tenKhachHang");
+        if (sdt === "") {
+            textName.innerText = "Không tìm thấy khách hàng nào";
+        } else {
+            textName.innerText = data[sdt];
+        }
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

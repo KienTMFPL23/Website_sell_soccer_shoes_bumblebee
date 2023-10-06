@@ -686,6 +686,6 @@ public class ChiTietSanPhamController {
             e.printStackTrace();
         }
         hinhAnhRepository.save(hinhAnh);
-        return "redirect:/hinh-anh/hien-thi";
+        return "redirect:/chi-tiet-san-pham/hien-thi";
     }
 }

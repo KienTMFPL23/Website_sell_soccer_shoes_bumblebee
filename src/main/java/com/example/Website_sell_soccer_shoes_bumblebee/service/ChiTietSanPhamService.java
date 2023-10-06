@@ -57,5 +57,7 @@ public interface ChiTietSanPhamService {
 
     ChiTietSanPham updateSoLuongTon(UUID id,int soLuong);
 
+    ChiTietSanPham updateDelete(UUID id,int soLuong);
+
 
 }

@@ -97,6 +97,19 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public ChiTietSanPham updateDelete(UUID id, int soLuong) {
+        ChiTietSanPham chiTietSanPham = repo.findById(id).orElse(null);
+        if (chiTietSanPham != null) {
+            chiTietSanPham.setSoLuong(soLuong+chiTietSanPham.getSoLuong());
+            repo.save(chiTietSanPham);
+            return chiTietSanPham;
+        } else {
+            return null;
+        }
+
+    }
+
+    @Override
     public Page<ChiTietSanPham> searchCL(UUID idCL, Pageable pageable) {
         return repo.searchByChatLieu(idCL, pageable);
     }

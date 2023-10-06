@@ -11,6 +11,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
 import com.itextpdf.forms.xfdf.Mode;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
@@ -66,13 +67,23 @@ public class BanHangTaiQuayController {
     private UUID idHoaDon = null;
     private UUID idHoaDonCT = null;
     private Double sumMoney = 0.0;
-//    private UUID idHoaDonCT = null;
+    //    private UUID idHoaDonCT = null;
 //    private List<HoaDonChiTiet> dsHoaDonCT = null;
 //    private Double sumMoney = 0.0;
 //    private Integer soLuongTon = 0;
 //    private ChiTietSanPham ctsp = null;
 //    private List<ChiTietSanPham> danhSachSPSearch = null;
 
+    //khach hang
+    @Autowired
+    KhachHangRepository khachHangRepository;
+
+    @ModelAttribute("listKhachHang")
+    List<KhachHang> listSP() {
+        return khachHangRepository.findAll();
+    }
+
+    //ban hang
     @GetMapping("/sell")
     public String banHang(Model model) {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
@@ -83,6 +94,7 @@ public class BanHangTaiQuayController {
 
         model.addAttribute("searchForm", new SearchForm());
 //        model.addAttribute("sumMoney", sumMoney);
+
         model.addAttribute("hoaDon",new HoaDon());
 
         return "admin/index";
@@ -95,6 +107,7 @@ public class BanHangTaiQuayController {
         String fullname = nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen();
         model.addAttribute("fullNameStaff", fullname);
     }
+
     @RequestMapping("/create-hoadon")
     public String createHoaDon(Model model) throws ParseException {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
@@ -163,7 +176,7 @@ public class BanHangTaiQuayController {
 //            return "redirect:/bumblebee/ban-hang-tai-quay/sell";
 //        }
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
-        HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon,id);
+        HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
         if (sanPhamInHDCT != null) {
             Integer soLuong = sp.getSoLuong() - 1;
             chiTietSanPhamService.updateSoLuongTon(id, soLuong);
@@ -184,11 +197,17 @@ public class BanHangTaiQuayController {
 
     @RequestMapping("/delete-hdct/{id}")
     public String deleteHoaDonCT(Model model, @PathVariable("id") UUID id) {
+//        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
+//        Integer soLuong = hoaDonChiTiet.getSoLuong();
+//        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
+//        Integer soLuongTon = chiTietSanPham.getSoLuong();
+//        chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon + soLuong);
+//        hoaDonChiTietService.deleteHoaDonCT(id);
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
-        Integer soLuong = hoaDonChiTiet.getSoLuong();
+//        Integer soLuong = hoaDonChiTiet.getSoLuong();
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
-        Integer soLuongTon = chiTietSanPham.getSoLuong();
-        chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon + soLuong);
+//        Integer soLuongTon = chiTietSanPham.getSoLuong();
+        chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), hoaDonChiTiet.getSoLuong());
         hoaDonChiTietService.deleteHoaDonCT(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
     }
