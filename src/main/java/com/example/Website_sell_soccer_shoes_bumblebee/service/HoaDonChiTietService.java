@@ -15,9 +15,7 @@ public interface HoaDonChiTietService {
 
     HoaDonChiTiet deleteHoaDonCT(UUID id);
 
-    HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idSP);
-
-    HoaDonChiTiet getSanPhamInHDCT(UUID idSP);
+    HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idHoaDon,UUID idSP);
 
     Double getTotalMoney(List<HoaDonChiTiet> list);
 }

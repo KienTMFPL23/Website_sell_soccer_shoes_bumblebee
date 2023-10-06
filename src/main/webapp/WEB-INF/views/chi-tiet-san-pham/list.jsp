@@ -118,7 +118,7 @@
                 <th>Giá Bán</th>
                 <th>Số lượng</th>
                 <th>Trạng Thái</th>
-                <th>Mô Tả Chi tiết</th>
+<%--                <th>Mô Tả Chi tiết</th>--%>
                 <td>Action</td>
             </tr>
 
@@ -131,10 +131,11 @@
 
                     <td>${sp.soLuong}</td>
                     <td>${sp.trangThai==1?"Hoạt động":"Không hoạt động"}</td>
-                    <td>${sp.moTaCT}</td>
+<%--                    <td>${sp.moTaCT}</td>--%>
                     <td>
                         <a href="/chi-tiet-san-pham/view-update/${sp.id}" class="btn btn-warning"><i
                                 class="bi bi-pencil-square"></i></a>
+                        <a href="/hinh-anh/view-add/${sp.id}" class="btn btn-warning"><i class="bi bi-image"></i></a>
                     </td>
                 </tr>
             </c:forEach>
