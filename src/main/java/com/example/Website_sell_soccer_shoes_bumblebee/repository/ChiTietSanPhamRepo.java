@@ -93,4 +93,5 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query("select h from HinhAnh h where h.ctsp.id = ?1")
     HinhAnh getHADetail(UUID idCTSP);
 
+
 }
