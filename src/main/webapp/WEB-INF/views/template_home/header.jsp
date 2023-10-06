@@ -1,88 +1,28 @@
+<%@ page pageEncoding="utf-8" %>
 <div class="header--sidebar"></div>
 <header class="header">
     <nav class="navigation">
         <div class="container-fluid">
             <div class="navigation__column left">
-                <div class="header__logo"><a class="ps-logo" href="/home/bumblebee"><img
-                        src="../../../images_template/logo.png" alt=""></a>
+                <div class="header__logo">
+                    <a class="ps-logo" href="/bumblebee/home">
+                        <img src="../../../images_template/logo_bumblebee.png" width="50px">
+                    </a>
+                    <span style="color: #37517E;font-weight: 600;font-size: 16px;margin-left: 20px">BUMBLEBEE</span>
                 </div>
             </div>
             <div class="navigation__column center">
                 <ul class="main-menu menu">
-                    <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Trang Chủ</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item"><a href="index.html">Homepage #1</a></li>
-                            <li class="menu-item"><a href="#">Homepage #2</a></li>
-                            <li class="menu-item"><a href="#">Homepage #3</a></li>
-                        </ul>
+                    <li class="menu-item menu-item-has-children dropdown"><a href="/bumblebee/home">Trang Chủ</a>
                     </li>
+                    <li class="menu-item"><a href="/bumblebee/product_list">Sản Phẩm</a></li>
                     <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Giới Thiệu</a>
-                        <div class="mega-menu">
-                            <div class="mega-wrap">
-                                <div class="mega-column">
-                                    <ul class="mega-item mega-features">
-                                        <li><a href="product-listing.html">NEW RELEASES</a></li>
-                                        <li><a href="product-listing.html">FEATURES SHOES</a></li>
-                                        <li><a href="product-listing.html">BEST SELLERS</a></li>
-                                        <li><a href="product-listing.html">NOW TRENDING</a></li>
-                                        <li><a href="product-listing.html">SUMMER ESSENTIALS</a></li>
-                                        <li><a href="product-listing.html">MOTHER'S DAY COLLECTION</a></li>
-                                        <li><a href="product-listing.html">FAN GEAR</a></li>
-                                    </ul>
-                                </div>
-                                <div class="mega-column">
-                                    <h4 class="mega-heading">Shoes</h4>
-                                    <ul class="mega-item">
-                                        <li><a href="product-listing.html">All Shoes</a></li>
-                                        <li><a href="product-listing.html">Running</a></li>
-                                        <li><a href="product-listing.html">Training & Gym</a></li>
-                                        <li><a href="product-listing.html">Basketball</a></li>
-                                        <li><a href="product-listing.html">Football</a></li>
-                                        <li><a href="product-listing.html">Soccer</a></li>
-                                        <li><a href="product-listing.html">Baseball</a></li>
-                                    </ul>
-                                </div>
-                                <div class="mega-column">
-                                    <h4 class="mega-heading">CLOTHING</h4>
-                                    <ul class="mega-item">
-                                        <li><a href="product-listing.html">Compression & Nike Pro</a></li>
-                                        <li><a href="product-listing.html">Tops & T-Shirts</a></li>
-                                        <li><a href="product-listing.html">Polos</a></li>
-                                        <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
-                                        <li><a href="product-listing.html">Jackets & Vests</a></li>
-                                        <li><a href="product-listing.html">Pants & Tights</a></li>
-                                        <li><a href="product-listing.html">Shorts</a></li>
-                                    </ul>
-                                </div>
-                                <div class="mega-column">
-                                    <h4 class="mega-heading">Accessories</h4>
-                                    <ul class="mega-item">
-                                        <li><a href="product-listing.html">Compression & Nike Pro</a></li>
-                                        <li><a href="product-listing.html">Tops & T-Shirts</a></li>
-                                        <li><a href="product-listing.html">Polos</a></li>
-                                        <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
-                                        <li><a href="product-listing.html">Jackets & Vests</a></li>
-                                        <li><a href="product-listing.html">Pants & Tights</a></li>
-                                        <li><a href="product-listing.html">Shorts</a></li>
-                                    </ul>
-                                </div>
-                                <div class="mega-column">
-                                    <h4 class="mega-heading">BRAND</h4>
-                                    <ul class="mega-item">
-                                        <li><a href="product-listing.html">NIKE</a></li>
-                                        <li><a href="product-listing.html">Adidas</a></li>
-                                        <li><a href="product-listing.html">Dior</a></li>
-                                        <li><a href="product-listing.html">B&G</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </li>
                     <li class="menu-item"><a href="#">Liên Hệ</a></li>
                 </ul>
             </div>
             <div class="navigation__column right">
-                <form class="ps-search--header" action="do_action" method="post">
+                <form class="ps-search--header" action="do_action" method="post" style="background-color: #e8e8e8;border-radius: 20px">
                     <input class="form-control" type="text" placeholder="Search Product…">
                     <button><i class="ps-icon-search"></i></button>
                 </form>

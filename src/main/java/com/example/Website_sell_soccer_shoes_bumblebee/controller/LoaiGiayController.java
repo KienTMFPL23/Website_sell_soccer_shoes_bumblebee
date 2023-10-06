@@ -35,6 +35,8 @@ public class LoaiGiayController {
         String keyword = "";
     }
 
+
+
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();

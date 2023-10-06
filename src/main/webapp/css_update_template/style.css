@@ -7,3 +7,30 @@
 .product_name {
     margin: 10px 0px;
 }
+/*detail*/
+.ps-select{
+    width: 130px;
+    height: 30px;
+    background-color: #e4e4e4;
+    border: none;
+}
+.form-control{
+    height: 30px;
+    width: 70px;
+    margin-left: 10px;
+}
+/*cart*/
+.plus{
+    margin-left: 10px;
+}
+/*listSp*/
+.ps-widget__content input{
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.7);
+    margin-right: 15px;
+}

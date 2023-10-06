@@ -8,8 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class MauSacServiceImpl   {
+public class MauSacServiceImpl  implements MauSacService {
     @Autowired
     MauSacReponsitory msr;
     public Page<MauSac> search(String key, Pageable pageable){
@@ -17,5 +19,10 @@ public class MauSacServiceImpl   {
             return msr.search(key,pageable);
         }
         return msr.findAll(pageable);
+    }
+
+    @Override
+    public List<MauSac> getAll() {
+        return msr.findAll();
     }
 }
