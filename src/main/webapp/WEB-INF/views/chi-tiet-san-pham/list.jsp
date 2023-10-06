@@ -16,16 +16,18 @@
             <a href="/san-pham/hien-thi" class="btn" style="background: #0d6efd; color: whitesmoke"><i
                     class="bi bi-plus-circle-fill"></i>Thêm
                 Sản Phẩm</a>
+            <a href="/chi-tiet-san-pham/hien-thi" type="submit" class="btn btn-dark"><i
+                    class="bi bi-arrow-clockwise"></i></a>
             <br>
         </div>
         <div class="col-6 col-md-6 col-sm-6">
 
             <form:form action="/chi-tiet-san-pham/search" modelAttribute="searchForm">
                 <div class="row">
-                    <div class="col-2 col-md-2 col-sm-5">
+                    <div class="col-2 col-md-2 col-sm-3">
                         <button class="btn" type="submit" style="background: #0d6efd; color: whitesmoke">Search</button>
                     </div>
-                    <div class="col-8 col-md-8 col-sm-7">
+                    <div class="col-6 col-md-6 col-sm-4">
                         <form:input path="keyword" class="form-control" placeholder="Nhập mã hoặc loại tên sản phẩm"/>
                     </div>
                 </div>
@@ -35,7 +37,7 @@
         <br>
         <br>
         <div class="row" style="padding-bottom: 30px">
-            <div class="col-2 col-md-2 col-sm-2">
+            <div class="col-lg-2 ">
                 <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
                     <label class="form-label">Loại giầy: </label>
                     <form:select type="text" id="searchName" path="idLG" onchange="submit()">
@@ -46,7 +48,7 @@
                 </form:form>
             </div>
 
-            <div class="col-2 col-md-2 col-sm-2">
+            <div class="col-lg-2 ">
                 <form:form modelAttribute="searchChatLieu" action="/chi-tiet-san-pham/search-by-chatlieu">
                     <label class="form-label">Chất liệu: </label>
                     <form:select type="text" id="searchName4" path="idChatLieu" onchange="submit()">
@@ -57,7 +59,7 @@
                 </form:form>
             </div>
 
-            <div class="col-2 col-md-2 col-sm-2">
+            <div class="col-lg-2 ">
                 <form:form action="/chi-tiet-san-pham/search-by-degiay" modelAttribute="searchDG">
                     <label class="form-label">Đế giày: </label>
                     <form:select type="text" id="searchName3" path="idDe" onchange="submit()">
@@ -67,7 +69,7 @@
 
                 </form:form>
             </div>
-            <div class="col-2 col-md-2 col-sm-2">
+            <div class="col-lg-2 ">
                 <form:form action="/chi-tiet-san-pham/search-by-kichco" modelAttribute="searchKC">
 
                     <label class="form-label">Kích cỡ: </label>
@@ -78,7 +80,7 @@
 
                 </form:form>
             </div>
-            <div class="col-2 col-md-2 col-sm-2">
+            <div class="col-lg-2 ">
                 <form:form action="/chi-tiet-san-pham/search-by-mausac" modelAttribute="searchFormByMau">
 
                     <label class="form-label">Màu sắc:</label>
@@ -91,15 +93,20 @@
             </div>
             </br>
 
-            <div class="col-2 col-md-2 col-sm-2">
-                <form:form action="/chi-tiet-san-pham/sort" modelAttribute="sortForm">
-                    <label class="form-label">Sắp xếp:</label>
-                    <form:select path="key" onchange="submit()" class="form-control">
-                        <option value="0">---</option>
-                        <form:option value="giaBan">Đơn giá</form:option>
+            <div class="col-lg-2 col-md-2 col-sm-2">
 
-                    </form:select>
+                <form:form method="post" action="/import" enctype="multipart/form-data">
+                  <input type="file" name="file" accept=".xlsx, .xls"/>
+                    <a href="/import" type="submit" class="btn btn-success"> <i class="bi bi-file-earmark-arrow-up-fill"></i></a>
                 </form:form>
+                <%--            <form:form action="/chi-tiet-san-pham/sort" modelAttribute="sortForm">--%>
+                <%--                    <label class="form-label">Sắp xếp:</label>--%>
+                <%--                    <form:select path="key" onchange="submit()" class="form-control">--%>
+                <%--                        <option value="0">---</option>--%>
+                <%--                        <form:option value="giaBan">Đơn giá</form:option>--%>
+
+                <%--                    </form:select>--%>
+                <%--                </form:form>--%>
             </div>
         </div>
 

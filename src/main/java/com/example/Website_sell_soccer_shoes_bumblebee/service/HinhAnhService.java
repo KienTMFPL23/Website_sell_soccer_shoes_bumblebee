@@ -16,4 +16,5 @@ public interface HinhAnhService {
     List<ChiTietSanPham> getAllCTSP();
     List<ChiTietSanPham> searchCTSP(UUID keyword);
     HinhAnh findById(UUID id);
+    String getImageUploadPath();
 }

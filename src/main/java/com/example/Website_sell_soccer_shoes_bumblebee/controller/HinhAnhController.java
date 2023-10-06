@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -65,6 +67,7 @@ public class HinhAnhController {
         return "/admin/index";
     }
 
+
     @PostMapping("/hinh-anh/add")
     public String save(Model model,
                        @RequestParam(name = "tenanh") MultipartFile tenanh,
@@ -77,34 +80,52 @@ public class HinhAnhController {
     ) {
         HinhAnh hinhAnh = new HinhAnh();
         hinhAnh.setCtsp(ctsp);
-        Path path = Paths.get("C:\\Users\\NamNguyenTien\\Desktop\\Website_sell_soccer_shoes_bumblebee\\src\\main\\webapp\\uploads");
+
         try {
-            InputStream input1 = tenanh.getInputStream();
-            Files.copy(input1, path.resolve(tenanh.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+            // Lấy đường dẫn tới thư mục lưu trữ tệp tin ảnh từ cấu hình
+            String uploadPath = service.getImageUploadPath();
 
-            InputStream input2 = duongdan1.getInputStream();
-            Files.copy(input2, path.resolve(duongdan1.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+            // Tạo thư mục lưu trữ nếu chưa tồn tại
+            Path uploadDir = Paths.get(uploadPath);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
 
-            InputStream input3 = duongdan2.getInputStream();
-            Files.copy(input3, path.resolve(duongdan2.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+            // Lưu trữ các tệp tin ảnh và sử dụng tên tệp tin làm đường dẫn
+            MultipartFile[] imageFiles = {tenanh, duongdan1, duongdan2, duongdan3, duongdan4, duongdan5};
+            for (int i = 0; i < imageFiles.length; i++) {
+                MultipartFile file = imageFiles[i];
+                if (file != null && !file.isEmpty()) {
+                    String fileName = file.getOriginalFilename().toLowerCase(); // Sử dụng tên tệp tin làm đường dẫn
+                    Path filePath = uploadDir.resolve(fileName);
+                    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            InputStream input4 = duongdan3.getInputStream();
-            Files.copy(input4, path.resolve(duongdan3.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            InputStream input5 = duongdan4.getInputStream();
-            Files.copy(input5, path.resolve(duongdan4.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            InputStream input6 = duongdan5.getInputStream();
-            Files.copy(input6, path.resolve(duongdan5.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            hinhAnh.setTenanh(tenanh.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan1(duongdan1.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan2(duongdan2.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan3(duongdan3.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan4(duongdan4.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan5(duongdan5.getOriginalFilename().toLowerCase());
+                    // Gán tên tệp tin ảnh và đường dẫn tới các thuộc tính tương ứng của đối tượng HinhAnh
+                    switch (i) {
+                        case 0:
+                            hinhAnh.setTenanh(fileName);
+                            break;
+                        case 1:
+                            hinhAnh.setDuongdan1(fileName);
+                            break;
+                        case 2:
+                            hinhAnh.setDuongdan2(fileName);
+                            break;
+                        case 3:
+                            hinhAnh.setDuongdan3(fileName);
+                            break;
+                        case 4:
+                            hinhAnh.setDuongdan4(fileName);
+                            break;
+                        case 5:
+                            hinhAnh.setDuongdan5(fileName);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         repository.save(hinhAnh);
@@ -112,7 +133,7 @@ public class HinhAnhController {
     }
 
     @GetMapping("/hinh-anh/view-update/{id}")
-    public String viewUpdate(Model model, @PathVariable(name = "id") UUID id){
+    public String viewUpdate(Model model, @PathVariable(name = "id") UUID id) {
         HinhAnh hinhAnh = service.findById(id);
         model.addAttribute("listHinhAnh", hinhAnh);
         model.addAttribute("action", "/hinh-anh/update/" + hinhAnh.getId());
@@ -121,55 +142,61 @@ public class HinhAnhController {
     }
 
     @PostMapping("/hinh-anh/update/{id}")
-    public String update(Model model,
-                       @RequestParam(name = "tenanh") MultipartFile tenanh,
-                       @RequestParam(name = "duongdan1") MultipartFile duongdan1,
-                       @RequestParam(name = "duongdan2") MultipartFile duongdan2,
-                       @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                       @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                       @RequestParam(name = "duongdan5") MultipartFile duongdan5,
-                       @RequestParam(name = "ctsp") ChiTietSanPham ctsp,
-                         @PathVariable(name = "id") UUID id
-    ) {
-        HinhAnh hinhAnh = new HinhAnh();
-        hinhAnh.setCtsp(ctsp);
-        Path path = Paths.get("C:\\Users\\NamNguyenTien\\Desktop\\Website_sell_soccer_shoes_bumblebee\\src\\main\\webapp\\uploads");
-        try {
-            InputStream input1 = tenanh.getInputStream();
-            Files.copy(input1, path.resolve(tenanh.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+    public String update(@PathVariable(name = "id") UUID id,
+                         @RequestParam(name = "tenanh") MultipartFile tenanh,
+                         @RequestParam(name = "duongdan1") MultipartFile duongdan1,
+                         @RequestParam(name = "duongdan2") MultipartFile duongdan2,
+                         @RequestParam(name = "duongdan3") MultipartFile duongdan3,
+                         @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+                         @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+                         @RequestParam(name = "ctsp") ChiTietSanPham ctsp) {
+        HinhAnh hinhAnh = service.findById(id);
 
-            InputStream input2 = duongdan1.getInputStream();
-            Files.copy(input2, path.resolve(duongdan1.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            InputStream input3 = duongdan2.getInputStream();
-            Files.copy(input3, path.resolve(duongdan2.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            InputStream input4 = duongdan3.getInputStream();
-            Files.copy(input4, path.resolve(duongdan3.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            InputStream input5 = duongdan4.getInputStream();
-            Files.copy(input5, path.resolve(duongdan4.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            InputStream input6 = duongdan5.getInputStream();
-            Files.copy(input6, path.resolve(duongdan5.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
-            hinhAnh.setTenanh(tenanh.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan1(duongdan1.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan2(duongdan2.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan3(duongdan3.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan4(duongdan4.getOriginalFilename().toLowerCase());
-            hinhAnh.setDuongdan5(duongdan5.getOriginalFilename().toLowerCase());
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
+        // Cập nhật ảnh "tenanh" nếu người dùng đã chọn
+        if (!tenanh.isEmpty()) {
+            String newTenAnh = saveImage(tenanh);
+            hinhAnh.setTenanh(newTenAnh);
+        }
+        if (!duongdan1.isEmpty()) {
+            String newDuongdan1 = saveImage(duongdan1);
+            hinhAnh.setDuongdan1(newDuongdan1);
+        }
+        if (!duongdan2.isEmpty()) {
+            String newDuongdan2 = saveImage(duongdan2);
+            hinhAnh.setDuongdan2(newDuongdan2);
+        }
+        if (!duongdan3.isEmpty()) {
+            String newDuongdan3 = saveImage(duongdan3);
+            hinhAnh.setDuongdan3(newDuongdan3);
+        }
+        if (!duongdan4.isEmpty()) {
+            String newDuongdan4 = saveImage(duongdan4);
+            hinhAnh.setDuongdan4(newDuongdan4);
+        }
+        if (!duongdan5.isEmpty()) {
+            String newDuongdan5 = saveImage(duongdan5);
+            hinhAnh.setDuongdan5(newDuongdan5);
         }
 
-        HinhAnh findId = service.findById(id);
-        hinhAnh.setId(findId.getId());
-        BeanUtils.copyProperties(hinhAnh, findId);
-        repository.save(findId);
+        repository.save(hinhAnh);
+
         return "redirect:/hinh-anh/hien-thi";
     }
 
+    private String saveImage(MultipartFile file) {
+
+        String newImageFileName = UUID.randomUUID().toString() + ".jpg";
+        String imagePath = service.getImageUploadPath() + File.separator + newImageFileName;
+
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(imagePath);
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return newImageFileName;
+    }
 
 }

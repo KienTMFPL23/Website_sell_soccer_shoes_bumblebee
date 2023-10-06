@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
+
 @Service
 public class HinhAnhServiceImpl implements HinhAnhService {
 
@@ -29,6 +30,15 @@ public class HinhAnhServiceImpl implements HinhAnhService {
 
     @Autowired
     ChiTietSanPhamRepo chiTietSanPhamRepo;
+
+    @Value("${image.upload.path}")
+    private String imageUploadPath;
+
+    // Các phương thức khác trong dịch vụ
+    @Override
+    public String getImageUploadPath() {
+        return imageUploadPath;
+    }
 
     @Override
     public List<HinhAnh> getAll() {
@@ -49,6 +59,5 @@ public class HinhAnhServiceImpl implements HinhAnhService {
     public HinhAnh findById(UUID id) {
         return repository.findId(id);
     }
-
 
 }
