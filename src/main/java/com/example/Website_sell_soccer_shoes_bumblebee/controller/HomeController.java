@@ -1,9 +1,9 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.KichCo;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.MauSac;
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
@@ -38,10 +38,16 @@ public class HomeController {
     @Autowired
     MauSacService mauSacService;
 
+    @Autowired
+    ChiTietSanPhamRepo chiTietSanPhamRepo;
+
     @Data
     public static class SortForm {
         String key;
     }
+
+    @Autowired
+    HinhAnhRepository hinhAnhRepository;
 
     @Data
     public static class SearchFormByKichCo {
@@ -66,8 +72,16 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/detail/{id}")
     public String detail(Model model, @PathVariable UUID id) {
+        System.out.println("-----------------------------" + id);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(id);
         List<KichCo> listKC = kichCoService.getList();
+        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(id);
+        model.addAttribute("hinhAnh",hinhAnh);
+        System.out.println(hinhAnh.getDuongdan1());
+        List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
+        List<MauSac> listMS = mauSacService.getAll();
+        model.addAttribute("listMS", listMS);
+        model.addAttribute("listSP",listSP);
         model.addAttribute("listKC", listKC);
         model.addAttribute("ctsp", chiTietSanPham);
         model.addAttribute("view", "../template_home/product_detail.jsp");
@@ -106,6 +120,7 @@ public class HomeController {
                                @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan) {
         Pageable pageable = PageRequest.of(p, 12);
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamService.getListSP(pageable);
+    //    List<ChiTietSanPhamDto> pageCTSP = chiTietSanPhamService.getListChiTietSanPhamHinhAnh();
         List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<LoaiGiay> listLG = loaiGiayService.findAll();
         List<KichCo> listKC = kichCoService.getList();

@@ -43,4 +43,5 @@ public class HinhAnh {
 
     @Column(name = "Trangthai")
     int trangthai;
+
 }

@@ -63,7 +63,7 @@
         border-radius: 3px;
     }
 
-    .row{
+    .row {
         padding-left: 50px;
         padding-right: 50px;
     }
@@ -74,7 +74,7 @@
 <body>
 <div class="formAdd">
     <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA HÌNH ẢNH</h1>
-    <form action="${action}" method="post" enctype="multipart/form-data">
+    <form:form modelAttribute="hinhAnh" action="${action4}" enctype="multipart/form-data">
         <div class="row mb-3">
             <div class="col-sm-6">
                 <input type="hidden" class="form-control" name="id" value="${listHinhAnh.id}"/>
@@ -85,29 +85,24 @@
         <div class="row" style="margin-bottom: 30px;">
             <div class="col-lg-5">
                 <label>ID CTSP:</label>
-                <%--                <select id="selectCTSP" class="form-control" name="ctsp" name="keyword" style="margin-bottom: 30px;"/>--%>
-                <%--                <form:errors path="ma" cssStyle="color: crimson"></form:errors>--%>
-                <input type="text" class="form-control" id="inputEmail3" name="ctsp" value="${listHinhAnh.ctsp.id}"/>
+                <input type="text" class="form-control" id="inputEmail3" name="ctsp" value="${idctsp}"/>
             </div>
-            <div class="col-lg-2"></div>
-            <div class="col-lg-5">
 
-            </div>
         </div>
 
         <%--   Row 2     --%>
         <div class="row">
             <div class="col-lg-5">
                 <label>Ảnh 1:</label>
-                <input type="file" class="form-control" name="tenanh" onchange="imageFileAsUrl1(this)" value="${listHinhAnh.tenanh}" accept="image/*"/>
-                <span cssStyle="color: crimson">${errorUploadNull}</span>
-                <span cssStyle="color: crimson">${errorUploads}</span>
+
+                <form:input type="file" class="form-control" path="tenanh" onchange="imageFileAsUrl1(this)"
+                            value="${listHinhAnh.tenanh}"/>
             </div>
             <div class="col-lg-2"></div>
             <div class="col-lg-5">
                 <label>Ảnh 2:</label>
-                <input type="file"  class="form-control" name="duongdan1" onchange="imageFileAsUrl2(this)"/>
-                <span cssStyle="color: crimson">${errorUploads}</span>
+
+                <form:input type="file" class="form-control" path="duongdan1" onchange="imageFileAsUrl2(this)"/>
             </div>
         </div>
 
@@ -126,15 +121,19 @@
         <div class="row mb-3">
             <div class="col-lg-5">
                 <label>Ảnh 3:</label>
-                <input type="file" id="upload" class="form-control" name="duongdan2" onchange="imageFileAsUrl3(this)"/>
-                <span cssStyle="color: crimson">${errorUploads}</span>
+
+                <form:input type="file" id="upload" class="form-control" path="duongdan2"
+                            onchange="imageFileAsUrl3(this)"/>
+
             </div>
             <div class="col-lg-2"></div>
 
             <div class="col-lg-5">
                 <label>Ảnh 4:</label>
-                <input type="file" id="upload" class="form-control" name="duongdan3" onchange="imageFileAsUrl4(this)"/>
-                <span cssStyle="color: crimson">${errorUploads}</span>
+
+                <form:input type="file" id="upload" class="form-control" path="duongdan3"
+                            onchange="imageFileAsUrl4(this)"/>
+
             </div>
         </div>
 
@@ -153,15 +152,19 @@
         <div class="row mb-3">
             <div class="col-lg-5">
                 <label>Ảnh 5:</label>
-                <input type="file" id="upload" class="form-control" name="duongdan4" onchange="imageFileAsUrl5(this)"/>
-                <span cssStyle="color: crimson">${errorUploads}</span>
+
+                <form:input type="file" id="upload" class="form-control" path="duongdan4"
+                            onchange="imageFileAsUrl5(this)"/>
+
             </div>
             <div class="col-lg-2"></div>
 
             <div class="col-lg-5">
                 <label>Ảnh 6:</label>
-                <input type="file" id="upload" class="form-control" name="duongdan5" onchange="imageFileAsUrl6(this)"/>
-                <span cssStyle="color: crimson">${errorUploads}</span>
+
+                <form:input type="file" id="upload" class="form-control" path="duongdan5"
+                            onchange="imageFileAsUrl6(this)"/>
+
             </div>
         </div>
 
@@ -180,7 +183,7 @@
             <button class="button" type="submit">SUBMIT</button>
         </div>
 
-    </form>
+    </form:form>
 </div>
 <script>
     function imageFileAsUrl1(fileInput) {

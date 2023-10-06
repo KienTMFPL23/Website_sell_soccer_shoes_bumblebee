@@ -51,6 +51,7 @@ public class ChiTietSanPham {
     @NotNull(message = "Mời chọn đế giầy")
     DeGiay deGiay;
 
+
     @Column(name = "GiaBan")
     @NotNull(message = "không để trống")
     Double giaBan;
@@ -68,6 +69,10 @@ public class ChiTietSanPham {
     @Column(name = "Trangthai")
     @NotNull(message = "không để trống")
     Integer trangThai;
+
+    @OneToMany(mappedBy = "ctsp")
+    List<HinhAnh> hinhAnhs;
+
 
 
     public void loadFromViewModel(QLSanPham vm) {

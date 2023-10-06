@@ -1,9 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.KichCo;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.QLSanPham;
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ChiTietSanPhamService {
+
+
+
+    List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh();
 
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 

@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -20,17 +21,15 @@
     }
 
 </style>
+
 <div class="header">
     <nav class="navbar navHoaDon navbar-expand-lg">
-        <div class="themSanPham">
-
-        </div>
         <%-- list hóa đơn chờ--%>
         <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
             <div class="hoaDonCho">
-                <a href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
-                   style="margin-left: 5px">HD${i.count}
-                    - ${sumMoney}</a>
+                <a class="theHoaDon" href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
+                   style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
+                </a>
                 <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
                         src="/images_template/deleteHD.png"></a>
             </div>
@@ -79,6 +78,7 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+
                                 <table>
                                     <thead>
                                     <tr>
@@ -174,7 +174,6 @@
             </div>
         </div>
     </div>
-    <b class="name">Giỏ hàng chi tiết</b>
     <table class="table">
         <tr class="row1" style="background-color:#34B6D3 ">
             <th scope="col">STT</th>
@@ -217,10 +216,13 @@
         <b style="float: right;margin-right: 20px" class="name">Tổng tiền : <fmt:formatNumber value="${sumMoney}"
                                                                                               type="number"/></b>
     </div>
-    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-       aria-controls="offcanvasExample">
-        Thanh toán
-    </a>
+    <c:if test="${sumMoney != 0}">
+        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+           aria-controls="offcanvasExample">
+            Thanh toán
+        </a>
+    </c:if>
+
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample"
          aria-labelledby="offcanvasExampleLabel">
@@ -233,23 +235,24 @@
                        action="/bumblebee/ban-hang-tai-quay/thanhtoan/${idHoaDon}">
                 <%--                    <input value="${idHoaDon}" name="id" type="hidden">--%>
                 <div class="row">
-                        <%--                        <p>Khách hàng: <form:input path="tenNguoiNhan" id="phoneNumber"--%>
-                        <%--                                                   onchange="getTenKhachHang()" class="form-control"/><a--%>
-                        <%--                                href="#"><img--%>
-                        <%--                                src="/images/plus.png"></a></p>--%>
-                        <%--                        <p>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>--%>
-                        <%--                        </p>--%>
-                    <p>Tổng tiền : <fmt:formatNumber value="${sumMoney}" type="number"/>
+                    <p>Khách hàng: <form:input path="tenNguoiNhan" id="phoneNumber"
+                                               onchange="getTenKhachHang()" class="form-control"/>
+                    <b>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>
+                    </b>
+                    <p><b>Tổng tiền :</b> <fmt:formatNumber value="${sumMoney}" type="number"/>
                         đ</p>
-                        <%--                        <p>Giảm giá : 0đ</p>--%>
-                    <p>Tổng tiền phải thu : <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>
-                    <p>Tiền khách đưa: <input class="form-control" type="number" id="change"
-                                              onchange="getMoneyChange()"></p>
-                    <p>Tiền thừa: <label type="number" id="tienThua"
-                                         groupingUsed="false"></label>đ</p>
+                        <%--                    <p><b>Giảm giá :</b> 0đ</p>--%>
+                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"
+                    /> đ</p>
+                    <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
+                                                     onchange="getMoneyChange()"></p>
+                    <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly
+                                                groupingUsed="false"/>đ</p>
+                    <p><b style="color: red">${errorThanhToan}</b></p>
+                    <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                 </div>
                 <div class="dropdown mt-3">
-                    <button class="btn btn-primary">In hóa đơn</button>
+                        <%--                    <button class="btn btn-primary">In hóa đơn</button>--%>
                     <button type="submit" class="btn btn-primary"
                             onclick="return confirm('Bạn có muốn thanh toán không')">Thanh toán
                     </button>
@@ -258,6 +261,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     $("#myInput").keyup(function () {
@@ -439,3 +443,33 @@
     //     });
     // });
 </script>
+
+<script>
+    function getMoneyChange() {
+        var change = document.getElementById('change').value;
+        document.getElementById('tienThua').innerHTML = change - ${sum};
+        var tienThua = change - ${sum};
+        const showThanhToan = document.getElementById("thanhToan");
+        const showHoaDon = document.getElementById("inHoaDon");
+        if (tienThua < 0) {
+            showThanhToan.style.display = "none";
+            showHoaDon.style.display = "none";
+        } else {
+            showThanhToan.style.display = "inline-block";
+            showHoaDon.style.display = "inline-block";
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+

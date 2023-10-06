@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <main class="ps-main">
     <div class="ps-banner">
         <div class="rev_slider fullscreenbanner" id="home-banner">
@@ -95,34 +96,38 @@
             <div class="ps-section__content pb-50">
                 <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="30"
                      data-radio="100%">
-                        <div class="ps-masonry row">
-                            <div class="grid-sizer"></div>
-                            <c:forEach var="item" items="${listSP.content}">
+                    <div class="ps-masonry row">
+                        <div class="grid-sizer"></div>
+                        <c:forEach var="item" items="${listSP.content}">
                             <div class="grid-item col-md-3">
                                 <div class="grid-item__content-wrapper">
                                     <div class="ps-shoe mb-30">
                                         <div class="ps-shoe__thumbnail">
-                                            <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img
-                                                src="../../../images_template/shoe/1.jpg" alt=""><a class="ps-shoe__overlay"
-                                                                                                    href="/bumblebee/detail/${item.id}"></a>
+                                            <c:forEach var="image" items="${item.hinhAnhs}">
+                                                <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
+                                                <img
+                                                        src="../../../uploads/${image.tenanh}" height="250px" alt=""><a class="ps-shoe__overlay" href="/bumblebee/detail/${item.id}"></a>
+                                            </c:forEach>
                                         </div>
                                         <div class="ps-shoe__content">
-                                            <div class="ps-shoe__variants">
-                                                <div class="ps-shoe__variant normal"><img
-                                                        src="../../../images_template/shoe/2.jpg"
-                                                        alt=""><img
-                                                        src="../../../images_template/shoe/3.jpg" alt=""><img
-                                                        src="../../../images_template/shoe/4.jpg"
-                                                        alt=""><img
-                                                        src="../../../images_template/shoe/5.jpg" alt=""></div>
+                                            <div class="ps-shoe__variants" style="margin-top: 10px">
+                                                <div class="ps-shoe__variant normal">
+                                                    <c:forEach var="image" items="${item.hinhAnhs}">
+                                                        <img src="../../../uploads/${image.duongdan1}">
+                                                        <img src="../../../uploads/${image.duongdan2}">
+                                                        <img src="../../../uploads/${image.duongdan3}">
+                                                        <img src="../../../uploads/${image.duongdan4}">
+                                                    </c:forEach>
+                                                </div>
                                             </div>
                                             <div class="ps-shoe__detail">
                                                 <div class="product_name">
                                                     <a href="#" style="font-weight: 600;">${item.sanPham.tenSanPham}</a>
                                                 </div>
                                                 <div class="product_price">
-                                                <span >
-                                                    <del style="color: red;margin-right: 10px">2.150.000 ₫</del>${item.giaBan} ₫
+                                                <span>
+                                                    <fmt:formatNumber value="${item.giaBan}"
+                                                                      type="currency"/>
                                                 </span>
                                                 </div>
                                             </div>
@@ -130,8 +135,8 @@
                                     </div>
                                 </div>
                             </div>
-                            </c:forEach>
-                        </div>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
         </div>
