@@ -90,21 +90,21 @@
 
         </div>
 
-
         <%--   Row 2     --%>
         <div class="row">
             <div class="col-lg-5">
                 <label>Ảnh 1:</label>
+
                 <form:input type="file" class="form-control" path="tenanh" onchange="imageFileAsUrl1(this)"
                             value="${listHinhAnh.tenanh}"/>
             </div>
             <div class="col-lg-2"></div>
             <div class="col-lg-5">
                 <label>Ảnh 2:</label>
+
                 <form:input type="file" class="form-control" path="duongdan1" onchange="imageFileAsUrl2(this)"/>
             </div>
         </div>
-
 
         <div class="row mb-3">
             <div class="col-lg-5">
@@ -114,7 +114,6 @@
 
             <div class="col-lg-5">
                 <img src="../../../uploads/${listHinhAnh.duongdan1}" id="image2" width="200px" height="200px"/>
-
             </div>
         </div>
 
@@ -122,13 +121,16 @@
         <div class="row mb-3">
             <div class="col-lg-5">
                 <label>Ảnh 3:</label>
+
                 <form:input type="file" id="upload" class="form-control" path="duongdan2"
                             onchange="imageFileAsUrl3(this)"/>
+
             </div>
             <div class="col-lg-2"></div>
 
             <div class="col-lg-5">
                 <label>Ảnh 4:</label>
+
                 <form:input type="file" id="upload" class="form-control" path="duongdan3"
                             onchange="imageFileAsUrl4(this)"/>
 
@@ -146,20 +148,23 @@
             </div>
         </div>
 
-
         <%--   Row 3   --%>
         <div class="row mb-3">
             <div class="col-lg-5">
                 <label>Ảnh 5:</label>
+
                 <form:input type="file" id="upload" class="form-control" path="duongdan4"
                             onchange="imageFileAsUrl5(this)"/>
+
             </div>
             <div class="col-lg-2"></div>
 
             <div class="col-lg-5">
                 <label>Ảnh 6:</label>
+
                 <form:input type="file" id="upload" class="form-control" path="duongdan5"
                             onchange="imageFileAsUrl6(this)"/>
+
             </div>
         </div>
 

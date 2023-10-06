@@ -15,3 +15,4 @@ scanner.addListener("scan", function (qrCode) {
 });
 
 
+

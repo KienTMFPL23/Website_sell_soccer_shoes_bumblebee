@@ -86,11 +86,13 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query("SELECT c FROM ChiTietSanPham c WHERE c.loaiGiay.id IN ?1")
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 
+
     @Query(value = "SELECT CTSP.Id as 'id', CTSP.GiaBan as 'giaBan',CTSP.IdSP as'sanPham',CTSP.IdMauSac as 'mauSac',CTSP.IdChatLieu as 'chatLieu',CTSP.IdTheLoai as 'loaiGiay',CTSP.IdKichCo as 'kichCo',CTSP.IdDeGiay as 'deGiay',CTSP.MoTaCT as 'moTaCT',CTSP.SoLuong as 'soLuong',CTSP.TrangThai as 'trangThai', HA.duongdan1 as 'hinhAnh' FROM ChiTietSanPham CTSP\n" +
             "LEFT JOIN HinhAnh HA ON CTSP.Id = HA.IdCTSP", nativeQuery = true)
     List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh();
 
     @Query("select h from HinhAnh h where h.ctsp.id = ?1")
     HinhAnh getHADetail(UUID idCTSP);
+
 
 }
