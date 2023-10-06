@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,7 +63,6 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<KichCo> listKC();
 
     @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword)")
-
     List<KichCo> search2KC(@Param("keyword") Integer size);
 
     @Query("select ctsp from ChiTietSanPham  ctsp where ctsp.giaBan between ?1 and ?2")
@@ -74,13 +74,19 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query("select ctsp from ChiTietSanPham ctsp where ctsp.mauSac.id = ?1")
     Page<ChiTietSanPham> getCTSPBYMS(UUID idMS, Pageable pageable);
 
-    List<KichCo> search2KC(@Param("keyword") Integer keyword);
-
-// update ctsp modal add
-    @Query(value = "select c.IdSP from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1",nativeQuery = true)
+    // update ctsp modal add
+    @Query(value = "select c.IdSP from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1", nativeQuery = true)
     UUID getOneToAddModal(UUID id);
 
 
     @Query("SELECT c FROM ChiTietSanPham c WHERE c.loaiGiay.id IN ?1")
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
+
+    @Query(value = "SELECT CTSP.Id as 'id', CTSP.GiaBan as 'giaBan',CTSP.IdSP as'sanPham',CTSP.IdMauSac as 'mauSac',CTSP.IdChatLieu as 'chatLieu',CTSP.IdTheLoai as 'loaiGiay',CTSP.IdKichCo as 'kichCo',CTSP.IdDeGiay as 'deGiay',CTSP.MoTaCT as 'moTaCT',CTSP.SoLuong as 'soLuong',CTSP.TrangThai as 'trangThai', HA.duongdan1 as 'hinhAnh' FROM ChiTietSanPham CTSP\n" +
+            "LEFT JOIN HinhAnh HA ON CTSP.Id = HA.IdCTSP", nativeQuery = true)
+    List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh();
+
+    @Query("select h from HinhAnh h where h.ctsp.id = ?1")
+    HinhAnh getHADetail(UUID idCTSP);
+
 }
