@@ -4,6 +4,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;
@@ -57,5 +58,6 @@ public interface ChiTietSanPhamService {
     ChiTietSanPham updateSoLuongTon(UUID id,int soLuong);
 
     ChiTietSanPham updateDelete(UUID id,int soLuong);
+
 
 }
