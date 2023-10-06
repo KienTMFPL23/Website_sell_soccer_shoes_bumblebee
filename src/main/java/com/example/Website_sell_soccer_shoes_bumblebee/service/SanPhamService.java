@@ -22,4 +22,6 @@ public interface SanPhamService {
 
     SanPham getByMa(String ma);
 
+    List<SanPham> searchSanPham(String keyword);
+
 }

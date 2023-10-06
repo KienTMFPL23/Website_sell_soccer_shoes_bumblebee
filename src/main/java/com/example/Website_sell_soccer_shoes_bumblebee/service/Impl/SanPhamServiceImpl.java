@@ -51,4 +51,9 @@ public class SanPhamServiceImpl implements SanPhamService {
     public SanPham getByMa(String ma) {
         return sanPhamRepository.getSanPhamByMaSP(ma);
     }
+
+    @Override
+    public List<SanPham> searchSanPham(String keyword) {
+        return sanPhamRepository.searchSanPham(keyword);
+    }
 }
