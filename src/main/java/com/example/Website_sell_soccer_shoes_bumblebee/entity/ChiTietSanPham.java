@@ -51,7 +51,7 @@ public class ChiTietSanPham {
     @NotNull(message = "Mời chọn đế giầy")
     DeGiay deGiay;
 
-    @Column(name = "DonGia")
+    @Column(name = "Giaban")
     @NotNull(message = "không để trống")
     Double giaBan;
 
