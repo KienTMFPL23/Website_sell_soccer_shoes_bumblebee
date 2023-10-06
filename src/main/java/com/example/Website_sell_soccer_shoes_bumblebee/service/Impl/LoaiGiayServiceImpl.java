@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,6 +16,11 @@ public class LoaiGiayServiceImpl implements LoaiGiayService {
 
     @Autowired
     LoaiGiayRepository repository;
+
+    @Override
+    public List<LoaiGiay> findAll() {
+        return repository.findAll();
+    }
 
     @Override
     public Page<LoaiGiay> getAll(Pageable pageable) {

@@ -11,6 +11,15 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ChiTietSanPhamService {
+
+    Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
+
+    Page<ChiTietSanPham> getCTSPByKC(UUID idKC, Pageable pageable);
+
+    Page<ChiTietSanPham> getCTSPByMS(UUID idMS,Pageable pageable);
+
+    Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable);
+
     List<ChiTietSanPham> getList();
 
     Page<ChiTietSanPham> getListSP(Pageable pageable);

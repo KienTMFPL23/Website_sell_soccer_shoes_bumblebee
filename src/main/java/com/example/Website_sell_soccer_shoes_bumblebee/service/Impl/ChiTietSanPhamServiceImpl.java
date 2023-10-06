@@ -23,6 +23,26 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     HttpServletRequest request;
 
     @Override
+    public Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable) {
+        return repo.searchCTSPByLoaiGiayList(idLoaiGiayList,pageable);
+    }
+
+    @Override
+    public Page<ChiTietSanPham> getCTSPByKC(UUID idKC, Pageable pageable) {
+        return repo.getCTSPBYKC(idKC,pageable);
+    }
+
+    @Override
+    public Page<ChiTietSanPham> getCTSPByMS(UUID idMS, Pageable pageable) {
+        return repo.getCTSPBYMS(idMS,pageable);
+    }
+
+    @Override
+    public Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable) {
+        return repo.getCTSPByGiaBan(minPrice,maxPrice,pageable);
+    }
+
+    @Override
     public List<ChiTietSanPham> getList() {
         return repo.findAll();
     }

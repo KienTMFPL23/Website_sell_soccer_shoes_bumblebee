@@ -15,6 +15,7 @@ import java.util.UUID;
 @Repository
 public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> {
 
+
     @Query(value = "SELECT ctsp FROM ChiTietSanPham ctsp WHERE  ctsp.sanPham.tenSanPham like %?1%")
     Page<ChiTietSanPham> searchCTSP(String keyword, Pageable pageable);
 
@@ -63,7 +64,15 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword)")
     List<KichCo> search2KC(@Param("keyword") Integer size);
 
+    @Query("select ctsp from ChiTietSanPham  ctsp where ctsp.giaBan between ?1 and ?2")
+    Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable);
 
+    @Query(value = "select * from ChiTietSanPham where Idkichco = ?1", nativeQuery = true)
+    Page<ChiTietSanPham> getCTSPBYKC(UUID idKC, Pageable pageable);
 
+    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.mauSac.id = ?1")
+    Page<ChiTietSanPham> getCTSPBYMS(UUID idMS, Pageable pageable);
 
+    @Query("SELECT c FROM ChiTietSanPham c WHERE c.loaiGiay.id IN ?1")
+    Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 }

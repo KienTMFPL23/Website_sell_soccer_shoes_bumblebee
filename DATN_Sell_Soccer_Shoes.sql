@@ -71,7 +71,7 @@ CREATE TABLE ChiTietSanPham(
     IdKichCo UNIQUEIDENTIFIER REFERENCES KichCo(Id),
     IdChatLieu UNIQUEIDENTIFIER REFERENCES ChatLieu(Id),
     IdDeGiay UNIQUEIDENTIFIER REFERENCES DeGiay(Id),
-    GiaBan   MONEY,
+    DonGia   MONEY,
     SoLuong INT,
     MoTaCT   NVARCHAR(255),
     TrangThai INT
