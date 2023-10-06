@@ -19,6 +19,11 @@
     width: 70px;
     margin-left: 10px;
 }
+.ps-product__style ul li a{
+    height: 30px;
+    width: 30px;
+}
+
 /*cart*/
 .plus{
     margin-left: 10px;

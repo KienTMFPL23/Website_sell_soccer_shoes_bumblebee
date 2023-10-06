@@ -1,9 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.KichCo;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.QLSanPham;
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,32 +12,41 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
+
     @Autowired
     ChiTietSanPhamRepo repo;
+
     @Autowired
     HttpServletRequest request;
 
+
+    @Override
+    public List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh() {
+        return repo.getListChiTietSanPhamHinhAnh();
+    }
+
     @Override
     public Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable) {
-        return repo.searchCTSPByLoaiGiayList(idLoaiGiayList,pageable);
+        return repo.searchCTSPByLoaiGiayList(idLoaiGiayList, pageable);
     }
 
     @Override
     public Page<ChiTietSanPham> getCTSPByKC(UUID idKC, Pageable pageable) {
-        return repo.getCTSPBYKC(idKC,pageable);
+        return repo.getCTSPBYKC(idKC, pageable);
     }
 
     @Override
     public Page<ChiTietSanPham> getCTSPByMS(UUID idMS, Pageable pageable) {
-        return repo.getCTSPBYMS(idMS,pageable);
+        return repo.getCTSPBYMS(idMS, pageable);
     }
 
     @Override
     public Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable) {
-        return repo.getCTSPByGiaBan(minPrice,maxPrice,pageable);
+        return repo.getCTSPByGiaBan(minPrice, maxPrice, pageable);
     }
 
     @Override

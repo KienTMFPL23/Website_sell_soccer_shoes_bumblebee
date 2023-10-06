@@ -17,24 +17,24 @@
                     <div class="ps-product__thumbnail">
                         <div class="ps-product__preview">
                             <div class="ps-product__variations">
-                                <div class="item"><img src="../../../images_template/shoe-detail/1.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/2.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/2.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/2.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/2.jpg" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan1}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan2}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan3}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan4}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan5}" alt=""></div>
                             </div>
                         </div>
                         <div class="ps-product__image">
-                            <div class="item"><img class="zoom" src="../../../images_template/shoe-detail/1.jpg" alt=""
-                                                   data-zoom-image="images/shoe-detail/1.jpg"></div>
-                            <div class="item"><img class="zoom" src="../../../images_template/shoe-detail/2.jpg" alt=""
-                                                   data-zoom-image="images/shoe-detail/2.jpg"></div>
-                            <div class="item"><img class="zoom" src="../../../images_template/shoe-detail/3.jpg" alt=""
-                                                   data-zoom-image="images/shoe-detail/3.jpg"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.tenanh}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.tenanh}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan2}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan2}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan3}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan3}"></div>
                         </div>
                     </div>
                     <div class="ps-product__thumbnail--mobile">
-                        <div class="ps-product__main-img"><img src="../../../images_template/shoe-detail/1.jpg" alt="">
+                        <div class="ps-product__main-img"><img src="../../../uploads/${hinhAnh.tenanh}" alt="">
                         </div>
                         <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true"
                              data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -47,20 +47,18 @@
                     <div class="ps-product__info">
                         <h1>${ctsp.sanPham.tenSanPham}</h1>
                         <h3 class="ps-product__price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency" />
-                            <del style="color: red">2.000.000đ</del>
                         </h3>
                         <div class="ps-product__block ps-product__style">
                             <h4>Chọn màu sắc</h4>
-                            <ul>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/1.jpg"
-                                                                       alt=""></a></li>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/2.jpg"
-                                                                       alt=""></a></li>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/3.jpg"
-                                                                       alt=""></a></li>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/2.jpg"
-                                                                       alt=""></a></li>
-                            </ul>
+                            <div>
+                                <ul>
+                                    <c:forEach var="ms" items="${listMS}">
+                                        <li><a class="mauGiay"
+                                                href="#"
+                                                style="background-color: ${ms.ten};width: 30px;border: 1px solid #ddd"></a></li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
                         </div>
                         <div class="ps-product__block ps-product__size">
                             <h4>Kích cỡ<a href="#">Size chart</a></h4>
