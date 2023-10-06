@@ -23,6 +23,9 @@ public interface HinhAnhRepository extends JpaRepository<HinhAnh, UUID> {
 
     @Query(value = "select ctsp.id from ChiTietSanPham ctsp where ctsp.id LIKE :keyword", nativeQuery = true)
     List<ChiTietSanPham> searchCTSP(UUID keyword);
+
+    @Query(value = "select ctsp.id from HinhAnh h join ChiTietSanPham ctsp on ctsp.id=h.IdCTSP where h.id=?1",nativeQuery = true)
+    UUID getIdCTSP(UUID id);
 }
 
 

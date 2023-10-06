@@ -23,13 +23,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/chi-tiet-san-pham")
 public class ChiTietSanPhamController {
     @Autowired
     ChiTietSanPhamService service;
@@ -130,7 +133,7 @@ public class ChiTietSanPhamController {
         return sanPhamRepo.findAll();
     }
 
-    @RequestMapping("/hien-thi")
+    @RequestMapping("/chi-tiet-san-pham/hien-thi")
 
     public String hienThiSanPham(@ModelAttribute("sortForm") SortFormSP sortFormSP, @ModelAttribute("sanpham") QLSanPham sp, @RequestParam(defaultValue = "0") int p, Model model) throws IOException, WriterException {
 
@@ -154,7 +157,7 @@ public class ChiTietSanPhamController {
     }
 
     // search 2 loại giầy
-    @GetMapping("/search2-loai-giay")
+    @GetMapping("/chi-tiet-san-pham/search2-loai-giay")
     public ResponseEntity<?> search2LoaiGiay(@RequestParam(name = "keyword") String keyword) {
 
         if (keyword == null || keyword == "") {
@@ -164,18 +167,7 @@ public class ChiTietSanPhamController {
         }
     }
 
-    // search 2 kích cỡ
-//    @GetMapping("/search2-kich-co")
-//    public ResponseEntity<?> search2KichCo(@RequestParam(name = "keyword") Integer size) {
-//        if (size != null) {
-//            // Xử lý khi 'size' có giá trị
-//            return ResponseEntity.ok(service.search2KC(size));
-//        } else {
-//            // Xử lý khi 'size' là null (không được truyền vào)
-//            return ResponseEntity.ok(kichCoService.getList());
-//        }
-//    }
-    @GetMapping("/search2-kich-co")
+    @GetMapping("/chi-tiet-san-pham/search2-kich-co")
     public ResponseEntity<List<KichCo>> search2KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
         List<KichCo> result;
         if (size != null) {
@@ -189,7 +181,7 @@ public class ChiTietSanPhamController {
     }
 
     // search 2 màu sắc
-    @GetMapping("/search2-mau-sac")
+    @GetMapping("/chi-tiet-san-pham/search2-mau-sac")
     public ResponseEntity<?> search2MS(@RequestParam(name = "keyword") String ten) {
 
         if (ten == null || ten.equals("")) {
@@ -200,7 +192,7 @@ public class ChiTietSanPhamController {
     }
 
     // search 2 đế giầy
-    @GetMapping("/search2-de-giay")
+    @GetMapping("/chi-tiet-san-pham/search2-de-giay")
     public ResponseEntity<?> search2DG(@RequestParam(name = "keyword") String loaiDe) {
 
         if (loaiDe == null || loaiDe.equals("")) {
@@ -211,7 +203,7 @@ public class ChiTietSanPhamController {
     }
 
     // search 2 chất liệu
-    @GetMapping("/search2-chat-lieu")
+    @GetMapping("/chi-tiet-san-pham/search2-chat-lieu")
     public ResponseEntity<?> search2CL(@RequestParam(name = "keyword") String ten) {
 
         if (ten == null || ten.equals("")) {
@@ -221,7 +213,7 @@ public class ChiTietSanPhamController {
         }
     }
 
-    @RequestMapping("/search")
+    @RequestMapping("/chi-tiet-san-pham/search")
     public String searchSP(@ModelAttribute("searchForm") SearchFormSP searchFormSP, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -247,7 +239,7 @@ public class ChiTietSanPhamController {
     }
 
     // filer with combobox mau-sac
-    @RequestMapping("/search-by-mausac")
+    @RequestMapping("/chi-tiet-san-pham/search-by-mausac")
     public String searchByMau(@ModelAttribute("searchFormByMau") SearchFormSPByMau searchFormSPByMau, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -273,7 +265,7 @@ public class ChiTietSanPhamController {
     }
 
     // filer with combobox kich co
-    @RequestMapping("/search-by-kichco")
+    @RequestMapping("/chi-tiet-san-pham/search-by-kichco")
     public String searchByKC(@ModelAttribute("searchKC") SearchKC searchKC, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -299,7 +291,7 @@ public class ChiTietSanPhamController {
     }
 
     // filer with combobox de giay
-    @RequestMapping("/search-by-degiay")
+    @RequestMapping("/chi-tiet-san-pham/search-by-degiay")
     public String searchByDeGiay(@ModelAttribute("searchDG") SearchDeGiay searchDeGiay, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -325,7 +317,7 @@ public class ChiTietSanPhamController {
     }
 
     // filer with combobox chat lieu
-    @RequestMapping("/search-by-chatlieu")
+    @RequestMapping("/chi-tiet-san-pham/search-by-chatlieu")
     public String searchByChatLieu(@ModelAttribute("searchChatLieu") SearchChatlieu searchChatlieu, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -352,7 +344,7 @@ public class ChiTietSanPhamController {
     }
 
     // filer with combobox loai giay
-    @RequestMapping("/search-by-loaigiay")
+    @RequestMapping("/chi-tiet-san-pham/search-by-loaigiay")
     public String searchByLoaiGiay(@ModelAttribute("lg") SearchLoaiGiay searchLoaiGiay, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -377,7 +369,7 @@ public class ChiTietSanPhamController {
         return "/admin/index";
     }
 
-    @RequestMapping("/sort")
+    @RequestMapping("/chi-tiet-san-pham/sort")
     public String sort(@ModelAttribute("sortForm") SortFormSP sortFormSP, @ModelAttribute("searchForm") SearchFormSP searchFormSP, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
             p = 0;
@@ -401,7 +393,7 @@ public class ChiTietSanPhamController {
     }
 
 
-    @RequestMapping("/update/{id}")
+    @RequestMapping("/chi-tiet-san-pham/update/{id}")
     public String updateKC(Model model, @Valid @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result) throws IOException, WriterException {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
@@ -435,7 +427,7 @@ public class ChiTietSanPhamController {
         return "redirect:/chi-tiet-san-pham/hien-thi";
     }
 
-    @RequestMapping("/view-update/{id}")
+    @RequestMapping("/chi-tiet-san-pham/view-update/{id}")
     public String viewUpdate(@PathVariable("id") UUID id, Model model) {
         ChiTietSanPham sp = service.getOne(id);
 
@@ -466,7 +458,7 @@ public class ChiTietSanPhamController {
     @Autowired
     SanPhamService sanPhamService;
 
-    @RequestMapping("/loai-giay/add/{id}")
+    @RequestMapping("/chi-tiet-san-pham/loai-giay/add/{id}")
     public String save(Model model, @ModelAttribute("lg") LoaiGiay loaiGiay, @PathVariable("id") UUID id, BindingResult result) {
         Boolean hasE = result.hasErrors();
         List<LoaiGiay> list = loaiGiayRepo.findAll();
@@ -518,7 +510,7 @@ public class ChiTietSanPhamController {
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
     }
 
-    @RequestMapping("/kich-co/add/{id}")
+    @RequestMapping("/chi-tiet-san-pham/kich-co/add/{id}")
     public String addKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, @PathVariable("id") UUID id, BindingResult resultt) {
         UUID idSP = service.getOneToAddModal(id);
         SanPham sanPham2 = sanPhamRepo.findById(idSP).orElse(null);
@@ -538,7 +530,7 @@ public class ChiTietSanPhamController {
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
     }
 
-    @PostMapping("/mau-sac/add/{id}")
+    @PostMapping("/chi-tiet-san-pham/mau-sac/add/{id}")
     public String add(@Valid @ModelAttribute("ms") MauSac ms, @PathVariable("id") UUID id, BindingResult result, Model model) {
         UUID idSP = service.getOneToAddModal(id);
         SanPham sanPham2 = sanPhamRepo.findById(idSP).orElse(null);
@@ -560,7 +552,7 @@ public class ChiTietSanPhamController {
     @Autowired
     ChatLieuService chatLieuService;
 
-    @RequestMapping("/chat-lieu/add/{id}")
+    @RequestMapping("/chi-tiet-san-pham/chat-lieu/add/{id}")
     public String store(Model model, @PathVariable("id") UUID id,
                         @Valid @ModelAttribute("vm") ChatLieu cl,
                         BindingResult result
@@ -591,7 +583,7 @@ public class ChiTietSanPhamController {
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
     }
 
-    @PostMapping("/de-giay/add/{id}")
+    @PostMapping("/chi-tiet-san-pham/de-giay/add/{id}")
     public String add(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
         UUID idSP = service.getOneToAddModal(id);
         SanPham sanPham2 = sanPhamRepo.findById(idSP).orElse(null);
@@ -615,5 +607,85 @@ public class ChiTietSanPhamController {
         deGiayRepo.save(degiay);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
+    }
+
+    // hình ảnh
+    @GetMapping("/hinh-anh/view-add/{id}")
+    public String viewAdd(Model model, @ModelAttribute("hinhAnh") HinhAnh hinhAnh, @PathVariable("id") UUID id) {
+        ChiTietSanPham ctsp = service.getOne(id);
+        model.addAttribute("idctsp", ctsp.getId());
+        model.addAttribute("ctsp",ctsp);
+        model.addAttribute("action4", "/hinh-anh/add/" + ctsp.getId());
+        model.addAttribute("view", "../hinh-anh/add_update.jsp");
+        return "/admin/index";
+    }
+
+    @Autowired
+    HinhAnhService hinhAnhService;
+    @Autowired
+    HinhAnhRepository hinhAnhRepository;
+
+    @PostMapping("/hinh-anh/add/{id}")
+    public String save(Model model,
+                       @RequestParam(name = "tenanh") MultipartFile tenanh,
+                       @RequestParam(name = "duongdan1") MultipartFile duongdan1,
+                       @RequestParam(name = "duongdan2") MultipartFile duongdan2,
+                       @RequestParam(name = "duongdan3") MultipartFile duongdan3,
+                       @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+                       @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+                       @RequestParam(name = "ctsp") ChiTietSanPham ctsp
+    ) {
+        HinhAnh hinhAnh = new HinhAnh();
+        hinhAnh.setCtsp(ctsp);
+
+        try {
+            // Lấy đường dẫn tới thư mục lưu trữ tệp tin ảnh từ cấu hình
+            String uploadPath = hinhAnhService.getImageUploadPath();
+
+            // Tạo thư mục lưu trữ nếu chưa tồn tại
+            Path uploadDir = Paths.get(uploadPath);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
+            // Lưu trữ các tệp tin ảnh và sử dụng tên tệp tin làm đường dẫn
+            MultipartFile[] imageFiles = {tenanh, duongdan1, duongdan2, duongdan3, duongdan4, duongdan5};
+            for (int i = 0; i < imageFiles.length; i++) {
+                MultipartFile file = imageFiles[i];
+                if (file != null && !file.isEmpty()) {
+                    String fileName = file.getOriginalFilename().toLowerCase(); // Sử dụng tên tệp tin làm đường dẫn
+                    Path filePath = uploadDir.resolve(fileName);
+                    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                    // Gán tên tệp tin ảnh và đường dẫn tới các thuộc tính tương ứng của đối tượng HinhAnh
+                    switch (i) {
+                        case 0:
+                            hinhAnh.setTenanh(fileName);
+                            break;
+                        case 1:
+                            hinhAnh.setDuongdan1(fileName);
+                            break;
+                        case 2:
+                            hinhAnh.setDuongdan2(fileName);
+                            break;
+                        case 3:
+                            hinhAnh.setDuongdan3(fileName);
+                            break;
+                        case 4:
+                            hinhAnh.setDuongdan4(fileName);
+                            break;
+                        case 5:
+                            hinhAnh.setDuongdan5(fileName);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        hinhAnhRepository.save(hinhAnh);
+        return "redirect:/hinh-anh/hien-thi";
     }
 }
