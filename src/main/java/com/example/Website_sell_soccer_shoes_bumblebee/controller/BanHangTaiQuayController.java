@@ -3,10 +3,13 @@ package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonChiTietService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
+import com.itextpdf.forms.xfdf.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,9 @@ public class BanHangTaiQuayController {
     @Autowired
     HoaDonChiTietService hoaDonChiTietService;
 
+    @Autowired
+    ChiTietSanPhamRepo chiTietSanPhamRepo;
+
     private UUID idHoaDon = null;
 
     @GetMapping("/sell")
@@ -37,6 +43,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());
+
         return "admin/index";
     }
 
@@ -71,6 +78,12 @@ public class BanHangTaiQuayController {
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         Double sumMoney = hoaDonChiTietService.getTotalMoney(list);
         model.addAttribute("sumMoney", sumMoney);
+        model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
+        model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
+        model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
+        model.addAttribute("listDeGiay", chiTietSanPhamRepo.listDeGiay());
+        model.addAttribute("listChatLieu", chiTietSanPhamRepo.lítChatLieu());
+
         return "admin/index";
     }
 
@@ -137,4 +150,6 @@ public class BanHangTaiQuayController {
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
+
+
 }

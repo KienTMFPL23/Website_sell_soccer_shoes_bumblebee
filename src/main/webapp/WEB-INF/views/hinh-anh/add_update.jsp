@@ -95,20 +95,21 @@
             </div>
         </div>
 
-
         <%--   Row 2     --%>
         <div class="row">
             <div class="col-lg-5">
                 <label>Ảnh 1:</label>
-                <input type="file" class="form-control" name="tenanh" onchange="imageFileAsUrl1(this)" value="${listHinhAnh.tenanh}"/>
+                <input type="file" class="form-control" name="tenanh" onchange="imageFileAsUrl1(this)" value="${listHinhAnh.tenanh}" accept="image/*"/>
+                <span cssStyle="color: crimson">${errorUploadNull}</span>
+                <span cssStyle="color: crimson">${errorUploads}</span>
             </div>
             <div class="col-lg-2"></div>
             <div class="col-lg-5">
                 <label>Ảnh 2:</label>
                 <input type="file"  class="form-control" name="duongdan1" onchange="imageFileAsUrl2(this)"/>
+                <span cssStyle="color: crimson">${errorUploads}</span>
             </div>
         </div>
-
 
         <div class="row mb-3">
             <div class="col-lg-5">
@@ -118,7 +119,6 @@
 
             <div class="col-lg-5">
                 <img src="../../../uploads/${listHinhAnh.duongdan1}" id="image2" width="200px" height="200px"/>
-
             </div>
         </div>
 
@@ -127,13 +127,14 @@
             <div class="col-lg-5">
                 <label>Ảnh 3:</label>
                 <input type="file" id="upload" class="form-control" name="duongdan2" onchange="imageFileAsUrl3(this)"/>
+                <span cssStyle="color: crimson">${errorUploads}</span>
             </div>
             <div class="col-lg-2"></div>
 
             <div class="col-lg-5">
                 <label>Ảnh 4:</label>
                 <input type="file" id="upload" class="form-control" name="duongdan3" onchange="imageFileAsUrl4(this)"/>
-
+                <span cssStyle="color: crimson">${errorUploads}</span>
             </div>
         </div>
 
@@ -148,18 +149,19 @@
             </div>
         </div>
 
-
         <%--   Row 3   --%>
         <div class="row mb-3">
             <div class="col-lg-5">
                 <label>Ảnh 5:</label>
                 <input type="file" id="upload" class="form-control" name="duongdan4" onchange="imageFileAsUrl5(this)"/>
+                <span cssStyle="color: crimson">${errorUploads}</span>
             </div>
             <div class="col-lg-2"></div>
 
             <div class="col-lg-5">
                 <label>Ảnh 6:</label>
                 <input type="file" id="upload" class="form-control" name="duongdan5" onchange="imageFileAsUrl6(this)"/>
+                <span cssStyle="color: crimson">${errorUploads}</span>
             </div>
         </div>
 
