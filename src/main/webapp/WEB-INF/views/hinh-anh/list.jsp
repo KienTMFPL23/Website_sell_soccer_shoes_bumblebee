@@ -5,135 +5,88 @@
       integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 <style>
-    .container {
-        background-color: #f5f5f5;
-        margin-top: 10px;
+
+    body {
+        font-family: Nunito;
     }
 
-    .row1 {
-        color: white;
-    }
-
-    .search {
-        width: 500px;
-        background-color: #fff;
-        border-radius: 15px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .btn-timkiem {
-        background-color: #34B6D3;
-        width: 130px;
-        border: none;
-        border-radius: 15px 0px 0px 15px;
-        font-weight: bold;
-    }
-
-    .inputSearch {
-        padding-left: 16px;
-        border: none;
-        width: 370px;
-        background-color: #fff;
-        border-radius: 15px;
-        outline: 0;
-    }
-
-    .inputSearch::placeholder {
-        font-size: 14px;
-    }
-
-    .header {
-        margin: 30px 0px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .themSP {
-        width: 140px;
-        background-color: #fff;
-        border: 1px solid #34B6D3;
+    .btnAdd {
+        background-color: #EEEDED;
+        margin-left: 50px;
+        margin-bottom: 30px;
+        border: 2px solid #37517E;
         border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
+        width: 150px;
+        float: left;
+        height: 40px;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+        color: black;
+        text-align: center;
     }
 
-    .themSP span {
-        font-weight: 600;
+    .btnAdd:hover {
+        background-color: #37517E;
+        border: 2px solid #FFFFFF;
+        color: #FFFFFF;
+        text-decoration: none;
     }
 
-    .text-center {
-        display: flex;
-        margin-top: 30px;
-        justify-content: center;
+    .btnAdd > img {
+        margin-right: 10px;
+        margin-top: 3px;
+        margin-left: 15px;
+        float: left;
     }
 
-    .page-item a {
-        color: #000;
+    .btnAdd > p {
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+
+    .ui.table > thead > tr > th {
+        background-color: #37517E;
+        color: #FFFFFF;
+        font-size: 18px;
+    }
+
+    .ui.form input[type=search] {
+        background: #fff;
+        border: 2px solid #37517E;
+        border-radius: 20px;
+        width: 400px;
+    }
+
+    .ui input {
+        border-radius: 20px;
+    }
+
+    .ui.table > tbody > tr > td {
+        font-size: 16px;
     }
 </style>
-<div class="container">
 
-    <h2 STYLE="text-align: center;padding-top: 30px">DANH SÁCH HÌNH ẢNH</h2>
-    <div class="header">
-        <div class="themSP">
-            <a href="/hinh-anh/form">
-                <img src="https://cdn.pixabay.com/photo/2017/03/19/03/51/material-icon-2155448_1280.png" width="50px">
-                <span>Thêm mới</span>
-
+    <h2 STYLE="text-align: center;padding-top: 30px; font-family: Nunito">QUẢN LÝ HÌNH ẢNH</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="/hinh-anh/view-add" class="btnAdd">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
+                <p>Thêm mới</p>
             </a>
         </div>
-        <form:form modelAttribute="searchForm">
-            <div class="search">
-                <button formaction="/admin/hinh-anh" class="btn btn-success btn-timkiem">Tìm Kiếm</button>
-                <form:input path="keyword" cssClass="inputSearch"
-                            placeholder="bạn đang tìm kiếm sản phẩm..."></form:input>
-            </div>
-        </form:form>
-
     </div>
-    <div><a href="/loai-giay/sort">Sắp xếp theo tên</a></div>
-    <table class="table">
-        <tr class="row1" style="background-color:#34B6D3 ">
-            <th scope="col">STT</th>
-            <th scope="col">ID</th>
-            <th scope="col">Ảnh
-                <a href="/loai-giay/sort" style="text-decoration: none; color: #FFFFFF">
-                    <img src="https://icons.veryicon.com/png/o/internet--web/industrial-icon/sort-2.png" width="20px"
-                         height="20px">
-                </a></th>
-            <th scope="col">Action</th>
-        </tr>
-        <c:forEach items="${page.content}" var="item" varStatus="i">
-            <tr style="background-color: #fff">
-                <td scope="col">${i.index + 1}</td>
-                <td scope="col">${item.id}</td>
-                <td scope="col">${item.ma}</td>
-                <td scope="col">${item.tentheloai}</td>
-                <td scope="col" class="action">
-                    <a href="/loai-giay/edit/${item.id}"><img
-                            src="https://cdn-icons-png.flaticon.com/512/1827/1827951.png" width="24px"></a>
-                </td>
+    <table id="tableHinhAnh" class="ui celled table" width="100%">
+        <thead>
+            <tr>
+                <th>ID CTSP</th>
+                <th>Ảnh 1</th>
+                <th>Ảnh 2</th>
+                <th>Ảnh 3</th>
+                <th>Ảnh 4</th>
+                <th>Ảnh 5</th>
+                <th>Ảnh 6</th>
+                <th>Action</th>
             </tr>
-        </c:forEach>
+        </thead>
     </table>
-    <div class="text-center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link"
-                                         href="/admin/loai-giay?p=${page.number-1}&keyword=${param.keyword}">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="/admin/loai-giay?p=0&keyword=${param.keyword}">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="/admin/loai-giay?p=1&keyword=${param.keyword}">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="/admin/loai-giay?p=2&keyword=${param.keyword}">3</a>
-                </li>
-                <li class="page-item"><a class="page-link"
-                                         href="/admin/loai-giay?p=${page.number+1}&keyword=${param.keyword}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>

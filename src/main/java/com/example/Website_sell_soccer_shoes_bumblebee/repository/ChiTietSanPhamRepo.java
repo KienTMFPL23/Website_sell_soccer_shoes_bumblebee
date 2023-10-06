@@ -62,6 +62,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<KichCo> listKC();
 
     @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword)")
+
     List<KichCo> search2KC(@Param("keyword") Integer size);
 
     @Query("select ctsp from ChiTietSanPham  ctsp where ctsp.giaBan between ?1 and ?2")
@@ -72,6 +73,13 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 
     @Query("select ctsp from ChiTietSanPham ctsp where ctsp.mauSac.id = ?1")
     Page<ChiTietSanPham> getCTSPBYMS(UUID idMS, Pageable pageable);
+
+    List<KichCo> search2KC(@Param("keyword") Integer keyword);
+
+// update ctsp modal add
+    @Query(value = "select c.IdSP from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1",nativeQuery = true)
+    UUID getOneToAddModal(UUID id);
+
 
     @Query("SELECT c FROM ChiTietSanPham c WHERE c.loaiGiay.id IN ?1")
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);

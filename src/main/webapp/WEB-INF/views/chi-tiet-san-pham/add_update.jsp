@@ -114,8 +114,9 @@
             </div>
             <div class="right ">
                 <div class="item-right">
-
+                    <label class="form-label">Loại giầy: </label>
                     <form:select type="text" id="searchName" path="loaiGiay">
+                        <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="loaiGiay" cssStyle="color: crimson"/></span>
@@ -124,14 +125,18 @@
                 </div>
 
                 <div class="item-right">
+                    <label class="form-label">Kích cỡ: </label>
                     <form:select type="text" id="searchName1" path="kichCo" cssClass=".searchName1">
+                        <form:option value="">Chọn kích cỡ</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="kichCo" cssStyle="color: crimson"/></span>
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bi bi-plus-circle-fill"></i></a>
                 </div>
                 <div class="item-right">
+                    <label class="form-label">Màu sắc: </label>
                     <form:select type="text" id="searchName2" path="mauSac" cssClass=".searchName2">
+                        <form:option value="">Chọn màu sắc</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="mauSac" cssStyle="color: crimson"/></span>
@@ -139,14 +144,18 @@
 
                 </div>
                 <div class="item-right">
+                    <label class="form-label">Chất liệu: </label>
                     <form:select type="text" id="searchName4" path="chatLieu">
+                        <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="chatLieu" cssStyle="color: crimson"/></span>
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal4"><i class="bi bi-plus-circle-fill"></i></a>
                 </div>
                 <div class="item-right">
+                    <label class="form-label">Đế giầy: </label>
                     <form:select type="text" id="searchName3" path="deGiay" cssClass=".searchName4">
+                        <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="deGiay" cssStyle="color: crimson"/></span>
@@ -162,12 +171,13 @@
             </button>
         </div>
     </form:form>
-    <%--    modal--%>
+
+<%--    modal--%>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form:form modelAttribute="lg" method="post" action="/san-pham/loai-giay/add/${sanpham.id}">
+                <form:form modelAttribute="lg" method="post" action="${action4}">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Loại Giầy</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -211,7 +221,7 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form:form modelAttribute="kichco" action="/san-pham/kich-co/add/${sanpham.id}">
+                <form:form modelAttribute="kichco" action="${action2}">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel2">Thêm kích cỡ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -223,6 +233,7 @@
                         <label class="form-label">Mã Kích Cỡ: </label>
 
                         <form:input path="maKichCo" class="form-control"/>
+                        <span id="maKichCoError" class="text-danger"></span>
                         <form:errors path="maKichCo" cssStyle="color: crimson"/>
                     </div>
                     <div class="mb-3 form-check-inline">
@@ -259,7 +270,7 @@
     <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form:form modelAttribute="ms" action="/san-pham/mau-sac/add/${sanpham.id}">
+                <form:form modelAttribute="ms" action="${action3}">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel3">Thêm màu sắc</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -300,7 +311,7 @@
     <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form:form modelAttribute="vm" action="/san-pham/chat-lieu/add/${sanpham.id}">
+                <form:form modelAttribute="vm" action="${action6}">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel4">Thêm chất liệu</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -339,7 +350,7 @@
     <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form:form modelAttribute="degiay" action="/san-pham/de-giay/add/${sanpham.id}">
+                <form:form modelAttribute="degiay" action="${action5}">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel5">Thêm đế giầy</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"

@@ -132,3 +132,38 @@ $(document).ready(function () {
         }
     });
 });
+// validate modal
+//
+//     $(document).ready(function () {
+//         $('#exampleModal2 form').submit(function (e) {
+//             e.preventDefault();
+//
+//             $.ajax({
+//                 type: 'POST',
+//                 url: '/san-pham/kich-co/add/' + sanpham.id,
+//                 data: $('#exampleModal2 form').serialize(),
+//                 success: function (response) {
+//                     if (response.success) {
+//                         // Đóng modal nếu thành công
+//                         $('#exampleModal2').modal('hide');
+//                         // Thực hiện các xử lý khác sau khi thêm thành công (nếu cần)
+//                     } else {
+//                         // Xử lý khi có lỗi
+//                         if (response.errorMessage) {
+//                             // Hiển thị lỗi chung (nếu có)
+//                             alert(response.errorMessage);
+//                         }
+//                         if (response.errors) {
+//                             for (var key in response.errors) {
+//                                 // Hiển thị lỗi cho từng trường dựa vào key
+//                                 $('#' + key + 'Error').text(response.errors[key]);
+//                             }
+//                         }
+//                     }
+//                 },
+//                 error: function () {
+//                     // Xử lý lỗi nếu cần
+//                 }
+//             });
+//         });
+//     });

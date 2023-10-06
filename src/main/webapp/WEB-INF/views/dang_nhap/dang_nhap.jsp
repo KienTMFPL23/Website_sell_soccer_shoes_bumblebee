@@ -42,23 +42,23 @@
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-block">
                             <img
-                                    src="http://localhost:8080/img/logoBumblebee.png"
+                                    src="../../../img/logoBumblebee.png" height="500" width="470"
                                     alt=""
                             />
                         </div>
                         <div class="col-lg-6" >
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">
+                                    <h1 class="h4 text-gray-900 mb-4" style="margin-top: -20px;">
                                         Bumblebee Shop!
                                     </h1>
+                                    <p style="color: red; text-align: center; font-size: 19px;">${message1} <br> ${message2}</p>
                                 </div>
-                                <form:form class="user" modelAttribute="taikhoan" method="post">
+                                <form:form action="/bumblebee/login" class="user" modelAttribute="taikhoan" method="post">
                                     <div class="form-group">
                                         <form:input
-                                                type="email"
+                                                type="text"
                                                 class="form-control form-control-user"
-                                                id="exampleInputEmail"
                                                 aria-describedby="emailHelp"
                                                 placeholder="Tên đăng nhập"
                                                 path="username"
@@ -85,12 +85,10 @@
                                             >
                                         </div>
                                     </div>
-                                    <a
-                                            href="index.html"
-                                            class="btn btn-primary btn-user btn-block"
-                                    >
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Đăng nhập
-                                    </a>
+                                    </button>
+
                                 </form:form>
                                 <hr />
                                 <div class="text-center">
@@ -99,7 +97,7 @@
                                     >
                                 </div>
                                 <div class="text-center">
-                                    <a class="small" href="register.html"
+                                    <a class="small" href="/bumblebee/register"
                                     >Tạo tài khoản!</a
                                     >
                                 </div>

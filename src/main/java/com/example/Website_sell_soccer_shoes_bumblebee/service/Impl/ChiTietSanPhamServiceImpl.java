@@ -77,7 +77,17 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         return repo.searchByDeGiay(idDe, pageable);
     }
 
-
+    @Override
+    public ChiTietSanPham updateSoLuongTon(UUID id, int soLuong) {
+        ChiTietSanPham chiTietSanPham = repo.findById(id).orElse(null);
+        if (chiTietSanPham != null) {
+            chiTietSanPham.setSoLuong(soLuong);
+            repo.save(chiTietSanPham);
+            return chiTietSanPham;
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public Page<ChiTietSanPham> searchCL(UUID idCL, Pageable pageable) {
@@ -112,6 +122,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     @Override
     public List<KichCo> getListKC() {
         return repo.listKC();
+    }
+
+    @Override
+    public UUID getOneToAddModal(UUID id) {
+        return repo.getOneToAddModal(id);
     }
 
 }

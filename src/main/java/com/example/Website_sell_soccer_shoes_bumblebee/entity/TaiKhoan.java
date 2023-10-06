@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,10 @@ public class TaiKhoan {
     private UUID id;
 
     @Column(name = "Username")
+    @NotBlank(message = "Tên đăng nhập không được để trống")
     private String username;
 
+    @NotBlank(message = "Mật khẩu không được để trống")
     @Column(name = "Password")
     private String password;
 

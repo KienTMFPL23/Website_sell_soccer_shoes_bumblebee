@@ -6,6 +6,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.ChatLieuService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.SanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +30,6 @@ import java.util.UUID;
 
 @Controller
 public class SanPhamController {
-
 
     @Autowired
     ChiTietSanPhamService service;
@@ -187,6 +188,12 @@ public class SanPhamController {
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("kichco", new KichCo());
         model.addAttribute("ms", new MauSac());
+        model.addAttribute("action2", "/san-pham/kich-co/add/" + id);
+        model.addAttribute("action3", "/san-pham/mau-sac/add/" + id);
+        model.addAttribute("action4", "/san-pham/loai-giay/add/" + id);
+        model.addAttribute("action5", "/san-pham/de-giay/add/" + id);
+        model.addAttribute("action6", "/san-pham/chat-lieu/add/" + id);
+
         SanPham sanPham1 = sanPhamService.getOne(id);
         model.addAttribute("tensp", sanPham1.getTenSanPham());
         model.addAttribute("action", "/chi-tiet-san-pham/add/" + sanPham1.getId());
@@ -237,12 +244,12 @@ public class SanPhamController {
         service.addKC(ctsp);
 
         //generate code qr
-//        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
-//        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
-//        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
+        String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
+        String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
+        new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
 //
 //        // Lưu QR code vào thư mục "QRCode" trong "Documents"
-//        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
+        QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
 //        List<ChiTietSanPham> qlSanPhams = service.getList();
 //        if (qlSanPhams.size() != 0) {
 //            for (ChiTietSanPham ct : qlSanPhams
@@ -301,52 +308,49 @@ public class SanPhamController {
         }
         loaiGiay.setTrangthai(true);
         loaiGiayRepo.save(loaiGiay);
-        model.addAttribute("view", "../chi-tiet-san-pham/index.jsp");
+        model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 
     @RequestMapping("/san-pham/kich-co/add/{id}")
     public String addKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, @PathVariable("id") UUID id, BindingResult resultt) {
-        SanPham sanPham22 = sanPhamService.getOne(id);
-        Boolean hasError = resultt.hasErrors();
-        model.addAttribute("idsp", sanPham22.getId());
-        model.addAttribute("tensp", sanPham22.getTenSanPham());
+        SanPham sanPham1 = sanPhamService.getOne(id);
+        model.addAttribute("idsp", sanPham1.getId());
+        model.addAttribute("tensp", sanPham1.getTenSanPham());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("lg", new LoaiGiay());
-        if (kichCo != null) {
-            hasError = true;
-            model.addAttribute("maspError", "Vui lòng không nhập trùng mã");
-            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
+
+        if (resultt.hasErrors()) {
+            model.addAttribute("mess", "Chi tiết sản phẩm chưa tồn tại");
+                return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+
+
         }
-        if (hasError) {
-            // Báo lỗi
-            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
-        }
-        this.kichCoService.addKC(kichCo);
-        model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham22.getId();
+
+            kichCoService.addKC(kichCo);
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+
     }
 
     @PostMapping("/san-pham/mau-sac/add/{id}")
     public String add(@Valid @ModelAttribute("ms") MauSac ms, @PathVariable("id") UUID id, BindingResult result, Model model) {
-        SanPham sanPham2 = sanPhamService.getOne(id);
-        model.addAttribute("idsp", sanPham2.getId());
-        model.addAttribute("tensp", sanPham2.getTenSanPham());
+        SanPham sanPham1 = sanPhamService.getOne(id);
+        model.addAttribute("idsp", sanPham1.getId());
+        model.addAttribute("tensp", sanPham1.getTenSanPham());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("kichco", new KichCo());
         model.addAttribute("lg", new LoaiGiay());
         if (result.hasErrors()) {
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            model.addAttribute("mess", "Nhập lại thông tin kích cỡ!");
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         } else {
             this.mauSacReponsitories.save(ms);
         }
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 
     @Autowired
@@ -357,9 +361,9 @@ public class SanPhamController {
                         @Valid @ModelAttribute("vm") ChatLieu cl,
                         BindingResult result
     ) {
-        SanPham sanPham2 = sanPhamService.getOne(id);
-        model.addAttribute("idsp", sanPham2.getId());
-        model.addAttribute("tensp", sanPham2.getTenSanPham());
+        SanPham sanPham1 = sanPhamService.getOne(id);
+        model.addAttribute("idsp", sanPham1.getId());
+        model.addAttribute("tensp", sanPham1.getTenSanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("kichco", new KichCo());
@@ -370,40 +374,40 @@ public class SanPhamController {
             hasError = true;
             model.addAttribute("maspError", "Vui lòng không nhập trùng mã");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
         if (hasError) {
             // Báo lỗi
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
         this.chatLieuRepo.save(cl);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 
     @PostMapping("/san-pham/de-giay/add/{id}")
     public String add(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
-        SanPham sanPham2 = sanPhamService.getOne(id);
-        model.addAttribute("idsp", sanPham2.getId());
-        model.addAttribute("tensp", sanPham2.getTenSanPham());
+        SanPham sanPham1 = sanPhamService.getOne(id);
+        model.addAttribute("idsp", sanPham1.getId());
+        model.addAttribute("tensp", sanPham1.getTenSanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("kichco", new KichCo());
         model.addAttribute("lg", new LoaiGiay());
         if (result.hasErrors()) {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
 
         if (deGiayRepo.findByMa(degiay.getMa()) != null) {
             model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
 
         deGiayRepo.save(degiay);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham2.getId();
+        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 }
