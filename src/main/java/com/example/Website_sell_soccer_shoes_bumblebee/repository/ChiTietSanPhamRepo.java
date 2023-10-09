@@ -77,9 +77,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 
 //    List<KichCo> search2KC(@Param("keyword") Integer keyword);
 
-// update ctsp modal add
-    @Query(value = "select c.IdSP from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1",nativeQuery = true)
-
+    // update ctsp modal add
+    @Query(value = "select c.IdSP from ChiTietSanPham c join SanPham s on c.IdSP=s.Id where c.Id=?1", nativeQuery = true)
     UUID getOneToAddModal(UUID id);
 
 
@@ -87,12 +86,15 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 
 
-    @Query(value = "SELECT CTSP.Id as 'id', CTSP.GiaBan as 'giaBan',CTSP.IdSP as'sanPham',CTSP.IdMauSac as 'mauSac',CTSP.IdChatLieu as 'chatLieu',CTSP.IdTheLoai as 'loaiGiay',CTSP.IdKichCo as 'kichCo',CTSP.IdDeGiay as 'deGiay',CTSP.MoTaCT as 'moTaCT',CTSP.SoLuong as 'soLuong',CTSP.TrangThai as 'trangThai', HA.duongdan1 as 'hinhAnh' FROM ChiTietSanPham CTSP\n" +
-            "LEFT JOIN HinhAnh HA ON CTSP.Id = HA.IdCTSP", nativeQuery = true)
-    List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh();
 
     @Query("select h from HinhAnh h where h.ctsp.id = ?1")
     HinhAnh getHADetail(UUID idCTSP);
+
+
+    @Query(value = "select * from mausac ms join ChiTietSanPham ctsp on ms.Id = ctsp.IdMauSac " +
+            "join SanPham sp on sp.Id = ctsp.IdSP where sp.Id = ?1", nativeQuery = true)
+    List<MauSac> getMauBySanPham(UUID idSP);
+
 
 
 }

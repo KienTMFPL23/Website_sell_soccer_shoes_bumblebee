@@ -13,7 +13,7 @@ public interface ChiTietSanPhamService {
 
 
 
-    List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh();
+    List<MauSac> getMauSacBySP(UUID idSP);
 
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 

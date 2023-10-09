@@ -70,8 +70,8 @@ public class ChiTietSanPham {
     @NotNull(message = "không để trống")
     Integer trangThai;
 
-    @OneToMany(mappedBy = "ctsp")
-    List<HinhAnh> hinhAnhs;
+    @OneToOne(mappedBy = "ctsp")
+    HinhAnh hinhAnhs;
 
 
 
