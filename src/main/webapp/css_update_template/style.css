@@ -1,35 +1,75 @@
-*{
+* {
     font-family: "Arial", "Helvetica", sans-serif;
 }
-.product_price,.product_name{
+.product_price, .product_name {
     text-align: center;
 }
+
 .product_name {
     margin: 10px 0px;
 }
+
+.butAddCart{
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    background-color: #37517E;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.butAddCart a {
+    text-align: center;
+    font-size: 15px;
+    padding: 8px 30px;
+}
+
+.product_name a{
+    font-size: 18px;
+    color: black;
+}
+.product_price span{
+    color: gray;
+    font-size: 15px;
+
+}
+menu-link:before{
+    background-color: #37517E;
+    color: blue;
+}
+/*banner*/
+
+
 /*detail*/
-.ps-select{
+.ps-select {
     width: 130px;
     height: 30px;
     background-color: #e4e4e4;
     border: none;
+    font-size: 15px;
 }
-.form-control{
+
+.form-control {
     height: 30px;
     width: 70px;
     margin-left: 10px;
 }
-.ps-product__style ul li a{
+
+.ps-product__style ul li a {
     height: 30px;
     width: 30px;
 }
 
 /*cart*/
-.plus{
+.plus {
     margin-left: 10px;
 }
+
 /*listSp*/
-.ps-widget__content input{
+.ps-widget__content input {
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -38,4 +78,13 @@
 input[type="checkbox"] {
     transform: scale(1.7);
     margin-right: 15px;
+}
+.ps-widget__content{
+    font-size: 15px;
+}
+.ps-widget__content a{
+    color: black;
+}
+.form-control{
+    font-size: 17px;
 }

@@ -25,8 +25,8 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
 
     @Override
-    public List<ChiTietSanPhamDto> getListChiTietSanPhamHinhAnh() {
-        return repo.getListChiTietSanPhamHinhAnh();
+    public List<MauSac> getMauSacBySP(UUID idSP) {
+        return repo.getMauBySanPham(idSP);
     }
 
     @Override

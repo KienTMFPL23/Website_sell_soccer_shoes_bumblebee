@@ -77,7 +77,6 @@ public class HomeController {
         List<KichCo> listKC = kichCoService.getList();
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(id);
         model.addAttribute("hinhAnh",hinhAnh);
-        System.out.println(hinhAnh.getDuongdan1());
         List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<MauSac> listMS = mauSacService.getAll();
         model.addAttribute("listMS", listMS);

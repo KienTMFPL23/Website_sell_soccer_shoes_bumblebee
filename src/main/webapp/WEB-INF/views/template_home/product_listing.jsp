@@ -23,22 +23,22 @@
                     <div class="ps-product__column col-md-3">
                         <div class="ps-shoe mb-30">
                             <div class="ps-shoe__thumbnail">
-                                <c:forEach var="image" items="${item.hinhAnhs}">
-                                    <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
-                                    <img
-                                            src="../../../uploads/${image.tenanh}" height="250px" alt=""><a
-                                        class="ps-shoe__overlay" href="/bumblebee/detail/${item.id}"></a>
-                                </c:forEach>
+                                <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
+                                <img
+                                        src="../../../uploads/${item.hinhAnhs.tenanh}" height="250px"
+                                        alt=""><a
+                                    class="ps-shoe__overlay" href="/bumblebee/detail/${item.id}"></a>
                             </div>
                             <div class="ps-shoe__content">
                                 <div class="ps-shoe__variants" style="margin-top: 10px">
                                     <div class="ps-shoe__variant normal">
-                                        <c:forEach var="image" items="${item.hinhAnhs}">
-                                            <img src="../../../uploads/${image.duongdan1}">
-                                            <img src="../../../uploads/${image.duongdan2}">
-                                            <img src="../../../uploads/${image.duongdan3}">
-                                            <img src="../../../uploads/${image.duongdan4}">
-                                        </c:forEach>
+                                        <img src="../../../uploads/${item.hinhAnhs.duongdan1}">
+                                        <img src="../../../uploads/${item.hinhAnhs.duongdan2}">
+                                        <img src="../../../uploads/${item.hinhAnhs.duongdan3}">
+                                        <img src="../../../uploads/${item.hinhAnhs.duongdan4}">
+                                    </div>
+                                    <div class="ps-shoe__variant butAddCart">
+                                        <button>Thêm giỏ hàng</button>
                                     </div>
                                 </div>
                                 <div class="ps-shoe__detail">
@@ -88,7 +88,10 @@
                                 </li>
                             </c:forEach>
                         </ul>
-                        <input type="submit" value="Tìm kiếm">
+                        <input class="ac-slider__filter ps-btn"
+                               style="padding: 5px 30px;font-size: 12px;line-height: 15px;background-color: #37517E"
+                               type="submit"
+                               value="Tìm kiếm">
                     </form>
                 </div>
             </aside>
@@ -101,7 +104,7 @@
                         <form:form modelAttribute="searchFormByGiaban">
                             <form:input path="minPrice" placeholder="Từ"></form:input>
                             <form:input path="maxPrice" placeholder="Đến"></form:input>
-                            <button class="ac-slider__filter ps-btn" type="submit">Tìm kiếm</button>
+                            <button class="ac-slider__filter ps-btn" type="submit" style="background-color: #37517E">Tìm kiếm</button>
                         </form:form>
                     </form>
                 </div>
@@ -154,16 +157,13 @@
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Lấy danh sách tất cả các checkbox (bao gồm cả checkbox "Tất cả")
         var checkboxes = document.querySelectorAll(".check-theloai");
-
-        // Lặp qua từng checkbox và thêm xử lý sự kiện
         checkboxes.forEach(function (checkbox) {
             checkbox.addEventListener("change", function () {
-                // Kiểm tra nếu checkbox khác được chọn, thì bỏ chọn checkbox "Tất cả"
                 if (this !== document.querySelector(".check-all") && this.checked) {
                     document.querySelector(".check-all").checked = false;
                 }
+
             });
         });
     });
