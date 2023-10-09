@@ -2,16 +2,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ban Hang</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-<body>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+    #myInput {
+        height: 40px;
+        border: 2px solid #37517E;
+        border-radius: 15px;
+        margin-bottom: 15px;
+    }
+
+
+    th, tr {
+        line-height: 40px;
+    }
+
+</style>
+
 <div class="header">
     <nav class="navbar navHoaDon navbar-expand-lg">
         <%-- list hóa đơn chờ--%>
@@ -60,7 +70,7 @@
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách sản phẩm</h1>
@@ -68,40 +78,80 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form:form method="get" action="/bumblebee/ban-hang-tai-quay/searchSanPham"
-                                           modelAttribute="searchForm">
-                                    <form id="modalForm">
-                                        <button id="timSanPham" class="btn btn-primary"
-                                                type="submit">Tìm kiếm
-                                        </button>
-                                        <form:input path="keyword" onkeyup="filterFunction()"
-                                                    placeholder="Tìm kiếm.."
-                                                    style="width: 250px"/>
-                                    </form>
-                                </form:form>
-                                <table class="table">
+
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"><input id="myInput" placeholder="Tìm kiếm sản phẩm"></th>
+                                        <th scope="col"><%-- Màu sắc--%>
+                                            <select id="selectMS">
+                                                <option>---------</option>
+                                                <c:forEach items="${listChatLieu}" var="ms">
+                                                    <option>${ms.ten}</option>
+                                                </c:forEach>
+                                            </select></th>
+                                        <th scope="col"><%-- Chất liệu --%>
+                                            <select id="selectCL">
+                                                <option>---------</option>
+                                                <c:forEach items="${listMauSac}" var="cl">
+                                                    <option>${cl.ten}</option>
+                                                </c:forEach>
+                                            </select></th>
+                                        <th scope="col"> <%-- Đế giày--%>
+                                            <select id="selectDG">
+                                                <option>---------</option>
+                                                <c:forEach items="${listDeGiay}" var="dg">
+                                                    <option>${dg.loaiDe}</option>
+                                                </c:forEach>
+                                            </select></th>
+                                        <th scope="col"> <%-- Kích cỡ--%>
+                                            <select id="selectKC">
+                                                <option>---------</option>
+                                                <c:forEach items="${listKC}" var="kc">
+                                                    <option>${kc.size}</option>
+                                                </c:forEach>
+                                            </select></th>
+                                        <th scope="col"><%-- Loại giày--%>
+                                            <select id="selectLG">
+                                                <option>------------</option>
+                                                <c:forEach items="${listLoaiGiay}" var="lg">
+                                                    <option>${lg.tentheloai}</option>
+                                                </c:forEach>
+                                            </select></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+
+                                <table class="table" id="tableModal">
                                     <thead>
                                     <tr>
                                         <th scope="col">STT</th>
                                         <th scope="col">Tên</th>
                                         <th scope="col">Số lượng</th>
                                         <th scope="col">Màu sắc</th>
+                                        <th scope="col">Chất liệu</th>
+                                        <th scope="col">Đế giày</th>
                                         <th scope="col">Kích cỡ</th>
+                                        <th scope="col">Loại giày</th>
                                         <th scope="col">Giá bán</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="myTable">
                                     <c:forEach items="${listSanPham}" var="sp" varStatus="i">
                                         <tr>
                                             <td>${i.count}</td>
                                             <td>${sp.sanPham.tenSanPham}</td>
                                             <td>${sp.soLuong}</td>
                                             <td>${sp.mauSac.ten}</td>
+                                            <td>${sp.chatLieu.ten}</td>
+                                            <td>${sp.deGiay.loaiDe}</td>
                                             <td>${sp.kichCo.size}</td>
+                                            <td>${sp.loaiGiay.tentheloai}</td>
                                             <td>${sp.giaBan}</td>
                                             <td><a href="/bumblebee/ban-hang-tai-quay/add-gio-hang/${sp.id}"
-                                                   class="btn btn-primary">add</a></td>
+                                                   class="btn btn-primary">Add</a></td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -185,15 +235,18 @@
                        action="/bumblebee/ban-hang-tai-quay/thanhtoan/${idHoaDon}">
                 <%--                    <input value="${idHoaDon}" name="id" type="hidden">--%>
                 <div class="row">
-                    <p>Khách hàng: <form:input path="tenNguoiNhan" id="phoneNumber"
-                                               onchange="getTenKhachHang()" class="form-control"/>
+                    <b>Khách hàng:</b>
+                    <div class="col-sm-10">
+                        <input id="phoneNumber" type="number" onchange="getTenKhachHang(this.value)" class="form-control"/>
+<%--                        <form:input path="tenNguoiNhan" id="tenKhachHang" readonly="true" class="form-control"/>--%>
+                    </div>
+                    <b style="color: red" id="tenKhachHang"></b></p>
                     <b>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>
                     </b>
                     <p><b>Tổng tiền :</b> <fmt:formatNumber value="${sumMoney}" type="number"/>
                         đ</p>
                         <%--                    <p><b>Giảm giá :</b> 0đ</p>--%>
-                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"
-                    /> đ</p>
+                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
                                                      onchange="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly
@@ -211,6 +264,189 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $("#myInput").keyup(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#selectMS").click(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#selectCL").click(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#selectDG").click(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#selectLG").click(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#selectKC").click(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+
+    // $(document).ready(function () {
+    //     $('#selectLG').select2({
+    //         width: 150,
+    //         placeholder: "Lọc loại giày",
+    //         ajax: {
+    //             type: 'GET',
+    //             url: '',
+    //             data: function (params) {
+    //                 return {
+    //                     keyword: params.term || '',
+    //
+    //                 };
+    //             },
+    //             processResults: function (data) {
+    //                 return {
+    //                     results: $.map(data, function (item) {
+    //                         return {
+    //                             text: item.tentheloai,
+    //                             id: item.id
+    //                         }
+    //                     })
+    //                 };
+    //             }
+    //         }
+    //     });
+    // });
+    //
+    // $(document).ready(function () {
+    //     $('#selectKC').select2({
+    //         width: 150,
+    //         placeholder: "Lọc kích cỡ",
+    //         ajax: {
+    //             type: 'GET',
+    //             url: '',
+    //             data: function (params) {
+    //                 return {
+    //                     keyword: params.term || '',
+    //
+    //                 };
+    //             },
+    //             processResults: function (data) {
+    //                 return {
+    //                     results: $.map(data, function (item) {
+    //                         return {
+    //                             text: item.size,
+    //                             id: item.id
+    //                         }
+    //                     })
+    //                 };
+    //             }
+    //         }
+    //     });
+    // });
+    // $(document).ready(function () {
+    //     $('#selectMS').select2({
+    //         width: 150,
+    //         placeholder: "Lọc màu sắc",
+    //         ajax: {
+    //             type: 'GET',
+    //             url: '',
+    //             data: function (params) {
+    //                 return {
+    //                     keyword: params.term || '',
+    //
+    //                 };
+    //             },
+    //             processResults: function (data) {
+    //                 return {
+    //                     results: $.map(data, function (item) {
+    //                         return {
+    //                             text: item.ten,
+    //                             id: item.id
+    //                         }
+    //                     })
+    //                 };
+    //             }
+    //         }
+    //     });
+    // });
+
+    // $(document).ready(function () {
+    //     $('#selectDG').select2({
+    //         width: 150,
+    //         placeholder: "Lọc đế giày",
+    //         allowClear: true,
+    //         ajax: {
+    //             type: 'GET',
+    //             url: '/bumblebee/ban-hang-tai-quay/search-de-giay/modal',
+    //             data: function (params) {
+    //                 return {
+    //                     keyword: params.term || '',
+    //
+    //                 };
+    //             },
+    //             processResults: function (data) {
+    //                 return {
+    //                     results: $.map(data, function (item) {
+    //                         return {
+    //                             text: item.loaiDe,
+    //                             id: item.id
+    //                         }
+    //                     })
+    //                 };
+    //             }
+    //         }
+    //     });
+    // });
+
+
+    // $(document).ready(function () {
+    //     $('#selectCL').select2({
+    //         width: 150,
+    //         placeholder: "Lọc chất liệu",
+    //         ajax: {
+    //             type: 'GET',
+    //             url: '',
+    //             data: function (params) {
+    //                 return {
+    //                     keyword: params.term || '',
+    //
+    //                 };
+    //             },
+    //             processResults: function (data) {
+    //                 return {
+    //                     results: $.map(data, function (item) {
+    //                         return {
+    //                             text: item.ten,
+    //                             id: item.id
+    //                         }
+    //                     })
+    //                 };
+    //             }
+    //         }
+    //     });
+    // });
+</script>
+
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;
@@ -227,7 +463,22 @@
         }
     }
 </script>
+<script>
+    var data = {
+        <c:forEach items="${listKhachHang}" var="k">
+        "${k.soDienThoai}": "${k.ho} ${k.tenDem} ${k.ten}",
+        </c:forEach>
+    };
 
+    function getTenKhachHang(sdt) {
+        var textName = document.getElementById("tenKhachHang");
+        if (sdt === "") {
+            textName.innerText = "Không tìm thấy khách hàng nào";
+        } else {
+            textName.innerText = data[sdt];
+        }
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -239,3 +490,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+

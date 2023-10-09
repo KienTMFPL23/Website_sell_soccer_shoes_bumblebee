@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public interface HoaDonChiTietService {
 
+    List<HoaDonChiTiet> getHoaDonById(UUID id);
+
     List<HoaDonChiTiet> getListHoaDonCTByIdHoaDon(UUID id);
 
     HoaDonChiTiet getOneHoaDon(UUID id);
