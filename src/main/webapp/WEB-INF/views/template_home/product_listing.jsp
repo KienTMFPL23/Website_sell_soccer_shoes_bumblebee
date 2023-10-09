@@ -38,7 +38,7 @@
                                         <img src="../../../uploads/${item.hinhAnhs.duongdan4}">
                                     </div>
                                     <div class="ps-shoe__variant butAddCart">
-                                        <button>Thêm giỏ hàng</button>
+                                        <a style="color: white">Thêm giỏ hàng</a>
                                     </div>
                                 </div>
                                 <div class="ps-shoe__detail">
