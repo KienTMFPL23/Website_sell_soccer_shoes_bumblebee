@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -52,4 +53,9 @@ public class HoaDon {
     @ManyToOne()
     @JoinColumn(name = "IdKH")
     private KhachHang khachHang;
+
+    @OneToMany(mappedBy = "hoaDon")
+    private List<HoaDonChiTiet> hoaDons;
+
+
 }

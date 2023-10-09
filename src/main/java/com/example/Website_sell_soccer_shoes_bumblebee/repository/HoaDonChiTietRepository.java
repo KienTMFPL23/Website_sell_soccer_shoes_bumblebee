@@ -13,9 +13,15 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     @Query("select hdct from HoaDonChiTiet  hdct where hdct.hoaDon.id = ?1")
     List<HoaDonChiTiet> getListByHoaDon(UUID id);
 
-    @Query(value = "delete  from HoaDonChiTiet  where HoaDonChiTiet.IdHoaDon = ?1",nativeQuery = true)
+    @Query(value = "delete  from HoaDonChiTiet  where HoaDonChiTiet.IdHoaDon = ?1", nativeQuery = true)
     List<HoaDonChiTiet> deleteHDCTById(UUID id);
+
+
+    @Query("select hdct from HoaDonChiTiet hdct where hdct.chiTietSanPham.id = ?1")
+    HoaDonChiTiet getSanPhamInHDCT(UUID idSP);
+
 
     @Query("select hdct from HoaDonChiTiet hdct where hdct.hoaDon.id = ?1 and hdct.chiTietSanPham.id = ?2")
     HoaDonChiTiet getSanPhamInHDCT(UUID idHoaDon,UUID idSP);
+
 }
