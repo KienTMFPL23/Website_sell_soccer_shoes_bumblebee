@@ -87,10 +87,10 @@
     </div>
 </div>
 
-<table id="table" class="ui celled table" width="100%">
+<table id="tableChatLieu" class="ui celled table" width="100%">
     <thead>
     <tr>
-        <th scope="col">Mã</th>
+        <th scope="col">Mã Chất liệu</th>
         <th scope="col">Tên Chất liệu</th>
         <th scope="col">Trạng thái</th>
         <th scope="col">Action</th>

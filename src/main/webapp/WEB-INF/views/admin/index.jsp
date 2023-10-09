@@ -366,10 +366,10 @@
         </div>
     </div>
 </div>
-<%--<script--%>
-<%--        type="text/javascript"--%>
-<%--        src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"--%>
-<%--></script>--%>
+<!--<script-->
+<!--        type="text/javascript"-->
+<!--        src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"-->
+<!--&gt;</script>-->
 <%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 <!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

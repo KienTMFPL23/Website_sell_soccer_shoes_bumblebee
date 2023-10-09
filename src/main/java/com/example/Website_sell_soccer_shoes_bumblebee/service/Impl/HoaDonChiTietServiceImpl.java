@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -15,6 +16,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
 
+
+    @Override
+    public List<HoaDonChiTiet> getHoaDonById(UUID id) {
+        return hoaDonChiTietRepository.getListByHoaDon(id);
+    }
 
     @Override
     public List<HoaDonChiTiet> getListHoaDonCTByIdHoaDon(UUID id) {
