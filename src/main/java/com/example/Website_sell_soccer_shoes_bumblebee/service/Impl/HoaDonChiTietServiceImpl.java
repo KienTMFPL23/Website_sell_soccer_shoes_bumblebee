@@ -45,8 +45,8 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idSP) {
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.getSanPhamInHDCT(idSP);
+    public HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idHoaDon,UUID idSP) {
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.getSanPhamInHDCT(idHoaDon,idSP);
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + 1);
             hoaDonChiTietRepository.save(hoaDonChiTiet);
@@ -56,10 +56,6 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         }
     }
 
-    @Override
-    public HoaDonChiTiet getSanPhamInHDCT(UUID idSP) {
-        return hoaDonChiTietRepository.getSanPhamInHDCT(idSP);
-    }
 
     @Override
     public Double getTotalMoney(List<HoaDonChiTiet> list) {

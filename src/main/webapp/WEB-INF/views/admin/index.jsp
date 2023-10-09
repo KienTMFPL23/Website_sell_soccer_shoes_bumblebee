@@ -103,7 +103,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
 
                     <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
-                    <a class="collapse-item" href="#">Kích cỡ</a>
+                    <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
 
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
                     <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
@@ -402,9 +402,22 @@
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="../../../js/kich_co/kich_co.js"></script>
+
+<script src="../../../js/loai_giay/loai_giay.js"></script>
+
 <script src="../../../js/hinh_anh/hinh_anh.js"></script>
 <script src="../../../js/hinh_anh/select2.js"></script>
-<script src="../../../js/loai_giay/loai_giay.js.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -20,4 +21,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
     @Query("select p from SanPham p  where p.maSanPham = ?1 or p.tenSanPham = ?1")
     Page<SanPham> findAllByKeWord(String keyword,Pageable pageable);
+
+    @Query("select p from SanPham p  where p.maSanPham = ?1 or p.tenSanPham = ?1")
+    List<SanPham> searchSanPham(String keyword);
 }

@@ -1,7 +1,7 @@
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <style>
     * {
         font-family: 'Inter', sans-serif;
@@ -12,8 +12,6 @@
       rel="stylesheet">
 <link rel="stylesheet" href="../../../plugins/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../../plugins/ps-icon/style.css">
-
-<!-- CSS Library-->
 <link rel="stylesheet" href="../../../plugins/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../plugins/owl-carousel/assets/owl.carousel.css">
 <link rel="stylesheet" href="../../../plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css">
@@ -24,7 +22,6 @@
 <link rel="stylesheet" href="../../../plugins/revolution/css/settings.css">
 <link rel="stylesheet" href="../../../plugins/revolution/css/layers.css">
 <link rel="stylesheet" href="../../../plugins/revolution/css/navigation.css">
-<!-- Custom-->
 <link rel="stylesheet" href="../../../css_template/style.css">
 <link rel="stylesheet" href="../../../css_update_template/style.css">
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

@@ -76,6 +76,7 @@
             </a>
         </div>
     </div>
+
     <table id="tableHinhAnh" class="ui celled table" width="100%">
         <thead>
             <tr>

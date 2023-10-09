@@ -1,16 +1,6 @@
-
-<div class="header-services">
-    <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0"
-         data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1"
-         data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
-        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery
-            on every order with Sky Store</p>
-        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery
-            on every order with Sky Store</p>
-        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery
-            on every order with Sky Store</p>
-    </div>
-</div>
+<%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <main class="ps-main">
     <div class="test">
         <div class="container">
@@ -26,29 +16,25 @@
                 <div class="col-lg-10 col-md-12 col-lg-offset-1">
                     <div class="ps-product__thumbnail">
                         <div class="ps-product__preview">
-                            <div class="ps-product__variants">
-                                <div class="item"><img src="../../../images_template/shoe-detail/1.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/2.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
-                                <div class="item"><img src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
+                            <div class="ps-product__variations">
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan1}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan2}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan3}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan4}" alt=""></div>
+                                <div class="item"><img src="../../../uploads/${hinhAnh.duongdan5}" alt=""></div>
                             </div>
-                            <a class="popup-youtube ps-product__video"
-                               href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img
-                                    src="../../../images_template/shoe-detail/1.jpg" alt=""><i
-                                    class="fa fa-play"></i></a>
                         </div>
                         <div class="ps-product__image">
-                            <div class="item"><img class="zoom" src="../../../images_template/shoe-detail/1.jpg" alt=""
-                                                   data-zoom-image="images/shoe-detail/1.jpg"></div>
-                            <div class="item"><img class="zoom" src="../../../images_template/shoe-detail/2.jpg" alt=""
-                                                   data-zoom-image="images/shoe-detail/2.jpg"></div>
-                            <div class="item"><img class="zoom" src="../../../images_template/shoe-detail/3.jpg" alt=""
-                                                   data-zoom-image="images/shoe-detail/3.jpg"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.tenanh}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.tenanh}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan2}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan2}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan3}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan3}"></div>
                         </div>
                     </div>
                     <div class="ps-product__thumbnail--mobile">
-                        <div class="ps-product__main-img"><img src="../../../images_template/shoe-detail/1.jpg" alt="">
+                        <div class="ps-product__main-img"><img src="../../../uploads/${hinhAnh.tenanh}" alt="">
                         </div>
                         <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true"
                              data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -59,61 +45,40 @@
                                 src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
                     </div>
                     <div class="ps-product__info">
-                        <div class="ps-product__rating">
-                            <select class="ps-rating">
-                                <option value="1">1</option>
-                                <option value="1">2</option>
-                                <option value="1">3</option>
-                                <option value="1">4</option>
-                                <option value="2">5</option>
-                            </select><a href="#">(Read all 8 reviews)</a>
-                        </div>
-                        <h1>Air strong training</h1>
-                        <p class="ps-product__category"><a href="#"> Men shoes</a>,<a href="#"> Nike</a>,<a href="#">
-                            Jordan</a></p>
-                        <h3 class="ps-product__price">£ 115
-                            <del>£ 330</del>
+                        <h1>${ctsp.sanPham.tenSanPham}</h1>
+                        <h3 class="ps-product__price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency" />
                         </h3>
-                        <div class="ps-product__block ps-product__quickview">
-                            <h4>QUICK REVIEW</h4>
-                            <p>The Nike Free RN 2017 Men's Running Sky weighs less than previous versions and features
-                                an updated knit material…</p>
-                        </div>
                         <div class="ps-product__block ps-product__style">
-                            <h4>CHOOSE YOUR STYLE</h4>
-                            <ul>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/1.jpg"
-                                                                       alt=""></a></li>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/2.jpg"
-                                                                       alt=""></a></li>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/3.jpg"
-                                                                       alt=""></a></li>
-                                <li><a href="product-detail.html"><img src="../../../images_template/shoe/sidebar/2.jpg"
-                                                                       alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="ps-product__block ps-product__size">
-                            <h4>CHOOSE SIZE<a href="#">Size chart</a></h4>
-                            <select class="ps-select selectpicker">
-                                <option value="1">Select Size</option>
-                                <option value="2">4</option>
-                                <option value="3">4.5</option>
-                                <option value="3">5</option>
-                                <option value="3">6</option>
-                                <option value="3">6.5</option>
-                                <option value="3">7</option>
-                                <option value="3">7.5</option>
-                                <option value="3">8</option>
-                                <option value="3">8.5</option>
-                                <option value="3">9</option>
-                                <option value="3">9.5</option>
-                                <option value="3">10</option>
-                            </select>
-                            <div class="form-group">
-                                <input class="form-control" type="number" value="1">
+                            <h4>Chọn màu sắc</h4>
+                            <div>
+                                <ul>
+                                    <c:forEach var="ms" items="${listMS}">
+                                        <li><a class="mauGiay"
+                                                href="#"
+                                                style="background-color: ${ms.ten};width: 30px;border: 1px solid #ddd"></a></li>
+                                    </c:forEach>
+                                </ul>
                             </div>
                         </div>
-                        <div class="ps-product__shopping"><a class="ps-btn mb-10" href="cart.html">Add to cart<i
+                        <div class="ps-product__block ps-product__size">
+                            <h4>Kích cỡ<a href="#">Size chart</a></h4>
+                            <div style="display: flex;justify-content: space-between">
+                                <select class="ps-select ">
+                                    <option value="1">Chọn kích cỡ</option>
+                                    <c:forEach var="kc" items="${listKC}">
+                                        <option value="">${kc.size}</option>
+                                    </c:forEach>
+                                </select>
+                                <div  style="display: flex;align-items: center">
+                                    <p>Số lượng</p>
+                                    <div class="form-group">
+                                        <input class="form-control" type="number" value="1">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="ps-product__shopping"><a class="ps-btn mb-10" href="cart.html" style="background-color: #37517E;font-size: 15px">Thêm vào giỏ hàng<i
                                 class="ps-icon-next"></i></a>
                             <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i
                                     class="ps-icon-heart"></i></a><a href="compare.html"><i
@@ -123,25 +88,16 @@
                     <div class="clearfix"></div>
                     <div class="ps-product__content mt-50">
                         <ul class="tab-list" role="tablist">
-                            <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Overview</a>
+                            <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Mô tả</a>
                             </li>
-                            <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Review</a></li>
-                            <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">PRODUCT TAG</a>
-                            </li>
-                            <li><a href="#tab_04" aria-controls="tab_04" role="tab" data-toggle="tab">ADDITIONAL</a>
+                            <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Chính sách đổi trả</a></li>
+                            <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">Đánh giá</a>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-content mb-60">
                         <div class="tab-pane active" role="tabpanel" id="tab_01">
-                            <p>Caramels tootsie roll carrot cake sugar plum. Sweet roll jelly bear claw liquorice.
-                                Gingerbread lollipop dragée cake. Pie topping jelly-o. Fruitcake dragée candy canes
-                                tootsie roll. Pastry jelly-o cupcake. Bonbon brownie soufflé muffin.</p>
-                            <p>Sweet roll soufflé oat cake apple pie croissant. Pie gummi bears jujubes cake lemon drops
-                                gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake Carrot cake
-                                cake bear claw jujubes topping cake apple pie. Jujubes gummi bears soufflé candy canes
-                                topping gummi bears cake soufflé cake. Cotton candy soufflé sugar plum pastry sweet
-                                roll..</p>
+                            <p>${ctsp.moTaCT}</p>
                         </div>
                         <div class="tab-pane" role="tabpanel" id="tab_02">
                             <p class="mb-20">1 review for <strong>Shoes Air Jordan</strong></p>
@@ -432,26 +388,3 @@
         </div>
     </div>
 </main>
-<script type="text/javascript" src="../../../plugins/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="../../../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../../plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
-<script type="text/javascript" src="../../../plugins/owl-carousel/owl.carousel.min.js"></script>
-<script type="text/javascript" src="../../../plugins/gmap3.min.js"></script>
-<script type="text/javascript" src="../../../plugins/imagesloaded.pkgd.js"></script>
-<script type="text/javascript" src="../../../plugins/isotope.pkgd.min.js"></script>
-<script type="text/javascript" src="../../../plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="../../../plugins/jquery.matchHeight-min.js"></script>
-<script type="text/javascript" src="../../../plugins/slick/slick/slick.min.js"></script>
-<script type="text/javascript" src="../../../plugins/elevatezoom/jquery.elevatezoom.js"></script>
-<script type="text/javascript" src="../../../plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
-<script type="text/javascript" src="../../../plugins/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script><script type="text/javascript" src="../../../plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-<!-- Custom scripts-->
-<script type="text/javascript" src="../../../js_template/main.js"></script>

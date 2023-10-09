@@ -1,10 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.util.UUID;
@@ -55,4 +52,9 @@ public class KhachHang {
     @OneToOne()
     @JoinColumn(name = "IdTaiKhoan")
     private TaiKhoan taiKhoanKH;
+
+    @Override
+    public String toString() {
+        return ho  + tenDem + ten ;
+    }
 }

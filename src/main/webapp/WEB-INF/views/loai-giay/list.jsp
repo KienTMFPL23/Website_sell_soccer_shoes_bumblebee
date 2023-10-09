@@ -74,28 +74,24 @@
         font-size: 16px;
     }
 </style>
-<div class="container">
-    <h1 style="text-align: center; font-family: Nunito">QUẢN LÝ LOẠI GIÀY</h1>
+<h1 style="text-align: center; font-family: Nunito">QUẢN LÝ LOẠI GIÀY</h1>
 
 
-    <div class="row">
-        <div class="col-lg-6">
-            <a onclick="PopupForm('/loai-giay/form')" class="btnAdd">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
-                <p>Thêm mới</p>
-            </a>
-        </div>
+<div class="row">
+    <div class="col-lg-6">
+        <a onclick="PopupForm('/loai-giay/form')" class="btnAdd">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
+            <p>Thêm mới</p>
+        </a>
     </div>
-
-
-    <table id="tableLoaiGiay" class="ui celled table" width="100%">
-        <thead>
-        <tr>
-            <th scope="col">Mã</th>
-            <th scope="col">Loại Giày</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-    </table>
 </div>
+<table id="tableLoaiGiay" class="ui celled table" width="100%">
+    <thead>
+    <tr>
+        <th scope="col">Mã</th>
+        <th scope="col">Loại Giày</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+</table>

@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <main class="ps-main">
     <div class="ps-banner">
         <div class="rev_slider fullscreenbanner" id="home-banner">
@@ -80,7 +83,7 @@
     <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100">
         <div class="ps-container">
             <div class="ps-section__header mb-50">
-                <h3 class="ps-section__title" data-mask="features">- Features Products</h3>
+                <h3 class="ps-section__title" data-mask="features">SẢN PHẨM TIÊU BIỂU</h3>
                 <ul class="ps-masonry__filter">
                     <li class="current"><a href="#" data-filter="*">All </a></li>
                     <li><a href="#" data-filter=".nike">Nike </a></li>
@@ -95,45 +98,44 @@
                      data-radio="100%">
                     <div class="ps-masonry row">
                         <div class="grid-sizer"></div>
-                        <div class="grid-item col-md-3">
-                            <div class="grid-item__content-wrapper">
-                                <div class="ps-shoe mb-30">
-                                    <div class="ps-shoe__thumbnail">
-                                        <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img
-                                            src="../../../images_template/shoe/1.jpg" alt=""><a class="ps-shoe__overlay"
-                                                                                                href="/bumblebee/detail"></a>
-                                    </div>
-                                    <div class="ps-shoe__content">
-                                        <div class="ps-shoe__variants">
-                                            <div class="ps-shoe__variant normal"><img
-                                                    src="../../../images_template/shoe/2.jpg"
-                                                    alt=""><img
-                                                    src="../../../images_template/shoe/3.jpg" alt=""><img
-                                                    src="../../../images_template/shoe/4.jpg"
-                                                    alt=""><img
-                                                    src="../../../images_template/shoe/5.jpg" alt=""></div>
-                                            <select class="ps-rating ps-shoe__rating">
-                                                <option value="1">1</option>
-                                                <option value="1">2</option>
-                                                <option value="1">3</option>
-                                                <option value="1">4</option>
-                                                <option value="2">5</option>
-                                            </select>
+                        <c:forEach var="item" items="${listSP.content}">
+                            <div class="grid-item col-md-3">
+                                <div class="grid-item__content-wrapper">
+                                    <div class="ps-shoe mb-30">
+                                        <div class="ps-shoe__thumbnail">
+                                            <c:forEach var="image" items="${item.hinhAnhs}">
+                                                <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
+                                                <img
+                                                        src="../../../uploads/${image.tenanh}" height="250px" alt=""><a class="ps-shoe__overlay" href="/bumblebee/detail/${item.id}"></a>
+                                            </c:forEach>
                                         </div>
-                                        <div class="ps-shoe__detail">
-                                            <div class="product_name">
-                                                <a href="#" style="font-weight: 600;">Air Jordan 7 Retro</a>
+                                        <div class="ps-shoe__content">
+                                            <div class="ps-shoe__variants" style="margin-top: 10px">
+                                                <div class="ps-shoe__variant normal">
+                                                    <c:forEach var="image" items="${item.hinhAnhs}">
+                                                        <img src="../../../uploads/${image.duongdan1}">
+                                                        <img src="../../../uploads/${image.duongdan2}">
+                                                        <img src="../../../uploads/${image.duongdan3}">
+                                                        <img src="../../../uploads/${image.duongdan4}">
+                                                    </c:forEach>
+                                                </div>
                                             </div>
-                                            <div class="product_price">
-                                                <span >
-                                                    <del style="color: red">2.150.000 ₫</del>1.950.000đ
+                                            <div class="ps-shoe__detail">
+                                                <div class="product_name">
+                                                    <a href="#" style="font-weight: 600;">${item.sanPham.tenSanPham}</a>
+                                                </div>
+                                                <div class="product_price">
+                                                <span>
+                                                    <fmt:formatNumber value="${item.giaBan}"
+                                                                      type="currency"/>
                                                 </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
