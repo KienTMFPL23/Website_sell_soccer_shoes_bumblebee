@@ -76,11 +76,11 @@ public class HomeController {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(id);
         List<KichCo> listKC = kichCoService.getList();
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(id);
-        model.addAttribute("hinhAnh",hinhAnh);
+        model.addAttribute("hinhAnh", hinhAnh);
         List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<MauSac> listMS = mauSacService.getAll();
         model.addAttribute("listMS", listMS);
-        model.addAttribute("listSP",listSP);
+        model.addAttribute("listSP", listSP);
         model.addAttribute("listKC", listKC);
         model.addAttribute("ctsp", chiTietSanPham);
         model.addAttribute("view", "../template_home/product_detail.jsp");
@@ -89,7 +89,27 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/cart")
     public String cart(Model model) {
+
+        List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
+        model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
+
+
+        return "template_home/index";
+    }
+
+    /*-------------------Nguyễn Tiến Nam code thanh toán ở đây--------------------------------*/
+    @RequestMapping("/bumblebee/thanh-toan")
+    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail){
+//        Lấy list idctsp
+        List<UUID> idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
+                .stream()
+                .map(UUID::fromString)
+                .collect(Collectors.toList());
+        for(UUID id : idCartUUIDList){
+            System.out.println(id);
+        }
+        model.addAttribute("view", "../template_home/thanhtoan.jsp");
         return "template_home/index";
     }
 
@@ -119,7 +139,7 @@ public class HomeController {
                                @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan) {
         Pageable pageable = PageRequest.of(p, 12);
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamService.getListSP(pageable);
-    //    List<ChiTietSanPhamDto> pageCTSP = chiTietSanPhamService.getListChiTietSanPhamHinhAnh();
+        //    List<ChiTietSanPhamDto> pageCTSP = chiTietSanPhamService.getListChiTietSanPhamHinhAnh();
         List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<LoaiGiay> listLG = loaiGiayService.findAll();
         List<KichCo> listKC = kichCoService.getList();
@@ -215,7 +235,6 @@ public class HomeController {
             model.addAttribute("listMS", listMS);
             model.addAttribute("view", "../template_home/product_listing.jsp");
         } else {
-            // Xử lý với các UUID bình thường
             List<UUID> idLoaiGiayUUIDList = Arrays.asList(idLoaiGiayList.split(","))
                     .stream()
                     .map(UUID::fromString)
