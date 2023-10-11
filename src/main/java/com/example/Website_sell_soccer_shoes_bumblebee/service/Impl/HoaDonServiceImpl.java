@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -28,11 +29,16 @@ public class HoaDonServiceImpl implements HoaDonService {
     HoaDonChiTietRepository hoaDonChiTietRepository;
 
     @Override
-    public Page<HoaDon> search(String key, Pageable pageable){
-        if(key != null){
+    public Page<HoaDon> search(String key, Pageable pageable) {
+        if (key != null) {
             return hoaDonRepository.search(key, pageable);
         }
         return hoaDonRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<HoaDon> getALlBetweenDates(Date startDate, Date endDate, Pageable pageable) {
+            return hoaDonRepository.getALlBetweenDates(startDate, endDate, pageable);
     }
 
 
@@ -68,7 +74,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon deleteHoaDon(UUID id) {
         HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
 //        hoaDonChiTietRepository.deleteHDCTById(id);
-        if (hoaDon != null){
+        if (hoaDon != null) {
             hoaDonRepository.delete(hoaDon);
         }
         return hoaDon;

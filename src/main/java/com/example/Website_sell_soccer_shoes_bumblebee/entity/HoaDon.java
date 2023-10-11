@@ -25,9 +25,11 @@ public class HoaDon {
     @Column(name = "MaHD")
     private String maHoaDon;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayTao")
     private Date ngayTao;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayThanhToan")
     private Date ngayThanhToan;
 

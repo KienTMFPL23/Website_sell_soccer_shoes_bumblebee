@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +57,23 @@
         margin-left: 110px;
     }
 
+    #kh-input {
+        margin-left: 60px;
+    }
+
+    #kh-input input {
+        border: 1px solid #4e5b6c;
+        padding: 3px;
+        border-radius: 5px;
+    }
+
+    span {
+        font-weight: bold;
+    }
+    #searchDate{
+        margin-top: 12px ;
+    }
+
 </style>
 
 <body>
@@ -63,14 +81,39 @@
 <div class="row">
     <h3 class="title">Danh sách hóa đơn</h3>
 </div>
-<div class="form">
-    <form:form action="/hoa-don/search" modelAttribute="searchForm">
-        <div>
-            <span>Khách Hàng</span> </br>
-            <form:input path="keyword"/>
-            <button class="btn btn-success" style="margin-left: 10px">Tìm</button>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form">
+            <form:form action="/hoa-don/search" modelAttribute="searchForm">
+                <div class="row">
+                    <div id="kh-input">
+                        <span>Khách Hàng</span> </br>
+                        <form:input path="keyword"/>
+                        <button class="btn btn-success" style="margin-left: 10px">Tìm</button>
+                    </div>
+                </div>
+            </form:form>
         </div>
-    </form:form>
+    </div>
+    <div class="col-lg-6">
+        <div class="form">
+            <form:form action="/hoa-don/searchDate" modelAttribute="searchDate" method="get">
+                <div class="row">
+                    <div class="col-lg-3" id="start-input">
+                        <span>Từ Ngày</span> </br>
+                        <form:input path="startDate" type="Date"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <span>Đến Ngày</span> </br>
+                        <form:input path="endDate" type="Date"/>
+                    </div>
+                    <div class="col-lg-2" id="searchDate">
+                        <button class="btn btn-success" style="margin-left: 10px">Tìm</button>
+                    </div>
+                </div>
+            </form:form>
+        </div>
+    </div>
 </div>
 
 <div class="row" style="margin-top: 27px">
@@ -110,7 +153,7 @@
                         <div class="modal fade" id="${hd.id}" data-bs-backdrop="static" data-bs-keyboard="false"
                              tabindex="-1"
                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
@@ -134,12 +177,18 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <c:forEach items="${hd.hoaDons}" varStatus="stt" var="ma">
+                                                    <c:forEach items="${hd.hoaDons}" varStatus="stt" var="hd">
                                                         <tr>
                                                             <th scope="row">${stt.index + 1}</th>
-                                                            <td>${ma.chiTietSanPham.sanPham.tenSanPham}</td>
-                                                            <td>${ma.donGia}</td>
-                                                            <td>${ma.soLuong}</td>
+                                                            <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
+                                                            <td>
+                                                                <fmt:formatNumber value="${hd.donGia}" type="number"/>
+                                                            </td>
+                                                            <td>${hd.soLuong}</td>
+                                                            <td>
+                                                                <fmt:formatNumber value="${hd.donGia * hd.soLuong}"
+                                                                                  type="number"/>
+                                                            </td>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>
@@ -160,15 +209,14 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-<%--                                                    <c:forEach var="ma" items="${hd.khachHang}">--%>
-                                                        <tr>
-                                                            <td>${hd.khachHang.ma}</td>
-                                                            <td>${hd.khachHang.ten}</td>
-                                                            <td>${hd.khachHang.soDienThoai}</td>
-                                                            <td>${hd.khachHang.diaChi}</td>
-                                                        </tr>
-<%--                                                    </c:forEach>--%>
-
+                                                        <%--                                                    <c:forEach var="ma" items="${hd.khachHang}">--%>
+                                                    <tr>
+                                                        <td>${hd.khachHang.ma}</td>
+                                                        <td>${hd.khachHang.ten}</td>
+                                                        <td>${hd.khachHang.soDienThoai}</td>
+                                                        <td>${hd.khachHang.diaChi}</td>
+                                                    </tr>
+                                                        <%--                                                    </c:forEach>--%>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -206,78 +254,7 @@
         </div>
     </div>
 </div>
-<%--<div class="modal fade" id="#" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"--%>
-<%--     aria-labelledby="staticBackdropLabel" aria-hidden="true">--%>
-<%--    <div class="modal-dialog">--%>
-<%--        <div class="modal-content">--%>
-<%--            <div class="modal-header">--%>
-<%--                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>--%>
-<%--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-<%--            </div>--%>
-<%--            <div class="modal-body">--%>
-<%--                <h2 class="title">Thông tin đơn hàng</h2>--%>
-<%--                <h5 class="title">Hóa đơn chi tiết</h5>--%>
-<%--                <div class="row" style="margin-top: 20px">--%>
-<%--                    <div class="col-lg-1"></div>--%>
-<%--                    <div class="col-lg-10">--%>
-<%--                        <table class="table table-striped">--%>
-<%--                            <thead class="hoa-don-chi-tiet-thead">--%>
-<%--                            <tr>--%>
-<%--                                <th scope="col">STT</th>--%>
-<%--                                <th scope="col">Tên Sản Phẩm</th>--%>
-<%--                                <th scope="col">Đơn Giá</th>--%>
-<%--                                <th scope="col">Số lượng</th>--%>
-<%--                                <th scope="col">Thành Tiền</th>--%>
-<%--                            </tr>--%>
-<%--                            </thead>--%>
-<%--                            <tbody>--%>
-<%--                            <c:forEach items="${listHDCT}" varStatus="stt" var="ma">--%>
-<%--                                <tr>--%>
-<%--                                    <th scope="row">${stt.index + 1}</th>--%>
-<%--                                    <td>${ma.chiTietSanPham.sanPham.tenSanPham}</td>--%>
-<%--                                    <td>${ma.donGia}</td>--%>
-<%--                                    <td>${ma.soLuong}</td>--%>
-<%--                                </tr>--%>
-<%--                            </c:forEach>--%>
-<%--                            </tbody>--%>
-<%--                        </table>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <h5 class="title" style="margin-top: 30px">Thông tin Khách Hàng</h5>--%>
-<%--                <div class="row" style="margin-top: 20px">--%>
-<%--                    <div class="col-lg-1"></div>--%>
-<%--                    <div class="col-lg-10">--%>
-<%--                        <table class="table table-striped">--%>
-<%--                            <thead class="hoa-don-chi-tiet-thead">--%>
-<%--                            <tr>--%>
-<%--                                <th scope="col">Mã KH</th>--%>
-<%--                                <th scope="col">Tên Khách Hàng</th>--%>
-<%--                                <th scope="col">SĐT</th>--%>
-<%--                                <th scope="col">Địa Chỉ</th>--%>
-<%--                            </tr>--%>
-<%--                            </thead>--%>
-<%--                            <tbody>--%>
-<%--                            &lt;%&ndash;                            <c:forEach var="data" items="${listHDCT}">&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                                <tr>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                                    <td>${data.khachHang.ma}</td>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                                    <td>${ma.hoaDon.khachHang.ten}</td>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                                    <td>${ma.hoaDon.khachHang.soDienThoai}</td>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                                    <td>${ma.hoaDon.khachHang.diaChi}</td>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                                </tr>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                            </c:forEach>&ndash;%&gt;--%>
 
-<%--                            </tbody>--%>
-<%--                        </table>--%>
-<%--                    </div>--%>
-<%--                    <div class="col-lg-1"></div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="modal-footer">--%>
-<%--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Closes</button>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -287,26 +264,21 @@
 </body>
 
 <script type="text/javascript">
-
-
-    function click(id) {
-        // $.ajax({
-        //     type: 'GET',
-        //     dataType: "jsonp",
-        //     url: "http://localhost:8080/hoa-don-chi-tiet/hien-thi/"+id ,
-        //     headers: {
-        //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     succces: function (data, status, xhr) {
-        //         console.log('success', data);
-        //     }
-        // });
-        // $.get("http://localhost:8080/hoa-don-chi-tiet/hien-thi/"+id, function(data, status){
-        //     alert("Data: " + data + "nStatus: " + status);
-        // });
-    }
-
+    // $.ajax({
+    //     type: 'GET',
+    //     dataType: "jsonp",
+    //     url: "http://localhost:8080/hoa-don-chi-tiet/hien-thi/"+id ,
+    //     headers: {
+    //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+    //         'Content-Type': 'application/json'
+    //     },
+    //     succces: function (data, status, xhr) {
+    //         console.log('success', data);
+    //     }
+    // });
+    // $.get("http://localhost:8080/hoa-don-chi-tiet/hien-thi/"+id, function(data, status){
+    //     alert("Data: " + data + "nStatus: " + status);
+    // });
 
 </script>
 </html>

@@ -31,7 +31,7 @@ public class ChatLieuController {
 
     @Data
     public static class SearchForm {
-        String keyword;
+        String keyword = "";
     }
 
     @GetMapping("hien-thi")
