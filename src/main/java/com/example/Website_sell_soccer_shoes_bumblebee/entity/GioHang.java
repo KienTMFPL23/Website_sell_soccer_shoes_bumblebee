@@ -2,31 +2,44 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+
 import lombok.Data;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Data
-@NoArgsConstructor
+@Table(name = "GioHang")
 @AllArgsConstructor
-@Table(name = "Giohang")
+@NoArgsConstructor
+@Getter
+@Setter
 public class GioHang {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "Id")
+    private UUID id;
 
     @Column(name = "NgayTao")
-    Date ngayTao;
+    private Date ngayTao;
 
     @Column(name = "NgayThanhToan")
-    Date ngayThanhToan;
+    private Date ngayThanhToan;
 
-    @ManyToOne()
-    @JoinColumn(name = "IdKH")
-    KhachHang khachHang;
+    @Column(name = "TrangThai")
+    private Integer trangThai;
+
+    @OneToMany(mappedBy = "gioHang")
+    private List<GioHangChiTiet> gioHangChiTiet;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "IdKH", referencedColumnName = "id")
+    private KhachHang khachHang;
 
 }

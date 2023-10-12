@@ -5,16 +5,17 @@
     <div class="ps-content pt-80 pb-80">
         <div class="ps-container">
             <div class="ps-cart-listing">
-                <form>
+                ${thongBao}
+                <form method="post">
                     <table class="table ps-cart__table">
                         <thead>
                         <tr>
                             <th width="50px"></th>
                             <th>SẢN PHẨM</th>
-                            <th>ĐƠN GIÁ</th>
-                            <th>SỐ LƯỢNG</th>
-                            <th>TỔNG TIỀN</th>
-                            <th></th>
+                            <th style="text-align: center">ĐƠN GIÁ</th>
+                            <th style="text-align: center">SỐ LƯỢNG</th>
+                            <th style="text-align: center">TỔNG TIỀN</th>
+                            <th style="text-align: center"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -31,20 +32,19 @@
                                         <button class="plus"><span>+</span></button>
                                     </div>
                                 </td>
-                                <td><fmt:formatNumber value="${item.donGia * item.soLuong}" type="currency"/></td>
+                                <td><fmt:formatNumber value="${item.donGia * item.soLuong}" type="currency"/></td>                           
                                 <td>
                                     <div class="ps-remove"></div>
                                 </td>
                             </tr>
                         </c:forEach>
-
                         </tbody>
                     </table>
                     <div class="ps-cart__actions">
                         <div class="ps-cart__promotion">
                             <div class="form-group">
                                 <div class="ps-form--icon"><i class="fa fa-angle-right"></i>
-                                    <input class="form-control" type="text" placeholder="Promo Code">
+                                    <input class="form-control" type="text" placeholder="Nhập mã giảm giá">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -53,14 +53,15 @@
                         </div>
                         <div class="ps-cart__total">
 
-                            <h3>Total Price: <span> 2599.00 $</span></h3><button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
-                                                                                 style="background-color: #37517E">Thanh Toán<i
-                                class="ps-icon-next"></i></button>
+                            <h3>Tổng tiền thanh toán: <span> ${totalPrice}</span></h3>
+                            <button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
+                                    style="background-color: #37517E">Thanh Toán<i
+                                    class="ps-icon-next"></i></button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 </main>
+
