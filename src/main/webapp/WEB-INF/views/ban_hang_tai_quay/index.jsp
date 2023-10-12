@@ -14,7 +14,11 @@
         border-radius: 15px;
         margin-bottom: 15px;
     }
-
+    #searchSPGioHang{
+        border: 2px solid #37517E;
+        margin-bottom: 5px;
+        width: 350px;
+    }
 
     th, tr {
         line-height: 40px;
@@ -23,11 +27,19 @@
 </style>
 
 <div class="header">
+    <div class="row">
+        <div class="col-lg-8">
+
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+    </div>
     <nav class="navbar navHoaDon navbar-expand-lg">
         <%-- list hóa đơn chờ--%>
         <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
             <div class="hoaDonCho">
-                <a class="theHoaDon" href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
+                <a id="content" class="theHoaDon" href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
                    style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                 </a>
                 <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
@@ -35,37 +47,38 @@
             </div>
         </c:forEach>
         <div style="margin-left: 20px">
-            <a form href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img src="/images_template/add.png"></a>
+            <a id="themHoaDon" form href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img
+                    src="/images_template/add.png"></a>
         </div>
     </nav>
-    <c:if test="${soLuongHD >= 5}">
-        <p>Toi da </p>>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="getModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <b>Tối đa 5 hóa đơn chờ</b>
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="getCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"> API CODE </h4>
+                </div>
+                <div class="modal-body" id="getCode" style="overflow-x: scroll;">
+                    //ajax success content here.
                 </div>
             </div>
         </div>
-    </c:if>
+    </div>
 </div>
 <div class="content">
     <div class="row">
         <div class="col-lg-6">
             <form>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Tìm kiếm sản phẩm
-                </button>
+                <!-- Button TIM KIEM -->
+
+                <c:if test="${idHoaDon != null}">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Tìm kiếm sản phẩm
+                    </button>
+                </c:if>
 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -174,6 +187,7 @@
             </div>
         </div>
     </div>
+    <input id="searchSPGioHang" placeholder="Tìm kiếm sản phẩm đã chọn">
     <table class="table">
         <tr class="row1" style="background-color:#34B6D3 ">
             <th scope="col">STT</th>
@@ -183,6 +197,7 @@
             <th scope="col">Thành tiền</th>
             <th scope="col"></th>
         </tr>
+        <tbody id="sanPhamMua">
         <c:forEach items="${listHDCT}" var="hdct" varStatus="i">
             <form:form action="/bumblebee/ban-hang-tai-quay/update-cart/${hdct.id}" method="post">
                 <tr style="background-color: #fff">
@@ -203,7 +218,7 @@
                         <fmt:formatNumber
                                 value="${hdct.soLuong * hdct.chiTietSanPham.giaBan}" type="number"/></td>
                     <td>
-                        <a onclick="return confirm('Bạn có muốn xóa không')"
+                        <a onclick="deleleHDCT()"
                            href="/bumblebee/ban-hang-tai-quay/delete-hdct/${hdct.id}">
                             <img src="../../../img/delete.png">
                         </a>
@@ -211,9 +226,10 @@
                 </tr>
             </form:form>
         </c:forEach>
+        </tbody>
     </table>
     <div>
-        <b style="float: right;margin-right: 20px" class="name">Tổng tiền : <fmt:formatNumber value="${sumMoney}"
+        <b style="float: right;margin-right: 20px; font-size: 20px" class="name">Tổng tiền : <fmt:formatNumber value="${sumMoney}"
                                                                                               type="number"/></b>
     </div>
     <c:if test="${sumMoney != 0}">
@@ -237,8 +253,39 @@
                 <div class="row">
                     <b>Khách hàng:</b>
                     <div class="col-sm-10">
-                        <input id="phoneNumber" type="number" onchange="getTenKhachHang(this.value)" class="form-control"/>
-<%--                        <form:input path="tenNguoiNhan" id="tenKhachHang" readonly="true" class="form-control"/>--%>
+                        <input id="phoneNumber" type="number" onchange="getTenKhachHang(this.value)"
+                               class="form-control"/>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Launch demo modal
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="themkhachhang" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="themkhachhang">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--                        <form:input path="tenNguoiNhan" id="tenKhachHang" readonly="true" class="form-control"/>--%>
+                            <%--                        <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">--%>
+                            <%--                            <label class="form-label">Loại giầy: </label>--%>
+                            <%--                            <form:select type="text" id="searchName" path="idLG" onchange="submit()">--%>
+                            <%--                                <form:option value="">Tất cả</form:option>--%>
+                            <%--                                <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>--%>
+                            <%--                            </form:select>--%>
+
+                            <%--                        </form:form>--%>
                     </div>
                     <b style="color: red" id="tenKhachHang"></b></p>
                     <b>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>
@@ -265,7 +312,21 @@
     </div>
 </div>
 
-
+<script>
+    $("#themHoaDon").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "/bumblebee/ban-hang-tai-quay/so-luong-hoa-don-cho",
+            success: function (response) {
+                var htmlContent = $(response).find('.content').html();
+                var soLuong = response.data();
+                if (soLuong == 5){
+                    $('#getCodeModal').modal('show');
+                }
+            }
+        })
+    })
+</script>
 <script>
     $("#myInput").keyup(function () {
         var value = $(this).val().toLowerCase();
@@ -274,6 +335,12 @@
         });
     });
 
+    $("#searchSPGioHang").keyup(function () {
+        var value = $(this).val().toLowerCase();
+        $("#sanPhamMua tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
     $("#selectMS").click(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
@@ -446,7 +513,28 @@
     //     });
     // });
 </script>
-
+<script>
+    function deleleHDCT() {
+        Swal.fire({
+            title: 'Bạn có muốn xóa không',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2',
+                denyButton: 'order-3',
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+</script>
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;
@@ -473,6 +561,8 @@
     function getTenKhachHang(sdt) {
         var textName = document.getElementById("tenKhachHang");
         if (sdt === "") {
+            textName.innerText = "Không tìm thấy khách hàng nào";
+        } else if (sdt === null) {
             textName.innerText = "Không tìm thấy khách hàng nào";
         } else {
             textName.innerText = data[sdt];

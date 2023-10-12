@@ -155,8 +155,8 @@ CREATE TABLE GioHang
     Id            UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     IdKH          UNIQUEIDENTIFIER REFERENCES KhachHang (Id),
     IdNV          UNIQUEIDENTIFIER REFERENCES NhanVien (Id),
-    NgayTao       DATE,
-    NgayThanhToan DATE,
+    NgayTao       DATETIME,
+    NgayThanhToan DATETIME,
     TrangThai     INT
 )
     GO
@@ -167,8 +167,8 @@ CREATE TABLE HoaDon
     IdNV          UNIQUEIDENTIFIER REFERENCES NhanVien (Id),
     IdKH          UNIQUEIDENTIFIER REFERENCES KhachHang (Id),
     MaHD          VARCHAR(150),
-    NgayTao       DATE,
-    NgayThanhToan DATE,
+    NgayTao       DATETIME,
+    NgayThanhToan DATETIME,
     DiaChiShip    NVARCHAR(255),
     SoDienThoai   VARCHAR(15),
     TenNguoiNhan  NVARCHAR(100),
@@ -193,10 +193,10 @@ CREATE TABLE PhieuGiaoHang
 (
     Id            UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     IdHoaDon      UNIQUEIDENTIFIER REFERENCES HoaDon (Id),
-    NgayTao       DATE,
-    NgayThanhToan DATE,
-    NgayShip      DATE,
-    NgayNhan      DATE,
+    NgayTao       DATETIME,
+    NgayThanhToan DATETIME,
+    NgayShip      DATETIME,
+    NgayNhan      DATETIME,
     DiaChi        NVARCHAR(200)
 )
     GO
