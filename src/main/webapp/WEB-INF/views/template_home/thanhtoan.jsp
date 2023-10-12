@@ -1,118 +1,177 @@
+<%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<style>
+    .formInfor {
+        padding: 30px;
+    }
+
+    .formInfor > .mb-3 > input {
+        font-size: 14px;
+        border-radius: 15px;
+    }
+
+    #textarea {
+        font-size: 14px;
+    }
+
+    .ps-btn btnDatHang {
+        margin-left: 100px;
+    }
+</style>
+
 <main class="ps-main">
-    <div class="ps-checkout pt-80 pb-80">
-        <div class="ps-container">
-            <form class="ps-checkout__form" action="do_action" method="post">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
-                        <div class="ps-checkout__billing">
-                            <h3>Billing Detail</h3>
-                            <div class="form-group form-group--inline">
-                                <label>First Name<span>*</span>
-                                </label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group form-group--inline">
-                                <label>Last Name<span>*</span>
-                                </label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group form-group--inline">
-                                <label>Company Name<span>*</span>
-                                </label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group form-group--inline">
-                                <label>Email Address<span>*</span>
-                                </label>
-                                <input class="form-control" type="email">
-                            </div>
-                            <div class="form-group form-group--inline">
-                                <label>Company Name<span>*</span>
-                                </label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group form-group--inline">
-                                <label>Phone<span>*</span>
-                                </label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group form-group--inline">
-                                <label>Address<span>*</span>
-                                </label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" id="cb01">
-                                    <label for="cb01">Create an account?</label>
-                                </div>
-                            </div>
-                            <h3 class="mt-40"> Addition information</h3>
-                            <div class="form-group form-group--inline textarea">
-                                <label>Order Notes</label>
-                                <textarea class="form-control" rows="5" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                        <div class="ps-checkout__order">
-                            <header>
-                                <h3>Your Order</h3>
-                            </header>
-                            <div class="content">
-                                <table class="table ps-checkout__products">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-uppercase">Product</th>
-                                        <th class="text-uppercase">Total</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>HABITANT x1</td>
-                                        <td>$300.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Card Subtitle</td>
-                                        <td>$300.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Order Total</td>
-                                        <td>$300.00</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <footer>
-                                <h3>Payment Method</h3>
-                                <div class="form-group cheque">
-                                    <div class="ps-radio">
-                                        <input class="form-control" type="radio" id="rdo01" name="payment" checked>
-                                        <label for="rdo01">Cheque Payment</label>
-                                        <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                    </div>
-                                </div>
-                                <div class="form-group paypal">
-                                    <div class="ps-radio ps-radio--inline">
-                                        <input class="form-control" type="radio" name="payment" id="rdo02">
-                                        <label for="rdo02">Paypal</label>
-                                    </div>
-                                    <ul class="ps-payment-method">
-                                        <li><a href="#"><img src="../../../images_template/payment/1.png" alt=""></a></li>
-                                        <li><a href="#"><img src="../../../images_template/payment/2.png" alt=""></a></li>
-                                        <li><a href="#"><img src="../../../images_template/payment/3.png" alt=""></a></li>
-                                    </ul>
-                                    <button class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
-                                </div>
-                            </footer>
-                        </div>
-                        <div class="ps-shipping">
-                            <h3>FREE SHIPPING</h3>
-                            <p>YOUR ORDER QUALIFIES FOR FREE SHIPPING.<br> <a href="#"> Singup </a> for free shipping on every order, every time.</p>
+    <div class="container">
+        <form class="ps-checkout__form" action="/bumblebee/dat-hang" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ps-checkout__order">
+                        <div class="row" style="padding: 20px">
+                            <h2 style="color: crimson;">
+                                <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="25px"
+                                     height="25px"/>Thông tin
+                                nhận hàng:
+                            </h2>
+                            <p style="font-size: 18px; color: black; font-weight: 600; margin-left: 10px;">${listKH.ho} ${listKH.tenDem} ${listKH.ten}
+                                - ${listKH.soDienThoai} - ${listKH.diaChi}</p>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ps-checkout__order">
+                        <div class="formInfor">
+                            <div class="mb-3">
+                                <label class="form-label"></label>
+                                <input type="text" class="form-control" name="tenNguoiNhan"
+                                       placeholder="Tên người nhận hàng"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"></label>
+                                <input type="text" class="form-control" name="sdt"
+                                       placeholder="Số điện thoại"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"></label>
+                                <input type="text" class="form-control" name="diaChiShip"
+                                       placeholder="Địa chỉ nhận"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ps-checkout__order">
+                        <header>
+                            <h3>Thanh toán</h3>
+                        </header>
+                        <div class="content">
+
+                            <table class="table ps-checkout__products">
+                                <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th></th>
+                                    <th style="text-align: center;">Kích cỡ</th>
+                                    <th style="text-align: center;">Màu sắc</th>
+                                    <th style="text-align: center;">Số lượng</th>
+                                    <th style="text-align: center;">Đơn giá</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${listGHCT}" var="sp">
+                                    <tr>
+                                        <td><img src="../../../uploads/${sp.ctsp.hinhAnhs.tenanh}" width="60px"
+                                                 height="60px"></td>
+                                        <td style="padding-top: 25px;">${sp.ctsp.sanPham.tenSanPham}</td>
+                                        <td style="text-align: center; padding-top: 25px;">${sp.ctsp.kichCo.size}</td>
+                                        <td style="text-align: center;padding-top: 25px;">${sp.ctsp.mauSac.ten}</td>
+                                        <td style="text-align: center;padding-top: 25px;">${sp.soLuong}</td>
+                                        <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
+                                                value="${sp.donGia}"
+                                                type="currency"/></td>
+                                    </tr>
+                                </c:forEach>
+                                <td style="padding-top: 20px;">Ghi chú</td>
+                                <td>
+                                        <textarea class="form-control" id="textarea" rows="3"
+                                                  name="ghiChu"
+                                                  placeholder="Ghi chú cho người bán..."></textarea>
+
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-8"></div>
+                            <div class="col-lg-4" style="padding-bottom: 20px;">
+                                <span style="font-size: 18px; font-weight: 600;">Tổng tiền hàng: </span>
+                                <span style="font-size: 18px; "><fmt:formatNumber value="${totalPrice}"
+                                                                                  type="currency"/></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ps-checkout__order">
+                                <footer>
+                                    <h3>Phương thức thanh toán</h3>
+                                    <div style="height: 250px;">
+
+                                        <div class="form-group cheque">
+                                            <div class="ps-radio">
+                                                <input class="form-control" type="radio" id="rdo01" name="payment"
+                                                       checked>
+                                                <label for="rdo01">Thanh toán khi nhận hàng</label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group paypal">
+                                            <div class="ps-radio ps-radio--inline">
+                                                <input class="form-control" type="radio" name="payment" id="rdo02">
+                                                <label for="rdo02">Paypal</label>
+                                            </div>
+                                            <ul class="ps-payment-method">
+                                                <li><a href="#"><img src="../../../img/paypal.png" alt="" width="150px"
+                                                                     height="30px"></a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-4">
+                                                <button class="ps-btn">Đặt hàng<i class="ps-icon-next"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-4"></div>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </main>
+<script>
+    function conFirm() {
+        alert("Đơn hàng của bạn được đặt thành công")
+    }
+</script>

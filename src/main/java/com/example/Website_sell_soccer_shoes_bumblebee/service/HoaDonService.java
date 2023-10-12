@@ -23,4 +23,7 @@ public interface HoaDonService {
      HoaDon deleteHoaDon(UUID id);
 
      HoaDon getOne(UUID id);
+
+     List<HoaDon> getId(UUID id);
+
 }
