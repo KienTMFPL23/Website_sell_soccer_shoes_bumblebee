@@ -2,6 +2,9 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+
+import lombok.Data;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,4 +41,5 @@ public class GioHang {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "IdKH", referencedColumnName = "id")
     private KhachHang khachHang;
+
 }

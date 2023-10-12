@@ -41,7 +41,7 @@
                      data-radio="100%">
                     <div class="ps-masonry row">
                         <div class="grid-sizer"></div>
-                        <c:forEach var="item" items="${listSP.content}">
+                        <c:forEach var="item" items="${listSP.content}" varStatus="loop">
                             <div class="grid-item col-md-3">
                                 <div class="grid-item__content-wrapper">
                                     <div class="ps-shoe mb-30">
@@ -49,8 +49,10 @@
                                             <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
                                             <img
                                                     src="../../../uploads/${item.hinhAnhs.tenanh}" height="250px"
+                                                    width="250px"
                                                     alt=""><a
-                                                class="ps-shoe__overlay" href="/bumblebee/detail/${item.id}"></a>
+                                                class="ps-shoe__overlay"
+                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"></a>
                                         </div>
                                         <div class="ps-shoe__content">
                                             <div class="ps-shoe__variants" style="margin-top: 10px">
@@ -60,12 +62,15 @@
                                                     <img src="../../../uploads/${item.hinhAnhs.duongdan3}">
                                                     <img src="../../../uploads/${item.hinhAnhs.duongdan4}">
                                                 </div>
-                                                <div class="ps-shoe__variant butAddCart">
-                                                    <a data-toggle="modal"
-                                                       data-target="#myModal"
-                                                       style="color: white;width: 240px"
-                                                       href="">Thêm giỏ
-                                                        hàng</a>
+                                                <div class=" butAddCart">
+                                                    <button class="addToCartBtn"
+                                                            data-toggle="modal"
+                                                            data-target="#kichCoModal_${loop.index}"
+                                                            style="color: white; width: 240px"
+                                                            data-item-id="${item.sanPham.id}"
+                                                            data-item-mausac="${item.mauSac.id}"
+                                                    >Thêm giỏ hàng
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="ps-shoe__detail" style="margin-top: 10px">
@@ -83,33 +88,59 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal -->
+                            <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}">
+                                <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Thêm Sản phẩm vào giỏ hàng</h4>
+                                                <button type="button" class="close"
+                                                        data-dismiss="modal">&times;
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="col-md-5">
+                                                    <img src="../../../uploads/${item.hinhAnhs.tenanh}"
+                                                         width="80px"
+                                                         height="80px">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="sizeAddCart">
+                                                        <p>Chọn Size</p>
+                                                        <select id="kichCoSelect" class="form-control"
+                                                                style="width: 100px;font-size: 15px" name="kichCo">
+                                                        </select>
+                                                    </div>
+                                                    <div class="soLuongAddCart">
+                                                        <p>Chọn số lượng</p>
+                                                        <input type="number" style="width: 100px;font-size: 15px"
+                                                               name="soLuong">
+                                                    </div>
+                                                    <p style="margin-top: 10px">${item.soLuong} sản phẩm có sẵn</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button style="font-size: 15px" type="button" class="btn btn-danger"
+                                                        data-dismiss="modal">Đóng
+                                                </button>
+                                                <button class="btn"
+                                                        style="font-size:15px;background-color: #37517E; color: white"
+                                                        href="/bumblebee/add-to-cart">Thêm vào giỏ hàng
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </c:forEach>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" style="margin-top: 200px">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Thêm Sản phẩm vào giỏ hàng</h4>
-                    <button type="button" class="close"
-                            data-dismiss="modal">&times;
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Nội dung của modal ở đây...</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Đóng
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="ps-section--offer">
         <div class="ps-column"><a class="ps-offer" href="#"><img
                 src="../../../img/banner4.png" width="100%" height="295px" alt=""></a></div>
@@ -204,7 +235,7 @@
                                             <img src="../../../uploads/${item.hinhAnhs.duongdan4}">
                                         </div>
                                         <div class="ps-shoe__variant butAddCart">
-                                            <button>Thêm giỏ hàng</button>
+                                            <a href="/bumblebee/select-size">Thêm giỏ hàng</a>
                                         </div>
                                     </div>
                                     <div class="ps-shoe__detail">
@@ -220,10 +251,41 @@
                             </div>
                         </div>
                     </c:forEach>
-
                 </div>
             </div>
         </div>
     </div>
-
 </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".addToCartBtn").click(function () {
+            var itemId = $(this).data("item-id");
+            var idMS = $(this).data("item-mausac");
+            $.ajax({
+                url: "/bumblebee/select-size?idSP=" + itemId + "&idMS=" + idMS,
+                type: "GET",
+                success: function (data) {
+                    var selectElement = $("#kichCoSelect");
+                    selectElement.empty();
+                    data.forEach(function (kichCo) {
+                        var option = $("<option></option>")
+                            .attr("value", kichCo)
+                            .text(kichCo);
+                        selectElement.append(option);
+                    });
+                    $("#kichCoModal_" + itemId).modal("show");
+                },
+                error: function () {
+                    console.log("Error fetching kich co data.");
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
