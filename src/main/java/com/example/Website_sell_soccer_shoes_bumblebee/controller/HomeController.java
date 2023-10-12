@@ -156,12 +156,13 @@ public class HomeController {
                           @RequestParam int kichCo,
                           @RequestParam UUID idMS,
                           @RequestParam UUID idSP,
-                          @RequestParam String soLuong) {
-
-        System.out.println(idMS + "------------------" + kichCo + "------------" + idSP);
+                          @RequestParam String soLuong,
+                          HttpSession session) {
         KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
         ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
-        GioHang gioHang = gioHangRepo.getGioHang(UUID.fromString("CB0C7CF2-B9C0-9133-0C6B-0EB0380305D8"));
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         int sl = Integer.parseInt(soLuong);
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         gioHangChiTiet.setCtsp(ctsp);
@@ -170,16 +171,14 @@ public class HomeController {
         gioHangChiTiet.setSoLuong(sl);
         gioHangChiTietRepo.save(gioHangChiTiet);
         List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         model.addAttribute("listGHCT",listGHCT);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
         return "template_home/index";
     }
-
+    
     /*-------------------Nguyễn Tiến Nam code thanh toán ở đây--------------------------------*/
     @RequestMapping("/bumblebee/thanh-toan")
-
     public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
                             @ModelAttribute("hoadon") HoaDon hoadon, HttpSession session
     ) {
