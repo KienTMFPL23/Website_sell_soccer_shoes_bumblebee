@@ -176,7 +176,7 @@ public class HomeController {
         model.addAttribute("view", "../template_home/cart.jsp");
         return "template_home/index";
     }
-    
+
     /*-------------------Nguyễn Tiến Nam code thanh toán ở đây--------------------------------*/
     @RequestMapping("/bumblebee/thanh-toan")
     public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
