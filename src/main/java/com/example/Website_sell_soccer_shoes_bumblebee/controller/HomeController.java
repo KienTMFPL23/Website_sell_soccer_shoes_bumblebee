@@ -6,12 +6,21 @@ import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPham
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
+
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
 import jakarta.servlet.http.HttpServletRequest;
+
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
+import com.itextpdf.forms.xfdf.Mode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +32,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -31,6 +41,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,6 +70,18 @@ public class HomeController {
     @Autowired
     GioHangChiTietRepo gioHangChiTietRepo;
 
+    GioHangChiTietService gioHangChiTietService;
+
+    @Autowired
+    KhachHangRepository khachHangRepository;
+
+    @Autowired
+    KhachHangService khachHangService;
+
+    @Autowired
+    HoaDonService hoaDonService;
+
+
     @Data
     public static class SortForm {
         String key;
@@ -63,6 +89,9 @@ public class HomeController {
 
     @Autowired
     HinhAnhRepository hinhAnhRepository;
+
+    @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
 
     @Data
     public static class SearchFormByKichCo {
@@ -74,12 +103,15 @@ public class HomeController {
         Double minPrice;
         Double maxPrice;
     }
-
     @GetMapping("/bumblebee/select-size")
     public ResponseEntity<List<Integer>> getKichCoByItemId(@RequestParam UUID idSP, @RequestParam UUID idMS, Model model) {
         List<Integer> kichCoList = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         return ResponseEntity.ok(kichCoList);
     }
+
+    private List<GioHangChiTiet> listGHCT = null;
+    private List<UUID> idCartUUIDList = null;
+
 
     @RequestMapping("/bumblebee/home")
     public String index(Model model, @RequestParam(defaultValue = "0") int p) {
@@ -109,15 +141,15 @@ public class HomeController {
     }
 
     @RequestMapping("/bumblebee/cart")
-    public String cart(Model model) {
-        List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-        GioHang gioHang = gioHangRepo.getGioHang(UUID.fromString("CB0C7CF2-B9C0-9133-0C6B-0EB0380305D8"));
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(UUID.fromString("570FFA38-3E57-4AC5-896B-DE71B962F671"));
+    public String cart(Model model,HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         model.addAttribute("listGHCT",listGHCT);
-        model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
         return "template_home/index";
     }
+
 
     @RequestMapping("/bumblebee/add-to-cart")
     public String addCart(Model model,
@@ -147,18 +179,101 @@ public class HomeController {
 
     /*-------------------Nguyễn Tiến Nam code thanh toán ở đây--------------------------------*/
     @RequestMapping("/bumblebee/thanh-toan")
-    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail) {
-//        Lấy list idctsp
-        List<UUID> idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
-                .stream()
-                .map(UUID::fromString)
-                .collect(Collectors.toList());
-        for (UUID id : idCartUUIDList) {
-            System.out.println(id);
+
+    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
+                            @ModelAttribute("hoadon") HoaDon hoadon, HttpSession session
+    ) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        if (taiKhoan == null) {
+            return "redirect:/bumblebee/login";
+        } else {
+            model.addAttribute("listKH", taiKhoan.getKhachHangKH());
+
+            if (idListCartDetail == null){
+                return "redirect:/bumblebee/cart";
+            } else {
+
+                // Lấy list idctsp
+                idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
+                        .stream()
+                        .map(UUID::fromString)
+                        .collect(Collectors.toList());
+                listGHCT = new ArrayList<>();
+                for (UUID id : idCartUUIDList) {
+                    GioHangChiTiet ghct = gioHangChiTietService.findId(id);
+                    listGHCT.add(ghct);
+                }
+
+                model.addAttribute("listGHCT", listGHCT);
+                model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+                model.addAttribute("view", "../template_home/thanhtoan.jsp");
+
+                return "template_home/index";
+            }
         }
-        model.addAttribute("view", "../template_home/thanhtoan.jsp");
+
+    }
+
+    private HoaDon hoaDon;
+
+    @RequestMapping("/bumblebee/dat-hang")
+    public String datHang(
+            Model model,
+            HttpSession session,
+            //@ModelAttribute("hoadon") HoaDon hoaDon
+            @RequestParam(name = "tenNguoiNhan") String tenNguoiNhan,
+            @RequestParam(name = "sdt") String sdt,
+            @RequestParam(name = "diaChiShip") String diaChiShip,
+            @RequestParam(name = "ghiChu") String ghiChu
+    ) throws ParseException {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        KhachHang kh = khachHangService.findId(taiKhoan.getKhachHangKH().getId());
+
+        // Tạo hóa đơn
+        hoaDon = new HoaDon();
+        Random random = new Random();
+        hoaDon.setMaHoaDon("HĐ-" + random.nextInt());
+        hoaDon.setNgayTao(new Date());
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String format = sdf.format(date);
+        hoaDon.setKhachHang(kh);
+        hoaDon.setNgayTao(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
+        hoaDon.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
+        hoaDon.setTenNguoiNhan(tenNguoiNhan);
+        hoaDon.setSdt(sdt);
+        hoaDon.setDiaChiShip(diaChiShip);
+        hoaDon.setGhiChu(ghiChu);
+        hoaDon.setTrangThai(3);
+        hoaDonService.saveHoaDon(hoaDon);
+
+
+        // Tạo hóa đơn chi tiết
+        for (GioHangChiTiet ghct : listGHCT) {
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            hdct.setHoaDon(hoaDon);
+            hdct.setChiTietSanPham(ghct.getCtsp());
+            hdct.setSoLuong(ghct.getSoLuong());
+            hdct.setDonGia(ghct.getDonGia());
+            hdct.setTrangThai(3);
+            hoaDonChiTietService.save(hdct);
+            gioHangChiTietService.deleteGHCT(ghct.getId());
+        }
+
+        return "redirect:/bumblebee/bill/" + hoaDon.getId();
+    }
+
+    @RequestMapping("/bumblebee/bill/{id}")
+    public String bill(Model model, @PathVariable(name = "id") UUID id) {
+
+        model.addAttribute("listHD", hoaDonService.getId(id));
+        model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+        model.addAttribute("view", "../template_home/bill.jsp");
         return "template_home/index";
     }
+
 
     @RequestMapping("/bumblebee/product_list/sort")
     public String sort(Model model, @RequestParam(defaultValue = "0") int p,

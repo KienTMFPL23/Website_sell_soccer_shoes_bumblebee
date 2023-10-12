@@ -5,35 +5,39 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.UUID;
 
 @Entity
-@Data
+@Table(name = "GioHangChiTiet")
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "GioHangChiTiet")
+@Getter
+@Setter
 public class GioHangChiTiet {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    private UUID id;
 
-    @ManyToOne()
-    @JoinColumn(name = "IdChiTietSP")
-    ChiTietSanPham ctsp;
+    @Column(name = "SoLuong")
+    private Integer soLuong;
+
+    @Column(name = "DonGia")
+    private Double donGia;
+
+    @Column(name = "DonGiaKhiGiam")
+    private Double donGiaKhiGiam;
 
     @ManyToOne()
     @JoinColumn(name = "IdGioHang")
-    GioHang gioHang;
+    private GioHang gioHang;
 
-    @Column(name = "SoLuong")
-    int soLuong;
-
-    @Column(name = "DonGia")
-    Double donGia;
-
-    @Column(name = "DonGiaKhiGiam")
-    Double donGiaKhiGiam;
-
+    @ManyToOne()
+    @JoinColumn(name = "IdChiTietSP")
+    private ChiTietSanPham ctsp;
 }

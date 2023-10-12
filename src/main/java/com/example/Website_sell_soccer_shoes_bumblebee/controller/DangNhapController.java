@@ -56,7 +56,7 @@ public class DangNhapController {
             return "redirect:/admin/dashboard";
         } else if (taiKhoanDB != null && taiKhoanDB.getRole() == 3) {
             session.setAttribute("userLogged", taiKhoanDB);
-            return "redirect:/home/bumblebee";
+            return "redirect:/bumblebee/home";
         }
 
         // Login false

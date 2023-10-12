@@ -19,7 +19,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query(value = "SELECT hd FROM HoaDon hd where hd.maHoaDon like %?1% or hd.khachHang.ten LIKE %?1% or hd.sdt LIKE %?1%")
     Page<HoaDon> search(String keyword, Pageable pageable);
 
-
+    @Query("select hd from HoaDon hd where hd.id =?1")
+    List<HoaDon> findId(UUID id);
 
 
 }
