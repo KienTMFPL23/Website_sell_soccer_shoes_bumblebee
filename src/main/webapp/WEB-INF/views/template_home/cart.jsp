@@ -18,20 +18,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="item" items="${listCTSP}">
+                        <c:forEach var="item" items="${listGHCT}">
                             <tr>
-                                <td><input class="checkCart" type="checkbox" name="idListCartDetail" value="${item.id}"></td>
-                                <td><a class="ps-product__preview" href="/bumblebee/detail/${item.id}">
-                                    <img class="mr-15" src="../../../uploads/${item.hinhAnhs.tenanh}" width="100px" height="100px"> ${item.sanPham.tenSanPham}</a></td>
-                                <td><fmt:formatNumber value="${item.giaBan}" type="currency"/></td>
+                                <td><input class="checkCart" type="checkbox" name="idListCartDetail" value="${item.ctsp.id}"></td>
+                                <td><a class="ps-product__preview" href="/bumblebee/detail/${item.ctsp.id}">
+                                    <img class="mr-15" src="../../../uploads/${item.ctsp.hinhAnhs.tenanh}" width="100px" height="100px"> ${item.ctsp.sanPham.tenSanPham}</a></td>
+                                <td><fmt:formatNumber value="${item.donGia}" type="currency"/></td>
                                 <td>
                                     <div class="form-group--number">
                                         <button class="minus"><span>-</span></button>
-                                        <input class="form-control" type="text" value="2">
+                                        <input class="form-control" type="text" value="${item.soLuong}" style="font-size: 15px">
                                         <button class="plus"><span>+</span></button>
                                     </div>
                                 </td>
-                                <td></td>
+                                <td><fmt:formatNumber value="${item.donGia * item.soLuong}" type="currency"/></td>
                                 <td>
                                     <div class="ps-remove"></div>
                                 </td>

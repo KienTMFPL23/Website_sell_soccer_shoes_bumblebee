@@ -16,7 +16,7 @@
                 <div class="col-lg-10 col-md-12 col-lg-offset-1">
                     <div class="ps-product__thumbnail">
                         <div class="ps-product__preview">
-                            <div class="ps-product__variations">
+                            <div class="ps-product__variants">
                                 <div class="item"><img src="../../../uploads/${hinhAnh.duongdan1}" alt=""></div>
                                 <div class="item"><img src="../../../uploads/${hinhAnh.duongdan2}" alt=""></div>
                                 <div class="item"><img src="../../../uploads/${hinhAnh.duongdan3}" alt=""></div>
@@ -25,12 +25,16 @@
                             </div>
                         </div>
                         <div class="ps-product__image">
-                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.tenanh}" alt=""
-                                                   data-zoom-image="../../../uploads/${hinhAnh.tenanh}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan1}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan1}"></div>
                             <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan2}" alt=""
                                                    data-zoom-image="../../../uploads/${hinhAnh.duongdan2}"></div>
                             <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan3}" alt=""
                                                    data-zoom-image="../../../uploads/${hinhAnh.duongdan3}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan4}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan4}"></div>
+                            <div class="item"><img class="zoom" src="../../../uploads/${hinhAnh.duongdan5}" alt=""
+                                                   data-zoom-image="../../../uploads/${hinhAnh.duongdan5}"></div>
                         </div>
                     </div>
                     <div class="ps-product__thumbnail--mobile">
@@ -44,53 +48,45 @@
                                 src="../../../images_template/shoe-detail/2.jpg" alt=""><img
                                 src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
                     </div>
-                    <div class="ps-product__info">
-                        <h1>${ctsp.sanPham.tenSanPham}</h1>
-                        <h3 class="ps-product__price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency" />
-                        </h3>
-                        <div class="ps-product__block ps-product__style">
-                            <h4>Chọn màu sắc</h4>
-                            <div>
-                                <ul>
-                                    <c:forEach var="ms" items="${listMS}">
-                                        <li><a class="mauGiay"
-                                                href="#"
-                                                style="background-color: ${ms.ten};width: 30px;border: 1px solid #ddd"></a></li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="ps-product__block ps-product__size">
-                            <h4>Kích cỡ<a href="#">Size chart</a></h4>
-                            <div style="display: flex;justify-content: space-between">
-                                <select class="ps-select ">
-                                    <option value="1">Chọn kích cỡ</option>
-                                    <c:forEach var="kc" items="${listKC}">
-                                        <option value="">${kc.size}</option>
-                                    </c:forEach>
-                                </select>
-                                <div  style="display: flex;align-items: center">
-                                    <p>Số lượng</p>
-                                    <div class="form-group">
-                                        <input class="form-control" type="number" value="1">
+                        <form action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}" method="post">
+                            <div class="ps-product__info">
+                                <h1>${ctsp.sanPham.tenSanPham}</h1>
+                                <h3 class="ps-product__price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency"/>
+                                </h3>
+                                <div class="ps-product__block ps-product__size">
+                                    <h4>Kích cỡ<a href="#">Size chart</a></h4>
+                                    <div style="display: flex;justify-content: space-between">
+                                        <select class="ps-select" name="kichCo">
+                                            <option value="1">Chọn kích cỡ</option>
+                                            <c:forEach var="kc" items="${listKC}">
+                                                <option value="${kc}" >${kc}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <div style="display: flex;align-items: center">
+                                            <p>Số lượng</p>
+                                            <div class="form-group">
+                                                <input class="form-control" style="font-size: 15px" type="number" value="1" name="soLuong">
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-
+                                <div class="ps-product__shopping"><button class="ps-btn mb-10" type="submit"
+                                                                     style="background-color: #37517E;font-size: 15px">Thêm vào giỏ hàng<i class="ps-icon-next"></i></button>
+                                    <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i
+                                            class="ps-icon-heart"></i></a><a href="compare.html"><i
+                                            class="ps-icon-share"></i></a></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="ps-product__shopping"><a class="ps-btn mb-10" href="cart.html" style="background-color: #37517E;font-size: 15px">Thêm vào giỏ hàng<i
-                                class="ps-icon-next"></i></a>
-                            <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i
-                                    class="ps-icon-heart"></i></a><a href="compare.html"><i
-                                    class="ps-icon-share"></i></a></div>
-                        </div>
-                    </div>
+                        </form>
                     <div class="clearfix"></div>
                     <div class="ps-product__content mt-50">
                         <ul class="tab-list" role="tablist">
-                            <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Mô tả</a>
+                            <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Mô
+                                tả</a>
                             </li>
-                            <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Chính sách đổi trả</a></li>
+                            <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Chính sách đổi
+                                trả</a></li>
                             <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">Đánh giá</a>
                             </li>
                         </ul>

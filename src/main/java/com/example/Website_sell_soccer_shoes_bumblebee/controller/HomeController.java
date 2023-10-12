@@ -3,11 +3,14 @@ package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepo;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,11 +18,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.AbstractPersistable_;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,6 +50,12 @@ public class HomeController {
     @Autowired
     ChiTietSanPhamRepo chiTietSanPhamRepo;
 
+    @Autowired
+    GioHangRepo gioHangRepo;
+
+    @Autowired
+    GioHangChiTietRepo gioHangChiTietRepo;
+
     @Data
     public static class SortForm {
         String key;
@@ -60,28 +75,34 @@ public class HomeController {
         Double maxPrice;
     }
 
+    @GetMapping("/bumblebee/select-size")
+    public ResponseEntity<List<Integer>> getKichCoByItemId(@RequestParam UUID idSP, @RequestParam UUID idMS, Model model) {
+        List<Integer> kichCoList = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+        return ResponseEntity.ok(kichCoList);
+    }
 
     @RequestMapping("/bumblebee/home")
     public String index(Model model, @RequestParam(defaultValue = "0") int p) {
         Pageable pageable = PageRequest.of(p, 8);
-        Page<ChiTietSanPham> listSP = chiTietSanPhamService.getListSP(pageable);
+        //Page<ChiTietSanPham> listSP = chiTietSanPhamService.getListSP(pageable);
+        Page<ChiTietSanPham> listSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
         model.addAttribute("listSP", listSP);
         model.addAttribute("view", "../template_home/home.jsp");
         return "template_home/index";
     }
 
-    @RequestMapping("/bumblebee/detail/{id}")
-    public String detail(Model model, @PathVariable UUID id) {
-        System.out.println("-----------------------------" + id);
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(id);
+    @RequestMapping("/bumblebee/detail")
+    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
         List<KichCo> listKC = kichCoService.getList();
-        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(id);
+        List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<MauSac> listMS = mauSacService.getAll();
         model.addAttribute("listMS", listMS);
         model.addAttribute("listSP", listSP);
-        model.addAttribute("listKC", listKC);
+        model.addAttribute("listKC", listKCBySP);
         model.addAttribute("ctsp", chiTietSanPham);
         model.addAttribute("view", "../template_home/product_detail.jsp");
         return "template_home/index";
@@ -89,24 +110,50 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/cart")
     public String cart(Model model) {
-
         List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
+        GioHang gioHang = gioHangRepo.getGioHang(UUID.fromString("CB0C7CF2-B9C0-9133-0C6B-0EB0380305D8"));
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(UUID.fromString("570FFA38-3E57-4AC5-896B-DE71B962F671"));
+        model.addAttribute("listGHCT",listGHCT);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
+        return "template_home/index";
+    }
 
+    @RequestMapping("/bumblebee/add-to-cart")
+    public String addCart(Model model,
+                          @RequestParam int kichCo,
+                          @RequestParam UUID idMS,
+                          @RequestParam UUID idSP,
+                          @RequestParam String soLuong) {
 
+        System.out.println(idMS + "------------------" + kichCo + "------------" + idSP);
+        KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
+        ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
+        GioHang gioHang = gioHangRepo.getGioHang(UUID.fromString("CB0C7CF2-B9C0-9133-0C6B-0EB0380305D8"));
+        int sl = Integer.parseInt(soLuong);
+        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+        gioHangChiTiet.setCtsp(ctsp);
+        gioHangChiTiet.setGioHang(gioHang);
+        gioHangChiTiet.setDonGia(ctsp.getGiaBan());
+        gioHangChiTiet.setSoLuong(sl);
+        gioHangChiTietRepo.save(gioHangChiTiet);
+        List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+        model.addAttribute("listGHCT",listGHCT);
+        model.addAttribute("listCTSP", listCTSP);
+        model.addAttribute("view", "../template_home/cart.jsp");
         return "template_home/index";
     }
 
     /*-------------------Nguyễn Tiến Nam code thanh toán ở đây--------------------------------*/
     @RequestMapping("/bumblebee/thanh-toan")
-    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail){
+    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail) {
 //        Lấy list idctsp
         List<UUID> idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
                 .stream()
                 .map(UUID::fromString)
                 .collect(Collectors.toList());
-        for(UUID id : idCartUUIDList){
+        for (UUID id : idCartUUIDList) {
             System.out.println(id);
         }
         model.addAttribute("view", "../template_home/thanhtoan.jsp");
@@ -180,7 +227,6 @@ public class HomeController {
                                   @PathVariable UUID id) {
         KichCo kichCo = kichCoService.getOne(id);
         System.out.println(kichCo);
-        System.out.println("----------" + id);
         Pageable pageable = PageRequest.of(p, 12);
         Page<ChiTietSanPham> pageCTSPByKichCo = chiTietSanPhamService.getCTSPByKC(kichCo.getId(), pageable);
 

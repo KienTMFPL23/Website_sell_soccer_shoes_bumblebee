@@ -95,6 +95,35 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "join SanPham sp on sp.Id = ctsp.IdSP where sp.Id = ?1", nativeQuery = true)
     List<MauSac> getMauBySanPham(UUID idSP);
 
+    @Query(value = "select kc.size from kichCo kc join ChiTietSanPham ctsp on kc.Id = ctsp.IdKichCo " +
+            "join SanPham sp on sp.Id = ctsp.IdSP where sp.Id = ?1", nativeQuery = true)
+    List<String> getKichCoBySanPham(UUID idSP);
+
+    @Query("select kc from KichCo kc where kc.size = ?1")
+    KichCo getKichCoBySize(int size);
 
 
+
+    @Query(value = "select kc.size from kichCo kc join ChiTietSanPham ctsp on ctsp.IdKichCo = kc.Id\n" +
+            "where ctsp.IdMauSac = ?1 \n" +
+            "and ctsp.IdSP = ?2",nativeQuery = true)
+    List<Integer> getKichCoByMauSacAndSanPham(UUID idMS, UUID idSP);
+
+    @Query(value = "WITH RankedCTSP AS (\n" +
+            "    SELECT\n" +
+            "       id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai,\n" +
+            "        ROW_NUMBER() OVER (PARTITION BY IdSP, IdMauSac ORDER BY (SELECT NULL)) AS RowNum\n" +
+            "    FROM ChiTietSanPham\n" +
+            ")\n" +
+            "SELECT\n" +
+            "    id,IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
+            "FROM RankedCTSP\n" +
+            "WHERE RowNum = 1;",nativeQuery = true)
+    Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
+
+
+    @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
+            "and IdMauSac = ?2 \n" +
+            "and IdKichCo = ?3",nativeQuery = true)
+    ChiTietSanPham findctspAddCart(UUID idSP, UUID idMS, UUID idKC);
 }
