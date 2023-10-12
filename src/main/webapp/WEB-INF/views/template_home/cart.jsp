@@ -32,7 +32,8 @@
                                         <button class="plus"><span>+</span></button>
                                     </div>
                                 </td>
-                                <td><fmt:formatNumber value="${item.donGia * item.soLuong}" type="currency"/></td>
+                                <td><fmt:formatNumber value="${item.donGia * item.soLuong}" type="currency"/></td>                           
+                                <td>
                                     <div class="ps-remove"></div>
                                 </td>
                             </tr>

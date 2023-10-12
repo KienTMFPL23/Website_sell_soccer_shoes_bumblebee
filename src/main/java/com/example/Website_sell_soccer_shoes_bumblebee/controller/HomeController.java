@@ -11,7 +11,6 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamSer
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
-import jakarta.servlet.http.HttpServletRequest;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
@@ -44,7 +43,11 @@ import java.util.UUID;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.*;
+
+
+
 import java.util.stream.Collectors;
 
 @Controller
@@ -65,6 +68,7 @@ public class HomeController {
     ChiTietSanPhamRepo chiTietSanPhamRepo;
 
     @Autowired
+
     GioHangRepo gioHangRepo;
 
     @Autowired
@@ -141,6 +145,7 @@ public class HomeController {
     }
 
     @RequestMapping("/bumblebee/cart")
+
     public String cart(Model model,HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
@@ -177,7 +182,6 @@ public class HomeController {
         return "template_home/index";
     }
 
-    /*-------------------Nguyễn Tiến Nam code thanh toán ở đây--------------------------------*/
     @RequestMapping("/bumblebee/thanh-toan")
     public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
                             @ModelAttribute("hoadon") HoaDon hoadon, HttpSession session
@@ -259,6 +263,7 @@ public class HomeController {
             hdct.setTrangThai(3);
             hoaDonChiTietService.save(hdct);
             gioHangChiTietService.deleteGHCT(ghct.getId());
+
         }
 
         return "redirect:/bumblebee/bill/" + hoaDon.getId();

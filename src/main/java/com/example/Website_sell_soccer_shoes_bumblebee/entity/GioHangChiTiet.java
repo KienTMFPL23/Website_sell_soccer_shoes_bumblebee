@@ -2,12 +2,13 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 import java.util.UUID;
 
