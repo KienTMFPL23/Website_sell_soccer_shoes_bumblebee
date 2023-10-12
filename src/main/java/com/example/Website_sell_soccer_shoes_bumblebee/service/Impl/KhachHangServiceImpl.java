@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 
-@Repository
+@Service
 public class KhachHangServiceImpl implements KhachHangService {
 
     @Autowired
@@ -18,5 +18,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public KhachHang findId(UUID id) {
         return khachHangRepository.findId(id);
+      
+    @Override
+    public KhachHang saveKhachHang(KhachHang khachHang) {
+        return repository.save(khachHang);
     }
 }
