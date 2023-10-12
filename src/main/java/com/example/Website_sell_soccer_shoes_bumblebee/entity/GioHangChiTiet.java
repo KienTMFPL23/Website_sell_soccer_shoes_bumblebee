@@ -2,6 +2,8 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,8 @@ import lombok.Setter;
 
 
 import java.util.UUID;
+
+@Entity
 @Table(name = "GioHangChiTiet")
 @AllArgsConstructor
 @NoArgsConstructor

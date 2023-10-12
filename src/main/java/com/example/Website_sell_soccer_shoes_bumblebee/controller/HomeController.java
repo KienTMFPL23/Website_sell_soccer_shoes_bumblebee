@@ -7,6 +7,11 @@ import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTiet
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
+
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import com.itextpdf.forms.xfdf.Mode;
@@ -38,6 +43,10 @@ import java.util.UUID;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import java.util.*;
+
+
 
 import java.util.stream.Collectors;
 
@@ -98,8 +107,6 @@ public class HomeController {
         Double minPrice;
         Double maxPrice;
     }
-
-
     @GetMapping("/bumblebee/select-size")
     public ResponseEntity<List<Integer>> getKichCoByItemId(@RequestParam UUID idSP, @RequestParam UUID idMS, Model model) {
         List<Integer> kichCoList = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
@@ -139,12 +146,11 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/cart")
 
-    public String cart(Model model) {
-        List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-        GioHang gioHang = gioHangRepo.getGioHang(UUID.fromString("CB0C7CF2-B9C0-9133-0C6B-0EB0380305D8"));
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(UUID.fromString("570FFA38-3E57-4AC5-896B-DE71B962F671"));
+    public String cart(Model model,HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         model.addAttribute("listGHCT",listGHCT);
-        model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
         return "template_home/index";
     }
@@ -155,12 +161,13 @@ public class HomeController {
                           @RequestParam int kichCo,
                           @RequestParam UUID idMS,
                           @RequestParam UUID idSP,
-                          @RequestParam String soLuong) {
-
-        System.out.println(idMS + "------------------" + kichCo + "------------" + idSP);
+                          @RequestParam String soLuong,
+                          HttpSession session) {
         KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
         ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
-        GioHang gioHang = gioHangRepo.getGioHang(UUID.fromString("CB0C7CF2-B9C0-9133-0C6B-0EB0380305D8"));
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         int sl = Integer.parseInt(soLuong);
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         gioHangChiTiet.setCtsp(ctsp);
@@ -169,7 +176,6 @@ public class HomeController {
         gioHangChiTiet.setSoLuong(sl);
         gioHangChiTietRepo.save(gioHangChiTiet);
         List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         model.addAttribute("listGHCT",listGHCT);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
