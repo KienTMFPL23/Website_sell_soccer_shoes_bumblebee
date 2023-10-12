@@ -38,4 +38,5 @@ public class KichCo {
     @Column(name = "Trangthai")
     private Integer trangThai;
 
+
 }
