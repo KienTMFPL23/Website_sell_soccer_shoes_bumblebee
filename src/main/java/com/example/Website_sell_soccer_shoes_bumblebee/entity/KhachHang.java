@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -47,7 +48,6 @@ public class KhachHang {
 
     @Column(name = "TrangThai")
     private Integer trangThai;
-
 
     @OneToOne()
     @JoinColumn(name = "IdTaiKhoan")
