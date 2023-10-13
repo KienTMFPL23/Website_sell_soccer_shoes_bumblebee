@@ -93,35 +93,4 @@ public class DeGiayController {
     }
 
 
-
-    @GetMapping("/")
-    public String index() {
-        return "/de_giay/uploadPage";
-    }
-
-    @PostMapping("/uploadFile")
-    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-
-        deGiayService.uploadFile(file);
-
-        redirectAttributes.addFlashAttribute("message",
-                "You have successfully uploaded '"+ file.getOriginalFilename()+"' !");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return "redirect:/";
-    }
-
-    @GetMapping("/saveData")
-    public String saveExcelData(Model model) {
-
-        List<DeGiay> excelDataAsList = deGiayService.getExcelDataAsList();
-        int noOfRecords = deGiayService.saveExcelData(excelDataAsList);
-        model.addAttribute("noOfRecords",noOfRecords);
-        return "/de_giay/thanhCong";
-    }
-
 }

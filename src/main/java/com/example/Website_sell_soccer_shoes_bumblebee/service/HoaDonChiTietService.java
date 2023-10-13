@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface HoaDonChiTietService {
     HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idHoaDon,UUID idSP);
 
     Double getTotalMoney(List<HoaDonChiTiet> list);
+
+    HoaDonChiTiet save(HoaDonChiTiet hdct);
+    List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct);
 }

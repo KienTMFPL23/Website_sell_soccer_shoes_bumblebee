@@ -73,7 +73,8 @@ public class ChiTietSanPham {
     @OneToOne(mappedBy = "ctsp")
     HinhAnh hinhAnhs;
 
-
+    @OneToMany(mappedBy = "ctsp")
+    private List<GioHangChiTiet> gioHangChiTiet;
 
     public void loadFromViewModel(QLSanPham vm) {
         this.setChatLieu(vm.getChatLieu());

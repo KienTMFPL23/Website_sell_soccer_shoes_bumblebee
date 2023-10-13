@@ -5,6 +5,10 @@
     text-align: center;
 }
 
+* a:hover{
+    text-decoration: none;
+}
+
 .product_name {
     margin: 10px 0px;
 }
@@ -21,10 +25,20 @@
 
 
 
-.butAddCart a {
+.butAddCart button {
     text-align: center;
     font-size: 15px;
     padding: 8px 30px;
+    border: none;
+    background-color: #37517E;
+}
+
+.butAddCart button:before{
+    background-color: white;
+    color: #37517E;
+    border: 1px solid #37517E;
+    transition: 0.5s;
+    font-weight: 600;
 }
 
 .product_name a{
@@ -39,6 +53,14 @@
 menu-link:before{
     background-color: #37517E;
     color: blue;
+}
+.sizeAddCart,.soLuongAddCart{
+    display: flex;
+    justify-content: space-between;
+}
+.modal-body{
+    display: flex;
+    align-items: center;
 }
 /*banner*/
 

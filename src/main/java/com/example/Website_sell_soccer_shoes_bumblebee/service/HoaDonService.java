@@ -23,9 +23,16 @@ public interface HoaDonService {
 
     HoaDon createHoaDon() throws ParseException;
 
+
     HoaDon saveHoaDon(HoaDon hoaDon);
 
     HoaDon deleteHoaDon(UUID id);
 
     HoaDon getOne(UUID id);
+
+     HoaDon getOne(UUID id);
+
+     List<HoaDon> getId(UUID id);
+
+
 }

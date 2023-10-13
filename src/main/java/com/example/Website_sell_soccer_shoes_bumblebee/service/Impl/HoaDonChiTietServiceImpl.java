@@ -66,4 +66,14 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         return sum;
     }
 
+    @Override
+    public HoaDonChiTiet save(HoaDonChiTiet hdct) {
+        return hoaDonChiTietRepository.save(hdct);
+    }
+
+    @Override
+    public List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct) {
+        return hoaDonChiTietRepository.saveAll(hdct);
+    }
+
 }
