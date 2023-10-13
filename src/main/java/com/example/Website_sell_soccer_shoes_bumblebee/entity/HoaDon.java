@@ -1,10 +1,12 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -25,9 +27,12 @@ public class HoaDon {
     @Column(name = "MaHD")
     private String maHoaDon;
 
+    @NotNull(message ="Ngày tạo không được trống")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayTao")
     private Date ngayTao;
+
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayThanhToan")

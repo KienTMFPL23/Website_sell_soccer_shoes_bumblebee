@@ -18,15 +18,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -49,18 +44,19 @@ public class HoaDonController {
     @Data
     public static class SearchForm {
         String keyword = "";
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        Date fromDate;
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        Date toDate;
     }
 
-    @Data
-    public static class SearchDate {
-        Date startDate;
-        Date endDate;
-    }
 
     @GetMapping("/hoa-don/hien-thi")
     public String index(@RequestParam(defaultValue = "0", name = "page") Integer page, Model model) {
         model.addAttribute("searchForm", new SearchForm());
-        model.addAttribute("searchDate", new SearchDate());
+//        model.addAttribute("searchDate", new SearchDate());
         Pageable pageable = PageRequest.of(page, 10);
         Page<HoaDon> list = hdRepo.findAll(pageable);
         model.addAttribute("list", list);
@@ -71,7 +67,7 @@ public class HoaDonController {
     @GetMapping("/hoa-don-chi-tiet/hien-thi/{ma}")
     public String hienThi(Model model, HttpSession session, @PathVariable("ma") UUID id) {
         model.addAttribute("searchForm", new SearchForm());
-        model.addAttribute("searchDate", new SearchDate());
+//        model.addAttribute("searchDate", new SearchDate());
         session.setAttribute("listHDCT", hdctService.getHoaDonById(id));
         return "/admin/index";
     }
@@ -83,29 +79,34 @@ public class HoaDonController {
     ) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<HoaDon> hoaDons = this.hdRepo.search(searchForm.keyword, pageable);
-        model.addAttribute("searchDate", new SearchDate());
+        model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("list", hoaDons);
         model.addAttribute("view", "../hoa_don/list.jsp");
         return "/admin/index";
     }
+
 
     @RequestMapping(value = "/hoa-don/searchDate")
-    public String searchDate(Model model, @ModelAttribute("searchDate") SearchDate searchDate,
-                             @RequestParam(defaultValue = "0", name = "page") int page, BindingResult bindingResult
+    public String searchDate(Model model,
+                             @RequestParam(defaultValue = "0", name = "page") int page,
+                             @ModelAttribute("searchForm") SearchForm searchForm
     ) {
-        model.addAttribute("searchForm", new SearchForm());
         Pageable pageable = PageRequest.of(page, 5);
-        String sDate = "09-10-2023";
-        String eDate = "11-10-2023";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date sdate = dateFormat.parse(sDate, new ParsePosition(0));
-        Date edate = dateFormat.parse(eDate, new ParsePosition(0));
-        System.out.println(searchDate.startDate + "-"+searchDate.endDate);
-        Page<HoaDon> hoaDons = this.hoaDonService.getALlBetweenDates(sdate, edate, pageable);
-        model.addAttribute("list", hoaDons);
+        Page<HoaDon> listS = this.hoaDonService.searchALlBetweenDates(searchForm.fromDate,searchForm.toDate,pageable);
+        model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("list" , listS);
         model.addAttribute("view", "../hoa_don/list.jsp");
         return "/admin/index";
     }
 
+
+    @RequestMapping(value = "/hoa-don/update/{maHoaDon}", method = RequestMethod.POST)
+    public String updateStatus(@PathVariable("maHoaDon") String maHoaDon, @RequestBody() String data, Model model) {
+        HoaDon hoaDon = hoaDonService.searchHoaDon(maHoaDon);
+        data = data.substring(0, data.indexOf("="));
+        hoaDon.setTrangThai(Integer.valueOf(data));
+        this.hoaDonService.saveHoaDon(hoaDon);
+        return "redirect:/hoa-don/hien-thi";
+    }
 
 }

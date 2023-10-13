@@ -11,21 +11,21 @@ import java.util.List;
 import java.util.UUID;
 
 public interface HoaDonService {
-     Page<HoaDon> search(String key, Pageable pageable);
+    Page<HoaDon> search(String key, Pageable pageable);
 
+    HoaDon searchHoaDon(String hoaDon);
 
-     Page<HoaDon> getALlBetweenDates(Date startDate, Date endDate, Pageable pageable);
+    Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable);
 
+    List<HoaDon> findAll();
 
-     List<HoaDon> findAll();
+    List<HoaDon> listHoaDonCho();
 
-     List<HoaDon> listHoaDonCho();
+    HoaDon createHoaDon() throws ParseException;
 
-     HoaDon createHoaDon() throws ParseException;
+    HoaDon saveHoaDon(HoaDon hoaDon);
 
-     HoaDon saveHoaDon(HoaDon hoaDon);
+    HoaDon deleteHoaDon(UUID id);
 
-     HoaDon deleteHoaDon(UUID id);
-
-     HoaDon getOne(UUID id);
+    HoaDon getOne(UUID id);
 }

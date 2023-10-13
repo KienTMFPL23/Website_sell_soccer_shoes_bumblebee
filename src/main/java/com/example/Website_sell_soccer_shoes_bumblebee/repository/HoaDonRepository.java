@@ -18,12 +18,13 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query("select hd from HoaDon  hd where hd.trangThai = 0 order by hd.ngayTao")
     List<HoaDon> getListByTrangThai();
 
-    @Query(value = "SELECT hd FROM HoaDon hd where hd.maHoaDon like %?1% or hd.sdt like %?1%")
+    @Query(value = "SELECT hd FROM HoaDon hd where hd.maHoaDon like %?1% or hd.sdt like %?1%  or hd.tenNguoiNhan like %?1% ") //or hd.nhanVien.ten like %?1%
     Page<HoaDon> search(String keyword, Pageable pageable);
-// or hd.khachHang.ten = ?1
-
-    @Query("select hd from HoaDon hd where hd.ngayTao between :startDate and :endDate")
-    Page<HoaDon> getALlBetweenDates(Date startDate, Date endDate, Pageable pageable);
 
 
+    @Query("select hd from HoaDon hd where (?1 IS NULL OR hd.ngayTao >= ?1) AND (?2 IS NULL OR hd.ngayTao <= ?2)")
+    Page<HoaDon> searchALlBetweenDates(Date fromDate,Date toDate, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.maHoaDon = ?1")
+    HoaDon searchHoaDon(String hoaDon);
 }

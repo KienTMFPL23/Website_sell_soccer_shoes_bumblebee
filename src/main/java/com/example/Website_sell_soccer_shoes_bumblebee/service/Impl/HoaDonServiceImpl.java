@@ -37,10 +37,14 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public Page<HoaDon> getALlBetweenDates(Date startDate, Date endDate, Pageable pageable) {
-            return hoaDonRepository.getALlBetweenDates(startDate, endDate, pageable);
+    public Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable) {
+        return hoaDonRepository.searchALlBetweenDates(fromDate, toDate, pageable);
     }
 
+    @Override
+    public HoaDon searchHoaDon(String hoaDon) {
+        return hoaDonRepository.searchHoaDon(hoaDon);
+    }
 
     @Override
     public List<HoaDon> findAll() {
