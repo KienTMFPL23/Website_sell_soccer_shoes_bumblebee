@@ -71,7 +71,8 @@ public class QLSanPham {
     @Column(name = "Trangthai")
     @NotNull(message = "không để trống")
     Integer trangThai;
-
+    @OneToOne(mappedBy = "ctsp")
+    HinhAnh hinhAnhs;
 
     @Override
     public String toString() {

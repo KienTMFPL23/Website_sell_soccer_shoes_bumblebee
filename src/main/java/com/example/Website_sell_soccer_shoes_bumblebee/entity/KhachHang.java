@@ -53,6 +53,9 @@ public class KhachHang {
     @JoinColumn(name = "IdTaiKhoan")
     private TaiKhoan taiKhoanKH;
 
+    @OneToOne(mappedBy = "khachHang")
+    private GioHang gioHang;
+
     @Override
     public String toString() {
         return ho  + tenDem + ten ;

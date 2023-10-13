@@ -25,8 +25,23 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
 
     @Override
+    public ChiTietSanPham findCTSPAddCart(UUID idSP, UUID idMS, UUID idKC) {
+        return repo.findctspAddCart(idSP, idMS, idKC);
+    }
+
+    @Override
     public List<MauSac> getMauSacBySP(UUID idSP) {
         return repo.getMauBySanPham(idSP);
+    }
+
+    @Override
+    public List<String> getKichCoSacBySP(UUID idSP) {
+        return repo.getKichCoBySanPham(idSP);
+    }
+
+    @Override
+    public List<Integer> getKichCoByMauSacAndSanPham(UUID idMS, UUID idSP) {
+        return repo.getKichCoByMauSacAndSanPham(idMS, idSP);
     }
 
     @Override
@@ -100,13 +115,18 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     public ChiTietSanPham updateDelete(UUID id, int soLuong) {
         ChiTietSanPham chiTietSanPham = repo.findById(id).orElse(null);
         if (chiTietSanPham != null) {
-            chiTietSanPham.setSoLuong(soLuong+chiTietSanPham.getSoLuong());
+            chiTietSanPham.setSoLuong(soLuong + chiTietSanPham.getSoLuong());
             repo.save(chiTietSanPham);
             return chiTietSanPham;
         } else {
             return null;
         }
 
+    }
+
+    @Override
+    public Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable) {
+        return repo.listCTSP(id,pageable);
     }
 
     @Override

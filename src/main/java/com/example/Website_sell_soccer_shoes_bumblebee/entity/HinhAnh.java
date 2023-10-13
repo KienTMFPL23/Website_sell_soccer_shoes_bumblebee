@@ -19,8 +19,8 @@ public class HinhAnh {
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
 
-    @ManyToOne()
-    @JoinColumn(name = "IdCTSP")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCTSP", referencedColumnName = "id")
     ChiTietSanPham ctsp;
 
     @Column(name = "Tenanh")

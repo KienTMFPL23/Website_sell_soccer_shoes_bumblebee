@@ -75,7 +75,7 @@
     }
 
 </style>
-
+<div class="container">
     <div class="row">
         <div class="col-lg-6">
             <a href="/kich-co/view-add" class="btnAdd">
@@ -99,7 +99,7 @@
 
     </div>
 
-    <table id="tableKichCo" class="ui celled table" width="100%">
+    <table id="tableKichCo" class="ui celled table table-bordered" width="100%">
         <thead>
         <tr>
             <th scope="col">Mã</th>
@@ -156,3 +156,4 @@
 <%--            </ul>--%>
 <%--        </nav>--%>
 <%--    </div>--%>
+</div>

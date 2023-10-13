@@ -76,6 +76,7 @@
 
 </style>
 <div class="container-sm">
+
     <h2 style="text-align: center;padding-top: 20px;margin-bottom: 20px">Thêm/Sửa Chi Tiết Sản Phẩm</h2>
     <form:form action="${action}" modelAttribute="sanpham" cssClass="text-center" enctype="multipart/form-data">
         <form:input path="id" class="form-control" type="hidden"/>
@@ -120,7 +121,8 @@
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="loaiGiay" cssStyle="color: crimson"/></span>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle-fill"></i></a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                            class="bi bi-plus-circle-fill"></i></a>
 
                 </div>
 
@@ -131,7 +133,8 @@
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="kichCo" cssStyle="color: crimson"/></span>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bi bi-plus-circle-fill"></i></a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
+                            class="bi bi-plus-circle-fill"></i></a>
                 </div>
                 <div class="item-right">
                     <label class="form-label">Màu sắc: </label>
@@ -140,7 +143,8 @@
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="mauSac" cssStyle="color: crimson"/></span>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i class="bi bi-plus-circle-fill"></i></a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
+                            class="bi bi-plus-circle-fill"></i></a>
 
                 </div>
                 <div class="item-right">
@@ -150,7 +154,8 @@
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
                     <span> <form:errors path="chatLieu" cssStyle="color: crimson"/></span>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal4"><i class="bi bi-plus-circle-fill"></i></a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal4"><i
+                            class="bi bi-plus-circle-fill"></i></a>
                 </div>
                 <div class="item-right">
                     <label class="form-label">Đế giầy: </label>
@@ -160,7 +165,8 @@
                     </form:select>
                     <span> <form:errors path="deGiay" cssStyle="color: crimson"/></span>
 
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal5"><i class="bi bi-plus-circle-fill"></i></a>
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal5"><i
+                            class="bi bi-plus-circle-fill"></i></a>
                 </div>
             </div>
         </div>
@@ -172,7 +178,7 @@
         </div>
     </form:form>
 
-<%--    modal--%>
+    <%--    modal--%>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -187,6 +193,7 @@
                         <div class="input" style="">
                             <p>Mã:</p>
                             <form:input path="ma" class="form-control"/>
+                            <div style="color: red" id="errorMa"></div>
                         </div>
                         <form:errors path="ma"/>
                         <div style="margin-left: 10px;color: red">${errorMa}</div>
@@ -199,7 +206,8 @@
                         <div style="margin-left: 10px;color: red">${errorTen}</div>
                         <div class="mb-3 form-check-inline ">
                             <label class="form-label">Trạng Thái</label>
-                            <form:radiobuttons items="${dsTrangThai}" path="trangthai" class="form-check-input"/>
+                            <form:radiobuttons items="${dsTrangThai}" path="trangthai"
+                                               class="form-check-input"/>
                             <form:errors path="trangthai" cssStyle="color: crimson"/>
                         </div>
 
@@ -216,6 +224,39 @@
 
         </div>
     </div>
+<%--    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
+<%--        <div class="modal-dialog">--%>
+<%--            <div class="modal-content">--%>
+<%--                <form:form modelAttribute="lg" method="post" action="${action4}">--%>
+<%--                    <div class="modal-header">--%>
+<%--                        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Loại Giầy</h1>--%>
+<%--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-body">--%>
+<%--                        <div class="input" style="">--%>
+<%--                            <p>Mã:</p>--%>
+<%--                            <form:input path="ma" class="form-control"/>--%>
+<%--                            <div style="color: red" id="errorMa"></div>--%>
+<%--                        </div>--%>
+<%--                        <div class="input">--%>
+<%--                            <p>Loại giày:</p>--%>
+<%--                            <form:input path="tentheloai" class="form-control"/>--%>
+<%--                            <div style="color: red" id="errorTen"></div>--%>
+<%--                        </div>--%>
+<%--                        <div class="mb-3 form-check-inline">--%>
+<%--                            <label class="form-label">Trạng Thái</label>--%>
+<%--                            <form:radiobuttons items="${dsTrangThai}" path="trangthai" class="form-check-input"/>--%>
+<%--                            <div style="color: crimson" id="errorTrangThai"></div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-footer">--%>
+<%--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--%>
+<%--                        <button type="submit" class="btn btn-primary">Submit</button>--%>
+<%--                    </div>--%>
+<%--                </form:form>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
     <%--    modal2--%>
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -228,7 +269,7 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-<%--                    <form:input path="id" class="form-control" type="hidden"/>--%>
+                        <%--                    <form:input path="id" class="form-control" type="hidden"/>--%>
                     <div class="mb-3">
                         <label class="form-label">Mã Kích Cỡ: </label>
 
@@ -267,7 +308,8 @@
         </div>
     </div>
     <%--    modal3--%>
-    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form:form modelAttribute="ms" action="${action3}">
@@ -308,7 +350,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form:form modelAttribute="vm" action="${action6}">
@@ -330,7 +373,8 @@
                         </div>
                         <div id="tt" class="form-check-inline">
                             <label>Trạng Thái</label>
-                            <form:radiobutton class="form-check-input" path="trangThai" value="1" checked="true"/>HĐ
+                            <form:radiobutton class="form-check-input" path="trangThai" value="1"
+                                              checked="true"/>HĐ
                             <form:radiobutton class="form-check-input" path="trangThai" value="0"/>Ngưng HĐ
                         </div>
                     </div>
@@ -347,7 +391,8 @@
         </div>
     </div>
     <%--    modal4--%>
-    <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form:form modelAttribute="degiay" action="${action5}">

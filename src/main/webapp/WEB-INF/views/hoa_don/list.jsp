@@ -159,7 +159,7 @@
                     <td>${hd.tenNguoiNhan}</td>
                     <td>${hd.sdt}</td>
                     <td>
-                        <span>${hd.trangThai == 1 ? 'Đã Thanh Toán' : 'Chờ thanh toán'}</span>-
+                        <span>${hd.trangThai == 1 ? 'Đã Thanh Toán' : 'Đang Xử Lý'}</span>-
                         <select class="select-item" onchange="updateStatus('${hd.maHoaDon}',${hd.trangThai})"
                                 id="${hd.maHoaDon}">
                             <option value="1" ${hd.trangThai == 1 ? 'selected' : ''} id="${hd.maHoaDon}1">Đã Thanh

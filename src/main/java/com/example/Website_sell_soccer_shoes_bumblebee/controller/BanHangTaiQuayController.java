@@ -55,6 +55,9 @@ public class BanHangTaiQuayController {
     @Autowired
     NhanVienService nhanVienService;
 
+    @Autowired
+    KhachHangService khachHangService;
+
 
     @Getter
     @Setter
@@ -89,15 +92,19 @@ public class BanHangTaiQuayController {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());
-
+        this.idHoaDon = null;
+        this.sumMoney = 0.0;
+        model.addAttribute("idHoaDon", idHoaDon);
+        model.addAttribute("sumMoney", sumMoney);
+        model.addAttribute("khachHang", new KhachHang());
 
 
         model.addAttribute("searchForm", new SearchForm());
 //        model.addAttribute("sumMoney", sumMoney);
 
-        model.addAttribute("hoaDon",new HoaDon());
+        model.addAttribute("hoaDon", new HoaDon());
 
-        return "admin/index";
+        return "ban_hang_tai_quay/ban-hang";
     }
 
     private void getTaiKhoan(Model model) {
@@ -108,11 +115,17 @@ public class BanHangTaiQuayController {
         model.addAttribute("fullNameStaff", fullname);
     }
 
+    @GetMapping("/so-luong-hoa-don-cho")
+    public ResponseEntity<?> soLuongHoaDon() {
+        Integer soLuongHDC = hoaDonService.listHoaDonCho().size();
+        return ResponseEntity.ok(soLuongHDC);
+    }
+
     @RequestMapping("/create-hoadon")
     public String createHoaDon(Model model) throws ParseException {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         Integer soLuongHDCho = hoaDonService.listHoaDonCho().size();
-        if (soLuongHDCho >= 5) {
+        if (soLuongHDCho == 5) {
             model.addAttribute("soLuongHD", soLuongHDCho);
             return "redirect:/bumblebee/ban-hang-tai-quay/sell";
         }
@@ -144,12 +157,14 @@ public class BanHangTaiQuayController {
     @GetMapping("/hoa-don-chi-tiet/{id}")
     public String hoaDonChiTiet(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
+        model.addAttribute("khachHang", new KhachHang());
         idHoaDon = id;
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         model.addAttribute("listHDCT", hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id));
         model.addAttribute("idHoaDon", this.idHoaDon);
+        model.addAttribute("listKhachHang",khachHangService.getAll());
         getTaiKhoan(model);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
@@ -162,10 +177,9 @@ public class BanHangTaiQuayController {
         model.addAttribute("listDeGiay", chiTietSanPhamRepo.listDeGiay());
         model.addAttribute("listChatLieu", chiTietSanPhamRepo.lítChatLieu());
 
-     
 
         idHoaDonCT = id;
-        return "/admin/index";
+        return "ban_hang_tai_quay/ban-hang";
     }
 
     @RequestMapping("/add-gio-hang/{id}")
@@ -215,12 +229,11 @@ public class BanHangTaiQuayController {
     @RequestMapping("/update-cart/{id}")
     public String updateSLGioHang(@PathVariable("id") UUID id, int soLuong) {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
+        Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setSoLuong(soLuong);
-            Integer soLuongMua = hoaDonChiTiet.getSoLuong();
-            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
-            Integer soLuongTon = chiTietSanPham.getSoLuong();
-//            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(),soLuongTon+soLuongMua);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - soLuong);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
@@ -245,5 +258,12 @@ public class BanHangTaiQuayController {
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
 
-
+    @RequestMapping("/them-khach-hang")
+    public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
+        KhachHang addKhachHang = new KhachHang();
+        addKhachHang.setTen(khachHang.getTen());
+        addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
+        khachHangService.saveKhachHang(addKhachHang);
+        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+    }
 }

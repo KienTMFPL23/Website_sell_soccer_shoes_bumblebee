@@ -12,7 +12,7 @@
     />
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-
+    <link rel="icon" href="../../../images_template/logo_bumblebee.png">
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
@@ -102,7 +102,7 @@
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
 
-                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
                     <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
 
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
@@ -372,6 +372,7 @@
 <!--&gt;</script>-->
 <%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 <!-- Bootstrap core JavaScript-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
