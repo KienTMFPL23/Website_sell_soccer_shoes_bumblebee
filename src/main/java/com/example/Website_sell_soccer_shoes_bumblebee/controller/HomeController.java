@@ -47,7 +47,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-
 import java.util.stream.Collectors;
 
 @Controller
@@ -107,6 +106,7 @@ public class HomeController {
         Double minPrice;
         Double maxPrice;
     }
+
     @GetMapping("/bumblebee/select-size")
     public ResponseEntity<List<Integer>> getKichCoByItemId(@RequestParam UUID idSP, @RequestParam UUID idMS, Model model) {
         List<Integer> kichCoList = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
@@ -146,11 +146,11 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/cart")
 
-    public String cart(Model model,HttpSession session) {
+    public String cart(Model model, HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
         List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
-        model.addAttribute("listGHCT",listGHCT);
+        model.addAttribute("listGHCT", listGHCT);
         model.addAttribute("view", "../template_home/cart.jsp");
         return "template_home/index";
     }
@@ -168,6 +168,17 @@ public class HomeController {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
         List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+        for (GioHangChiTiet gioHangChiTiet : listGHCT) {
+            if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
+                int soLuongHienTai = gioHangChiTiet.getSoLuong();
+                int slThem = Integer.parseInt(soLuong);
+                int slUpdate = soLuongHienTai + slThem;
+                gioHangChiTiet.setSoLuong(slUpdate);
+                gioHangChiTietRepo.save(gioHangChiTiet);
+                System.out.println("có rồiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                return "redirect:/bumblebee/cart";
+            }
+        }
         int sl = Integer.parseInt(soLuong);
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         gioHangChiTiet.setCtsp(ctsp);
@@ -176,7 +187,7 @@ public class HomeController {
         gioHangChiTiet.setSoLuong(sl);
         gioHangChiTietRepo.save(gioHangChiTiet);
         List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-        model.addAttribute("listGHCT",listGHCT);
+        model.addAttribute("listGHCT", listGHCT);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
         return "redirect:/bumblebee/cart";
@@ -193,7 +204,7 @@ public class HomeController {
         } else {
             model.addAttribute("listKH", taiKhoan.getKhachHangKH());
 
-            if (idListCartDetail == null){
+            if (idListCartDetail == null) {
                 return "redirect:/bumblebee/cart";
             } else {
 

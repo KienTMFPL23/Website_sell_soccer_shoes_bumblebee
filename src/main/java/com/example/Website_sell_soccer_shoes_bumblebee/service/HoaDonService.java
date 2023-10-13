@@ -30,9 +30,7 @@ public interface HoaDonService {
 
     HoaDon getOne(UUID id);
 
-     HoaDon getOne(UUID id);
-
-     List<HoaDon> getId(UUID id);
+    List<HoaDon> getId(UUID id);
 
 
 }

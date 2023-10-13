@@ -74,6 +74,9 @@ menu-link:before{
     display: flex;
     align-items: center;
 }
+.menu > li > a{
+    color: white;
+}
 /*banner*/
 
 
@@ -139,4 +142,12 @@ input[type="checkbox"] {
 }
 .form-control{
     font-size: 17px;
+}
+/*ban-hang-tai-quay*/
+.navHoaDon{
+    position: relative;
+}
+#searchSPGioHang{
+    border: 2px solid #37517E;
+    width: 400px;
 }
