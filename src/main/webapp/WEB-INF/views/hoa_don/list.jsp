@@ -233,9 +233,14 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-<%--                                                     <c:forEach var="hd" items="${hd.khachHang}">--%>
-                                                        <c:forTokens items="" delims=""
-<%--                                                     </c:forEach>--%>
+                                                        <%--                                                     <c:forEach var="hd" items="${hd.khachHang}">--%>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                        <%--                                                     </c:forEach>--%>
                                                     </tbody>
                                                 </table>
                                             </div>
