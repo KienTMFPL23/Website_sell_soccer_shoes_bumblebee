@@ -60,4 +60,5 @@ public interface ChiTietSanPhamService {
     ChiTietSanPham updateDelete(UUID id,int soLuong);
 
 
+    Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable);
 }

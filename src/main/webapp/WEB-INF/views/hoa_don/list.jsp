@@ -100,7 +100,7 @@
                     <td>${hd.tenNguoiNhan}</td>
                     <td>${hd.sdt}</td>
                     <td>
-                            ${hd.trangThai == 1 ? 'Đã Thanh Toán':'Chưa Thanh Toán'}
+                            ${hd.trangThai == 0 ? 'Đã Thanh Toán':'Chưa Thanh Toán'}
                     </td>
                     <td>
                         <button id="content" type="submit" class="btn btn-primary" data-bs-toggle="modal"

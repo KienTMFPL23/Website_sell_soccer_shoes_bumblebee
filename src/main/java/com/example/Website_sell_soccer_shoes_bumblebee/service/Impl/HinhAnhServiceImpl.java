@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HinhAnh;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.SanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HinhAnhService;
@@ -38,6 +39,31 @@ public class HinhAnhServiceImpl implements HinhAnhService {
     @Override
     public String getImageUploadPath() {
         return imageUploadPath;
+    }
+
+    @Override
+    public Page<HinhAnh> listHinhAnh(Pageable pageable) {
+        return repository.listHinhAnh(pageable);
+    }
+
+    @Override
+    public UUID getIdHinhAnh(UUID keyword) {
+        return repository.getIdHinhAnh(keyword);
+    }
+
+    @Override
+    public HinhAnh getHinhAnh(UUID id) {
+        return repository.getHinhAnh(id);
+    }
+
+    @Override
+    public UUID getIdCTSP(UUID id) {
+        return repository.getIdCTSP(id);
+    }
+
+    @Override
+    public SanPham getSanPhamByIDCTSP(UUID idCTSP) {
+        return repository.getSanPhamByIDCTSP(idCTSP);
     }
 
     @Override

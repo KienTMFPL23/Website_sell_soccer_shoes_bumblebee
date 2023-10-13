@@ -257,7 +257,7 @@ public class SanPhamController {
 //                QRCodeGenerator.generatorQRCode(ct);
 //            }
 //        }
-        return "redirect:/chi-tiet-san-pham/hien-thi";
+        return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }
 
     //add modal loai giay
@@ -324,13 +324,13 @@ public class SanPhamController {
 
         if (resultt.hasErrors()) {
             model.addAttribute("mess", "Chi tiết sản phẩm chưa tồn tại");
-                return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
 
 
         }
 
-            kichCoService.addKC(kichCo);
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+        kichCoService.addKC(kichCo);
+        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
 
     }
 
@@ -409,5 +409,31 @@ public class SanPhamController {
         deGiayRepo.save(degiay);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+    }
+
+    //list ctsp theo id
+    @RequestMapping("/chi-tiet-san-pham/list-san-pham/{id}")
+
+    public String hienListSanPham(@ModelAttribute("sortForm") ChiTietSanPhamController.SortFormSP sortFormSP, @ModelAttribute("sanpham") QLSanPham sp, @RequestParam(defaultValue = "0") int p, @PathVariable("id") UUID id, Model model) throws IOException, WriterException {
+
+        if (p < 0) {
+            p = 0;
+        }
+        SanPham sanPham1 = sanPhamService.getOne(id);
+        model.addAttribute("idsp", sanPham1.getId());
+        model.addAttribute("tensp", sanPham1.getTenSanPham());
+        Pageable pageable = PageRequest.of(p, 5);
+        Page<ChiTietSanPham> qlSanPhamPage = service.listCTSP(id, pageable);
+        model.addAttribute("page", qlSanPhamPage);
+        model.addAttribute("searchChatLieu", new ChiTietSanPhamController.SearchChatlieu());
+        model.addAttribute("lg", new ChiTietSanPhamController.SearchLoaiGiay());
+        model.addAttribute("SP", new SanPham());
+        model.addAttribute("view", "../chi-tiet-san-pham/list-spct.jsp");
+        model.addAttribute("searchForm", new ChiTietSanPhamController.SearchFormSP());
+        model.addAttribute("searchFormByMau", new ChiTietSanPhamController.SearchFormSPByMau());
+        model.addAttribute("searchKC", new ChiTietSanPhamController.SearchKC());
+        model.addAttribute("searchDG", new ChiTietSanPhamController.SearchDeGiay());
+
+        return "/admin/index";
     }
 }

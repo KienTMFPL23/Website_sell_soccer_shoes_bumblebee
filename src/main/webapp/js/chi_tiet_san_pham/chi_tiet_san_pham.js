@@ -1,4 +1,3 @@
-
     $(document).ready(function () {
     $('#searchName').select2({
         width: 150,

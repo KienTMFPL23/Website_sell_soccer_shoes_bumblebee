@@ -75,10 +75,10 @@
     }
 
 </style>
-
+<div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <a href="/de-giay/view-add" class="btnAdd">
+            <a href="/kich-co/view-add" class="btnAdd">
                 <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
                 <p>Thêm mới</p>
             </a>
@@ -99,7 +99,7 @@
 
     </div>
 
-    <table id="tableKichCo" class="ui celled table" width="100%">
+    <table id="tableKichCo" class="ui celled table table-bordered" width="100%">
         <thead>
         <tr>
             <th scope="col">Mã</th>
@@ -156,3 +156,4 @@
 <%--            </ul>--%>
 <%--        </nav>--%>
 <%--    </div>--%>
+</div>

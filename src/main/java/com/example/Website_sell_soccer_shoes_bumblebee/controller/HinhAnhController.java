@@ -1,9 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.DeGiay;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HinhAnh;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.LoaiGiayRepository;
@@ -40,7 +37,6 @@ import java.util.UUID;
 
 @Controller
 public class HinhAnhController {
-
     @Autowired
     HinhAnhService service;
 
@@ -49,9 +45,14 @@ public class HinhAnhController {
 
 
     @GetMapping("/hinh-anh/hien-thi")
-    public String index(Model model) {
-
+    public String hienThi(Model model, @RequestParam(defaultValue = "0") int p) {
         model.addAttribute("view", "../hinh-anh/list.jsp");
+        if (p < 0) {
+            p = 0;
+        }
+        Pageable pageable = PageRequest.of(p, 5);
+        Page<HinhAnh> page = service.listHinhAnh(pageable);
+        model.addAttribute("page", page);
         return "/admin/index";
     }
 
@@ -144,7 +145,7 @@ public class HinhAnhController {
         return "/admin/index";
     }
 
-    @PostMapping("/hinh-anh/update/{id}")
+    @RequestMapping("/hinh-anh/update/{id}")
     public String update(@PathVariable(name = "id") UUID id,
                          @RequestParam(name = "tenanh") MultipartFile tenanh,
                          @RequestParam(name = "duongdan1") MultipartFile duongdan1,
@@ -183,11 +184,106 @@ public class HinhAnhController {
             hinhAnh.setDuongdan5(newDuongdan5);
         }
 
+
         repository.save(hinhAnh);
 
         return "redirect:/hinh-anh/hien-thi";
     }
 
+    //
+    @RequestMapping("/hinh-anh-ctsp/update/{id}")
+    public String updateHinhAnhCTSP(@PathVariable(name = "id") UUID id,
+                                    @RequestParam(name = "tenanh") MultipartFile tenanh,
+                                    @RequestParam(name = "duongdan1") MultipartFile duongdan1,
+                                    @RequestParam(name = "duongdan2") MultipartFile duongdan2,
+                                    @RequestParam(name = "duongdan3") MultipartFile duongdan3,
+                                    @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+                                    @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+                                    @RequestParam(name = "ctsp") ChiTietSanPham ctsp, Model model) {
+        HinhAnh hinhAnh = service.findById(id);
+        model.addAttribute("hinhANh", hinhAnh);
+        UUID idctsp = repository.getIdCTSP(id);
+        SanPham sp = service.getSanPhamByIDCTSP(idctsp);
+        model.addAttribute("idctsp", idctsp);
+        // Cập nhật ảnh "tenanh" nếu người dùng đã chọn
+        if (!tenanh.isEmpty()) {
+            String newTenAnh = saveImage(tenanh);
+            hinhAnh.setTenanh(newTenAnh);
+        }
+        if (!duongdan1.isEmpty()) {
+            String newDuongdan1 = saveImage(duongdan1);
+            hinhAnh.setDuongdan1(newDuongdan1);
+        }
+        if (!duongdan2.isEmpty()) {
+            String newDuongdan2 = saveImage(duongdan2);
+            hinhAnh.setDuongdan2(newDuongdan2);
+        }
+        if (!duongdan3.isEmpty()) {
+            String newDuongdan3 = saveImage(duongdan3);
+            hinhAnh.setDuongdan3(newDuongdan3);
+        }
+        if (!duongdan4.isEmpty()) {
+            String newDuongdan4 = saveImage(duongdan4);
+            hinhAnh.setDuongdan4(newDuongdan4);
+        }
+        if (!duongdan5.isEmpty()) {
+            String newDuongdan5 = saveImage(duongdan5);
+            hinhAnh.setDuongdan5(newDuongdan5);
+        }
+
+
+        repository.save(hinhAnh);
+
+        return "redirect:/chi-tiet-san-pham/list-san-pham/" + sp.getId();
+    }
+
+    //
+    @RequestMapping("/hinh-anh-spct/update/{id}")
+    public String updateHinhAnh(@PathVariable(name = "id") UUID id,
+                                @RequestParam(name = "tenanh") MultipartFile tenanh,
+                                @RequestParam(name = "duongdan1") MultipartFile duongdan1,
+                                @RequestParam(name = "duongdan2") MultipartFile duongdan2,
+                                @RequestParam(name = "duongdan3") MultipartFile duongdan3,
+                                @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+                                @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+                                @RequestParam(name = "ctsp") ChiTietSanPham ctsp, Model model) {
+        HinhAnh hinhAnh = service.findById(id);
+        model.addAttribute("hinhANh", hinhAnh);
+        UUID idctsp = repository.getIdCTSP(id);
+        model.addAttribute("idctsp", idctsp);
+        // Cập nhật ảnh "tenanh" nếu người dùng đã chọn
+        if (!tenanh.isEmpty()) {
+            String newTenAnh = saveImage(tenanh);
+            hinhAnh.setTenanh(newTenAnh);
+        }
+        if (!duongdan1.isEmpty()) {
+            String newDuongdan1 = saveImage(duongdan1);
+            hinhAnh.setDuongdan1(newDuongdan1);
+        }
+        if (!duongdan2.isEmpty()) {
+            String newDuongdan2 = saveImage(duongdan2);
+            hinhAnh.setDuongdan2(newDuongdan2);
+        }
+        if (!duongdan3.isEmpty()) {
+            String newDuongdan3 = saveImage(duongdan3);
+            hinhAnh.setDuongdan3(newDuongdan3);
+        }
+        if (!duongdan4.isEmpty()) {
+            String newDuongdan4 = saveImage(duongdan4);
+            hinhAnh.setDuongdan4(newDuongdan4);
+        }
+        if (!duongdan5.isEmpty()) {
+            String newDuongdan5 = saveImage(duongdan5);
+            hinhAnh.setDuongdan5(newDuongdan5);
+        }
+
+
+        repository.save(hinhAnh);
+
+        return "redirect:/chi-tiet-san-pham/hien-thi";
+    }
+
+    //
     private String saveImage(MultipartFile file) {
 
         String newImageFileName = UUID.randomUUID().toString() + ".jpg";
@@ -203,5 +299,4 @@ public class HinhAnhController {
 
         return newImageFileName;
     }
-
 }

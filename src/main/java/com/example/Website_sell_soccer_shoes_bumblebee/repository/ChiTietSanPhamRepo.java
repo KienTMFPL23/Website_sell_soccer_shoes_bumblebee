@@ -95,6 +95,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "join SanPham sp on sp.Id = ctsp.IdSP where sp.Id = ?1", nativeQuery = true)
     List<MauSac> getMauBySanPham(UUID idSP);
 
-
+    // list ctsp theo id
+    @Query(value = "select ct from ChiTietSanPham ct where ct.sanPham.id=?1")
+    Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable);
 
 }
