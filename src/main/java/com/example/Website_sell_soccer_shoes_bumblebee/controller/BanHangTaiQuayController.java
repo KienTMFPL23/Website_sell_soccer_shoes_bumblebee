@@ -164,6 +164,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         model.addAttribute("listHDCT", hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id));
         model.addAttribute("idHoaDon", this.idHoaDon);
+        model.addAttribute("listKhachHang",khachHangService.getAll());
         getTaiKhoan(model);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
@@ -257,7 +258,7 @@ public class BanHangTaiQuayController {
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
 
-    @PostMapping("/them-khach-hang")
+    @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
         addKhachHang.setTen(khachHang.getTen());
