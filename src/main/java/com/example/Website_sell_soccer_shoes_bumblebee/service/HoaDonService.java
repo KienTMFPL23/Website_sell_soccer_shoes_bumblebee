@@ -5,22 +5,34 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
 
 public interface HoaDonService {
-     Page<HoaDon> search(String key, Pageable pageable);
+    Page<HoaDon> search(String key, Pageable pageable);
 
-     List<HoaDon> findAll();
+    HoaDon searchHoaDon(String hoaDon);
 
-     List<HoaDon> listHoaDonCho();
+    Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable);
 
-     HoaDon createHoaDon() throws ParseException;
+    List<HoaDon> findAll();
 
-     HoaDon saveHoaDon(HoaDon hoaDon);
+    List<HoaDon> listHoaDonCho();
 
-     HoaDon deleteHoaDon(UUID id);
+    HoaDon createHoaDon() throws ParseException;
+
+
+    HoaDon saveHoaDon(HoaDon hoaDon);
+
+    HoaDon deleteHoaDon(UUID id);
+
+    HoaDon getOne(UUID id);
 
      HoaDon getOne(UUID id);
+
+     List<HoaDon> getId(UUID id);
+
+
 }

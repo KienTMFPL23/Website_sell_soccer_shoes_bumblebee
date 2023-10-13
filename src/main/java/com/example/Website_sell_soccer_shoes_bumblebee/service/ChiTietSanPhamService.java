@@ -12,8 +12,13 @@ import java.util.UUID;
 public interface ChiTietSanPhamService {
 
 
+    ChiTietSanPham findCTSPAddCart(UUID idSP, UUID idMS, UUID idKC);
 
     List<MauSac> getMauSacBySP(UUID idSP);
+
+    List<String> getKichCoSacBySP(UUID idSP);
+
+    List<Integer> getKichCoByMauSacAndSanPham(UUID idMS, UUID idSP);
 
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 

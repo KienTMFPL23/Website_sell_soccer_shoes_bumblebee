@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -28,13 +29,22 @@ public class HoaDonServiceImpl implements HoaDonService {
     HoaDonChiTietRepository hoaDonChiTietRepository;
 
     @Override
-    public Page<HoaDon> search(String key, Pageable pageable){
-        if(key != null){
+    public Page<HoaDon> search(String key, Pageable pageable) {
+        if (key != null) {
             return hoaDonRepository.search(key, pageable);
         }
         return hoaDonRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable) {
+        return hoaDonRepository.searchALlBetweenDates(fromDate, toDate, pageable);
+    }
+
+    @Override
+    public HoaDon searchHoaDon(String hoaDon) {
+        return hoaDonRepository.searchHoaDon(hoaDon);
+    }
 
     @Override
     public List<HoaDon> findAll() {
@@ -68,7 +78,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon deleteHoaDon(UUID id) {
         HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
 //        hoaDonChiTietRepository.deleteHDCTById(id);
-        if (hoaDon != null){
+        if (hoaDon != null) {
             hoaDonRepository.delete(hoaDon);
         }
         return hoaDon;
@@ -77,5 +87,10 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon getOne(UUID id) {
         return hoaDonRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<HoaDon> getId(UUID id) {
+        return hoaDonRepository.findId(id);
     }
 }
