@@ -4,8 +4,9 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.KhachHang;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -18,9 +19,15 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public KhachHang findId(UUID id) {
         return khachHangRepository.findId(id);
-      
+    }
+
     @Override
     public KhachHang saveKhachHang(KhachHang khachHang) {
-        return repository.save(khachHang);
+        return khachHangRepository.save(khachHang);
+    }
+
+    @Override
+    public List<KhachHang> getAll() {
+        return khachHangRepository.findAll();
     }
 }
