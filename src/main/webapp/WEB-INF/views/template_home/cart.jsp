@@ -7,32 +7,39 @@
             <div class="ps-cart-listing">
                 ${thongBao}
                 <form method="post">
-                    <table class="table ps-cart__table">
+                    <table class="table ps-cart__table" id="tableCart">
                         <thead>
                         <tr>
                             <th width="50px"></th>
                             <th>SẢN PHẨM</th>
-                            <th style="text-align: center">ĐƠN GIÁ</th>
-                            <th style="text-align: center">SỐ LƯỢNG</th>
-                            <th style="text-align: center">TỔNG TIỀN</th>
-                            <th style="text-align: center"></th>
+                            <th>ĐƠN GIÁ</th>
+                            <th>SỐ LƯỢNG</th>
+                            <th>TỔNG TIỀN</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="item" items="${listGHCT}">
                             <tr>
-                                <td><input class="checkCart" type="checkbox" name="idListCartDetail" value="${item.ctsp.id}"></td>
+                                <td><input class="checkCart" type="checkbox" name="idListCartDetail"
+                                           value="${item.ctsp.id}"></td>
                                 <td><a class="ps-product__preview" href="/bumblebee/detail/${item.ctsp.id}">
-                                    <img class="mr-15" src="../../../uploads/${item.ctsp.hinhAnhs.tenanh}" width="100px" height="100px"> ${item.ctsp.sanPham.tenSanPham}</a></td>
-                                <td><fmt:formatNumber value="${item.donGia}" type="currency"/></td>
+                                    <img class="mr-15" src="../../../uploads/${item.ctsp.hinhAnhs.tenanh}" width="100px"
+                                         height="100px"> ${item.ctsp.sanPham.tenSanPham}</a></td>
+                                <td id="donGia_${item.ctsp.id}"><fmt:formatNumber value="${item.donGia}"
+                                                                                  type="currency"/></td>
                                 <td>
                                     <div class="form-group--number">
-                                        <button class="minus"><span>-</span></button>
-                                        <input class="form-control" type="text" value="${item.soLuong}" style="font-size: 15px">
-                                        <button class="plus"><span>+</span></button>
+                                        <a style="color: white" onclick="truSL('${item.ctsp.id}')"
+                                           class="minus"><span>-</span></a>
+                                        <input class="form-control" id="soLuongCTSP_${item.ctsp.id}" type="text"
+                                               value="${item.soLuong}" style="font-size: 15px;top: 0">
+                                        <a style="color: white" onclick="themSL('${item.ctsp.id}')"
+                                           class="plus"><span>+</span></a>
                                     </div>
                                 </td>
-                                <td><fmt:formatNumber value="${item.donGia * item.soLuong}" type="currency"/></td>                           
+                                <td id="thanhTien_${item.ctsp.id}"><fmt:formatNumber
+                                        value="${item.donGia * item.soLuong}" type="currency"/></td>
                                 <td>
                                     <div class="ps-remove"></div>
                                 </td>
@@ -48,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="ps-btn ps-btn--gray">Tiếp tục xem hàng</button>
+                                <a href="/bumblebee/home" class="ps-btn ps-btn--gray">Tiếp tục xem hàng</a>
                             </div>
                         </div>
                         <div class="ps-cart__total">
@@ -60,8 +67,41 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 </main>
+<script>
+    function truSL(itemId) {
+        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
+        var currentQuantity = parseInt(inputElement.value, 10);
+        if (currentQuantity > 1) {
+            inputElement.value = currentQuantity - 1;
+            capNhatThanhTien(itemId);
+        }
+    }
+
+    function themSL(itemId) {
+        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
+        var currentQuantity = parseInt(inputElement.value, 10);
+        inputElement.value = currentQuantity + 1;
+        capNhatThanhTien(itemId);
+    }
+
+    function capNhatThanhTien(itemId) {
+        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
+        var currentQuantity = parseInt(inputElement.value, 10);
+        var donGia = parseFloat(document.getElementById("donGia_" + itemId).innerText.replace(/\D/g, ''));
+        var thanhTien = currentQuantity * donGia;
+        document.getElementById("thanhTien_" + itemId).innerText = formatCurrency(thanhTien);
+    }
+
+    function formatCurrency(number) {
+        return number.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        });
+    }
+</script>
 

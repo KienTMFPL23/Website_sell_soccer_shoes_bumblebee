@@ -68,12 +68,12 @@ public class HomeController {
     ChiTietSanPhamRepo chiTietSanPhamRepo;
 
     @Autowired
-
     GioHangRepo gioHangRepo;
 
     @Autowired
     GioHangChiTietRepo gioHangChiTietRepo;
 
+    @Autowired
     GioHangChiTietService gioHangChiTietService;
 
     @Autowired
@@ -179,7 +179,7 @@ public class HomeController {
         model.addAttribute("listGHCT",listGHCT);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
-        return "template_home/index";
+        return "redirect:/bumblebee/cart";
     }
 
     @RequestMapping("/bumblebee/thanh-toan")

@@ -27,7 +27,7 @@
                                 <img
                                         src="../../../uploads/${item.hinhAnhs.tenanh}" height="250px" width="250px"
                                         alt=""><a
-                                    class="ps-shoe__overlay" href="/bumblebee/detail/${item.id}"></a>
+                                    class="ps-shoe__overlay" href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"></a>
                             </div>
                             <div class="ps-shoe__content">
                                 <div class="ps-shoe__variants" style="margin-top: 10px">

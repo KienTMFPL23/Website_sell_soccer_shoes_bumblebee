@@ -23,7 +23,19 @@
     align-items: center;
 }
 
-
+.info_right{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.info_right img{
+    cursor: pointer;
+}
+.info_right p{
+    font-size: 16px;
+    font-weight: 600;
+}
 
 .butAddCart button {
     text-align: center;
@@ -86,10 +98,27 @@ menu-link:before{
 }
 
 /*cart*/
-.plus {
-    margin-left: 10px;
-}
 
+.form-group--number{
+    display: flex;
+    align-items: center;
+}
+.plus{
+    margin-left: 14px;
+}
+.form-group--number a{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #37517E;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.plus,.minus{
+
+}
 
 /*listSp*/
 .ps-widget__content input {
