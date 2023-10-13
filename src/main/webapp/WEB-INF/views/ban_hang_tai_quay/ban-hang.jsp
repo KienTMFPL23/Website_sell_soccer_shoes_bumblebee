@@ -44,7 +44,7 @@
                 <a id="themHoaDon" form href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img
                         src="/images_template/add.png"></a>
             </div>
-            <div style="margin-right: 20px; justify-content: flex-end">
+            <div style="margin-right: 20px;position: absolute;right: 20px">
                 <a href="/admin/dashboard"><img src="/img/house.png"></a>
             </div>
         </nav>
@@ -81,7 +81,7 @@
 
                                     <c:if test="${idHoaDon != null}">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
+                                                data-bs-target="#exampleModal" style="background-color: #37517E;border: none">
                                             Tìm kiếm sản phẩm
                                         </button>
                                     </c:if>
@@ -199,15 +199,16 @@
                                 </div>
                             </div>
                         </div>
-                        <input id="searchSPGioHang" placeholder="Tìm kiếm sản phẩm đã chọn">
+                        <input id="searchSPGioHang" placeholder="Tìm kiếm sản phẩm đã chọn"
+                               style="width: 400px;border: 2px solid #37517E;height: 40px;margin-bottom: 20px;border-radius: 20px;margin-top: 20px;padding-left: 20px">
                         <table class="table table-bordered">
-                            <tr class="row1" style="background-color:#34B6D3 ">
-                                <th scope="col">STT</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Số lượng</th>
-                                <th scope="col">Đơn giá</th>
-                                <th scope="col">Thành tiền</th>
-                                <th scope="col"></th>
+                            <tr class="row1">
+                                <th scope="col" style="background-color: #37517E;color: white">STT</th>
+                                <th scope="col" style="background-color: #37517E;color: white">Tên sản phẩm</th>
+                                <th scope="col" style="background-color: #37517E;color: white">Số lượng</th>
+                                <th scope="col" style="background-color: #37517E;color: white">Đơn giá</th>
+                                <th scope="col" style="background-color: #37517E;color: white">Thành tiền</th>
+                                <th scope="col" style="background-color: #37517E;color: white"></th>
                             </tr>
                             <tbody id="sanPhamMua">
                             <c:forEach items="${listHDCT}" var="hdct" varStatus="i">
@@ -262,10 +263,16 @@
                         </div>
                         <div class="col-sm-2">
                             <!-- Them Khach hang -->
-                            <a type="button" id="openThemKH" class="btn btn-primary" data-bs-toggle="modal"
+
+<!--                             <a type="button" id="openThemKH" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#khachHang">
                                 <img src="/images_template/add.png" style="height: 25px;height: 25px">
-                            </a>
+                            </a> -->
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#khachHang" style="background-color: #37517E;border: none">
+                                <img src="/images_template/add.png" width="20px" style="background-color: #37517E">
+                            </button>
                         </div>
                     </div>
                     <b style="color: red" id="tenKhachHang"></b></p>
@@ -282,8 +289,8 @@
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                     <div class="dropdown mt-3">
                             <%--                    <button class="btn btn-primary">In hóa đơn</button>--%>
-                        <button disabled="true" id="btnThanhToan" type="submit" class="btn btn-primary"
-                                onclick="return confirm('Banj co muon thanh toan')">Thanh toán
+                        <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+                                onclick="return confirm('Banj co muon thanh toan')" style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">Thanh toán
                         </button>
                     </div>
                     </form:form>
