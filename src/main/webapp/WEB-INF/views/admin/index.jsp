@@ -12,7 +12,7 @@
     />
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-
+    <link rel="icon" href="../../../images_template/logo_bumblebee.png">
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
