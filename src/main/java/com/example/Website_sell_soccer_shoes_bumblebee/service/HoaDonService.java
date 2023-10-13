@@ -32,5 +32,4 @@ public interface HoaDonService {
 
     List<HoaDon> getId(UUID id);
 
-
 }

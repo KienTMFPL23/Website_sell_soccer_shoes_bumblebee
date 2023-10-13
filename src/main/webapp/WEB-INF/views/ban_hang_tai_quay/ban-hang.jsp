@@ -23,7 +23,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
-    <script src="/js/ban_hang_tai_quay/ban_hang.js"></script>
     <link href="/css/ban-hang/ban-hang.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -246,9 +245,7 @@
                         </table>
                         <div>
                             <b style="float: right;margin-right: 20px; font-size: 20px" class="name">Tổng tiền :
-                                <fmt:formatNumber
-                                        value="${sumMoney}"
-                                        type="number"/></b>
+                                <fmt:formatNumber value="${sumMoney}" type="number"/></b>
                         </div>
                     </div>
                 </div>
@@ -266,6 +263,12 @@
                         </div>
                         <div class="col-sm-2">
                             <!-- Them Khach hang -->
+
+<!--                             <a type="button" id="openThemKH" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#khachHang">
+                                <img src="/images_template/add.png" style="height: 25px;height: 25px">
+                            </a> -->
+
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#khachHang" style="background-color: #37517E;border: none">
                                 <img src="/images_template/add.png" width="20px" style="background-color: #37517E">
@@ -281,8 +284,7 @@
                     <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
                                                      onchange="getMoneyChange()"></p>
-                    <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly
-                                                groupingUsed="false"/>đ</p>
+                    <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly/> đ</p>
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                     <div class="dropdown mt-3">
@@ -314,7 +316,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Số điện thoại</label>
-                                <form:input path="soDienThoai" class="form-control"/>
+                                <form:input path="soDienThoai" id="getSDT" class="form-control"/>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -356,17 +358,24 @@
         "${k.soDienThoai}": "${k.ho} ${k.tenDem} ${k.ten}",
         </c:forEach>
     };
-
     function getTenKhachHang(sdt) {
-        var textName = document.getElementById("tenKhachHang");
+        let textName = document.getElementById("tenKhachHang");
         if (sdt === "") {
             textName.innerText = "Không tìm thấy khách hàng nào";
-        } else if (typeof undefined === 'undefined') {
-            textName.innerText = "Không tìm thấy khách hàng nào";
-        } else {
+        } else if (data[sdt] !== undefined) {
             textName.innerText = data[sdt];
+        } else {
+            textName.innerText = "Không tìm thấy khách hàng nào";
         }
-    };
+    }
+    let dataInput = document.getElementById("tenKhachHang").value;
+    var openModal = document.getElementById("openThemKH");
+    var soDienThoai = document.getElementById("getSDT")
+    //
+    openModal.addEventListener("click",function (){
+        var inputData = dataInput.value;
+        soDienThoai.value = inputData;
+    })
 </script>
 <script>
     $("#myInput").keyup(function () {
@@ -417,6 +426,8 @@
         });
     });
 </script>
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
