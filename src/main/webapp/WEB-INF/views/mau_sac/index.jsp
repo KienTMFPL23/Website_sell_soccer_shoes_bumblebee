@@ -89,7 +89,7 @@
         <div class="col-lg-1">
         </div>
         <div class="col-lg-6">
-            <button class="icon-add" id="add-icon-id"><a href=/hien-thi-add" style="text-decoration: none">
+            <button class="icon-add" id="add-icon-id"><a href="/hien-thi-add" style="text-decoration: none">
                 <div class="add-text"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828817.png" alt=""/>
                     <span class="text">Thêm mới</span></div>
             </a>
