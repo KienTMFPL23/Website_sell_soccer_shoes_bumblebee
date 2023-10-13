@@ -102,7 +102,7 @@
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
 
-                    <a class="collapse-item" href="/chi-tiet-san-pham/hien-thi">Sản phẩm</a>
+                    <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
                     <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
 
                     <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>

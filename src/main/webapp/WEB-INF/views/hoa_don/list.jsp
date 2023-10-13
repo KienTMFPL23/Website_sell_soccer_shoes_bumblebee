@@ -189,6 +189,7 @@
                     <td>${hd.tenNguoiNhan}</td>
                     <td>${hd.sdt}</td>
                     <td>
+
                         <span>${hd.trangThai == 1 ? 'Đã Thanh Toán' : 'Đang Xử Lý'}</span>-
                         <select class="select-item" onchange="updateStatus('${hd.maHoaDon}',${hd.trangThai})"
                                 id="${hd.maHoaDon}">
