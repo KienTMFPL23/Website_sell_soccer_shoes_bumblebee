@@ -1,11 +1,12 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChatLieu;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.NhanVienRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
+import jakarta.servlet.http.HttpSession;
+import org.apache.commons.math3.analysis.function.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,13 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    NhanVienRepository nhanVienRepository;
+
+    @Autowired
+    HttpSession session;
+
 
     @Override
     public Page<HoaDon> search(String key, Pageable pageable) {
@@ -56,15 +64,21 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.getListByTrangThai();
     }
 
+    private static int maHoaDon = 1;
+
     @Override
     public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
-        Random random = new Random();
-        hoaDon.setMaHoaDon("HD" + random.nextInt(999999));
+        String formatHoaDon = "HD" + String.format("%08d", maHoaDon);
+        hoaDon.setMaHoaDon(formatHoaDon);
+        maHoaDon++;
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String format = sdf.format(date);
         hoaDon.setNgayTao(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        NhanVien nhanVien = nhanVienRepository.findByIdTaiKhoan(taiKhoan.getId());
+        hoaDon.setNhanVien(nhanVien);
         hoaDon.setTrangThai(0);
         return hoaDonRepository.save(hoaDon);
     }
@@ -93,4 +107,5 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> getId(UUID id) {
         return hoaDonRepository.findId(id);
     }
+
 }
