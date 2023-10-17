@@ -30,4 +30,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     public List<KhachHang> getAll() {
         return khachHangRepository.findAll();
     }
+
+    @Override
+    public KhachHang findKHBySDT(String sdt) {
+        return khachHangRepository.findKHBySDT(sdt);
+    }
 }

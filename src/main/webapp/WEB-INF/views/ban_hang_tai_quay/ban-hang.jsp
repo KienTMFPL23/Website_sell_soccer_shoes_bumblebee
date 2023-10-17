@@ -258,24 +258,17 @@
                     <b>Khách hàng:</b>
                     <div class="row">
                         <div class="col-sm-10">
-                            <input id="phoneNumber" type="number" onchange="getTenKhachHang(this.value)"
+                            <input id="phoneNumber" name="soDienThoai" type="number" onchange="getTenKhachHang(this.value)" placeholder="Nhập số điện thoại"
                                    class="form-control"/>
                         </div>
                         <div class="col-sm-2">
-                            <!-- Them Khach hang -->
-
-<!--                             <a type="button" id="openThemKH" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#khachHang">
-                                <img src="/images_template/add.png" style="height: 25px;height: 25px">
-                            </a> -->
-
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#khachHang" style="background-color: #37517E;border: none">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="openKhachHang"
+                                    data-bs-target="#modalKhachHang" style="background-color: #37517E;border: none">
                                 <img src="/images_template/add.png" width="20px" style="background-color: #37517E">
                             </button>
                         </div>
                     </div>
-                    <b style="color: red" id="tenKhachHang"></b></p>
+                    <b name="ten" style="color: red" id="tenKhachHang"></b></p>
                     <b>Nhân viên bán hàng: <input class="form-control" value="${fullNameStaff}" readonly>
                     </b>
                     <p><b>Tổng tiền : </b> <fmt:formatNumber value="${sumMoney}" type="number"/>
@@ -298,7 +291,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="khachHang" tabindex="-1" aria-labelledby="themKhachHang"
+        <div class="modal fade" id="modalKhachHang" tabindex="-1" aria-labelledby="themKhachHang"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -308,18 +301,18 @@
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form:form method="post" modelAttribute="khachHang"
+                        <form:form method="post" modelAttribute="khachHang" id="sendKhachHang"
                                    action="/bumblebee/ban-hang-tai-quay/them-khach-hang">
                             <div class="mb-3">
                                 <label class="form-label">Tên khách hàng</label>
-                                <form:input path="ten" class="form-control"/>
+                                <form:input path="ten" id="customer" class="form-control"/>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Số điện thoại</label>
                                 <form:input path="soDienThoai" id="getSDT" class="form-control"/>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
                             </div>
                         </form:form>
                     </div>
@@ -330,28 +323,9 @@
     </div>
 </div>
 </div>
-<script>
-    function deleleHDCT() {
-        Swal.fire({
-            title: 'Bạn có muốn xóa không',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            customClass: {
-                actions: 'my-actions',
-                cancelButton: 'order-1 right-gap',
-                confirmButton: 'order-2',
-                denyButton: 'order-3',
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
-    }
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
@@ -368,14 +342,18 @@
             textName.innerText = "Không tìm thấy khách hàng nào";
         }
     }
-    let dataInput = document.getElementById("tenKhachHang").value;
-    var openModal = document.getElementById("openThemKH");
-    var soDienThoai = document.getElementById("getSDT")
-    //
-    openModal.addEventListener("click",function (){
-        var inputData = dataInput.value;
-        soDienThoai.value = inputData;
-    })
+</script>
+<script>
+    const dataInput = document.getElementById("phoneNumber");
+    const openModalButton = document.getElementById("openKhachHang");
+    const modalInput = document.getElementById("getSDT");
+
+    $(document).ready(function () {
+        $('#openKhachHang').click(function () {
+            $('#modalKhachHang').modal('show');
+            modalInput.value = dataInput.value;
+        });
+    });
 </script>
 <script>
     $("#myInput").keyup(function () {
@@ -426,17 +404,18 @@
         });
     });
 </script>
-<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
+<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
+<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"--%>
+<%--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"--%>
+<%--        crossorigin="anonymous"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+<script src="../../../js/ban_hang_tai_quay/them-khach-hang.js"></script>
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;

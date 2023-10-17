@@ -70,12 +70,8 @@ public class BanHangTaiQuayController {
     private UUID idHoaDon = null;
     private UUID idHoaDonCT = null;
     private Double sumMoney = 0.0;
+    private static int maKhachHang = 1;
     //    private UUID idHoaDonCT = null;
-//    private List<HoaDonChiTiet> dsHoaDonCT = null;
-//    private Double sumMoney = 0.0;
-//    private Integer soLuongTon = 0;
-//    private ChiTietSanPham ctsp = null;
-//    private List<ChiTietSanPham> danhSachSPSearch = null;
 
     //khach hang
     @Autowired
@@ -134,16 +130,10 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/delete-hoadon/{id}")
-    public String deleteHoaDon(Model model, @PathVariable("id") UUID id) {
-        model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
+    public String deleteHoaDon(@PathVariable("id") UUID id) {
+        List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         hoaDonService.deleteHoaDon(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
-    }
-
-    @RequestMapping("/search-san-pham")
-    public String timKiemSanPham() {
-
-        return "admin/index";
     }
 
     @GetMapping("/searchSanPham")
@@ -164,7 +154,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         model.addAttribute("listHDCT", hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id));
         model.addAttribute("idHoaDon", this.idHoaDon);
-        model.addAttribute("listKhachHang",khachHangService.getAll());
+        model.addAttribute("listKhachHang", khachHangService.getAll());
         getTaiKhoan(model);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
@@ -211,13 +201,12 @@ public class BanHangTaiQuayController {
 
     @RequestMapping("/delete-hdct/{id}")
     public String deleteHoaDonCT(Model model, @PathVariable("id") UUID id) {
-//        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
 //        Integer soLuong = hoaDonChiTiet.getSoLuong();
 //        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
 //        Integer soLuongTon = chiTietSanPham.getSoLuong();
 //        chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon + soLuong);
 //        hoaDonChiTietService.deleteHoaDonCT(id);
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
 //        Integer soLuong = hoaDonChiTiet.getSoLuong();
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
 //        Integer soLuongTon = chiTietSanPham.getSoLuong();
@@ -240,17 +229,21 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
-    public String thanhToan(Model model, @PathVariable("idHoaDon") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon) throws ParseException {
+    public String thanhToan(Model model, @PathVariable("idHoaDon") UUID id,
+                            @RequestParam("soDienThoai")String soDienThoai,
+                            @RequestParam("ghiChu")String ghiChu) throws ParseException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
         if (hoaDonThanhToan != null) {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String format = sdf.format(date);
             hoaDonThanhToan.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
-            hoaDonThanhToan.setTenNguoiNhan(hoaDon.getTenNguoiNhan());
             hoaDonThanhToan.setNhanVien(nhanVien);
             hoaDonThanhToan.setTrangThai(1);
-            hoaDonThanhToan.setGhiChu(hoaDon.getGhiChu());
+            hoaDonThanhToan.setSdt(soDienThoai);
+            KhachHang khachHang = khachHangRepository.findKHBySDT(soDienThoai);
+            hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
+            hoaDonThanhToan.setGhiChu(ghiChu);
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
@@ -261,6 +254,9 @@ public class BanHangTaiQuayController {
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
+        String formatKhachHang = "KH" + String.format("%06d", maKhachHang);
+        addKhachHang.setMa(formatKhachHang);
+        maKhachHang++;
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
         khachHangService.saveKhachHang(addKhachHang);
