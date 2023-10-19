@@ -11,7 +11,7 @@
 <body>
 <h1>Paypal Payment with Spring Boot - ShareEverythings.com</h1>
 <form method="post" action="/pay">
-    <input type="text" value="5" name="price"/>
+    <input type="text" value="${price}" name="price"/>
     <button type="submit"> Payment with Paypal</button>
 </form>
 </body>

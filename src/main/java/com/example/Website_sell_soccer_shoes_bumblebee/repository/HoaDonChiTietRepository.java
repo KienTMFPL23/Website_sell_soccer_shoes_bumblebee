@@ -24,4 +24,6 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     @Query("select hdct from HoaDonChiTiet hdct where hdct.hoaDon.id = ?1 and hdct.chiTietSanPham.id = ?2")
     HoaDonChiTiet getSanPhamInHDCT(UUID idHoaDon,UUID idSP);
 
+//    @Query(value = "select hdct from HoaDonChiTiet hdct  where HoaDonChiTiet.IdHoaDon = ?1", nativeQuery = true)
+//    List<HoaDonChiTiet> findHoaDonChiTietByIdHoaDon(UUID id);
 }

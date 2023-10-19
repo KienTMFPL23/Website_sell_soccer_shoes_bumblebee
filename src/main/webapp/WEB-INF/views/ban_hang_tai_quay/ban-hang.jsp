@@ -25,6 +25,20 @@
             crossorigin="anonymous"></script>
     <link href="/css/ban-hang/ban-hang.css" rel="stylesheet" type="text/css">
 </head>
+<style>
+    #myInput {
+        height: 30px;
+        border: 2px solid #37517E;
+        border-radius: 20px;
+    }
+
+    #selectCL, #selectDG, #selectKC, #selectLG, #selectMS {
+        height: 30px;
+        border: 2px solid #37517E;
+        border-radius: 20px;
+    }
+
+</style>
 <body>
 <div class="bodyBanHang">
     <div class="header">
@@ -81,7 +95,8 @@
 
                                     <c:if test="${idHoaDon != null}">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" style="background-color: #37517E;border: none">
+                                                data-bs-target="#exampleModal"
+                                                style="background-color: #37517E;border: none">
                                             Tìm kiếm sản phẩm
                                         </button>
                                     </c:if>
@@ -103,52 +118,55 @@
 
                                                     <table>
                                                         <thead>
+
+                                                        </thead>
+                                                    </table>
+
+                                                    <table class="table" border="1px solid" id="tableModal">
+                                                        <thead>
                                                         <tr>
-                                                            <th scope="col"><input id="myInput"
-                                                                                   placeholder="Tìm kiếm sản phẩm">
+                                                            <th scope="col" colspan="2"><input id="myInput"
+                                                                                               placeholder="Tìm kiếm sản phẩm">
                                                             </th>
+                                                            <th scope="col"></th>
                                                             <th scope="col"><%-- Màu sắc--%>
                                                                 <select id="selectMS">
-                                                                    <option>---------</option>
-                                                                    <c:forEach items="${listChatLieu}" var="ms">
+                                                                    <option value="all">Lọc màu sắc</option>
+                                                                    <c:forEach items="${listMauSac}" var="ms">
                                                                         <option>${ms.ten}</option>
                                                                     </c:forEach>
                                                                 </select></th>
                                                             <th scope="col"><%-- Chất liệu --%>
                                                                 <select id="selectCL">
-                                                                    <option>---------</option>
-                                                                    <c:forEach items="${listMauSac}" var="cl">
+                                                                    <option value="all">Lọc chất liệu</option>
+                                                                    <c:forEach items="${listChatLieu}" var="cl">
                                                                         <option>${cl.ten}</option>
                                                                     </c:forEach>
                                                                 </select></th>
                                                             <th scope="col"> <%-- Đế giày--%>
                                                                 <select id="selectDG">
-                                                                    <option>---------</option>
+                                                                    <option value="all">Lọc đế giày</option>
                                                                     <c:forEach items="${listDeGiay}" var="dg">
                                                                         <option>${dg.loaiDe}</option>
                                                                     </c:forEach>
                                                                 </select></th>
                                                             <th scope="col"> <%-- Kích cỡ--%>
                                                                 <select id="selectKC">
-                                                                    <option>---------</option>
+                                                                    <option value="all">Lọc kích cỡ</option>
                                                                     <c:forEach items="${listKC}" var="kc">
                                                                         <option>${kc.size}</option>
                                                                     </c:forEach>
                                                                 </select></th>
                                                             <th scope="col"><%-- Loại giày--%>
                                                                 <select id="selectLG">
-                                                                    <option>------------</option>
+                                                                    <option value="all">Lọc loại giày</option>
                                                                     <c:forEach items="${listLoaiGiay}" var="lg">
                                                                         <option>${lg.tentheloai}</option>
                                                                     </c:forEach>
                                                                 </select></th>
                                                             <th scope="col"></th>
+                                                            <th scope="col"></th>
                                                         </tr>
-                                                        </thead>
-                                                    </table>
-
-                                                    <table class="table" border="1px solid" id="tableModal">
-                                                        <thead>
                                                         <tr>
                                                             <th scope="col">STT</th>
                                                             <th scope="col">Tên</th>
@@ -176,7 +194,7 @@
                                                                 <td>${sp.giaBan}</td>
                                                                 <td>
                                                                     <a href="/bumblebee/ban-hang-tai-quay/add-gio-hang/${sp.id}"
-                                                                       class="btn btn-primary">Add</a></td>
+                                                                    class="btn btn-primary">Add</a></td>
                                                             </tr>
                                                         </c:forEach>
                                                         </tbody>
@@ -264,10 +282,10 @@
                         <div class="col-sm-2">
                             <!-- Them Khach hang -->
 
-<!--                             <a type="button" id="openThemKH" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#khachHang">
-                                <img src="/images_template/add.png" style="height: 25px;height: 25px">
-                            </a> -->
+                            <!--                             <a type="button" id="openThemKH" class="btn btn-primary" data-bs-toggle="modal"
+                                                                data-bs-target="#khachHang">
+                                                            <img src="/images_template/add.png" style="height: 25px;height: 25px">
+                                                        </a> -->
 
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#khachHang" style="background-color: #37517E;border: none">
@@ -290,7 +308,9 @@
                     <div class="dropdown mt-3">
                             <%--                    <button class="btn btn-primary">In hóa đơn</button>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
-                                onclick="return confirm('Banj co muon thanh toan')" style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">Thanh toán
+                                onclick="return confirm('Banj co muon thanh toan')"
+                                style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
+                            Thanh toán
                         </button>
                     </div>
                     </form:form>
@@ -358,6 +378,7 @@
         "${k.soDienThoai}": "${k.ho} ${k.tenDem} ${k.ten}",
         </c:forEach>
     };
+
     function getTenKhachHang(sdt) {
         let textName = document.getElementById("tenKhachHang");
         if (sdt === "") {
@@ -368,11 +389,12 @@
             textName.innerText = "Không tìm thấy khách hàng nào";
         }
     }
+
     let dataInput = document.getElementById("tenKhachHang").value;
     var openModal = document.getElementById("openThemKH");
     var soDienThoai = document.getElementById("getSDT")
     //
-    openModal.addEventListener("click",function (){
+    openModal.addEventListener("click", function () {
         var inputData = dataInput.value;
         soDienThoai.value = inputData;
     })
@@ -391,39 +413,60 @@
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
-    $("#selectMS").click(function () {
+
+    $("#selectMS").change(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
     });
 
-    $("#selectCL").click(function () {
+    $("#selectCL").change(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
     });
 
-    $("#selectDG").click(function () {
+    $("#selectDG").change(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
     });
 
-    $("#selectLG").click(function () {
+    $("#selectLG").change(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
     });
 
-    $("#selectKC").click(function () {
+    $("#selectKC").change(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
     });
 </script>
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>

@@ -4,34 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-<style>
-    .btnReturn {
-        background-color: #f3f3f3;
-        border: 0px;
-        border-radius: 15px;
-        width: 70px;
-        height: 30px;
-        font-size: 15px;
-    }
-
-    .btnConfirm {
-        background-color: #37517E;
-        color: #FFFFFF;
-        border: 0px;
-        border-radius: 15px;
-        width: 100px;
-        height: 30px;
-        font-size: 15px;
-    }
-
-    .modal {
-        background-color: rgba(192, 192, 192, 0.1);
-    }
-
-</style>
 <main class="ps-main">
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-top: 30px;">
             <div class="col-lg-2"></div>
             <div class="col-lg-8">
                 <div class="ps-checkout__order">
@@ -46,6 +21,9 @@
                                     <c:if test="${hd.trangThai == 3}">
                                         <p style="color: crimson; float: right">CHỜ THANH TOÁN</p>
                                     </c:if>
+                                    <c:if test="${hd.trangThai == 1}">
+                                        <p style="color: crimson; float: right">ĐÃ THANH TOÁN</p>
+                                    </c:if>
                                 </div>
                             </div>
                             <div>
@@ -57,15 +35,18 @@
                                                     nhận: ${hd.khachHang.ho} ${hd.khachHang.tenDem} ${hd.khachHang.ten}</p>
                                                 <p>Số điện thoại: ${hd.khachHang.soDienThoai}</p>
                                                 <p>Địa chỉ: ${hd.khachHang.diaChi}</p>
-
                                             </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6">
                                                 <div>
                                                     <p>Ghi chú: ${hd.ghiChu}</p>
+                                                    <c:if test="${hd.phuongThucThanhToan == 0}">
+                                                        <p>Phương thức thanh toán: Thanh toán khi nhận hàng</p>
+                                                    </c:if>
+                                                    <c:if test="${hd.phuongThucThanhToan == 1}">
+                                                        <p>Phương thức thanh toán: Thanh toán PayPal</p>
+                                                    </c:if>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </c:when>
 
@@ -77,10 +58,15 @@
                                                 <p>Địa chỉ: ${hd.diaChiShip}</p>
 
                                             </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6">
                                                 <div>
                                                     <p>Ghi chú: ${hd.ghiChu}</p>
+                                                    <c:if test="${hd.phuongThucThanhToan == 1}">
+                                                        <p>Phương thức thanh toán: Thanh toán khi nhận hàng</p>
+                                                    </c:if>
+                                                    <c:if test="${hd.phuongThucThanhToan == 2}">
+                                                        <p>Phương thức thanh toán: Thanh toán PayPal</p>
+                                                    </c:if>
                                                 </div>
                                             </div>
 
