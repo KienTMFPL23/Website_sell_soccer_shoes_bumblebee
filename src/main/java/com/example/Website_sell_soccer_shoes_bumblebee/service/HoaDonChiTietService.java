@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface HoaDonChiTietService {
     HoaDonChiTiet save(HoaDonChiTiet hdct);
 
     List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct);
+
+    void deleteByHoaDon(UUID idHoaDon);
 }
