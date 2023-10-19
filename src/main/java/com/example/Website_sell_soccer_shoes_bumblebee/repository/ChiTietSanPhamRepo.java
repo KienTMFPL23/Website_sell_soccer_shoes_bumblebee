@@ -131,4 +131,5 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "and IdMauSac = ?2 \n" +
             "and IdKichCo = ?3",nativeQuery = true)
     ChiTietSanPham findctspAddCart(UUID idSP, UUID idMS, UUID idKC);
+
 }
