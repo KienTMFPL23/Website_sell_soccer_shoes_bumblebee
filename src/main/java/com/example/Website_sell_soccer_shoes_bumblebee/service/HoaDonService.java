@@ -32,9 +32,6 @@ public interface HoaDonService {
 
     List<HoaDon> getId(UUID id);
 
-
-    List<HoaDon> listHoaDonThanhToan();
-
     List<HoaDon> listHoaDonMua(UUID idKH);
 
     List<HoaDon> listHoaDonChoThanhToan(UUID idKH);
@@ -52,6 +49,5 @@ public interface HoaDonService {
     List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
 
     HoaDon hoaDonFindId(UUID id);
-
 
 }

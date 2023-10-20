@@ -27,7 +27,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -91,7 +90,6 @@ public class BanHangTaiQuayController {
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         this.idHoaDon = null;
         this.sumMoney = 0.0;
-        getTaiKhoan(model);
         model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("khachHang", new KhachHang());
@@ -256,13 +254,11 @@ public class BanHangTaiQuayController {
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
-//        String formatKhachHang = "KH" + String.format("%06d", maKhachHang);
-        Random random = new Random();
-        addKhachHang.setMa("HD" + random.nextInt(9999999));
-//        maKhachHang++;
+        String formatKhachHang = "KH" + String.format("%06d", maKhachHang);
+        addKhachHang.setMa(formatKhachHang);
+        maKhachHang++;
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
-        addKhachHang.setTrangThai(1);
         khachHangService.saveKhachHang(addKhachHang);
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
     }
