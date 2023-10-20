@@ -9,4 +9,6 @@ public interface KhachHangService {
     KhachHang findId(UUID id);
     KhachHang saveKhachHang(KhachHang khachHang);
     List<KhachHang> getAll();
+
+    KhachHang findKHBySDT(String sdt);
 }

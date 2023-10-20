@@ -6,6 +6,8 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class TaiKhoanServiceImpl implements TaiKhoanService {
 
@@ -19,6 +21,16 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public TaiKhoan dangKy(TaiKhoan taiKhoan) {
+        return taiKhoanRepository.save(taiKhoan);
+    }
+
+    @Override
+    public TaiKhoan findId(UUID id) {
+        return taiKhoanRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public TaiKhoan save(TaiKhoan taiKhoan) {
         return taiKhoanRepository.save(taiKhoan);
     }
 }

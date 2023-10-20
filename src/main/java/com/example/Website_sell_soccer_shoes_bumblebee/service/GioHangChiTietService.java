@@ -17,4 +17,5 @@ public interface GioHangChiTietService {
     Double getTotalMoney(List<GioHangChiTiet> list);
 
     void deleteGHCT(UUID id);
+
 }

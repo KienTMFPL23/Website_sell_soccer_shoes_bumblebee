@@ -11,6 +11,9 @@ import java.util.UUID;
 
 public interface ChiTietSanPhamService {
 
+    Integer getSLGioHang(UUID idKH);
+
+    String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
     ChiTietSanPham findCTSPAddCart(UUID idSP, UUID idMS, UUID idKC);
 

@@ -134,7 +134,7 @@
 
                                         <div class="form-group cheque">
                                             <div class="ps-radio">
-                                                <input class="form-control" type="radio" id="rdo01" name="payment"
+                                                <input class="form-control" type="radio" id="rdo01" name="payment" value="1"
                                                        checked>
                                                 <label for="rdo01">Thanh toán khi nhận hàng</label>
 
@@ -143,8 +143,8 @@
 
                                         <div class="form-group paypal">
                                             <div class="ps-radio ps-radio--inline">
-                                                <input class="form-control" type="radio" name="payment" id="rdo02">
-                                                <label for="rdo02">Paypal</label>
+                                                <input class="form-control" type="radio" name="payment" id="rdo02" value="2">
+                                                <label for="rdo02">Thanh toán Paypal</label>
                                             </div>
                                             <ul class="ps-payment-method">
                                                 <li><a href="#"><img src="../../../img/paypal.png" alt="" width="150px"

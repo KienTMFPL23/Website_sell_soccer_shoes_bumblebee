@@ -26,10 +26,31 @@ public interface HoaDonService {
 
     HoaDon saveHoaDon(HoaDon hoaDon);
 
+    HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon);
+
     HoaDon deleteHoaDon(UUID id);
 
     HoaDon getOne(UUID id);
 
     List<HoaDon> getId(UUID id);
+
+    List<HoaDon> listHoaDonMua(UUID idKH);
+
+    List<HoaDon> listHoaDonChoThanhToan(UUID idKH);
+
+    List<HoaDon> listHoaDonDangChuanBi(UUID idKH);
+
+    List<HoaDon> listHoaDonDangGiao(UUID idKH);
+
+    List<HoaDon> listHoaDonHoanThanh(UUID idKH);
+
+    List<HoaDon> listHoaDonDaHuy(UUID idKH);
+
+    List<HoaDon> listHoaDonTraHang(UUID idKH);
+
+    List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
+
+    HoaDon hoaDonFindId(UUID id);
+
 
 }

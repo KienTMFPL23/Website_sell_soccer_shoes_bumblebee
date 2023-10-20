@@ -48,37 +48,45 @@
                                 src="../../../images_template/shoe-detail/2.jpg" alt=""><img
                                 src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
                     </div>
-                        <form action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}" method="post">
-                            <div class="ps-product__info">
-                                <h1>${ctsp.sanPham.tenSanPham}</h1>
-                                <h3 class="ps-product__price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency"/>
-                                </h3>
-                                <div class="ps-product__block ps-product__size">
-                                    <h4>Kích cỡ<a href="#">Size chart</a></h4>
-                                    <div style="display: flex;justify-content: space-between">
-                                        <select class="ps-select" name="kichCo">
-                                            <option value="1">Chọn kích cỡ</option>
-                                            <c:forEach var="kc" items="${listKC}">
-                                                <option value="${kc}" >${kc}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <div style="display: flex;align-items: center">
-                                            <p>Số lượng</p>
-                                            <div class="form-group">
-                                                <input class="form-control" style="font-size: 15px" type="number" value="1" name="soLuong">
-                                            </div>
+                    <form action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}" method="post">
+                        <div class="ps-product__info">
+                            <h1>${ctsp.sanPham.tenSanPham}</h1>
+                            <h3 class="ps-product__price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency"/>
+                            </h3>
+                            <div class="ps-product__block ps-product__size">
+                                <h4>Kích cỡ<a href="#">Size chart</a></h4>
+                                <div style="display: flex;justify-content: space-between">
+                                    <select id="kichCoList" class="ps-select" name="kichCo" onchange="selectSize()">
+                                        <option value="1">Chọn kích cỡ</option>
+                                        <c:forEach var="kc" items="${listKC}">
+                                            <option value="${kc}">${kc}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <div style="display: flex;align-items: center">
+                                        <p>Số lượng</p>
+                                        <div class="form-group">
+                                            <input class="form-control" id="sl" style="font-size: 15px" type="number" value="1"
+                                                   name="soLuong" onchange="thayDoiSoLuong();">
                                         </div>
-
                                     </div>
                                 </div>
-                                <div class="ps-product__shopping"><button class="ps-btn mb-10" type="submit"
-                                                                     style="background-color: #37517E;font-size: 15px">Thêm vào giỏ hàng<i class="ps-icon-next"></i></button>
-                                    <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i
-                                            class="ps-icon-heart"></i></a><a href="compare.html"><i
-                                            class="ps-icon-share"></i></a></div>
+                                <div id="spcosan">sản phẩm có sẵn </div>
+                            </div>
+                            <div class="ps-product__shopping">
+                                <div class="ps-product__button" style="margin-bottom: 20px">
+                                    <button class="btn-themgh" type="submit"
+                                            style="background-color: #FFFFFF; color: #37517E;font-size: 15px;border: 1px solid #37517E;">Thêm vào giỏ hàng<i class="ps-icon-next"></i></button>
+                                    <button class="btn-mua" type="submit"
+                                            style="background-color: #37517E;font-size: 15px;width: 157px;margin-left: 30px">Mua ngay<i
+                                            class="ps-icon-next"></i></button>
+                                </div>
+                                <div class="ps-product__actions"><a class="mr-10" href=""><i
+                                        class="ps-icon-heart"></i></a><a href=""><i
+                                        class="ps-icon-share"></i></a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                    </form>
                     <div class="clearfix"></div>
                     <div class="ps-product__content mt-50">
                         <ul class="tab-list" role="tablist">
@@ -383,4 +391,78 @@
             </div>
         </div>
     </div>
+
 </main>
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeErrorModal()">&times;</span>
+        <p>${errorSL}</p>
+    </div>
+</div>
+
+<script>
+
+    var kichCo = document.getElementById("kichCoList").value;
+    if (kichCo == 1){
+        $(".btn-themgh").prop("disabled",true);
+        $(".btn-mua").prop("disabled",true);
+    }
+    var response = null;
+    function selectSize() {
+        var kichCo = document.getElementById("kichCoList").value;
+        if (kichCo == 1){
+            $(".btn-themgh").prop("disabled",true);
+            $(".btn-mua").prop("disabled",true);
+        }
+        if (kichCo != 1){
+            $(".btn-themgh").prop("disabled",false);
+            $(".btn-mua").prop("disabled",false);
+        }
+
+        var kichCo = document.getElementById("kichCoList").value;
+        var idMS = "${ctsp.mauSac.id}";
+        var idSP = "${ctsp.sanPham.id}";
+
+        if (kichCo == 1) {
+            document.getElementById("spcosan").innerHTML = "Chọn kích cỡ trước";
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/bumblebee/select-slsp?idMS=" + idMS + "&idSP=" + idSP + "&size=" + kichCo, true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                response = xhr.responseText;
+                document.getElementById("spcosan").innerHTML = "Sản phẩm có sẵn: " + response;
+                if (Number(response) === 0){
+                    $(".btn-themgh").prop("disabled",true);
+                    $(".btn-mua").prop("disabled",true);
+                }
+            }
+        };
+        xhr.send();
+
+    }
+    selectSize();
+    function thayDoiSoLuong() {
+        var sl = $("#sl").val();
+        if (Number(sl) < 1){
+            document.getElementById("sl").value = Number(1);
+        }
+        if (Number(sl) >= response){
+            document.getElementById("sl").value = Number(response);
+        }
+    }
+
+    document.getElementById("#sl").addEventListener("change",function () {
+        var sl = $("#sl").val();
+        if (Number(sl) < 0 || Number(sl) == 0){
+            document.getElementById("sl").value = Number(1);
+        }
+        if (Number(sl) >= response){
+            document.getElementById("sl").value = Number(response);
+        }
+    })
+</script>
+

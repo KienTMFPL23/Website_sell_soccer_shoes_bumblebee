@@ -1,9 +1,13 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
+
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
+
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.NhanVienRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.ServletOutputStream;
@@ -14,6 +18,10 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
+
+import jakarta.servlet.http.HttpSession;
+import org.apache.commons.math3.analysis.function.Identity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +30,9 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+
+import java.time.LocalDateTime;
 
 import java.util.*;
 
@@ -37,6 +48,13 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    NhanVienRepository nhanVienRepository;
+
+    @Autowired
+    HttpSession session;
+
 
     @Override
     public Page<HoaDon> search(String key, Pageable pageable) {
@@ -66,15 +84,21 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.getListByTrangThai();
     }
 
+    private static int maHoaDon = 1;
+
     @Override
     public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
-        Random random = new Random();
-        hoaDon.setMaHoaDon("HD" + random.nextInt(999999));
+        String formatHoaDon = "HD" + String.format("%08d", maHoaDon);
+        hoaDon.setMaHoaDon(formatHoaDon);
+        maHoaDon++;
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String format = sdf.format(date);
         hoaDon.setNgayTao(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        NhanVien nhanVien = nhanVienRepository.findByIdTaiKhoan(taiKhoan.getId());
+        hoaDon.setNhanVien(nhanVien);
         hoaDon.setTrangThai(0);
         return hoaDonRepository.save(hoaDon);
     }
@@ -87,6 +111,38 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon saveHoaDon(HoaDon hoaDon) {
         return hoaDonRepository.save(hoaDon);
+    }
+//    @Override
+//    public SanPham udpateSanPham(SanPham sanPham, UUID id) {
+//        Optional<SanPham> exitingSanPham = sanPhamRepository.findById(id);
+//        if (exitingSanPham.isPresent()) {
+//            SanPham spToUpdate = exitingSanPham.get();
+//            spToUpdate.setLastModifiedDate(LocalDateTime.now());
+//            spToUpdate.setTenSanPham(sanPham.getTenSanPham());
+//            spToUpdate.setTrangThai(sanPham.getTrangThai());
+//            sanPhamRepository.save(spToUpdate);
+//            return spToUpdate;
+//        } else {
+//            return null;
+//        }
+//    }
+    @Override
+    public HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon) {
+        Optional<HoaDon> exitingHoaDon = hoaDonRepository.findById(id);
+        if (exitingHoaDon.isPresent()) {
+            HoaDon hdToUpdate = exitingHoaDon.get();
+            hdToUpdate.setSdt(hoaDon.getSdt());
+            hdToUpdate.setMaHoaDon(hoaDon.getMaHoaDon());
+            hdToUpdate.setGhiChu(hoaDon.getGhiChu());
+            hdToUpdate.setDiaChiShip(hoaDon.getDiaChiShip());
+            hdToUpdate.setHinhthucThanhToan(hoaDon.getHinhthucThanhToan());
+//            hoaDon.set
+            hdToUpdate.setTrangThai(trangThai);
+            hoaDonRepository.save(hdToUpdate);
+            return hdToUpdate;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -108,6 +164,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> getId(UUID id) {
         return hoaDonRepository.findId(id);
     }
+
 
 
     public void exportExcel(HttpServletResponse response) throws Exception {
@@ -191,5 +248,49 @@ public class HoaDonServiceImpl implements HoaDonService {
         ops.close();
     }
 
+    @Override
+    public List<HoaDon> listHoaDonMua(UUID idKH) {
+        return hoaDonRepository.listHoaDonMua( idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonChoThanhToan(UUID idKH) {
+        return hoaDonRepository.listHoaDonChoThanhToan(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDangChuanBi(UUID idKH) {
+        return hoaDonRepository.listHoaDonDangChuanBi(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDangGiao(UUID idKH) {
+        return hoaDonRepository.listHoaDonDangGiao(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonHoanThanh(UUID idKH) {
+        return hoaDonRepository.listHoaDonHoanThanh(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDaHuy(UUID idKH) {
+        return hoaDonRepository.listHoaDonDaHuy(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonTraHang(UUID idKH) {
+        return hoaDonRepository.listHoaDonTraHang(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDaHoanTra(UUID idKH) {
+        return hoaDonRepository.listHoaDonDaHoanTra(idKH);
+    }
+
+    @Override
+    public HoaDon hoaDonFindId(UUID id) {
+        return hoaDonRepository.hoaDonFindId(id);
+    }
 
 }

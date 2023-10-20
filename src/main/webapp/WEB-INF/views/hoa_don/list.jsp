@@ -65,6 +65,7 @@
 
 
     .start-input {
+
         width: 170px;
         height: 28.6px;
         border-radius: 15px;
