@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    HoaDonRepository hoaDonRepository;
 
 
     @Override
@@ -75,5 +79,16 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     public List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct) {
         return hoaDonChiTietRepository.saveAll(hdct);
     }
+
+    @Override
+    public void deleteByHoaDon(UUID idHoaDon) {
+        hoaDonChiTietRepository.deleteHDCTbyHoaDon(idHoaDon);
+    }
+
+    @Override
+    public List<HoaDonChiTiet> getHoaDonTheoHoaDonChiTiet(UUID id) {
+        return hoaDonChiTietRepository.getHoaDonTheoHoaDonChiTiet(id);
+    }
+
 
 }

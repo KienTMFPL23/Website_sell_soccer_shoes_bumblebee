@@ -12,4 +12,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
 
     @Query(value = "select kh from KhachHang kh where kh.id = ?1")
     KhachHang findId(UUID id);
+
+    @Query("select kh from  KhachHang kh where kh.soDienThoai = ?1")
+    KhachHang findKHBySDT(String sdt);
 }
