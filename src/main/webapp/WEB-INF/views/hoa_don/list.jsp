@@ -56,105 +56,77 @@
         margin-left: 110px;
     }
 
-    #kh-input {
-        margin-left: 60px;
+
+    #myInput {
+        width: 350px;
+        border: 2px solid #37517E;
+        border-radius: 15px;
     }
 
-    #kh-input input {
+
+    .start-input {
+
+        width: 170px;
+        height: 28.6px;
+        border-radius: 15px;
         border: 1px solid #4e5b6c;
-        padding: 3px;
-        border-radius: 5px;
     }
 
-    #kh-input button {
-        margin-bottom: 5px;
+
+    #searchButton {
+        background: #37517E;
+        width: 100px;
+        border-radius: 10px;
+        border: 0px;
+        height: 30px;
+        color: #FFFFFF;
     }
 
-    span {
-        font-weight: bold;
+    .btnReset {
+        margin-left: 50px;
+        height: 28.6px;
+        background-color: #FFFFFF;
+        border: 2px solid #37517E;
+        border-radius: 10px;
     }
 
     .select-item {
-        border: 1px solid #96dbe4;
-        padding: 3px;
-        border-radius: 5px;
-    }
-
-    #start-input {
-        padding-top: 5px;
-    }
-
-    #start-input2 {
-        padding-top: 5px;
-    }
-
-    #start-input input {
-        width: 170px;
-        height: 28.6px;
-        border-radius: 5px;
-        border: 1px solid #4e5b6c;
-    }
-
-    #start-input2 input {
-        width: 170px;
-        height: 28.6px;
-        border-radius: 5px;
-        border: 1px solid #4e5b6c;
-    }
-
-    #searchButton {
-        display: flex;
-        margin-top: 22px;
-    }
-
-    #reset{
-        margin-top: 13px;
+        border-radius: 10px;
     }
 
 </style>
 
 <body>
 
-<div class="row">
-    <h3 class="title">Danh sách hóa đơn</h3>
+<div>
+    <h3 style="text-align: center; margin-bottom: 30px;">Danh sách hóa đơn</h3>
 </div>
 <div class="row">
-    <div class="col-lg-5">
-        <div class="form">
-            <form:form action="/hoa-don/search" modelAttribute="searchForm">
-                <div class="row">
-                    <div id="kh-input">
-                        <span>Khách Hàng</span> </br>
-                        <form:input path="keyword"/>
-                        <button class="btn btn-success" style="margin-left: 10px">Tìm</button>
-                    </div>
-                </div>
-            </form:form>
-        </div>
+    <div class="col-lg-4">
+        <input id="myInput" placeholder="Tìm kiếm theo mã, tên, số điện thoại"/>
+    </div>
 
-    </div>
-    <div class="col-lg-5">
-        <div class="form">
-            <form:form action="/hoa-don/searchDate" method="post" modelAttribute="searchForm">
-                <div class="row">
-                    <div class="col-lg-4" id="start-input">
-                        <span>Từ Ngày</span> </br>
-                        <form:input type="date" placeholder="dd/MM/yyyy" path="fromDate"/>
-                    </div>
-                    <div class="col-lg-4" id="start-input2">
-                        <span>Đến Ngày</span> </br>
-                        <form:input type="date" placeholder="dd/MM/yyyy" path="toDate"/>
-                    </div>
-                    <div class="col-lg-1" id="searchButton">
-                        <button class="btn btn-success">Tìm</button>
-                    </div>
+    <div class="col-lg-6">
+        <form:form action="/hoa-don/searchDate" method="post" modelAttribute="searchForm">
+            <div class="row">
+                <div class="col-lg-5">
+                    Từ Ngày:
+                    <form:input class="start-input" type="date" placeholder="dd/MM/yyyy" path="fromDate"/>
                 </div>
-            </form:form>
-        </div>
+                <div class="col-lg-5">
+                    Đến Ngày:
+                    <form:input class="start-input" type="date" placeholder="dd/MM/yyyy" path="toDate"/>
+                </div>
+                <div class="col-lg-2">
+                    <button id="searchButton">Tìm</button>
+                </div>
+            </div>
+        </form:form>
     </div>
-    <div class="col-lg-2" id="reset">
+
+    <div class="col-lg-2">
         <a href="/hoa-don/hien-thi">
-            <button class="btn btn-primary" style="margin-left: 10px">
+            <button class="btnReset">
                 <box-icon name='reset'></box-icon>
             </button>
         </a>
@@ -171,7 +143,7 @@
                 <th scope="col">Nhân Viên</th>
                 <th scope="col">Ngày Tạo</th>
                 <th scope="col">Ngày Thanh Toán</th>
-                <th scope="col">Tên Khách Hàng</th>
+                <th scope="col">Tên Khách Nhận</th>
                 <th scope="col">Số Điện Thoại</th>
                 <th scope="col">Trạng Thái</th>
                 <th scope="col">Action</th>
@@ -188,20 +160,19 @@
                     <td>${hd.tenNguoiNhan}</td>
                     <td>${hd.sdt}</td>
                     <td>
-
-                        <span>${hd.trangThai == 1 ? 'Đã Thanh Toán' : 'Đang Xử Lý'}</span>-
+                        <span>${hd.trangThai == 1 ? 'Đã Thanh Toán' : 'Chờ thanh toán'}</span>-
                         <select class="select-item" onchange="updateStatus('${hd.maHoaDon}',${hd.trangThai})"
                                 id="${hd.maHoaDon}">
                             <option value="1" ${hd.trangThai == 1 ? 'selected' : ''} id="${hd.maHoaDon}1">Đã Thanh
                                 Toán
                             </option>
-                            <option value="2" ${hd.trangThai == 2 ? 'selected' : ''} id="${hd.maHoaDon}2">Đang Xử Lý
+                            <option value="2" ${hd.trangThai == 2 ? 'selected' : ''} id="${hd.maHoaDon}2">Chờ thanh toán
                             </option>
                         </select>
                     </td>
                     <td>
                         <button id="content" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#${hd.id}" style="border-radius: 20px" onclick="click(${hd.id})"
+                                data-bs-target="#${hd.id}" style="border-radius: 20px"
                         >Detail
                         </button>
                         <div class="modal fade" id="${hd.id}" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -210,12 +181,11 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin đơn hàng</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h2 class="title">Thông tin đơn hàng</h2>
                                         <h5 class="title">Hóa đơn chi tiết</h5>
                                         <div class="row" style="margin-top: 20px">
                                             <div class="col-lg-1"></div>
@@ -264,14 +234,14 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%--                                                    <c:forEach var="ma" items="${hd.khachHang}">--%>
+                                                        <%--                                                     <c:forEach var="hd" items="${hd.khachHang}">--%>
                                                     <tr>
-                                                        <td>${hd.khachHang.ma}</td>
-                                                        <td>${hd.khachHang.ten}</td>
-                                                        <td>${hd.khachHang.soDienThoai}</td>
-                                                        <td>${hd.khachHang.diaChi}</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
-                                                        <%--                                                    </c:forEach>--%>
+                                                        <%--                                                     </c:forEach>--%>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -338,7 +308,12 @@
         select.selected = true
     }
 
-
+    $("#myInput").keyup(function () {
+        var value = $(this).val().toLowerCase();
+        $("#hoaDonTbody tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 </script>
 <script>
     $(document).ready(function () {

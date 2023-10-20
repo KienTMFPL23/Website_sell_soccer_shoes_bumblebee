@@ -136,6 +136,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "and IdKichCo = ?3", nativeQuery = true)
     ChiTietSanPham findctspAddCart(UUID idSP, UUID idMS, UUID idKC);
 
+
     @Query(value = "select count(*) from giohangchitiet join giohang on giohangchitiet.idgiohang = giohang.id\n" +
             "where giohang.IdKH = ?1", nativeQuery = true)
     Integer getSLGioHang(UUID idKH);

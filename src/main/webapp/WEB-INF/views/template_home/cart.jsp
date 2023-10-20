@@ -52,7 +52,9 @@
                                            class="plus"><span>+</span></a>
                                     </div>
                                 </td>
+
                                 <td id="thanhTien_${item.id}"><fmt:formatNumber
+
                                         value="${item.donGia * item.soLuong}" type="currency"/></td>
                                 <td>
                                     <a href="/bumblebee/remove-ghct/${item.id}">
@@ -76,9 +78,10 @@
                         </div>
                         <div class="ps-cart__total">
 
-                            <h3>Tổng tiền thanh toán: <span> ${totalPrice}</span></h3>
+                            <h3>Tổng tiền thanh toán: <span><fmt:formatNumber
+                                    value="${totalPrice}" type="currency"/> </span></h3>
                             <button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
-                                    style="background-color: #37517E">Thanh Toán<i
+                                    style="background-color: #37517E">Mua Hàng<i
                                     class="ps-icon-next"></i></button>
                         </div>
                     </div>

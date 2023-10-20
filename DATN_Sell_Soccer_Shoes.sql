@@ -159,6 +159,8 @@ CREATE TABLE HoaDon
     SoDienThoai   VARCHAR(15),
     TenNguoiNhan  NVARCHAR(100),
     GhiChu        NVARCHAR( MAX),
+    LoaiHoaDon    INT,
+    PhuongThucThanhToan INT,
     TrangThai     INT
 )
     GO

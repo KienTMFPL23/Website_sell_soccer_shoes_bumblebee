@@ -125,7 +125,7 @@
                                                 </c:forEach>
                                             </select></th>
                                         <th scope="col"><%-- Loại giày--%>
-                                            <select id="selectLG">
+                                            <select id="select">
                                                 <option>------------</option>
                                                 <c:forEach items="${listLoaiGiay}" var="lg">
                                                     <option>${lg.tentheloai}</option>
@@ -333,6 +333,19 @@
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+    });
+
+    $("#select").change(function() {
+        var filterValue = $(this).val();
+        var row = $('#myTable');
+
+        row.hide()
+        row.each(function(i, el) {
+            if($(el).attr('data-type') == filterValue) {
+                $(el).show();
+            }
+        })
+
     });
 
     $("#searchSPGioHang").keyup(function () {

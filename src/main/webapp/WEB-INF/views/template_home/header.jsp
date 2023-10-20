@@ -32,7 +32,7 @@
                 <div class="info" style="">
                     <div class="info_right">
                         <p style="margin-bottom: 0px;color: white;margin-right: 10px">${userLogged.username}</p>
-                        <a href="#"><img src="../../../img/in4.png" alt="" width="30px"></a>
+                        <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt="" width="30px"></a>
                     </div>
                 </div>
                 <div>
