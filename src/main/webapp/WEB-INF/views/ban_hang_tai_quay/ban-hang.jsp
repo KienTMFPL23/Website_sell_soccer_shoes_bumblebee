@@ -186,21 +186,24 @@
                                         </div>
                                     </div>
                                 </form>
+                                <input id="searchSPGioHang" placeholder="Tìm kiếm sản phẩm đã chọn"
+                                       style="width: 400px;border: 2px solid #37517E;height: 40px;margin-bottom: 20px;border-radius: 20px;margin-top: 20px;padding-left: 20px;float: bottom ">
                             </div>
                             <div class="col-lg-6">
                                 <div class="ban-hang">
                                     <video
-                                            style="border: 1px solid"
+                                            style="border: 1px solid;float: right"
                                             id="video"
                                             autoplay="true"
                                             width="200px"
                                             height="120px"
                                     ></video>
+                                    <button class="btn btn-primary" id="startButton"><i class="bi bi-qr-code-scan"></i>Scan</button>
+                                    <button class="btn btn-primary" id="stopButton" style="display:none;"><i class="bi bi-qr-code-scan"></i>Stop</button>
                                 </div>
                             </div>
                         </div>
-                        <input id="searchSPGioHang" placeholder="Tìm kiếm sản phẩm đã chọn"
-                               style="width: 400px;border: 2px solid #37517E;height: 40px;margin-bottom: 20px;border-radius: 20px;margin-top: 20px;padding-left: 20px">
+
                         <table class="table table-bordered">
                             <tr class="row1">
                                 <th scope="col" style="background-color: #37517E;color: white">STT</th>
@@ -404,11 +407,11 @@
         });
     });
 </script>
-<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
-<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
-<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"--%>
-<%--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"--%>
-<%--        crossorigin="anonymous"></script>--%>
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>

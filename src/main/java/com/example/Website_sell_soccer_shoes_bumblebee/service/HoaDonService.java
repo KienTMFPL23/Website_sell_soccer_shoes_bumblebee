@@ -32,4 +32,6 @@ public interface HoaDonService {
 
     List<HoaDon> getId(UUID id);
 
+    List<HoaDon> listHoaDonThanhToan();
+
 }
