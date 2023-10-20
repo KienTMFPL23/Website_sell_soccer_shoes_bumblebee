@@ -282,42 +282,41 @@ public class HomeController {
             model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
             model.addAttribute("view", "../template_home/thanhtoan.jsp");
 
-        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-        model.addAttribute("slGioHang", slGioHang);
-        if (taiKhoan == null) {
-            return "redirect:/bumblebee/login";
-        } else {
-            model.addAttribute("listKH", taiKhoan.getKhachHangKH());
-
-            if (idListCartDetail == null) {
-                return "redirect:/bumblebee/cart";
+            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+            model.addAttribute("slGioHang", slGioHang);
+            if (taiKhoan == null) {
+                return "redirect:/bumblebee/login";
             } else {
-
-                // Lấy list idctsp
-                idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
-                        .stream()
-                        .map(UUID::fromString)
-                        .collect(Collectors.toList());
-                listGHCT = new ArrayList<>();
-                for (UUID id : idCartUUIDList) {
-                    GioHangChiTiet ghct = gioHangChiTietService.findId(id);
-                    listGHCT.add(ghct);
-                }
                 model.addAttribute("listKH", taiKhoan.getKhachHangKH());
 
-                //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
-                model.addAttribute("listGHCT", listGHCT);
-                model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
-                model.addAttribute("view", "../template_home/thanhtoan.jsp");
+                if (idListCartDetail == null) {
+                    return "redirect:/bumblebee/cart";
+                } else {
 
-                return "template_home/index";
+                    // Lấy list idctsp
+                    idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
+                            .stream()
+                            .map(UUID::fromString)
+                            .collect(Collectors.toList());
+                    listGHCT = new ArrayList<>();
+                    for (UUID id : idCartUUIDList) {
+                        GioHangChiTiet ghct = gioHangChiTietService.findId(id);
+                        listGHCT.add(ghct);
+                    }
+                    model.addAttribute("listKH", taiKhoan.getKhachHangKH());
+
+                    //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
+                    model.addAttribute("listGHCT", listGHCT);
+                    model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+                    model.addAttribute("view", "../template_home/thanhtoan.jsp");
+
+                    return "template_home/index";
+                }
+
+
             }
-
-
-
         }
     }
-
     private HoaDon hoaDon;
 
     @RequestMapping("/bumblebee/dat-hang")

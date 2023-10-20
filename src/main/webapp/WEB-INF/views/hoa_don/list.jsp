@@ -65,7 +65,6 @@
 
 
     .start-input {
-
         width: 170px;
         height: 28.6px;
         border-radius: 15px;
@@ -102,10 +101,10 @@
         border-radius: 10px;
     }
 
-    #filter-hoaDon{
+    #selectTT{
         width: 150px;
         border-radius: 10px;
-        padding: 3px;
+        padding: 2px;
     }
 
 </style>
@@ -159,17 +158,19 @@
         <%--                <form:option value="2">Chờ thanh toán</form:option>--%>
         <%--            </form:select>--%>
         <%--        </form:form>--%>
-        <select id="filter-hoaDon">
-            <option value="all">Tất cả</option>
-            <option value="1">Đã thanh toán</option>
-            <option value="2">Chờ thanh toán</option>
-        </select>
+        <form >
+            <select id="selectTT">
+                <option value="all">Tất cả</option>
+                <option value="Đã thanh toán">Đã thanh toán</option>
+                <option value="Chờ thanh toán">Chờ thanh toán</option>
+            </select>
+        </form>
     </div>
 </div>
 
 <div class="row" style="margin-top: 27px">
     <div class="col-lg-12">
-        <table class="table table-striped" id="myTable">
+        <table class="table table-striped">
             <thead class="hoa-don-thead">
             <tr>
                 <th scope="col">STT</th>
@@ -209,7 +210,7 @@
 
                     <td>
                         <span>
-                                ${hd.trangThai == 1 ? 'Đã thanh toán' : hd.trangThai == 2 ? 'Chờ thanh toán' : ''}
+                                ${hd.trangThai == 1 ? 'Đã thanh toán' : hd.trangThai == 2 ? 'chờ thanh toán' : ''}
                         </span>-
                         <select class="select-item" onchange="updateStatus('${hd.maHoaDon}',${hd.trangThai})"
                                 id="${hd.maHoaDon}">`
@@ -378,11 +379,13 @@
         });
     });
 
-    $("#filter-hoaDon").change(function () {
+    $("#selectTT").change(function () {
         var value = $(this).val().toLowerCase();
         $("#hoaDonTbody tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+
+        console.log(value);
 
         if ("all" == value) {
             $("#hoaDonTbody tr").show();

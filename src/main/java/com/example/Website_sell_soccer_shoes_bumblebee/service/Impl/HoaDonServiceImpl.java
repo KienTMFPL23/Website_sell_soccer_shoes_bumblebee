@@ -135,7 +135,7 @@ public class HoaDonServiceImpl implements HoaDonService {
             hdToUpdate.setMaHoaDon(hoaDon.getMaHoaDon());
             hdToUpdate.setGhiChu(hoaDon.getGhiChu());
             hdToUpdate.setDiaChiShip(hoaDon.getDiaChiShip());
-            hdToUpdate.setHinhthucThanhToan(hoaDon.getHinhthucThanhToan());
+            hdToUpdate.setPhuongThucThanhToan(hoaDon.getPhuongThucThanhToan());
 //            hoaDon.set
             hdToUpdate.setTrangThai(trangThai);
             hoaDonRepository.save(hdToUpdate);
