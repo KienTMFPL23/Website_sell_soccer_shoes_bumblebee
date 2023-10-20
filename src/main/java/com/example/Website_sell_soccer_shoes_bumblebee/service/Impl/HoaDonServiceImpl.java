@@ -1,26 +1,36 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChatLieu;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
+@Transactional
 public class HoaDonServiceImpl implements HoaDonService {
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     HoaDonRepository hoaDonRepository;
@@ -70,6 +80,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public Page<HoaDon> searchByStatusBills(int status, Pageable pageable) {
+        return hoaDonRepository.searchByStatusBills(status,pageable);
+    }
+
+    @Override
     public HoaDon saveHoaDon(HoaDon hoaDon) {
         return hoaDonRepository.save(hoaDon);
     }
@@ -93,4 +108,88 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> getId(UUID id) {
         return hoaDonRepository.findId(id);
     }
+
+
+    public void exportExcel(HttpServletResponse response) throws Exception {
+        List<HoaDon> hoaDon = hoaDonRepository.findAll();
+
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("hoaDon");
+//        sheet.setDefaultColumnWidth(30);
+
+        // create style for header cells
+        CellStyle style = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setFontName("Arial");
+        style.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        font.setBold(true);
+        style.setFont(font);
+
+
+        HSSFRow row = sheet.createRow(0);
+
+        row.createCell(0).setCellValue("ID");
+        row.getCell(0).setCellStyle(style);
+
+        row.createCell(1).setCellValue("Mã HD");
+        row.getCell(1).setCellStyle(style);
+
+        row.createCell(2).setCellValue("Nhân Viên");
+        row.getCell(2).setCellStyle(style);
+
+        row.createCell(3).setCellValue("Ngày Tạo");
+        row.getCell(3).setCellStyle(style);
+
+        row.createCell(4).setCellValue("Ngày Thanh Toán");
+        row.getCell(4).setCellStyle(style);
+
+        row.createCell(5).setCellValue("Người Nhận");
+        row.getCell(5).setCellStyle(style);
+
+        row.createCell(6).setCellValue("Khách Hàng");
+        row.getCell(6).setCellStyle(style);
+
+        row.createCell(7).setCellValue("Địa Chỉ ship");
+        row.getCell(7).setCellStyle(style);
+
+        row.createCell(8).setCellValue("SĐT");
+        row.getCell(8).setCellStyle(style);
+
+        row.createCell(9).setCellValue("Ghi Chú");
+        row.getCell(9).setCellStyle(style);
+
+        row.createCell(10).setCellValue("Trạng Thái");
+        row.getCell(10).setCellStyle(style);
+        sheet.autoSizeColumn(1 - 10);
+
+
+        int dataRowIndex = 1;
+        for (HoaDon hd : hoaDon) {
+            HSSFRow dataRow = sheet.createRow(dataRowIndex);
+            DateFormat dateFormat = (DateFormat) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            dataRow.createCell(0).setCellValue(String.valueOf(hd.getId()));
+            dataRow.createCell(1).setCellValue(String.valueOf(hd.getMaHoaDon()));
+            dataRow.createCell(2).setCellValue(String.valueOf(hd.getNhanVien().getTen()));
+            dataRow.createCell(3).setCellValue(dateFormat.format(hd.getNgayTao()));
+            dataRow.createCell(4).setCellValue(dateFormat.format(hd.getNgayThanhToan()));
+            dataRow.createCell(5).setCellValue(String.valueOf(hd.getTenNguoiNhan()));
+//            dataRow.createCell(6).setCellValue(String.valueOf(hd.getKhachHang().getTen()));
+            dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
+            dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
+            dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
+            dataRow.createCell(10).setCellValue(hd.getTrangThai());
+            sheet.setDefaultColumnWidth(20);
+            dataRowIndex++;
+
+        }
+
+        ServletOutputStream ops = response.getOutputStream();
+        workbook.write(ops);
+        ops.close();
+    }
+
+
 }

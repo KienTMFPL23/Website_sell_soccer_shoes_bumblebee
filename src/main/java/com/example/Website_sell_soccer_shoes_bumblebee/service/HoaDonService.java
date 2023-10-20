@@ -1,6 +1,5 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChatLieu;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +22,7 @@ public interface HoaDonService {
 
     HoaDon createHoaDon() throws ParseException;
 
+    Page<HoaDon> searchByStatusBills(int status, Pageable pageable);
 
     HoaDon saveHoaDon(HoaDon hoaDon);
 
