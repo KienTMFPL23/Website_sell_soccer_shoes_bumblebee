@@ -89,6 +89,9 @@ public class HomeController {
     @Autowired
     HoaDonService hoaDonService;
 
+    @Autowired
+    TaiKhoanService taiKhoanService;
+
 
     @Data
     public static class SortForm {
@@ -126,7 +129,7 @@ public class HomeController {
 
     private List<GioHangChiTiet> listGHCT = null;
     private List<UUID> idCartUUIDList = null;
-    //private Double totalPrice = 0.0;
+
 
     @RequestMapping("/bumblebee/home")
     public String index(Model model, @RequestParam(defaultValue = "0") int p) {
@@ -222,9 +225,10 @@ public class HomeController {
         model.addAttribute("listKH", taiKhoan.getKhachHangKH());
 
         if (idListCartDetail == null) {
-            return "redirect:/bumblebee/cart";
+            model.addAttribute("idSPGHCT", idListCartDetail);
+            model.addAttribute("view", "../template_home/cart.jsp");
+            return "template_home/index";
         } else {
-
             // Lấy list idctsp
             idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
                     .stream()
@@ -235,7 +239,6 @@ public class HomeController {
                 GioHangChiTiet ghct = gioHangChiTietService.findId(id);
                 listGHCT.add(ghct);
             }
-
             //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
@@ -382,17 +385,19 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/don-mua")
     public String donMua(Model model, HttpSession session) {
-
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonMua(taiKhoan.getKhachHangKH().getId()));
-        model.addAttribute("view", "../don_mua/don_mua.jsp");
-        return "template_home/index";
+        if (taiKhoan == null) {
+            return "redirect:/bumblebee/login";
+        } else {
+            model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonMua(taiKhoan.getKhachHangKH().getId()));
+            model.addAttribute("view", "../don_mua/don_mua.jsp");
+            return "template_home/index";
+        }
     }
 
     @RequestMapping("/bumblebee/don-mua/{id}")
     public String donMuaChiTet(Model model, HttpSession session, @PathVariable(name = "id") UUID id) {
 
-        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         Double sumMoney = hoaDonChiTietService.getTotalMoney(list);
         model.addAttribute("sumMoney", sumMoney);
@@ -464,6 +469,41 @@ public class HomeController {
         model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonDaHoanTra(taiKhoan.getKhachHangKH().getId()));
         model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
+    }
+
+    @ModelAttribute("dsGioiTinh")
+    public Map<Boolean, String> getDsGioiTinh() {
+        Map<Boolean, String> dsGT = new HashMap<>();
+        dsGT.put(true, "Nam");
+        dsGT.put(false, "Nữ");
+        return dsGT;
+    }
+
+    @GetMapping("/bumblebee/thong-tin-ca-nhan")
+    public String getThongTinCaNhan(Model model, HttpSession session, @ModelAttribute("kh") KhachHang kh) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("kh", khachHangService.findId(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/thong_tin_ca_nhan.jsp");
+        return "template_home/index";
+    }
+
+    @PostMapping("/bumblebee/thong-tin-ca-nhan")
+    public String thongTinCaNhan(Model model, HttpSession session, @ModelAttribute("kh") KhachHang kh) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+
+        KhachHang khachHang = khachHangService.findId(taiKhoan.getKhachHangKH().getId());
+        khachHang.setHo(kh.getHo());
+        khachHang.setTenDem(kh.getTenDem());
+        khachHang.setTen(kh.getTen());
+        khachHang.setGioiTinh(kh.getGioiTinh());
+        khachHang.setSoDienThoai(kh.getSoDienThoai());
+        khachHang.setNgaySinh(kh.getNgaySinh());
+        khachHang.setDiaChi(kh.getDiaChi());
+        khachHangService.saveKhachHang(kh);
+
+        return "redirect:/bumblebee/thong-tin-ca-nhan";
     }
 
 

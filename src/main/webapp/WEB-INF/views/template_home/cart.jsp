@@ -63,9 +63,13 @@
 
                             <h3>Tổng tiền thanh toán: <span><fmt:formatNumber
                                     value="${totalPrice}" type="currency"/> </span></h3>
-                            <button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
-                                    style="background-color: #37517E">Mua Hàng<i
-                                    class="ps-icon-next"></i></button>
+                            <c:if test="${idSPGHCT != null}">
+                                <button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
+                                        style="background-color: #37517E">Mua Hàng<i
+                                        class="ps-icon-next"></i></button>
+                            </c:if>
+                            <c:if test="${idSPGHCT == null}"></c:if>
+                            ${idSPGHCT}
                         </div>
                     </div>
                 </form>
