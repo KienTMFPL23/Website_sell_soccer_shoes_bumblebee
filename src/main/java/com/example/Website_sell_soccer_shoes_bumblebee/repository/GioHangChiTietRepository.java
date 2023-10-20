@@ -12,8 +12,8 @@ import java.util.UUID;
 @Repository
 public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, UUID> {
 
-    @Query("select ghct from GioHangChiTiet ghct where ghct.ctsp.id = ?1")
-    GioHangChiTiet findId(UUID id);
+    @Query("select ghct from GioHangChiTiet ghct where ghct.ctsp.id = ?1 and ghct.gioHang.khachHang.id = ?2")
+    GioHangChiTiet findId(UUID id, UUID idKH);
 
     @Query("select ghct from GioHangChiTiet ghct where ghct.gioHang.khachHang.id =?1")
     List<GioHangChiTiet> listGHCTByKH(UUID id);
