@@ -26,7 +26,7 @@
         list-style-type: none;
         text-align: center;
         height: 50px;
-        width: 980px;
+        width: 100%;
         border-bottom: 1px solid #D9D9D9;
         border-radius: 10px;
         margin-bottom: 20px;
@@ -67,11 +67,11 @@
 
     .input-search {
         height: 40px;
-        width: 960px;
+        width: 100%;
         border: 0px solid;
         background-color: #E7E6E6;
-        border-bottom-right-radius: 10px;
-        border-top-right-radius: 10px;
+        border-radius: 10px;
+
     }
 
     .don-mua {
@@ -161,7 +161,8 @@
 
             <div>
                 <div class="menu-left">
-                    <a href="#"><img class="img" src="../../../img/1315638.png">Thông tin cá nhân</a>
+                    <a href="/bumblebee/thong-tin-ca-nhan"><img class="img" src="../../../img/1315638.png">Thông tin cá
+                        nhân</a>
                 </div>
                 <div class="menu-left">
                     <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>
@@ -189,7 +190,6 @@
             <c:choose>
                 <c:when test="${listHoaDonMua != null}">
                     <div class="search">
-                        <button class="btn-search"><i class='bx bx-search'></i></button>
                         <input class="input-search" type="text" placeholder=" Tìm kiếm sản phẩm">
                     </div>
 
@@ -246,11 +246,10 @@
                                 </div>
                                 <hr>
 
-                                <c:forEach items="${hd.hoaDons}" var="hdct">
-                                    <div class="tong-tien">
-                                        <h3>Thành tiền: ${sumMoney}</h3>
-                                    </div>
-                                </c:forEach>
+                                <div class="tong-tien">
+                                    <h3>Thành tiền: ${sumMoney}</h3>
+                                </div>
+
                             </div>
                         </div>
                     </c:forEach>

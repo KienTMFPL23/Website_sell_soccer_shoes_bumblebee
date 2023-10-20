@@ -116,7 +116,65 @@
     }
 
     .trang-thai {
+        border: 4px solid rgb(45, 194, 88);
+        border-radius: 50%;
+        display: flex;
+        margin: auto;
+
+    }
+
+    .status-order{
+        padding: 10px 0px 10px 0px;
+        background-color: #FFFFFF;
         border-radius: 10px;
+    }
+
+    .status-order>.row>.col-lg-2{
+        z-index: 1;
+    }
+
+
+    /*.inline{*/
+    /*    background-color: rgb(45, 194, 88);*/
+    /*    width: 100%;*/
+    /*    margin: 30px 60px 0px 60px;*/
+    /*    height: 3px;*/
+    /*    position: absolute;*/
+    /*    transition: width 1s cubic-bezier(.4,0,.2,1);*/
+    /*}*/
+
+    .stepper__line {
+        position: absolute;
+        top: 100px;
+        height: 4px;
+        width: 100%;
+    }
+
+    .stepper__line-background, .stepper__line-foreground {
+        position: absolute;
+        width: calc(100% - 140px);
+        margin: 0 80px;
+        height: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .stepper__line-foreground {
+        background: #2dc258;
+        transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+    .stepper__line-background, .stepper__line-foreground {
+        position: absolute;
+        width: calc(100% - 140px);
+        margin: 0 70px;
+        height: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .col-lg-2 > p,h4 {
+        text-align: center;
+        margin-top: 10px;
     }
 
     .table {
@@ -149,7 +207,7 @@
 
             <div>
                 <div class="menu-left">
-                    <a href="#"><img class="img" src="../../../img/1315638.png">Thông tin cá nhân</a>
+                    <a href="/bumblebee/thong-tin-ca-nhan"><img class="img" src="../../../img/1315638.png">Thông tin cá nhân</a>
                 </div>
                 <div class="menu-left">
                     <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>
@@ -173,16 +231,54 @@
                     </div>
                     <div class="col-lg-10">
                         <div class="ma-don">
-                            MÃ ĐƠN HÀNG: ${id}
+                            MÃ ĐƠN HÀNG: <span style="font-weight: 600; color: black">${id}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <img src="../../../img/trang-thai-don-hang.png" class="trang-thai">
+            <div class="status-order">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đơn hàng đã được đặt</h4>
+                        <p>14:27 20/10/2023</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đã xác nhận thanh toán</h4>
+                        <p>14:27 20/10/2023</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đơn hàng đang được giao</h4>
+                        <p>14:27 20/10/2023</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đã nhận được hàng</h4>
+                        <p>14:27 20/10/2023</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <img src="../../../img/istockphoto-1707893816-612x612.jpg" style="width: 60px; height: 60px;"
+                             class="trang-thai">
+                        <h4>Đổi trả</h4>
+                        <p>14:27 20/10/2023</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đơn hàng đã được hủy</h4>
+                        <p>14:27 20/10/2023</p>
+                    </div>
+
+                    <%--                    <div class="inline"></div>--%>
+                    <div class="stepper__line">
+                        <div class="stepper__line-background" style="background: rgb(224, 224, 224);"></div>
+                        <div class="stepper__line-foreground"
+                             style="width: calc((100% - 140px) * 1);background: rgb(45, 194, 88);"></div>
+                    </div>
                 </div>
+
             </div>
 
             <div class="table">
@@ -225,7 +321,8 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h3>ĐỊA CHỈ NHẬN HÀNG</h3>
-                                        <p>Tên người nhận: ${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}</p>
+                                        <p>Tên người
+                                            nhận: ${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}</p>
                                         <p>Số điện thoại: ${hoaDon.khachHang.soDienThoai}</p>
                                         <p>Địa chỉ: ${hoaDon.khachHang.diaChi}</p>
                                     </div>
