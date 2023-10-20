@@ -1,11 +1,15 @@
 * {
     font-family: "Arial", "Helvetica", sans-serif;
 }
+#spcosan{
+    font-size: 19px;
+}
+
 .product_price, .product_name {
     text-align: center;
 }
 
-* a:hover{
+* a:hover {
     text-decoration: none;
 }
 
@@ -13,7 +17,7 @@
     margin: 10px 0px;
 }
 
-.butAddCart{
+.butAddCart {
     cursor: pointer;
     width: 100%;
     display: flex;
@@ -23,16 +27,18 @@
     align-items: center;
 }
 
-.info_right{
+.info_right {
     display: flex;
     align-items: center;
     gap: 10px;
     justify-content: flex-end;
 }
-.info_right img{
+
+.info_right img {
     cursor: pointer;
 }
-.info_right p{
+
+.info_right p {
     font-size: 16px;
     font-weight: 600;
 }
@@ -45,7 +51,7 @@
     background-color: #37517E;
 }
 
-.butAddCart button:before{
+.butAddCart button:before {
     background-color: white;
     color: #37517E;
     border: 1px solid #37517E;
@@ -53,34 +59,50 @@
     font-weight: 600;
 }
 
-.product_name a{
+.product_name a {
     font-size: 18px;
     color: black;
 }
-.product_price span{
+
+.product_price span {
     color: gray;
     font-size: 15px;
 
 }
-menu-link:before{
+
+menu-link:before {
     background-color: #37517E;
     color: blue;
 }
-.sizeAddCart,.soLuongAddCart{
+
+.sizeAddCart, .soLuongAddCart {
     display: flex;
     justify-content: space-between;
 }
-.modal-body{
+
+.modal-body {
     display: flex;
     align-items: center;
 }
-.menu > li > a{
+
+.menu > li > a {
     color: white;
 }
+
 /*banner*/
 
 
 /*detail*/
+.ps-product__button button {
+    border: none;
+    color: white;
+    height: 50px;
+}
+
+.btn-themgh {
+
+}
+
 .ps-select {
     width: 130px;
     height: 30px;
@@ -101,15 +123,20 @@ menu-link:before{
 }
 
 /*cart*/
+.ps-cart__table > tr {
 
-.form-group--number{
+}
+
+.form-group--number {
     display: flex;
     align-items: center;
 }
-.plus{
+
+.plus {
     margin-left: 14px;
 }
-.form-group--number a{
+
+.form-group--number a {
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -118,9 +145,6 @@ menu-link:before{
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.plus,.minus{
-
 }
 
 /*listSp*/
@@ -134,20 +158,25 @@ input[type="checkbox"] {
     transform: scale(1.7);
     margin-right: 15px;
 }
-.ps-widget__content{
+
+.ps-widget__content {
     font-size: 15px;
 }
-.ps-widget__content a{
+
+.ps-widget__content a {
     color: black;
 }
-.form-control{
+
+.form-control {
     font-size: 17px;
 }
+
 /*ban-hang-tai-quay*/
-.navHoaDon{
+.navHoaDon {
     position: relative;
 }
-#searchSPGioHang{
+
+#searchSPGioHang {
     border: 2px solid #37517E;
     width: 400px;
 }

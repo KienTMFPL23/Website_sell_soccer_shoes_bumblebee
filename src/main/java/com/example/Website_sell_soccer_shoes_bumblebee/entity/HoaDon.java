@@ -53,8 +53,11 @@ public class HoaDon {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @Column(name = "HinhThucThanhToan")
-    Integer hinhthucThanhToan;
+    @Column(name="PhuongThucThanhToan")
+    private Integer phuongThucThanhToan;
+
+    @Column(name="LoaiHoaDon")
+    private Integer loaiHoaDon;
 
     @ManyToOne()
     @JoinColumn(name = "IdNV")
