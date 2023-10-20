@@ -1,5 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.config.PaypalPaymentIntent;
+import com.example.Website_sell_soccer_shoes_bumblebee.config.PaypalPaymentMethod;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
@@ -15,6 +17,9 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import com.itextpdf.forms.xfdf.Mode;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -96,6 +101,12 @@ public class HomeController {
     @Autowired
     HoaDonChiTietService hoaDonChiTietService;
 
+    @Autowired
+    private PayPalService service;
+
+    public static final String SUCCESS_URL = "pay/success";
+    public static final String CANCEL_URL = "pay/cancel";
+
     @Data
     public static class SearchFormByKichCo {
         Double key;
@@ -107,6 +118,13 @@ public class HomeController {
         Double maxPrice;
     }
 
+
+    @RequestMapping("/bumblebee/select-slsp")
+    public ResponseEntity<String> getSLBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
+        String sl = chiTietSanPhamService.getSoLuongByKichCo(idMS, idSP, size);
+        return ResponseEntity.ok(sl);
+    }
+
     @GetMapping("/bumblebee/select-size")
     public ResponseEntity<List<Integer>> getKichCoByItemId(@RequestParam UUID idSP, @RequestParam UUID idMS, Model model) {
         List<Integer> kichCoList = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
@@ -115,20 +133,38 @@ public class HomeController {
 
     private List<GioHangChiTiet> listGHCT = null;
     private List<UUID> idCartUUIDList = null;
-
+    //private Double totalPrice = 0.0;
 
     @RequestMapping("/bumblebee/home")
-    public String index(Model model, @RequestParam(defaultValue = "0") int p) {
+    public String home(Model model, @RequestParam(defaultValue = "0") int p, HttpSession session) {
         Pageable pageable = PageRequest.of(p, 8);
-        //Page<ChiTietSanPham> listSP = chiTietSanPhamService.getListSP(pageable);
         Page<ChiTietSanPham> listSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         model.addAttribute("listSP", listSP);
         model.addAttribute("view", "../template_home/home.jsp");
         return "template_home/index";
     }
 
+    @PostMapping("/bumblebee/update-cart")
+    public Map<String, Object> updateCart(@RequestBody Map<String, Object> requestData, @RequestParam UUID idGHCT) {
+        int soLuongMoi = Integer.parseInt(requestData.get("soLuong").toString());
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepo.getOne(idGHCT);
+        gioHangChiTiet.setSoLuong(soLuongMoi);
+        gioHangChiTietRepo.save(gioHangChiTiet);
+        double thanhTienMoi = soLuongMoi * gioHangChiTiet.getDonGia();
+        Map<String, Object> jsonResponse = new HashMap<>();
+        jsonResponse.put("soLuong", soLuongMoi);
+        jsonResponse.put("thanhTien", thanhTienMoi);
+        return jsonResponse;
+    }
+
     @RequestMapping("/bumblebee/detail")
-    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
+    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
         List<KichCo> listKC = kichCoService.getList();
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
@@ -145,14 +181,29 @@ public class HomeController {
     }
 
     @RequestMapping("/bumblebee/cart")
-
     public String cart(Model model, HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         model.addAttribute("listGHCT", listGHCT);
         model.addAttribute("view", "../template_home/cart.jsp");
-        return "template_home/index";
+        if (taiKhoan == null) {
+            return "redirect:/bumblebee/login";
+        } else {
+            GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+            List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+            model.addAttribute("listGHCT", listGHCT);
+            model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+            model.addAttribute("view", "../template_home/cart.jsp");
+            return "template_home/index";
+        }
+
+    }
+
+    @RequestMapping("/bumblebee/remove-ghct/{id}")
+    public String removeGHCT(@PathVariable UUID id) {
+        gioHangChiTietRepo.deleteById(id);
+        return "redirect:/bumblebee/cart";
     }
 
 
@@ -163,42 +214,49 @@ public class HomeController {
                           @RequestParam UUID idSP,
                           @RequestParam String soLuong,
                           HttpSession session) {
-        KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
-        ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
-        for (GioHangChiTiet gioHangChiTiet : listGHCT) {
-            if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
-                int soLuongHienTai = gioHangChiTiet.getSoLuong();
-                int slThem = Integer.parseInt(soLuong);
-                int slUpdate = soLuongHienTai + slThem;
-                gioHangChiTiet.setSoLuong(slUpdate);
-                gioHangChiTietRepo.save(gioHangChiTiet);
-                System.out.println("có rồiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                return "redirect:/bumblebee/cart";
+        if (taiKhoan == null) {
+            return "redirect:/bumblebee/login";
+        } else {
+            KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
+            ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
+            GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+            List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : listGHCT) {
+                if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
+                    int soLuongHienTai = gioHangChiTiet.getSoLuong();
+                    int slThem = Integer.parseInt(soLuong);
+                    int slUpdate = soLuongHienTai + slThem;
+                    gioHangChiTiet.setSoLuong(slUpdate);
+                    gioHangChiTietRepo.save(gioHangChiTiet);
+                    return "redirect:/bumblebee/cart";
+                }
             }
+            int sl = Integer.parseInt(soLuong);
+            GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+            gioHangChiTiet.setCtsp(ctsp);
+            gioHangChiTiet.setGioHang(gioHang);
+            gioHangChiTiet.setDonGia(ctsp.getGiaBan());
+            gioHangChiTiet.setSoLuong(sl);
+            gioHangChiTietRepo.save(gioHangChiTiet);
+            List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
+            model.addAttribute("listGHCT", listGHCT);
+            model.addAttribute("listCTSP", listCTSP);
+
+            model.addAttribute("view", "../template_home/cart.jsp");
+            return "redirect:/bumblebee/cart";
+
         }
-        int sl = Integer.parseInt(soLuong);
-        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-        gioHangChiTiet.setCtsp(ctsp);
-        gioHangChiTiet.setGioHang(gioHang);
-        gioHangChiTiet.setDonGia(ctsp.getGiaBan());
-        gioHangChiTiet.setSoLuong(sl);
-        gioHangChiTietRepo.save(gioHangChiTiet);
-        List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-        model.addAttribute("listGHCT", listGHCT);
-        model.addAttribute("listCTSP", listCTSP);
-        model.addAttribute("view", "../template_home/cart.jsp");
-        return "redirect:/bumblebee/cart";
     }
 
     @RequestMapping("/bumblebee/thanh-toan")
-    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
+    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String
+            idListCartDetail,
                             @ModelAttribute("hoadon") HoaDon hoadon, HttpSession session
     ) {
-
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
@@ -218,15 +276,18 @@ public class HomeController {
                     GioHangChiTiet ghct = gioHangChiTietService.findId(id);
                     listGHCT.add(ghct);
                 }
+                model.addAttribute("listKH", taiKhoan.getKhachHangKH());
 
+                //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
                 model.addAttribute("listGHCT", listGHCT);
                 model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
                 model.addAttribute("view", "../template_home/thanhtoan.jsp");
 
                 return "template_home/index";
             }
-        }
 
+
+        }
     }
 
     private HoaDon hoaDon;
@@ -235,14 +296,16 @@ public class HomeController {
     public String datHang(
             Model model,
             HttpSession session,
-            //@ModelAttribute("hoadon") HoaDon hoaDon
+            //@ModelAttribute("hoadon") HoaDon hoaDon,
             @RequestParam(name = "tenNguoiNhan") String tenNguoiNhan,
             @RequestParam(name = "sdt") String sdt,
             @RequestParam(name = "diaChiShip") String diaChiShip,
-            @RequestParam(name = "ghiChu") String ghiChu
+            @RequestParam(name = "ghiChu") String ghiChu,
+            @RequestParam(name = "payment") Integer payment
     ) throws ParseException {
-
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         KhachHang kh = khachHangService.findId(taiKhoan.getKhachHangKH().getId());
 
         // Tạo hóa đơn
@@ -260,9 +323,14 @@ public class HomeController {
         hoaDon.setSdt(sdt);
         hoaDon.setDiaChiShip(diaChiShip);
         hoaDon.setGhiChu(ghiChu);
-        hoaDon.setTrangThai(3);
-        hoaDonService.saveHoaDon(hoaDon);
-
+        hoaDon.setLoaiHoaDon(1);
+        if (payment.intValue() == 2) {
+            return "redirect:/pay";
+        } else {
+            hoaDon.setPhuongThucThanhToan(1);
+            hoaDon.setTrangThai(1);
+            hoaDonService.saveHoaDon(hoaDon);
+        }
 
         // Tạo hóa đơn chi tiết
         for (GioHangChiTiet ghct : listGHCT) {
@@ -273,19 +341,172 @@ public class HomeController {
             hdct.setDonGia(ghct.getDonGia());
             hdct.setTrangThai(3);
             hoaDonChiTietService.save(hdct);
-            gioHangChiTietService.deleteGHCT(ghct.getId());
 
+            ChiTietSanPham ctsp = chiTietSanPhamService.getOne(ghct.getCtsp().getId());
+            ctsp.setSoLuong(ghct.getCtsp().getSoLuong() - ghct.getSoLuong());
+            chiTietSanPhamRepo.save(ctsp);
+            //gioHangChiTietService.deleteGHCT(ghct.getId());
         }
 
         return "redirect:/bumblebee/bill/" + hoaDon.getId();
+//        return "redirect:/pay";
     }
+
+//    @GetMapping("/pay")
+//    public String home(Model model) {
+//        Double price = gioHangChiTietService.getTotalMoney(listGHCT);
+//        model.addAttribute("price", price);
+//        return "/paypal/paypal";
+//    }
+
+    // THANH TOÁN PAYPAL
+    @RequestMapping("/pay")
+    public String pay(HttpServletRequest request
+    ) {
+        String cancelUrl = "http://localhost:8080/" + CANCEL_URL;
+        String successUrl = "http://localhost:8080/" + SUCCESS_URL;
+        Double price = gioHangChiTietService.getTotalMoney(listGHCT);
+        try {
+            Payment payment = service.createPayment(
+                    price,
+                    "USD",
+                    PaypalPaymentMethod.paypal,
+                    PaypalPaymentIntent.sale,
+                    "payment description",
+                    cancelUrl,
+                    successUrl);
+            for (Links links : payment.getLinks()) {
+                if (links.getRel().equals("approval_url")) {
+                    return "redirect:" + links.getHref();
+                }
+            }
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping(SUCCESS_URL)
+    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String
+            payerId) {
+        try {
+            Payment payment = service.executePayment(paymentId, payerId);
+            System.out.println(payment.toJSON());
+            if (payment.getState().equals("approved")) {
+                hoaDon.setPhuongThucThanhToan(2);
+                hoaDon.setTrangThai(1);
+                hoaDonService.saveHoaDon(hoaDon);
+                // Tạo hóa đơn chi tiết
+                for (GioHangChiTiet ghct : listGHCT) {
+                    HoaDonChiTiet hdct = new HoaDonChiTiet();
+                    hdct.setHoaDon(hoaDon);
+                    hdct.setChiTietSanPham(ghct.getCtsp());
+                    hdct.setSoLuong(ghct.getSoLuong());
+                    hdct.setDonGia(ghct.getDonGia());
+                    hdct.setTrangThai(3);
+                    hoaDonChiTietService.save(hdct);
+                    //gioHangChiTietService.deleteGHCT(ghct.getId());
+                }
+                return "redirect:/bumblebee/bill/" + hoaDon.getId();
+            }
+        } catch (PayPalRESTException e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/";
+    }
+
 
     @RequestMapping("/bumblebee/bill/{id}")
     public String bill(Model model, @PathVariable(name = "id") UUID id) {
-
         model.addAttribute("listHD", hoaDonService.getId(id));
         model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
         model.addAttribute("view", "../template_home/bill.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua")
+    public String donMua(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonMua(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/{id}")
+    public String donMuaChiTet(Model model, HttpSession session, @PathVariable(name = "id") UUID id) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+        Double sumMoney = hoaDonChiTietService.getTotalMoney(list);
+        model.addAttribute("sumMoney", sumMoney);
+        model.addAttribute("id", id);
+        model.addAttribute("hoaDon", hoaDonService.getOne(id));
+        model.addAttribute("listHoaDonChiTiet", hoaDonChiTietService.getHoaDonById(id));
+        model.addAttribute("view", "../don_mua/don_mua_chi_tiet.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/cho-xac-nhan")
+    public String donChoThanhToan(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/dang-chuan-bi")
+    public String donDangChuanBi(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonDangChuanBi(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/dang-giao")
+    public String donDangGiao(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonDangGiao(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/hoan-thanh")
+    public String donHoanThanh(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonHoanThanh(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/da-huy")
+    public String donDaHuy(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonDaHuy(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/tra-hang")
+    public String donTraHang(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonTraHang(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
+        return "template_home/index";
+    }
+
+    @RequestMapping("/bumblebee/don-mua/da-hoan-tra")
+    public String donDaHoanTra(Model model, HttpSession session) {
+
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonDaHoanTra(taiKhoan.getKhachHangKH().getId()));
+        model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
     }
 
@@ -293,7 +514,11 @@ public class HomeController {
     @RequestMapping("/bumblebee/product_list/sort")
     public String sort(Model model, @RequestParam(defaultValue = "0") int p,
                        @ModelAttribute("sortForm") SortForm sortForm,
-                       @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan) {
+                       @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
+                       HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         Sort sort = Sort.by(Sort.Direction.ASC, sortForm.key);
         Pageable pageable = PageRequest.of(p, 12, sort);
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamService.getListSP(pageable);
@@ -313,16 +538,20 @@ public class HomeController {
     @RequestMapping("/bumblebee/product_list")
     public String product_list(Model model, @RequestParam(defaultValue = "0") int p,
                                @ModelAttribute("sortForm") SortForm sortForm,
-                               @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan) {
+                               @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
+                               HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         Pageable pageable = PageRequest.of(p, 12);
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamService.getListSP(pageable);
+        Page<ChiTietSanPham> listSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
         //    List<ChiTietSanPhamDto> pageCTSP = chiTietSanPhamService.getListChiTietSanPhamHinhAnh();
-        List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<LoaiGiay> listLG = loaiGiayService.findAll();
         List<KichCo> listKC = kichCoService.getList();
         List<MauSac> listMS = mauSacService.getAll();
-        model.addAttribute("listSP", listSP);
-        model.addAttribute("pageSP", pageCTSP);
+        model.addAttribute("pageSP", listSP);
+        // model.addAttribute("pageSP", pageCTSP);
         model.addAttribute("listLG", listLG);
         model.addAttribute("listKC", listKC);
         model.addAttribute("listMS", listMS);
@@ -354,7 +583,11 @@ public class HomeController {
     public String getListByKichCo(Model model, @RequestParam(defaultValue = "0") int p,
                                   @ModelAttribute("sortForm") SortForm sortForm,
                                   @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
-                                  @PathVariable UUID id) {
+                                  @PathVariable UUID id,
+                                  HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         KichCo kichCo = kichCoService.getOne(id);
         System.out.println(kichCo);
         Pageable pageable = PageRequest.of(p, 12);
@@ -376,8 +609,12 @@ public class HomeController {
     public String getListByMauSac(Model model, @RequestParam(defaultValue = "0") int p,
                                   @ModelAttribute("sortForm") SortForm sortForm,
                                   @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
-                                  @RequestParam UUID idMS
+                                  @RequestParam UUID idMS,
+                                  HttpSession session
     ) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         Pageable pageable = PageRequest.of(p, 12);
         Page<ChiTietSanPham> listCTSPBYMS = chiTietSanPhamService.getCTSPByMS(idMS, pageable);
         List<LoaiGiay> listLG = loaiGiayService.findAll();
@@ -396,9 +633,14 @@ public class HomeController {
                                     @RequestParam(defaultValue = "0") int p,
                                     @ModelAttribute("sortForm") SortForm sortForm,
                                     @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
-                                    @RequestParam(name = "idLoaiGiayList", required = false) String idLoaiGiayList
+                                    @RequestParam(name = "idLoaiGiayList", required = false) String idLoaiGiayList,
+                                    HttpSession session
     ) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+        model.addAttribute("slGioHang", slGioHang);
         if ("all".equals(idLoaiGiayList)) {
+
             Pageable pageable = PageRequest.of(p, 12);
             Page<ChiTietSanPham> pageSP = chiTietSanPhamService.getListSP(pageable);
             List<LoaiGiay> listLG = loaiGiayService.findAll();

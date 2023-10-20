@@ -65,10 +65,9 @@ public class HoaDonController {
     }
 
     @GetMapping("/hoa-don-chi-tiet/hien-thi/{ma}")
-    public String hienThi(Model model, HttpSession session, @PathVariable("ma") UUID id) {
+    public String hienThi(Model model, @PathVariable("ma") UUID id) {
         model.addAttribute("searchForm", new SearchForm());
-//        model.addAttribute("searchDate", new SearchDate());
-        session.setAttribute("listHDCT", hdctService.getHoaDonById(id));
+        model.addAttribute( "hoaDons", hdctService.getHoaDonById(id));
         return "/admin/index";
     }
 

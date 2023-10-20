@@ -24,6 +24,7 @@ public interface HoaDonChiTietService {
     Double getTotalMoney(List<HoaDonChiTiet> list);
 
     HoaDonChiTiet save(HoaDonChiTiet hdct);
+
     List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct);
 
     void deleteByHoaDon(UUID idHoaDon);

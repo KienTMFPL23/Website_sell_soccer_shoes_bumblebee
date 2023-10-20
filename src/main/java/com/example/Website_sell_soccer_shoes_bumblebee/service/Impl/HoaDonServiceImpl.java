@@ -118,9 +118,56 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.findId(id);
     }
 
+
     @Override
     public List<HoaDon> listHoaDonThanhToan() {
         return hoaDonRepository.listHoaDonThanhToan();
+
+
+    @Override
+    public List<HoaDon> listHoaDonMua(UUID idKH) {
+        return hoaDonRepository.listHoaDonMua( idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonChoThanhToan(UUID idKH) {
+        return hoaDonRepository.listHoaDonChoThanhToan(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDangChuanBi(UUID idKH) {
+        return hoaDonRepository.listHoaDonDangChuanBi(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDangGiao(UUID idKH) {
+        return hoaDonRepository.listHoaDonDangGiao(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonHoanThanh(UUID idKH) {
+        return hoaDonRepository.listHoaDonHoanThanh(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDaHuy(UUID idKH) {
+        return hoaDonRepository.listHoaDonDaHuy(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonTraHang(UUID idKH) {
+        return hoaDonRepository.listHoaDonTraHang(idKH);
+    }
+
+    @Override
+    public List<HoaDon> listHoaDonDaHoanTra(UUID idKH) {
+        return hoaDonRepository.listHoaDonDaHoanTra(idKH);
+    }
+
+    @Override
+    public HoaDon hoaDonFindId(UUID id) {
+        return hoaDonRepository.hoaDonFindId(id);
+
     }
 
 }

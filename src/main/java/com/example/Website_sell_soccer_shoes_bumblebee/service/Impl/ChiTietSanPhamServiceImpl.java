@@ -25,6 +25,16 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
 
     @Override
+    public Integer getSLGioHang(UUID idKH) {
+        return repo.getSLGioHang(idKH);
+    }
+
+    @Override
+    public String getSoLuongByKichCo(UUID idMS, UUID idSP, String size) {
+        return repo.getSoLuongByKichCo(idMS, idSP, size);
+    }
+
+    @Override
     public ChiTietSanPham findCTSPAddCart(UUID idSP, UUID idMS, UUID idKC) {
         return repo.findctspAddCart(idSP, idMS, idKC);
     }
@@ -126,7 +136,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable) {
-        return repo.listCTSP(id,pageable);
+        return repo.listCTSP(id, pageable);
     }
 
     @Override
