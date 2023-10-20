@@ -65,7 +65,7 @@
 
 <body>
 <div class="formAdd">
-    <h1>THÊM/SỬA ĐẾ GIÀY</h1>
+    <h1>THÊM/SỬA MÀU SẮC</h1>
 
     <form:form action="/mau-sac/add" modelAttribute="ms" method="post">
 

@@ -28,4 +28,6 @@ public interface HoaDonChiTietService {
     List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct);
 
     void deleteByHoaDon(UUID idHoaDon);
+
+    List<HoaDonChiTiet> getHoaDonTheoHoaDonChiTiet(UUID id);
 }
