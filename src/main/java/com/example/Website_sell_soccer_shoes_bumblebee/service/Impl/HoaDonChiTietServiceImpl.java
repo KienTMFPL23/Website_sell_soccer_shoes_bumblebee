@@ -85,5 +85,10 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         hoaDonChiTietRepository.deleteHDCTbyHoaDon(idHoaDon);
     }
 
+    @Override
+    public List<HoaDonChiTiet> getHoaDonTheoHoaDonChiTiet(UUID id) {
+        return hoaDonChiTietRepository.getHoaDonTheoHoaDonChiTiet(id);
+    }
+
 
 }
