@@ -86,7 +86,6 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 
 
-
     @Query("select h from HinhAnh h where h.ctsp.id = ?1")
     HinhAnh getHADetail(UUID idCTSP);
 
@@ -108,11 +107,16 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     KichCo getKichCoBySize(int size);
 
 
-
     @Query(value = "select kc.size from kichCo kc join ChiTietSanPham ctsp on ctsp.IdKichCo = kc.Id\n" +
             "where ctsp.IdMauSac = ?1 \n" +
-            "and ctsp.IdSP = ?2",nativeQuery = true)
+            "and ctsp.IdSP = ?2", nativeQuery = true)
     List<Integer> getKichCoByMauSacAndSanPham(UUID idMS, UUID idSP);
+
+    @Query(value = "select ctsp.soLuong from ChiTietSanPham ctsp join KichCo kc on kc.Id = ctsp.IdKichCo\n" +
+            "            where ctsp.IdMauSac = ?1\n" +
+            "            and ctsp.IdSP = ?2 \n" +
+            "\t\t\tand kc.size = ?3", nativeQuery = true)
+    String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
     @Query(value = "WITH RankedCTSP AS (\n" +
             "    SELECT\n" +
@@ -123,13 +127,18 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "SELECT\n" +
             "    id,IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
             "FROM RankedCTSP\n" +
-            "WHERE RowNum = 1;",nativeQuery = true)
+            "WHERE RowNum = 1;", nativeQuery = true)
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
             "and IdMauSac = ?2 \n" +
-            "and IdKichCo = ?3",nativeQuery = true)
+            "and IdKichCo = ?3", nativeQuery = true)
     ChiTietSanPham findctspAddCart(UUID idSP, UUID idMS, UUID idKC);
+
+
+    @Query(value = "select count(*) from giohangchitiet join giohang on giohangchitiet.idgiohang = giohang.id\n" +
+            "where giohang.IdKH = ?1", nativeQuery = true)
+    Integer getSLGioHang(UUID idKH);
 
 }

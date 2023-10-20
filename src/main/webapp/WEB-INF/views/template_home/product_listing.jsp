@@ -19,7 +19,7 @@
                 </form>
             </div>
             <div class="ps-product__column row">
-                <c:forEach var="item" items="${pageSP.content}">
+                <c:forEach var="item" items="${pageSP.content}" varStatus="loop">
                     <div class="ps-product__column col-md-3">
                         <div class="ps-shoe mb-30">
                             <div class="ps-shoe__thumbnail">
@@ -37,8 +37,15 @@
                                         <img src="../../../uploads/${item.hinhAnhs.duongdan3}">
                                         <img src="../../../uploads/${item.hinhAnhs.duongdan4}">
                                     </div>
-                                    <div class="ps-shoe__variant butAddCart">
-                                        <button style="color: white">Thêm giỏ hàng</button>
+                                    <div class=" butAddCart">
+                                        <button class="addToCartBtn"
+                                                data-toggle="modal"
+                                                data-target="#kichCoModal_${loop.index}"
+                                                style="color: white; width: 240px"
+                                                data-item-id="${item.sanPham.id}"
+                                                data-item-mausac="${item.mauSac.id}"
+                                        >Thêm giỏ hàng
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="ps-shoe__detail">
@@ -53,6 +60,52 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Modal -->
+                    <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}">
+                        <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thêm Sản phẩm vào giỏ hàng</h4>
+                                        <button type="button" class="close"
+                                                data-dismiss="modal">&times;
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-md-5">
+                                            <img src="../../../uploads/${item.hinhAnhs.tenanh}"
+                                                 width="80px"
+                                                 height="80px">
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="sizeAddCart">
+                                                <p>Chọn Size</p>
+                                                <select id="kichCoSelect_${item.sanPham.id}_${item.mauSac.id}" class="form-control"
+                                                        style="width: 100px;font-size: 15px" name="kichCo">
+                                                </select>
+                                            </div>
+                                            <div class="soLuongAddCart">
+                                                <p>Chọn số lượng</p>
+                                                <input type="number" style="width: 100px;font-size: 15px"
+                                                       name="soLuong" value="1">
+                                            </div>
+                                            <p style="margin-top: 10px">${item.soLuong} sản phẩm có sẵn</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button style="font-size: 15px" type="button" class="btn btn-danger"
+                                                data-dismiss="modal">Đóng
+                                        </button>
+                                        <button class="btn"
+                                                style="font-size:15px;background-color: #37517E; color: white"
+                                                href="/bumblebee/add-to-cart">Thêm vào giỏ hàng
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </c:forEach>
             </div>
             <div class="ps-product-action">
@@ -168,4 +221,31 @@
         });
     });
 </script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".addToCartBtn").click(function () {
+            var itemId = $(this).data("item-id");
+            var idMS = $(this).data("item-mausac");
+            console.log(itemId);
+            console.log(idMS)
+            $.ajax({
+                url: "/bumblebee/select-size?idSP=" + itemId + "&idMS=" + idMS,
+                type: "GET",
+                success: function (data) {
+                    var selectElement = $("#kichCoSelect_"+itemId+"_"+idMS);
+                    selectElement.empty();
+                    data.forEach(function (kichCo) {
+                        var option = $("<option></option>")
+                            .attr("value", kichCo)
+                            .text(kichCo);
+                        selectElement.append(option);
+                    });
+                },
+                error: function () {
+                    console.log("Error fetching kich co data.");
+                }
+            });
+        });
+    });
+</script>

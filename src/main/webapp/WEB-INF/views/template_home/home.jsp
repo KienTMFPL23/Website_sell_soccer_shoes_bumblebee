@@ -89,7 +89,8 @@
                                 </div>
                             </div>
                             <!-- Modal -->
-                            <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}">
+                            <form method="post"
+                                  action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}">
                                 <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -108,18 +109,22 @@
                                                 <div class="col-md-7">
                                                     <div class="sizeAddCart">
                                                         <p>Chọn Size</p>
-                                                        <select id="kichCoSelect" class="form-control"
-                                                                style="width: 100px;font-size: 15px" name="kichCo">
+                                                        <select id="kichCoSelect_${item.sanPham.id}_${item.mauSac.id}"
+                                                                class="form-control"
+                                                                style="width: 100px;font-size: 15px"  name="kichCo" onchange="selectSize('${item.sanPham.id}','${item.mauSac.id}')">
+                                                            <option id=""></option>
                                                         </select>
                                                     </div>
                                                     <div class="soLuongAddCart">
                                                         <p>Chọn số lượng</p>
                                                         <input type="number" style="width: 100px;font-size: 15px"
-                                                               name="soLuong">
+                                                               name="soLuong" value="1" class="slchon"
+                                                               onchange="themsl(this.value)">
                                                     </div>
                                                     <p style="margin-top: 10px">${item.soLuong} sản phẩm có sẵn</p>
+                                                    <input type="hidden" value="${item.soLuong}"
+                                                           id="slcosan">
                                                 </div>
-
                                             </div>
                                             <div class="modal-footer">
                                                 <button style="font-size: 15px" type="button" class="btn btn-danger"
@@ -222,7 +227,8 @@
                                     <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
                                     <img
                                             src="../../../uploads/${item.hinhAnhs.tenanh}" height="250px" alt=""><a
-                                        class="ps-shoe__overlay" href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"></a>
+                                        class="ps-shoe__overlay"
+                                        href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"></a>
 
                                 </div>
                                 <div class="ps-shoe__content">
@@ -234,7 +240,8 @@
                                             <img src="../../../uploads/${item.hinhAnhs.duongdan4}">
                                         </div>
                                         <div class="ps-shoe__variant butAddCart">
-                                            <button style="color: white" href="/bumblebee/select-size">Thêm giỏ hàng</button>
+                                            <button style="color: white" href="/bumblebee/select-size">Thêm giỏ hàng
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="ps-shoe__detail">
@@ -257,23 +264,48 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+    function selectSize(x,y) {
+        var size = $("#op-size").val();
+        console.log(size);
+    }
+
+    function themsl(slchon) {
+        var slcosan = document.getElementById("slcosan");
+        console.log(slcosan.value);
+        console.log(slchon);
+    }
+
+    // $(document).ready(function () {
+    //     $(".slchon").on("change",function () {
+    //         var slcosan = document.getElementById("slcosan");
+    //          var slchon = document.getElementsByClassName("slchon");
+    //         var sl = $(".slchon").val();
+    //         console.log(slcosan.value);
+    //         console.log(slchon.value);
+    //         // if (slchon > slcosan){
+    //         //     document.getElementsByClassName("slchon").value = slchon.value;
+    //         // }
+    //     })
+    // })
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");
             var idMS = $(this).data("item-mausac");
+
+            console.log(itemId, idMS)
             $.ajax({
                 url: "/bumblebee/select-size?idSP=" + itemId + "&idMS=" + idMS,
                 type: "GET",
                 success: function (data) {
-                    var selectElement = $("#kichCoSelect");
+                    var selectElement = $("#kichCoSelect_" + itemId + "_" + idMS);
                     selectElement.empty();
                     data.forEach(function (kichCo) {
-                        var option = $("<option></option>")
+                        var option = $("<option id='op-size'></option>")
                             .attr("value", kichCo)
                             .text(kichCo);
                         selectElement.append(option);
                     });
-                    $("#kichCoModal_" + itemId).modal("show");
                 },
                 error: function () {
                     console.log("Error fetching kich co data.");
@@ -282,6 +314,7 @@
         });
     });
 </script>
+
 
 
 

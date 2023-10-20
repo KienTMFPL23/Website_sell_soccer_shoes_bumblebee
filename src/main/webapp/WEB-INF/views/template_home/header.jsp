@@ -41,9 +41,11 @@
                         <input class="form-control" type="text" placeholder="Search Product…">
                         <button><i class="ps-icon-search"></i></button>
                     </form>
-                    <div class="ps-cart"><a class="ps-cart__toggle" href="/bumblebee/cart" style="top: 0px;"><span
-                            style="background-color: #37517E"><i>20</i></span><i
-                            class="ps-icon-shopping-cart"></i></a>
+                    <div class="ps-cart">
+                        <a class="ps-cart__toggle" href="/bumblebee/cart" style="top: 0px;">
+                            <span style="background-color: #37517E"><i>${slGioHang}</i></span>
+                            <i class="ps-icon-shopping-cart"></i>
+                        </a>
                     </div>
                 </div>
             </div>
