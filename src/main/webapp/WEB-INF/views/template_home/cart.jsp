@@ -44,11 +44,11 @@
                                                                              type="currency"/></td>
                                 <td>
                                     <div class="form-group--number">
-                                        <a style="color: white; ${item.ctsp.soLuong == 0 ? 'disabled':''}" onclick="truSL('${item.id}')"
+                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}" onclick="truSL('${item.id}')"
                                            class="minus"><span>-</span></a>
                                         <input class="form-control" id="soLuongCTSP_${item.id}" type="text"
                                                value="${item.soLuong}" style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''}>
-                                        <a style="color: white;${item.ctsp.soLuong == 0 ? 'disabled':''}" onclick="themSL('${item.id}')"
+                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}" onclick="themSL('${item.id}')"
                                            class="plus"><span>+</span></a>
                                     </div>
                                 </td>

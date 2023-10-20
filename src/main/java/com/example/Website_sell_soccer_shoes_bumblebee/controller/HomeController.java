@@ -224,6 +224,7 @@ public class HomeController {
             List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             for (GioHangChiTiet gioHangChiTiet : listGHCT) {
                 if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
+                    int soLuongCTSP = ctsp.getSoLuong();
                     int soLuongHienTai = gioHangChiTiet.getSoLuong();
                     int slThem = Integer.parseInt(soLuong);
                     int slUpdate = soLuongHienTai + slThem;
