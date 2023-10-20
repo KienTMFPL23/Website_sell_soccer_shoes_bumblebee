@@ -391,7 +391,14 @@
             </div>
         </div>
     </div>
+
 </main>
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeErrorModal()">&times;</span>
+        <p>${errorSL}</p>
+    </div>
+</div>
 
 <script>
 
@@ -403,6 +410,10 @@
     var response = null;
     function selectSize() {
         var kichCo = document.getElementById("kichCoList").value;
+        if (kichCo == 1){
+            $(".btn-themgh").prop("disabled",true);
+            $(".btn-mua").prop("disabled",true);
+        }
         if (kichCo != 1){
             $(".btn-themgh").prop("disabled",false);
             $(".btn-mua").prop("disabled",false);
@@ -424,15 +435,21 @@
             if (xhr.readyState === 4 && xhr.status === 200) {
                 response = xhr.responseText;
                 document.getElementById("spcosan").innerHTML = "Sản phẩm có sẵn: " + response;
+                if (Number(response) === 0){
+                    $(".btn-themgh").prop("disabled",true);
+                    $(".btn-mua").prop("disabled",true);
+                }
             }
         };
-
         xhr.send();
 
     }
     selectSize();
     function thayDoiSoLuong() {
         var sl = $("#sl").val();
+        if (Number(sl) < 1){
+            document.getElementById("sl").value = Number(1);
+        }
         if (Number(sl) >= response){
             document.getElementById("sl").value = Number(response);
         }
@@ -440,8 +457,12 @@
 
     document.getElementById("#sl").addEventListener("change",function () {
         var sl = $("#sl").val();
+        if (Number(sl) < 0 || Number(sl) == 0){
+            document.getElementById("sl").value = Number(1);
+        }
         if (Number(sl) >= response){
             document.getElementById("sl").value = Number(response);
         }
     })
 </script>
+
