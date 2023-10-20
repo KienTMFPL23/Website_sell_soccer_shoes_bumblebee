@@ -183,15 +183,10 @@ public class HomeController {
     @RequestMapping("/bumblebee/cart")
     public String cart(Model model, HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-
         Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
         model.addAttribute("slGioHang", slGioHang);
-        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
         model.addAttribute("listGHCT", listGHCT);
         model.addAttribute("view", "../template_home/cart.jsp");
-        return "template_home/index";
-
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
@@ -220,19 +215,6 @@ public class HomeController {
                           @RequestParam String soLuong,
                           HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-
-        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
-        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
-        for (GioHangChiTiet gioHangChiTiet : listGHCT) {
-            if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
-                int soLuongHienTai = gioHangChiTiet.getSoLuong();
-                int slThem = Integer.parseInt(soLuong);
-                int slUpdate = soLuongHienTai + slThem;
-                gioHangChiTiet.setSoLuong(slUpdate);
-                gioHangChiTietRepo.save(gioHangChiTiet);
-                return "redirect:/bumblebee/cart";
-            }
-
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
@@ -246,7 +228,7 @@ public class HomeController {
                     int slThem = Integer.parseInt(soLuong);
                     int slUpdate = soLuongHienTai + slThem;
                     gioHangChiTiet.setSoLuong(slUpdate);
-                    gioHangChiTietRepo.save(gioHangChiTiet);      
+                    gioHangChiTietRepo.save(gioHangChiTiet);
                     return "redirect:/bumblebee/cart";
                 }
             }
@@ -263,11 +245,13 @@ public class HomeController {
 
             model.addAttribute("view", "../template_home/cart.jsp");
             return "redirect:/bumblebee/cart";
-      
+
+        }
     }
 
     @RequestMapping("/bumblebee/thanh-toan")
-    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
+    public String thanhToan(Model model, @RequestParam(name = "idListCartDetail", required = false) String
+            idListCartDetail,
                             @ModelAttribute("hoadon") HoaDon hoadon, HttpSession session
     ) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
@@ -292,17 +276,18 @@ public class HomeController {
                     GioHangChiTiet ghct = gioHangChiTietService.findId(id);
                     listGHCT.add(ghct);
                 }
-        model.addAttribute("listKH", taiKhoan.getKhachHangKH());
+                model.addAttribute("listKH", taiKhoan.getKhachHangKH());
 
-            //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
-            model.addAttribute("listGHCT", listGHCT);
-            model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
-            model.addAttribute("view", "../template_home/thanhtoan.jsp");
+                //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
+                model.addAttribute("listGHCT", listGHCT);
+                model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+                model.addAttribute("view", "../template_home/thanhtoan.jsp");
 
-            return "template_home/index";
+                return "template_home/index";
+            }
+
+
         }
-
-
     }
 
     private HoaDon hoaDon;
@@ -402,7 +387,8 @@ public class HomeController {
     }
 
     @GetMapping(SUCCESS_URL)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String
+            payerId) {
         try {
             Payment payment = service.executePayment(paymentId, payerId);
             System.out.println(payment.toJSON());
