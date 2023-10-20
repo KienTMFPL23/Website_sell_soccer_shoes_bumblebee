@@ -34,16 +34,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     HoaDon searchHoaDon(String hoaDon);
 
 
-    @Query("select hd from HoaDon  hd where hd.trangThai = 1")
-    List<HoaDon> listHoaDonThanhToan();
-
-    @Query("select max(hd.maHoaDon) from HoaDon hd")
-    String getMaxMaHD();
-
-    @Query("select hd.maHoaDon from HoaDon  hd where  hd.maHoaDon = ?1")
-    HoaDon getMaHoaDon(String mahd);
-
-
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonMua(UUID idKH);
 
@@ -68,7 +58,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
-
 
 
 }

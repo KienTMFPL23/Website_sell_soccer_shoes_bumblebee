@@ -69,19 +69,9 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
-//        String formatHoaDon = "HD" + String.format("%08d", maHoaDon);
-        Random random = new Random();
-        hoaDon.setMaHoaDon("HD" + random.nextInt(999999));
-//        HoaDon getHoaDon = hoaDonRepository.getMaHoaDon(formatHoaDon);
-//        if (getHoaDon != null) {
-//            String maxHoaDon = hoaDonRepository.getMaxMaHD();
-//            String soHoaDon = maxHoaDon.substring(2);
-//            Integer autoNumber = Integer.parseInt(soHoaDon);
-//            autoNumber++;
-//            hoaDon.setMaHoaDon("HD" + String.valueOf(autoNumber));
-//        } else {
-//            hoaDon.setMaHoaDon(formatHoaDon);
-//        }
+        String formatHoaDon = "HD" + String.format("%08d", maHoaDon);
+        hoaDon.setMaHoaDon(formatHoaDon);
+        maHoaDon++;
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String format = sdf.format(date);
@@ -102,9 +92,9 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon deleteHoaDon(UUID id) {
         HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
 //        hoaDonChiTietRepository.deleteHDCTById(id);
-//        if (hoaDon != null) {
+        if (hoaDon != null) {
             hoaDonRepository.delete(hoaDon);
-//        }
+        }
         return hoaDon;
     }
 
@@ -117,11 +107,6 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> getId(UUID id) {
         return hoaDonRepository.findId(id);
     }
-
-
-    @Override
-    public List<HoaDon> listHoaDonThanhToan() {
-        return hoaDonRepository.listHoaDonThanhToan();
 
 
     @Override
@@ -167,7 +152,6 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon hoaDonFindId(UUID id) {
         return hoaDonRepository.hoaDonFindId(id);
-
     }
 
 }

@@ -10,7 +10,6 @@ $(document).ready(function () {
             url: "/bumblebee/ban-hang-tai-quay/them-khach-hang",
             data: requestData,
             success: function () {
-
                 console.log("thanh cong");
             },
             error: function () {

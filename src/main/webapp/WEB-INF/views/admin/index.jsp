@@ -161,13 +161,7 @@
                 <b>Quản lý hóa đơn</b></a
             >
         </li>
-        <!-- Nav Item - Đổi trả -->
-        <li class="nav-item">
-            <a class="nav-link" href="/bumblebee/doi-tra/hien-thi">
-                <box-icon name='bug'></box-icon>
-                <b>Đổi trả</b>
-            </a>
-        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block"/>
 
