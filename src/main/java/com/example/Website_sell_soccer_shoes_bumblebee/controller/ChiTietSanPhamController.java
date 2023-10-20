@@ -317,6 +317,34 @@ public class ChiTietSanPhamController {
         return "/admin/index";
     }
 
+    // Lỗi đâu Nam chịu
+    @RequestMapping("/chi-tiet-san-pham/listLoaiGiay")
+    public String listLoaiGiay(@ModelAttribute("lg") SearchLoaiGiay searchLoaiGiay, @RequestParam(defaultValue = "0") int p, Model model) {
+        if (p < 0) {
+            p = 0;
+        }
+        Page<ChiTietSanPham> qlSanPhamPage;
+        Pageable pageable = PageRequest.of(p, 5);
+        if (searchLoaiGiay.idLG != null && !searchLoaiGiay.idLG.equals("")) {
+            qlSanPhamPage = service.searchLoaiGiay(searchLoaiGiay.idLG, pageable);
+        } else {
+            qlSanPhamPage = service.getListSP(pageable);
+        }
+        model.addAttribute("SP", new SanPham());
+        model.addAttribute("searchKC", new SearchKC());
+        model.addAttribute("searchDG", new SearchDeGiay());
+        model.addAttribute("searchChatLieu", new SearchChatlieu());
+        model.addAttribute("searchFormByMau", new SearchFormSPByMau());
+        model.addAttribute("page", qlSanPhamPage);
+        model.addAttribute("searchForm", new SearchFormSP());
+        model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
+        model.addAttribute("sanpham", new QLSanPham());
+        model.addAttribute("sortForm", new SortFormSP());
+        return "/admin/index";
+    }
+
+
+
     // filer with combobox chat lieu
     @RequestMapping("/chi-tiet-san-pham/search-by-chatlieu")
     public String searchByChatLieu(@ModelAttribute("searchChatLieu") SearchChatlieu searchChatlieu, @RequestParam(defaultValue = "0") int p, Model model) {

@@ -147,7 +147,7 @@
 
         <!-- Nav Item - Quản lý đơn hàng -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/don-hang/list-all">
                 <i class="bx bxs-truck"></i>
 
                 <b>Quản lý đơn hàng</b></a

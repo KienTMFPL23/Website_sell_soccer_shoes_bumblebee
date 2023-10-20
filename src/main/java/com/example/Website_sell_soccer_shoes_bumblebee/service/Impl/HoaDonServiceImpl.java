@@ -15,10 +15,8 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
@@ -86,6 +84,38 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon saveHoaDon(HoaDon hoaDon) {
         return hoaDonRepository.save(hoaDon);
+    }
+//    @Override
+//    public SanPham udpateSanPham(SanPham sanPham, UUID id) {
+//        Optional<SanPham> exitingSanPham = sanPhamRepository.findById(id);
+//        if (exitingSanPham.isPresent()) {
+//            SanPham spToUpdate = exitingSanPham.get();
+//            spToUpdate.setLastModifiedDate(LocalDateTime.now());
+//            spToUpdate.setTenSanPham(sanPham.getTenSanPham());
+//            spToUpdate.setTrangThai(sanPham.getTrangThai());
+//            sanPhamRepository.save(spToUpdate);
+//            return spToUpdate;
+//        } else {
+//            return null;
+//        }
+//    }
+    @Override
+    public HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon) {
+        Optional<HoaDon> exitingHoaDon = hoaDonRepository.findById(id);
+        if (exitingHoaDon.isPresent()) {
+            HoaDon hdToUpdate = exitingHoaDon.get();
+            hdToUpdate.setSdt(hoaDon.getSdt());
+            hdToUpdate.setMaHoaDon(hoaDon.getMaHoaDon());
+            hdToUpdate.setGhiChu(hoaDon.getGhiChu());
+            hdToUpdate.setDiaChiShip(hoaDon.getDiaChiShip());
+            hdToUpdate.setHinhthucThanhToan(hoaDon.getHinhthucThanhToan());
+//            hoaDon.set
+            hdToUpdate.setTrangThai(trangThai);
+            hoaDonRepository.save(hdToUpdate);
+            return hdToUpdate;
+        } else {
+            return null;
+        }
     }
 
     @Override

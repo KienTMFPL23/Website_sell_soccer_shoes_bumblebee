@@ -26,6 +26,8 @@ public interface HoaDonService {
 
     HoaDon saveHoaDon(HoaDon hoaDon);
 
+    HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon);
+
     HoaDon deleteHoaDon(UUID id);
 
     HoaDon getOne(UUID id);

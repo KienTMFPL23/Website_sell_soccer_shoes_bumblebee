@@ -27,7 +27,7 @@ public class HoaDon {
     @Column(name = "MaHD")
     private String maHoaDon;
 
-    @NotNull(message ="Ngày tạo không được trống")
+//    @NotNull(message = "Ngày tạo không được trống")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NgayTao")
