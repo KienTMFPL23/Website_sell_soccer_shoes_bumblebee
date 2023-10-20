@@ -289,8 +289,6 @@ public class HomeController {
 
                 return "template_home/index";
             }
-
-
         }
     }
 
