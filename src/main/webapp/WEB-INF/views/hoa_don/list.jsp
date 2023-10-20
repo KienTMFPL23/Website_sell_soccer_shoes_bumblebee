@@ -74,7 +74,6 @@
         font-weight: bold;
     }
 
-
     .select-item {
         border: 1px solid #96dbe4;
         padding: 3px;
@@ -340,6 +339,31 @@
     }
 
 
+</script>
+<script>
+    $(document).ready(function () {
+        $(".addToCartBtn").click(function () {
+            var itemId = $(this).data("item-id");
+            $.ajax({
+                url: "hoa-don-chi-tiet?idHD=" + itemId,
+                type: "GET",
+                success: function (data) {
+                    var selectElement = $("#kichCoSelect");
+                    selectElement.empty();
+                    data.forEach(function (kichCo) {
+                        var option = $("<option></option>")
+                            .attr("value", kichCo)
+                            .text(kichCo);
+                        selectElement.append(option);
+                    });
+                    $("#kichCoModal_" + itemId).modal("show");
+                },
+                error: function () {
+                    console.log("Error fetching kich co data.");
+                }
+            });
+        });
+    });
 </script>
 </html>
 
