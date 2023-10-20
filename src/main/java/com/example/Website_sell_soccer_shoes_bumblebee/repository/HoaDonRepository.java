@@ -31,5 +31,26 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select hd from HoaDon hd where hd.maHoaDon = ?1")
     HoaDon searchHoaDon(String hoaDon);
+// đơn hàng
+    @Query("select hd from HoaDon hd where  hd.trangThai=5 ")
+    Page<HoaDon> donHangDaHuy(Pageable pageable);
+
+    @Query("select hd from HoaDon hd where  hd.trangThai=2 ")
+    Page<HoaDon> donHangDangChuanBi(Pageable pageable);
+
+    @Query("select hd from HoaDon hd where  hd.trangThai=6 ")
+    Page<HoaDon> donHangTra(Pageable pageable);
+
+    @Query("select hd from HoaDon hd where  hd.trangThai=7 ")
+    Page<HoaDon> donHangDaTra(Pageable pageable);
+
+    @Query("select hd from HoaDon hd where  hd.trangThai=1 ")
+    Page<HoaDon> donHangChoXacNhan(Pageable pageable);
+
+    @Query("select hd from HoaDon hd where  hd.trangThai=3 ")
+    Page<HoaDon> donHangDangGiao(Pageable pageable);
+
+    @Query("select hd from HoaDon hd where  hd.trangThai=4 ")
+    Page<HoaDon> donHangHoanThanh(Pageable pageable);
 
 }

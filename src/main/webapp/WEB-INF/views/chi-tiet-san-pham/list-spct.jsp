@@ -60,6 +60,12 @@
             <a href="/chi-tiet-san-pham/view-add/${idsp}" class="btnAdd" >
                 <i class="bi bi-plus-circle-fill"></i><p>Thêm CT Sản Phẩm</p></a>
             <br>
+            <div class="col-4 col-md-4 col-sm-2">
+                <a href="/chi-tiet-san-pham/hien-thi" class="btn"
+                   style="background: #0d6efd; color: whitesmoke"><i class="bi bi-eye-fill"></i>Danh sách
+                    chi tiết</a>
+                <br>
+            </div>
         </div>
         <div class="col-4">
 
@@ -80,7 +86,7 @@
                             </form:select>
                         </form:form>
 
-            <%--            <select id="searchName"></select>--%>
+
         </div>
 
         <div class="col-2 col-md-2 col-sm-2">
@@ -212,10 +218,10 @@
         });
     });
 
-    $("#searchName").click(function () {
+    $("#filterLG").click(function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(this).toggle($(this).val().toLowerCase().indexOf(value) > -1)
         });
     });
 </script>
