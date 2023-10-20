@@ -258,6 +258,7 @@ public class HomeController {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
 
         model.addAttribute("listKH", taiKhoan.getKhachHangKH());
+
         Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
         model.addAttribute("slGioHang", slGioHang);
         if (taiKhoan == null) {
@@ -276,7 +277,7 @@ public class HomeController {
                         .collect(Collectors.toList());
                 listGHCT = new ArrayList<>();
                 for (UUID id : idCartUUIDList) {
-                    GioHangChiTiet ghct = gioHangChiTietService.findId(id);
+                    GioHangChiTiet ghct = gioHangChiTietService.findId(id, taiKhoan.getKhachHangKH().getId());
                     listGHCT.add(ghct);
                 }
                 model.addAttribute("listKH", taiKhoan.getKhachHangKH());
@@ -290,6 +291,7 @@ public class HomeController {
             }
         }
     }
+
 
     private HoaDon hoaDon;
 
@@ -346,7 +348,7 @@ public class HomeController {
             ChiTietSanPham ctsp = chiTietSanPhamService.getOne(ghct.getCtsp().getId());
             ctsp.setSoLuong(ghct.getCtsp().getSoLuong() - ghct.getSoLuong());
             chiTietSanPhamRepo.save(ctsp);
-            //gioHangChiTietService.deleteGHCT(ghct.getId());
+            gioHangChiTietService.deleteGHCT(ghct.getId());
         }
 
         return "redirect:/bumblebee/bill/" + hoaDon.getId();

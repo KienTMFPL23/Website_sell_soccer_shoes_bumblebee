@@ -31,8 +31,15 @@
     gap: 10px;">
                 <div class="info" style="">
                     <div class="info_right">
-                        <p style="margin-bottom: 0px;color: white;margin-right: 10px">${userLogged.username}</p>
-                        <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt="" width="30px"></a>
+                        <c:if test="${userLogged.username == null}">
+                            <p style="margin-bottom: 0px;color: white;margin-right: 10px"></p>
+                            <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt="" width="30px"></a>
+                        </c:if>
+                        <c:if test="${userLogged.username != null}">
+                            <p style="margin-bottom: 0px;color: white;margin-right: 10px">${userLogged.username}</p>
+                            <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt="" width="30px"></a>
+                        </c:if>
+
                     </div>
                 </div>
                 <div>

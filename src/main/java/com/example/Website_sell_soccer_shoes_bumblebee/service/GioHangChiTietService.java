@@ -12,7 +12,7 @@ public interface GioHangChiTietService {
 
     List<GioHangChiTiet> listGHCTByKH(UUID id);
 
-    GioHangChiTiet findId(UUID id);
+    GioHangChiTiet findId(UUID id, UUID idKH);
 
     Double getTotalMoney(List<GioHangChiTiet> list);
 

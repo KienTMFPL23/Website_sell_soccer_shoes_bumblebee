@@ -27,8 +27,8 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     }
 
     @Override
-    public GioHangChiTiet findId(UUID id) {
-        return repo.findId(id);
+    public GioHangChiTiet findId(UUID id, UUID idKH) {
+        return repo.findId(id, idKH);
     }
 
     @Override
