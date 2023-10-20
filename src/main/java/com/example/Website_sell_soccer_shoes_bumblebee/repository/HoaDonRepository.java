@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChatLieu;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,15 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select hd from HoaDon hd where hd.maHoaDon = ?1")
     HoaDon searchHoaDon(String hoaDon);
-// đơn hàng
+
+
+    @Query("SELECT hd FROM HoaDon hd WHERE (?1 IS NULL OR hd.trangThai = ?1)")
+    Page<HoaDon> searchByStatusBills(int status, Pageable pageable);
+
+    @Query("SELECT hd.trangThai FROM HoaDon hd")
+    HoaDon listHoaDonByTrangThai();
+
+
     @Query("select hd from HoaDon hd where  hd.trangThai=5 ")
     Page<HoaDon> donHangDaHuy(Pageable pageable);
 
