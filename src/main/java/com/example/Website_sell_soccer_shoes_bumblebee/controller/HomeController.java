@@ -142,9 +142,6 @@ public class HomeController {
     public String home(Model model, @RequestParam(defaultValue = "0") int p, HttpSession session) {
         Pageable pageable = PageRequest.of(p, 8);
         Page<ChiTietSanPham> listSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
-        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-        model.addAttribute("slGioHang", slGioHang);
         model.addAttribute("listSP", listSP);
         model.addAttribute("view", "../template_home/home.jsp");
         return "template_home/index";
@@ -261,27 +258,6 @@ public class HomeController {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
 
         model.addAttribute("listKH", taiKhoan.getKhachHangKH());
-
-        if (idListCartDetail == null) {
-            model.addAttribute("idSPGHCT", idListCartDetail);
-            model.addAttribute("view", "../template_home/cart.jsp");
-            return "template_home/index";
-        } else {
-            // Lấy list idctsp
-            idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
-                    .stream()
-                    .map(UUID::fromString)
-                    .collect(Collectors.toList());
-            listGHCT = new ArrayList<>();
-            for (UUID id : idCartUUIDList) {
-                GioHangChiTiet ghct = gioHangChiTietService.findId(id);
-                listGHCT.add(ghct);
-            }
-            //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
-            model.addAttribute("listGHCT", listGHCT);
-            model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
-            model.addAttribute("view", "../template_home/thanhtoan.jsp");
-
         Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
         model.addAttribute("slGioHang", slGioHang);
         if (taiKhoan == null) {
@@ -312,9 +288,6 @@ public class HomeController {
 
                 return "template_home/index";
             }
-
-
-
         }
     }
 
