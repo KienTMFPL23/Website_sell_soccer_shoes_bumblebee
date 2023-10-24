@@ -276,24 +276,10 @@
         console.log(slchon);
     }
 
-    // $(document).ready(function () {
-    //     $(".slchon").on("change",function () {
-    //         var slcosan = document.getElementById("slcosan");
-    //          var slchon = document.getElementsByClassName("slchon");
-    //         var sl = $(".slchon").val();
-    //         console.log(slcosan.value);
-    //         console.log(slchon.value);
-    //         // if (slchon > slcosan){
-    //         //     document.getElementsByClassName("slchon").value = slchon.value;
-    //         // }
-    //     })
-    // })
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");
             var idMS = $(this).data("item-mausac");
-
-            console.log(itemId, idMS)
             $.ajax({
                 url: "/bumblebee/select-size?idSP=" + itemId + "&idMS=" + idMS,
                 type: "GET",
