@@ -55,7 +55,8 @@
                 </div>
             </c:forEach>
             <div style="margin-left: 20px">
-                <a id="themHoaDon" form href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img
+                <a id="themHoaDon" onclick="showAlertHoaDon(event)" form
+                   href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img
                         src="/images_template/add.png"></a>
             </div>
             <div style="margin-right: 20px;position: absolute;right: 20px">
@@ -194,7 +195,7 @@
                                                                 <td>${sp.giaBan}</td>
                                                                 <td>
                                                                     <a href="/bumblebee/ban-hang-tai-quay/add-gio-hang/${sp.id}"
-                                                                    class="btn btn-primary">Add</a></td>
+                                                                       class="btn btn-primary">Add</a></td>
                                                             </tr>
                                                         </c:forEach>
                                                         </tbody>
@@ -276,7 +277,8 @@
                     <b>Khách hàng:</b>
                     <div class="row">
                         <div class="col-sm-10">
-                            <input id="phoneNumber" name="soDienThoai" type="number" onchange="getTenKhachHang(this.value)" placeholder="Nhập số điện thoại"
+                            <input id="phoneNumber" name="soDienThoai" type="number"
+                                   onchange="getTenKhachHang(this.value)" placeholder="Nhập số điện thoại"
                                    class="form-control"/>
                         </div>
                         <div class="col-sm-2">
@@ -301,7 +303,8 @@
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                     <div class="dropdown mt-3">
-                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}" download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>
+                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"
+                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
                                 onclick="return confirm('Banj co muon thanh toan')"
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
@@ -354,6 +357,7 @@
         "${k.soDienThoai}": "${k.ho} ${k.tenDem} ${k.ten}",
         </c:forEach>
     };
+
     function getTenKhachHang(sdt) {
         let textName = document.getElementById("tenKhachHang");
         if (sdt === "") {
@@ -453,9 +457,9 @@
 
 <%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
 <%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
-<%--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"--%>
-<%--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"--%>
-<%--        crossorigin="anonymous"></script>--%>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -484,6 +488,15 @@
             document.getElementById('btnThanhToan').disabled = false;
         } else {
             document.getElementById('btnThanhToan').disabled = true;
+        }
+    }
+</script>
+<script>
+    var soLuongHoaDon = ${soLuongHD};
+    function showAlertHoaDon(event) {
+        if (soLuongHoaDon === 5) {
+            alert("Tối đa tạo 5 hóa đơn chờ!!!");
+            event.preventDefault();
         }
     }
 </script>
