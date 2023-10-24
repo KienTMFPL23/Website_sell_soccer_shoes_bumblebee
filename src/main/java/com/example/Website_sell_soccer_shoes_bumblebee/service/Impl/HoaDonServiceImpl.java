@@ -89,9 +89,17 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
-        String formatHoaDon = "HD" + String.format("%08d", maHoaDon);
-        hoaDon.setMaHoaDon(formatHoaDon);
-        maHoaDon++;
+        String formatHoaDon = "HD" + String.format("%07d", maHoaDon);
+        HoaDon checkMa = hoaDonRepository.searchHoaDon(formatHoaDon);
+        if (checkMa != null){
+            String maHoaDonMax = hoaDonRepository.searchMaxMaHoaDon();
+            maHoaDon = Integer.valueOf(maHoaDonMax.substring(2));
+            maHoaDon++;
+            String formatSoMa = "HD" + String.format("%07d", maHoaDon);
+            hoaDon.setMaHoaDon(formatSoMa);
+        }else {
+            hoaDon.setMaHoaDon(formatHoaDon);
+        }
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String format = sdf.format(date);
@@ -135,7 +143,9 @@ public class HoaDonServiceImpl implements HoaDonService {
             hdToUpdate.setMaHoaDon(hoaDon.getMaHoaDon());
             hdToUpdate.setGhiChu(hoaDon.getGhiChu());
             hdToUpdate.setDiaChiShip(hoaDon.getDiaChiShip());
-   //         hdToUpdate.setHinhthucThanhToan(hoaDon.getHinhthucThanhToan());
+
+            hdToUpdate.setPhuongThucThanhToan(hoaDon.getPhuongThucThanhToan());
+
 //            hoaDon.set
             hdToUpdate.setTrangThai(trangThai);
             hoaDonRepository.save(hdToUpdate);

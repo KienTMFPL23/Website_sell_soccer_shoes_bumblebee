@@ -10,7 +10,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 scanner.addListener("scan", function (qrCode,event) {
-    event.preventDefault();
+    // event.preventDefault();
     // Chuyển người dùng đến trang controller khi quét thành công
     window.location.href =  `/bumblebee/ban-hang-tai-quay/add-gio-hang/${qrCode}`;
 });

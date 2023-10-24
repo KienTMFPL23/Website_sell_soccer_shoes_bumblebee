@@ -35,4 +35,14 @@ public class KhachHangServiceImpl implements KhachHangService {
     public KhachHang findKHBySDT(String sdt) {
         return khachHangRepository.findKHBySDT(sdt);
     }
+
+    @Override
+    public KhachHang searchKhachHang(String maKhachHang) {
+        return khachHangRepository.searchKhachHang(maKhachHang);
+    }
+
+    @Override
+    public String searchMaxHoaDon() {
+        return khachHangRepository.searchMaxMaHoaDon();
+    }
 }
