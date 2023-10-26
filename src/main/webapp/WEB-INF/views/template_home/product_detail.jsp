@@ -474,7 +474,6 @@
             }
         };
         xhr.send();
-
     }
 
     selectSize();

@@ -152,26 +152,32 @@ public class HomeController {
     public Map<String, Object> updateCart(@RequestBody Map<String, Object> requestData, @RequestParam UUID idGHCT) {
         int soLuongMoi = Integer.parseInt(requestData.get("soLuong").toString());
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepo.getOne(idGHCT);
-        gioHangChiTiet.setSoLuong(soLuongMoi);
-        gioHangChiTietRepo.save(gioHangChiTiet);
-        double thanhTienMoi = soLuongMoi * gioHangChiTiet.getDonGia();
-        Map<String, Object> jsonResponse = new HashMap<>();
-        jsonResponse.put("soLuong", soLuongMoi);
-        jsonResponse.put("thanhTien", thanhTienMoi);
-        return jsonResponse;
+        ChiTietSanPham ctsp = gioHangChiTiet.getCtsp();
+        int slCTSP = ctsp.getSoLuong();
+        if (soLuongMoi > slCTSP ){
+            Map<String, Object> jsonResponse = new HashMap<>();
+            jsonResponse.put("numBer", ctsp.getSoLuong());
+            return jsonResponse;
+        }else {
+            gioHangChiTiet.setSoLuong(soLuongMoi);
+            gioHangChiTietRepo.save(gioHangChiTiet);
+            double thanhTienMoi = soLuongMoi * ctsp.getGiaBan();
+            Map<String, Object> jsonResponse = new HashMap<>();
+            jsonResponse.put("soLuong", soLuongMoi);
+            jsonResponse.put("thanhTien", thanhTienMoi);
+            return jsonResponse;
+        }
     }
 
 
     @RequestMapping("/bumblebee/cart")
     public String cart(Model model, HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-        model.addAttribute("slGioHang", slGioHang);
-        model.addAttribute("listGHCT", listGHCT);
-        model.addAttribute("view", "../template_home/cart.jsp");
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
+            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+            model.addAttribute("slGioHang", slGioHang);
             GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
             List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             model.addAttribute("listGHCT", listGHCT);
@@ -191,17 +197,21 @@ public class HomeController {
     @RequestMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-        model.addAttribute("slGioHang", slGioHang);
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-        List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
-        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-        model.addAttribute("idCTSP", idCTSP);
-        model.addAttribute("hinhAnh", hinhAnh);
-        model.addAttribute("listKC", listKCBySP);
-        model.addAttribute("ctsp", chiTietSanPham);
-        model.addAttribute("view", "../template_home/product_detail.jsp");
-        return "template_home/index";
+        if (taiKhoan == null) {
+            return "redirect:/bumblebee/login";
+        }else {
+            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+            model.addAttribute("slGioHang", slGioHang);
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+            List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+            HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+            model.addAttribute("idCTSP", idCTSP);
+            model.addAttribute("hinhAnh", hinhAnh);
+            model.addAttribute("listKC", listKCBySP);
+            model.addAttribute("ctsp", chiTietSanPham);
+            model.addAttribute("view", "../template_home/product_detail.jsp");
+            return "template_home/index";
+        }
     }
 
 
