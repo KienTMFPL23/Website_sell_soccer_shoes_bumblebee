@@ -1,4 +1,4 @@
-Create
+﻿Create
 Database JAVA_DATN_Sell_Soccer_Shoes
 GO
 Use JAVA_DATN_Sell_Soccer_Shoes
@@ -21,6 +21,7 @@ CREATE TABLE ChatLieu
     TenChatLieu NVARCHAR(150),
     TrangThai   INT
 )
+insert into ChatLieu(MaChatLieu,TenChatLieu,TrangThai) VALUEs('cl1','coston',1)
     GO
 
 CREATE TABLE KichCo
@@ -31,6 +32,7 @@ CREATE TABLE KichCo
     GioiTinh  BIT,
     TrangThai INT
 )
+insert into KichCo(MaKichCo,Size,GioiTinh,TrangThai) values('KC1',12,1,1)
     GO
 
 CREATE TABLE LoaiGiay
@@ -42,7 +44,7 @@ CREATE TABLE LoaiGiay
 )
     GO
 
-
+	select * from HoaDon
 
 CREATE TABLE DeGiay
 (
@@ -51,6 +53,7 @@ CREATE TABLE DeGiay
     LoaiDe    NVARCHAR(150),
     TrangThai INT
 )
+insert into DeGiay(Ma,LoaiDe,TrangThai) values('DG1','bỆT',1)
     GO
 
 CREATE TABLE MauSac
@@ -101,6 +104,7 @@ CREATE TABLE TaiKhoan
     Role     INT
 
 )
+insert into TaiKhoan(Username,Password,Role) values('BN','1',1)
     GO
 
 CREATE TABLE KhachHang
@@ -134,6 +138,8 @@ CREATE TABLE NhanVien
     Email       VARCHAR(200),
     TrangThai   INT
 )
+select * from TaiKhoan
+INSERT INTO NhanVien(IdTaiKhoan,Ho,TenDem,Ten) values('FD9378D9-1EEF-451A-9476-C95F7B36B983',N'Nguyễn ',N'Cao',N'Bằng')
     GO
 
 CREATE TABLE GioHang

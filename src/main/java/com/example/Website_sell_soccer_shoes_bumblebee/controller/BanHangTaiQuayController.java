@@ -27,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -233,10 +234,11 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
-    public String thanhToan(Model model, @PathVariable("idHoaDon") UUID id,
-                            @RequestParam("soDienThoai")String soDienThoai,
-                            @RequestParam("ghiChu")String ghiChu) throws ParseException {
+    public String   thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon,
+                          @RequestParam("soDienThoai") String soDienThoai,
+                          @RequestParam("ghiChu") String ghiChu)  throws ParseException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+        try{
         if (hoaDonThanhToan != null) {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -251,9 +253,177 @@ public class BanHangTaiQuayController {
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
+
         }
-        return "redirect:/bumblebee/ban-hang-tai-quay/sell";
+        HoaDon hoaDonThanhToan1 = hoaDonService.getOne(id);
+
+        List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
+
+            Document document = new Document();
+            document.setPageSize(PageSize.A4);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PdfWriter.getInstance(document, baos);
+
+
+            ////
+            document.open();
+
+            String qrCodeData = hoaDonThanhToan1.getMaHoaDon();
+            BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
+            com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
+//
+            qrCodeImage.setAbsolutePosition(400, 400);
+
+            document.add(qrCodeImage);
+
+            Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
+            ////////////// hoá đơn
+            Paragraph HoaDon = new Paragraph(" BUMBLEBEE SHOES" + "\n", largeFont);
+
+            HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(HoaDon);
+            Paragraph khoangTrang = new Paragraph("-");
+
+            khoangTrang.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(khoangTrang);
+            Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
+            //// Table
+            Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    " + hoaDonThanhToan1.getMaHoaDon());
+            Paragraph ma = new Paragraph();
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String format = sdf.format(date);
+            Paragraph Ngay = new Paragraph("Ngay thanh toan    :    " +format);
+
+            document.add(MaHoaDon);
+            document.add(Ngay);
+            Paragraph tennhanvien = new Paragraph("Nhan vien    :    " + hoaDonThanhToan1.getNhanVien().getHo() + "" + hoaDonThanhToan1.getNhanVien().getTenDem() + "" + hoaDonThanhToan1.getNhanVien().getTen());
+            document.add(tennhanvien);
+            Paragraph tenKhac = new Paragraph("Khach hang    :    " + hoaDonThanhToan1.getTenNguoiNhan());
+            document.add(tenKhac);
+            Paragraph sdt = new Paragraph("SDT    :     " + hoaDonThanhToan1.getSdt());
+            document.add(sdt);
+//            table.addCell(MaHoaDon);
+//            table.addCell(Ma);
+//            table.addCell(Ngay);
+//            table.addCell(ngay);
+//            document.add(table);
+            Paragraph khoangtrang2 = new Paragraph("✿✿✿");
+            khoangtrang2.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(khoangtrang2);
+            ////
+            PdfPTable productTable1 = new PdfPTable(4);
+            productTable1.setWidthPercentage(100);
+            productTable1.addCell(new Paragraph("Ten san pham"));
+            productTable1.addCell(new Paragraph("So luong"));
+            productTable1.addCell(new Paragraph("Gia tien"));
+            productTable1.addCell(new Paragraph("Thanh tien"));
+            document.add(productTable1);
+            for (HoaDonChiTiet hoaDon1 : listHoaDon1) {
+                PdfPTable productTable = new PdfPTable(4);
+                productTable.setWidthPercentage(100);
+                productTable.addCell(hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
+                productTable.addCell(String.valueOf(hoaDon1.getSoLuong()));
+                productTable.addCell(String.valueOf(hoaDon1.getDonGia()));
+                productTable.addCell(String.valueOf(hoaDon1.getDonGia() * hoaDon1.getSoLuong()));
+//    Paragraph Sl = new Paragraph("So luong");
+//    Sl.setAlignment(Element.ALIGN_LEFT);
+//    Sl.setFont(chutable);
+//    Paragraph SoLuong = new Paragraph(""+hoaDon1.getSoLuong());
+//    SoLuong.setAlignment(Element.ALIGN_RIGHT);
+//    SoLuong.setFont(chutable);
+//    Paragraph TenSanPham = new Paragraph("Ten san pham");
+//    TenSanPham.setAlignment(Element.ALIGN_LEFT);
+//    TenSanPham.setFont(chutable);
+//    Paragraph tsp = new Paragraph(hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
+//    tsp.setAlignment(Element.ALIGN_RIGHT);
+//    tsp.setFont(chutable);
+//    Paragraph Tien = new Paragraph("Don gia ");
+//    Tien.setAlignment(Element.ALIGN_LEFT);
+//    Tien.setFont(chutable);
+//    Paragraph tien = new Paragraph("" + hoaDon1.getDonGia());
+//    tien.setAlignment(Element.ALIGN_RIGHT);
+//    tien.setFont(chutable);
+//    table.addCell(Sl);
+//    table.addCell(SoLuong);
+//    table.addCell(TenSanPham);
+//    table.addCell(tsp);
+//    table.addCell(Tien);
+//    table.addCell(tien);
+
+
+                document.add(productTable);
+
+            }
+
+
+            Paragraph dong = new Paragraph("==========================================================================");
+
+            document.add(dong);
+            List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+            sumMoney = hoaDonChiTietService.getTotalMoney(list);
+            Double TinhTong = 0.0;
+//            for(HoaDonChiTiet hoadon1 : listHoaDon1){
+//
+//                TinhTong += hoadon1.getSoLuong()* hoadon1.getDonGia();
+//
+//
+//            }
+            Paragraph TongCong = new Paragraph("Tong cong       :    " + sumMoney);
+
+            document.add(TongCong);
+
+            Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
+            DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
+            Paragraph camOn = new Paragraph("CAM ON QUY KHACH DA SU DUNG DICH VU");
+            camOn.setAlignment(Paragraph.ALIGN_CENTER);
+            ////// insert document
+
+
+//            document.add(SoLuong);
+//            document.add(TenSanPham);
+//            document.add(Tien);
+
+
+            document.add(DongGanCuoi);
+            document.add(camOn);
+            document.close();
+            /// add vào table
+
+
+//            Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    "+hoaDonThanhToan.getMaHoaDon());
+//            Paragraph ma = new Paragraph();
+//            Paragraph Ngay = new Paragraph("Ngay                   ");
+//            Paragraph SoLuong = new Paragraph("So Luong       :     "+hoaDon1.getSoLuong());
+//            Paragraph sl = new Paragraph();
+//            Paragraph TenSanPham = new Paragraph("Ten San Pham   :  "+hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
+//            Paragraph tsp = new Paragraph();
+//            Paragraph Tien = new Paragraph("Don gia             :     "+hoaDon1.getDonGia());
+
+
+            ///////// Tính tổng hoá đơn và càm ơn
+
+//            BaseFont baseFont = BaseFont.createFont("path_to_vietnamese_font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+            ///
+            byte[] pdfBytes = baos.toByteArray();
+            response.setContentType("application/pdf");
+            response.setContentLength(pdfBytes.length);
+            response.setHeader("Content-Disposition", "inline; filename=hoa_don.pdf");
+            response.getOutputStream().write(pdfBytes);
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+
+
+
     }
+
+
 
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
@@ -269,7 +439,7 @@ public class BanHangTaiQuayController {
     @RequestMapping("/print/{id}")
     public void xuatFilePdf(HttpServletResponse response, Model model, @PathVariable("id") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon) throws ParseException {
 
-        HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+        HoaDon hoaDonThanhToan1 = hoaDonService.getOne(idHoaDon);
 
         List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
         try {
@@ -282,7 +452,7 @@ public class BanHangTaiQuayController {
             ////
             document.open();
 
-            String qrCodeData = hoaDonThanhToan.getMaHoaDon();
+            String qrCodeData = hoaDonThanhToan1.getMaHoaDon();
             BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
             com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
@@ -302,16 +472,16 @@ public class BanHangTaiQuayController {
             document.add(khoangTrang);
             Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
             //// Table
-                        Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    "+hoaDonThanhToan.getMaHoaDon());
+                        Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    "+hoaDonThanhToan1.getMaHoaDon());
             Paragraph ma = new Paragraph();
-            Paragraph Ngay = new Paragraph("Ngay Mua    :    "+hoaDonThanhToan.getNgayTao());
+            Paragraph Ngay = new Paragraph("Ngay Mua    :    "+hoaDonThanhToan1.getNgayTao());
 
             document.add(MaHoaDon);
             document.add(Ngay);
-            Paragraph tennhanvien = new Paragraph("Nhan vien    :    "+hoaDonThanhToan.getNhanVien().getTen());
-            document.add(tennhanvien);
-            Paragraph tenKhac = new Paragraph("Khach hang    :    "+hoaDonThanhToan.getKhachHang().getTen());
-            document.add(tenKhac);
+//            Paragraph tennhanvien = new Paragraph("Nhan vien    :    "+hoaDonThanhToan.getNhanVien().getTen());
+//            document.add(tennhanvien);
+//            Paragraph tenKhac = new Paragraph("Khach hang    :    "+hoaDonThanhToan.getKhachHang().getTen());
+//            document.add(tenKhac);
 //            table.addCell(MaHoaDon);
 //            table.addCell(Ma);
 //            table.addCell(Ngay);
