@@ -56,9 +56,7 @@
                                         <input style="display: none" value="${item.ctsp.soLuong}" id="slCTSP_${item.id}">
                                     </div>
                                 </td>
-
                                 <td id="thanhTien_${item.id}"><fmt:formatNumber
-
                                         value="${item.donGia * item.soLuong}" type="currency"/></td>
                                 <td>
                                     <a href="/bumblebee/remove-ghct/${item.id}">
@@ -145,6 +143,22 @@
     function thayDoiSoLuong(itemId){
         var soLuongMoi = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
         var slCTSP = parseInt(document.getElementById("slCTSP_"+itemId).value);
+        if (soLuongMoi < 0){
+            document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
+            capNhatThanhTien(itemId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
+                    document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
+                }
+            };
+            var data = JSON.stringify({productId: itemId, soLuong: Number(1)});
+            xhr.send(data);
+        }
         if (soLuongMoi > slCTSP){
             capNhatThanhTien(itemId);
             var xhr = new XMLHttpRequest();

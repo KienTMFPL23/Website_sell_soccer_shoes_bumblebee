@@ -50,7 +50,7 @@
                     </form>
                     <div class="ps-cart">
                         <a class="ps-cart__toggle" href="/bumblebee/cart" style="top: 0px;">
-                            <span style="background-color: #37517E"><i>${slGioHang}</i></span>
+                            <span style="background-color: #37517E;display: ${slGioHang == null ?"none":"block"}"><i>${slGioHang}</i></span>
                             <i class="ps-icon-shopping-cart"></i>
                         </a>
                     </div>
