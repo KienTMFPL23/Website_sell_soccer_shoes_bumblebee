@@ -31,6 +31,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.AbstractPersistable_;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -152,45 +153,32 @@ public class HomeController {
     public Map<String, Object> updateCart(@RequestBody Map<String, Object> requestData, @RequestParam UUID idGHCT) {
         int soLuongMoi = Integer.parseInt(requestData.get("soLuong").toString());
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepo.getOne(idGHCT);
-        gioHangChiTiet.setSoLuong(soLuongMoi);
-        gioHangChiTietRepo.save(gioHangChiTiet);
-        double thanhTienMoi = soLuongMoi * gioHangChiTiet.getDonGia();
-        Map<String, Object> jsonResponse = new HashMap<>();
-        jsonResponse.put("soLuong", soLuongMoi);
-        jsonResponse.put("thanhTien", thanhTienMoi);
-        return jsonResponse;
+        ChiTietSanPham ctsp = gioHangChiTiet.getCtsp();
+        int slCTSP = ctsp.getSoLuong();
+        if (soLuongMoi > slCTSP ){
+            Map<String, Object> jsonResponse = new HashMap<>();
+            jsonResponse.put("numBer", ctsp.getSoLuong());
+            return jsonResponse;
+        }else {
+            gioHangChiTiet.setSoLuong(soLuongMoi);
+            gioHangChiTietRepo.save(gioHangChiTiet);
+            double thanhTienMoi = soLuongMoi * ctsp.getGiaBan();
+            Map<String, Object> jsonResponse = new HashMap<>();
+            jsonResponse.put("soLuong", soLuongMoi);
+            jsonResponse.put("thanhTien", thanhTienMoi);
+            return jsonResponse;
+        }
     }
 
-    @RequestMapping("/bumblebee/detail")
-    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
-        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-        model.addAttribute("slGioHang", slGioHang);
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-        List<KichCo> listKC = kichCoService.getList();
-        List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
-        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-        model.addAttribute("hinhAnh", hinhAnh);
-        List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
-        List<MauSac> listMS = mauSacService.getAll();
-        model.addAttribute("listMS", listMS);
-        model.addAttribute("listSP", listSP);
-        model.addAttribute("listKC", listKCBySP);
-        model.addAttribute("ctsp", chiTietSanPham);
-        model.addAttribute("view", "../template_home/product_detail.jsp");
-        return "template_home/index";
-    }
 
     @RequestMapping("/bumblebee/cart")
     public String cart(Model model, HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-        model.addAttribute("slGioHang", slGioHang);
-        model.addAttribute("listGHCT", listGHCT);
-        model.addAttribute("view", "../template_home/cart.jsp");
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
+            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+            model.addAttribute("slGioHang", slGioHang);
             GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
             List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             model.addAttribute("listGHCT", listGHCT);
@@ -207,6 +195,26 @@ public class HomeController {
         return "redirect:/bumblebee/cart";
     }
 
+    @RequestMapping("/bumblebee/detail")
+    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
+        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+        if (taiKhoan == null) {
+            return "redirect:/bumblebee/login";
+        }else {
+            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+            model.addAttribute("slGioHang", slGioHang);
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+            List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+            HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+            model.addAttribute("idCTSP", idCTSP);
+            model.addAttribute("hinhAnh", hinhAnh);
+            model.addAttribute("listKC", listKCBySP);
+            model.addAttribute("ctsp", chiTietSanPham);
+            model.addAttribute("view", "../template_home/product_detail.jsp");
+            return "template_home/index";
+        }
+    }
+
 
     @RequestMapping("/bumblebee/add-to-cart")
     public String addCart(Model model,
@@ -214,6 +222,7 @@ public class HomeController {
                           @RequestParam UUID idMS,
                           @RequestParam UUID idSP,
                           @RequestParam String soLuong,
+                          @RequestParam UUID idCTSP,
                           HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         if (taiKhoan == null) {
@@ -221,20 +230,48 @@ public class HomeController {
         } else {
             KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
             ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
+            int soLuongCTSP = ctsp.getSoLuong();
             GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
             List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             for (GioHangChiTiet gioHangChiTiet : listGHCT) {
                 if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
-                    int soLuongCTSP = ctsp.getSoLuong();
                     int soLuongHienTai = gioHangChiTiet.getSoLuong();
                     int slThem = Integer.parseInt(soLuong);
                     int slUpdate = soLuongHienTai + slThem;
+                    if (slUpdate > soLuongCTSP) {
+                        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+                        model.addAttribute("slGioHang", slGioHang);
+                        model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
+                        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+                        List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+                        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+                        model.addAttribute("idCTSP", idCTSP);
+                        model.addAttribute("hinhAnh", hinhAnh);
+                        model.addAttribute("listKC", listKCBySP);
+                        model.addAttribute("ctsp", chiTietSanPham);
+                        model.addAttribute("view", "../template_home/product_detail.jsp");
+                        return "template_home/index";
+                    }
                     gioHangChiTiet.setSoLuong(slUpdate);
                     gioHangChiTietRepo.save(gioHangChiTiet);
                     return "redirect:/bumblebee/cart";
                 }
             }
             int sl = Integer.parseInt(soLuong);
+            if (sl > soLuongCTSP) {
+                Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+                model.addAttribute("slGioHang", slGioHang);
+                model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
+                ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+                List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+                HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+                model.addAttribute("idCTSP", idCTSP);
+                model.addAttribute("hinhAnh", hinhAnh);
+                model.addAttribute("listKC", listKCBySP);
+                model.addAttribute("ctsp", chiTietSanPham);
+                model.addAttribute("view", "../template_home/product_detail.jsp");
+                return "template_home/index";
+            }
             GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setCtsp(ctsp);
             gioHangChiTiet.setGioHang(gioHang);
@@ -352,7 +389,7 @@ public class HomeController {
             gioHangChiTietService.deleteGHCT(ghct.getId());
         }
 
-        return "redirect:/bumblebee/bill/" + hoaDon.getId();
+        return "redirect:/bumblebee/don-mua/cho-xac-nhan";
 //        return "redirect:/pay";
     }
 
