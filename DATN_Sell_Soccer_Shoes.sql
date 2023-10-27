@@ -28,7 +28,7 @@ CREATE TABLE KichCo
 (
     Id        UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     MaKichCo  VARCHAR(100) UNIQUE,
-    Size      INT,
+    Size      INT UNIQUE,
     GioiTinh  BIT,
     TrangThai INT
 )
@@ -111,7 +111,7 @@ CREATE TABLE KhachHang
 (
     Id          UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     IdTaiKhoan  UNIQUEIDENTIFIER REFERENCES TaiKhoan (Id),
-    Ma          VARCHAR(50),
+    Ma          VARCHAR(100) UNIQUE,
     Ho          NVARCHAR(50),
     TenDem      NVARCHAR(50),
     Ten         NVARCHAR(50),
@@ -119,7 +119,7 @@ CREATE TABLE KhachHang
     NgaySinh    DATE,
     DiaChi      NVARCHAR(255),
     SoDienThoai VARCHAR(15) UNIQUE,
-    Email       VARCHAR(200),
+    Email       VARCHAR(100),
     TrangThai   INT
 )
     GO
@@ -127,7 +127,7 @@ CREATE TABLE NhanVien
 (
     Id          UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     IdTaiKhoan  UNIQUEIDENTIFIER REFERENCES TaiKhoan (Id),
-    Ma          VARCHAR(50),
+    Ma          VARCHAR(100) UNIQUE,
     Ho          NVARCHAR(50),
     TenDem      NVARCHAR(50),
     Ten         NVARCHAR(50),
@@ -135,7 +135,7 @@ CREATE TABLE NhanVien
     NgaySinh    DATE,
     DiaChi      NVARCHAR(255),
     SoDienThoai VARCHAR(15) UNIQUE,
-    Email       VARCHAR(200),
+    Email       VARCHAR(100),
     TrangThai   INT
 )
 select * from TaiKhoan
@@ -158,7 +158,7 @@ CREATE TABLE HoaDon
     Id            UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
     IdNV          UNIQUEIDENTIFIER REFERENCES NhanVien (Id),
     IdKH          UNIQUEIDENTIFIER REFERENCES KhachHang (Id),
-    MaHD          VARCHAR(150),
+    MaHD          VARCHAR(150) UNIQUE,
     NgayTao       DATETIME,
     NgayThanhToan DATETIME,
     DiaChiShip    NVARCHAR(255),

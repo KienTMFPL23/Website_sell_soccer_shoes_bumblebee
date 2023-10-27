@@ -120,14 +120,15 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 
     @Query(value = "WITH RankedCTSP AS (\n" +
             "    SELECT\n" +
-            "       id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai,\n" +
-            "        ROW_NUMBER() OVER (PARTITION BY IdSP, IdMauSac ORDER BY (SELECT NULL)) AS RowNum\n" +
+            "        id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai,\n" +
+            "        ROW_NUMBER() OVER (PARTITION BY IdSP, IdMauSac ORDER BY Id) AS RowNum\n" +
             "    FROM ChiTietSanPham\n" +
             ")\n" +
             "SELECT\n" +
-            "    id,IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
+            "    id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
             "FROM RankedCTSP\n" +
             "WHERE RowNum = 1;", nativeQuery = true)
+
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 

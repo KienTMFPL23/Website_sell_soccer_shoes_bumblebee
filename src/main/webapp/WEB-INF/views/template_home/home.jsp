@@ -41,7 +41,7 @@
                      data-radio="100%">
                     <div class="ps-masonry row">
                         <div class="grid-sizer"></div>
-                        <c:forEach var="item" items="${listSP.content}" varStatus="loop">
+                        <c:forEach var="item" items="${pageSP.content}" varStatus="loop">
                             <div class="grid-item col-md-3">
                                 <div class="grid-item__content-wrapper">
                                     <div class="ps-shoe mb-30">
@@ -220,7 +220,7 @@
                      data-owl-speed="5000" data-owl-gap="30" data-owl-nav="false" data-owl-dots="false"
                      data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3"
                      data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on">
-                    <c:forEach var="item" items="${listSP.content}">
+                    <c:forEach var="item" items="${pageSP.content}">
                         <div class="ps-shoes--carousel">
                             <div class="ps-shoe">
                                 <div class="ps-shoe__thumbnail">
@@ -276,24 +276,10 @@
         console.log(slchon);
     }
 
-    // $(document).ready(function () {
-    //     $(".slchon").on("change",function () {
-    //         var slcosan = document.getElementById("slcosan");
-    //          var slchon = document.getElementsByClassName("slchon");
-    //         var sl = $(".slchon").val();
-    //         console.log(slcosan.value);
-    //         console.log(slchon.value);
-    //         // if (slchon > slcosan){
-    //         //     document.getElementsByClassName("slchon").value = slchon.value;
-    //         // }
-    //     })
-    // })
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");
             var idMS = $(this).data("item-mausac");
-
-            console.log(itemId, idMS)
             $.ajax({
                 url: "/bumblebee/select-size?idSP=" + itemId + "&idMS=" + idMS,
                 type: "GET",

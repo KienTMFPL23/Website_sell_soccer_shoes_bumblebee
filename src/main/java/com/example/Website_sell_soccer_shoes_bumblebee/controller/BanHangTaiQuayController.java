@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -75,6 +76,7 @@ public class BanHangTaiQuayController {
     private UUID idHoaDon = null;
     private UUID idHoaDonCT = null;
     private Double sumMoney = 0.0;
+    private String nameNhanVien = "";
     private static int maKhachHang = 1;
     //    private UUID idHoaDonCT = null;
 
@@ -99,6 +101,8 @@ public class BanHangTaiQuayController {
         model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("khachHang", new KhachHang());
 
+        Integer soLuongHDCho = hoaDonService.listHoaDonCho().size();
+        model.addAttribute("soLuongHD", soLuongHDCho);
 
         model.addAttribute("searchForm", new SearchForm());
 //        model.addAttribute("sumMoney", sumMoney);
@@ -112,8 +116,8 @@ public class BanHangTaiQuayController {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         nhanVien = nhanVienService.getOne(taiKhoan.getId());
         model.addAttribute("username", taiKhoan.getUsername());
-        String fullname = nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen();
-        model.addAttribute("fullNameStaff", fullname);
+        nameNhanVien = nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen();
+        model.addAttribute("fullNameStaff", nameNhanVien);
     }
 
     @GetMapping("/so-luong-hoa-don-cho")
@@ -225,6 +229,18 @@ public class BanHangTaiQuayController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
         Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
+        if (soLuong > soLuongTon){
+            hoaDonChiTiet.setSoLuong(soLuongTon);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), 0);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        }
+        if(soLuong <= 0){
+            hoaDonChiTiet.setSoLuong(1);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - 1);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        }
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setSoLuong(soLuong);
             chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - soLuong);
@@ -234,9 +250,11 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
-    public String   thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon,
+
+    public String   thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
                           @RequestParam("soDienThoai") String soDienThoai,
                           @RequestParam("ghiChu") String ghiChu)  throws ParseException {
+
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
         try{
         if (hoaDonThanhToan != null) {
@@ -428,179 +446,21 @@ public class BanHangTaiQuayController {
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
-        String formatKhachHang = "KH" + String.format("%06d", maKhachHang);
-        addKhachHang.setMa(formatKhachHang);
-        maKhachHang++;
+        String formatKH = "KH" + String.format("%07d", maKhachHang);
+        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
+        if (checkMa != null){
+            String maKHMax = khachHangService.searchMaxKH();
+            maKhachHang = Integer.valueOf(maKHMax.substring(2));
+            maKhachHang++;
+            String formatSoMa = "HD" + String.format("%07d", maKhachHang);
+            addKhachHang.setMa(formatKH);
+        }else {
+            addKhachHang.setMa(formatKH);
+        }
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
         khachHangService.saveKhachHang(addKhachHang);
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
     }
-    @RequestMapping("/print/{id}")
-    public void xuatFilePdf(HttpServletResponse response, Model model, @PathVariable("id") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon) throws ParseException {
 
-        HoaDon hoaDonThanhToan1 = hoaDonService.getOne(idHoaDon);
-
-        List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
-        try {
-            Document document = new Document();
-            document.setPageSize(PageSize.A4);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            PdfWriter.getInstance(document, baos);
-
-
-            ////
-            document.open();
-
-            String qrCodeData = hoaDonThanhToan1.getMaHoaDon();
-            BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
-            com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
-//
-            qrCodeImage.setAbsolutePosition(400, 400);
-
-            document.add(qrCodeImage);
-
-            Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f,Font.BOLD);
-            ////////////// hoá đơn
-            Paragraph HoaDon = new Paragraph(" BUMBLEBEE SHOES"+"\n", largeFont);
-
-            HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(HoaDon);
-            Paragraph khoangTrang = new Paragraph("-");
-
-            khoangTrang.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(khoangTrang);
-            Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
-            //// Table
-                        Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    "+hoaDonThanhToan1.getMaHoaDon());
-            Paragraph ma = new Paragraph();
-            Paragraph Ngay = new Paragraph("Ngay Mua    :    "+hoaDonThanhToan1.getNgayTao());
-
-            document.add(MaHoaDon);
-            document.add(Ngay);
-//            Paragraph tennhanvien = new Paragraph("Nhan vien    :    "+hoaDonThanhToan.getNhanVien().getTen());
-//            document.add(tennhanvien);
-//            Paragraph tenKhac = new Paragraph("Khach hang    :    "+hoaDonThanhToan.getKhachHang().getTen());
-//            document.add(tenKhac);
-//            table.addCell(MaHoaDon);
-//            table.addCell(Ma);
-//            table.addCell(Ngay);
-//            table.addCell(ngay);
-//            document.add(table);
-            Paragraph khoangtrang2 = new Paragraph("✿✿✿");
-            khoangtrang2.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(khoangtrang2);
-            ////
-            PdfPTable productTable1 = new PdfPTable(4);
-            productTable1.setWidthPercentage(100);
-            productTable1.addCell(new Paragraph("Ten san pham"));
-            productTable1.addCell(new Paragraph("So luong"));
-            productTable1.addCell(new Paragraph("Gia tien"));
-            productTable1.addCell(new Paragraph("Thanh tien"));
-            document.add(productTable1);
-for(HoaDonChiTiet hoaDon1 : listHoaDon1){
-    PdfPTable productTable = new PdfPTable(4);
-    productTable.setWidthPercentage(100);
-    productTable.addCell(hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
-    productTable.addCell(String.valueOf(hoaDon1.getSoLuong()));
-    productTable.addCell(String.valueOf(hoaDon1.getDonGia()));
-    productTable.addCell(String.valueOf(hoaDon1.getDonGia()*hoaDon1.getSoLuong()));
-//    Paragraph Sl = new Paragraph("So luong");
-//    Sl.setAlignment(Element.ALIGN_LEFT);
-//    Sl.setFont(chutable);
-//    Paragraph SoLuong = new Paragraph(""+hoaDon1.getSoLuong());
-//    SoLuong.setAlignment(Element.ALIGN_RIGHT);
-//    SoLuong.setFont(chutable);
-//    Paragraph TenSanPham = new Paragraph("Ten san pham");
-//    TenSanPham.setAlignment(Element.ALIGN_LEFT);
-//    TenSanPham.setFont(chutable);
-//    Paragraph tsp = new Paragraph(hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
-//    tsp.setAlignment(Element.ALIGN_RIGHT);
-//    tsp.setFont(chutable);
-//    Paragraph Tien = new Paragraph("Don gia ");
-//    Tien.setAlignment(Element.ALIGN_LEFT);
-//    Tien.setFont(chutable);
-//    Paragraph tien = new Paragraph("" + hoaDon1.getDonGia());
-//    tien.setAlignment(Element.ALIGN_RIGHT);
-//    tien.setFont(chutable);
-//    table.addCell(Sl);
-//    table.addCell(SoLuong);
-//    table.addCell(TenSanPham);
-//    table.addCell(tsp);
-//    table.addCell(Tien);
-//    table.addCell(tien);
-
-
-    document.add(productTable);
-
-}
-
-
-
-
-            Paragraph dong = new Paragraph("==========================================================================");
-
-            document.add(dong);
-            List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-            sumMoney = hoaDonChiTietService.getTotalMoney(list);
-            Double TinhTong = 0.0;
-//            for(HoaDonChiTiet hoadon1 : listHoaDon1){
-//
-//                TinhTong += hoadon1.getSoLuong()* hoadon1.getDonGia();
-//
-//
-//            }
-            Paragraph TongCong = new Paragraph("Tong cong       :    " +sumMoney);
-
-            document.add(TongCong);
-
-            Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
-            DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
-            Paragraph camOn = new Paragraph("CAM ON QUY KHACH DA SU DUNG DICH VU");
-            camOn.setAlignment(Paragraph.ALIGN_CENTER);
-            ////// insert document
-
-
-//            document.add(SoLuong);
-//            document.add(TenSanPham);
-//            document.add(Tien);
-
-
-            document.add(DongGanCuoi);
-            document.add(camOn);
-            document.close();
-            /// add vào table
-
-
-
-
-//            Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    "+hoaDonThanhToan.getMaHoaDon());
-//            Paragraph ma = new Paragraph();
-//            Paragraph Ngay = new Paragraph("Ngay                   ");
-//            Paragraph SoLuong = new Paragraph("So Luong       :     "+hoaDon1.getSoLuong());
-//            Paragraph sl = new Paragraph();
-//            Paragraph TenSanPham = new Paragraph("Ten San Pham   :  "+hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
-//            Paragraph tsp = new Paragraph();
-//            Paragraph Tien = new Paragraph("Don gia             :     "+hoaDon1.getDonGia());
-
-
-            ///////// Tính tổng hoá đơn và càm ơn
-
-//            BaseFont baseFont = BaseFont.createFont("path_to_vietnamese_font.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-
-            ///
-            byte[] pdfBytes = baos.toByteArray();
-            response.setContentType("application/pdf");
-            response.setContentLength(pdfBytes.length);
-            response.setHeader("Content-Disposition", "inline; filename=hoa_don.pdf");
-            response.getOutputStream().write(pdfBytes);
-            response.getOutputStream().flush();
-            response.getOutputStream().close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
-
-    }
 }

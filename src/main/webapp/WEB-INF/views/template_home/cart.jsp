@@ -44,12 +44,16 @@
                                                                              type="currency"/></td>
                                 <td>
                                     <div class="form-group--number">
-                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}" onclick="truSL('${item.id}')"
+                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
+                                           onclick="truSL('${item.id}')"
                                            class="minus"><span>-</span></a>
                                         <input class="form-control" id="soLuongCTSP_${item.id}" type="text"
-                                               value="${item.soLuong}" style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''}>
-                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}" onclick="themSL('${item.id}')"
+                                               value="${item.soLuong}"
+                                               style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''} onchange="thayDoiSoLuong('${item.id}')">
+                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
+                                           onclick="themSL('${item.id}')"
                                            class="plus"><span>+</span></a>
+                                        <input style="display: none" value="${item.ctsp.soLuong}" id="slCTSP_${item.id}">
                                     </div>
                                 </td>
 
@@ -81,9 +85,9 @@
                             <h3>Tổng tiền thanh toán: <span><fmt:formatNumber
                                     value="${totalPrice}" type="currency"/> </span></h3>
 
-                                <button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
-                                        style="background-color: #37517E">Mua Hàng<i
-                                        class="ps-icon-next"></i></button>
+                            <button formaction="/bumblebee/thanh-toan" class="ps-btn" type="submit"
+                                    style="background-color: #37517E">Mua Hàng<i
+                                    class="ps-icon-next"></i></button>
 
                         </div>
                     </div>
@@ -96,9 +100,10 @@
 <script>
     function truSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
-        if (soLuongHienTai > 1) {
-            var soLuongMoi = soLuongHienTai - 1;
+        if (soLuongHienTai - 1 < 1) {
+            return;
         }
+        var soLuongMoi = soLuongHienTai - 1;
         var inputElement = document.getElementById("soLuongCTSP_" + itemId);
         inputElement.value = soLuongMoi;
         capNhatThanhTien(itemId);
@@ -112,7 +117,6 @@
                 document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
             }
         };
-
         var data = JSON.stringify({productId: itemId, soLuong: soLuongMoi});
         xhr.send(data);
     }
@@ -120,8 +124,7 @@
     function themSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
         var soLuongMoi = soLuongHienTai + 1;
-        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
-        inputElement.value = soLuongMoi;
+
         capNhatThanhTien(itemId);
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
@@ -133,9 +136,45 @@
                 document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
             }
         };
-
         var data = JSON.stringify({productId: itemId, soLuong: soLuongMoi});
         xhr.send(data);
+        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
+        inputElement.value = soLuongMoi;
+    }
+
+    function thayDoiSoLuong(itemId){
+        var soLuongMoi = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
+        var slCTSP = parseInt(document.getElementById("slCTSP_"+itemId).value);
+        if (soLuongMoi > slCTSP){
+            capNhatThanhTien(itemId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("soLuongCTSP_" + itemId).value = slCTSP;
+                    document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
+                }
+            };
+            var data = JSON.stringify({productId: itemId, soLuong: slCTSP});
+            xhr.send(data);
+        }else {
+            capNhatThanhTien(itemId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("soLuongCTSP_" + itemId).value = response.soLuong;
+                    document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
+                }
+            };
+            var data = JSON.stringify({productId: itemId, soLuong: soLuongMoi});
+            xhr.send(data);
+        }
+
     }
 
     function capNhatThanhTien(itemId) {
