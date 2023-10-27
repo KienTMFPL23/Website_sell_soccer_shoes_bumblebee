@@ -10,7 +10,9 @@
 
     .formInfor > .mb-3 > input {
         font-size: 14px;
-        border-radius: 15px;
+        border-radius: 10px;
+        height: 50px;
+        line-height: 50px;
     }
 
     #textarea {
@@ -25,7 +27,7 @@
 <main class="ps-main">
     <div class="container">
         <form class="ps-checkout__form" action="/bumblebee/dat-hang" method="post">
-            <div class="row">
+            <div class="row" style="padding-top: 20px;">
                 <div class="col-lg-12">
                     <div class="ps-checkout__order">
                         <div class="row" style="padding: 20px">

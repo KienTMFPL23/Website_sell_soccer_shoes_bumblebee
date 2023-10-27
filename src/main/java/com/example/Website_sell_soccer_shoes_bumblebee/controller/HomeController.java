@@ -388,7 +388,7 @@ public class HomeController {
             gioHangChiTietService.deleteGHCT(ghct.getId());
         }
 
-        return "redirect:/bumblebee/bill/" + hoaDon.getId();
+        return "redirect:/bumblebee/don-mua/cho-xac-nhan";
 //        return "redirect:/pay";
     }
 
