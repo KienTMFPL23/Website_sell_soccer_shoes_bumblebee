@@ -60,7 +60,9 @@ body{
     top: 2px;
     right: 5px;
 }
-
+.vid {
+    float: bottom;
+}
 .btnTimKiem {
     background-color: #37517E;
     color: #fff;

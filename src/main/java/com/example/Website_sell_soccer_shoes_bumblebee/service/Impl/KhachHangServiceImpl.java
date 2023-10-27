@@ -42,7 +42,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public String searchMaxHoaDon() {
-        return khachHangRepository.searchMaxMaHoaDon();
+    public String searchMaxKH() {
+        return khachHangRepository.searchMaxMaKhachHang();
     }
 }

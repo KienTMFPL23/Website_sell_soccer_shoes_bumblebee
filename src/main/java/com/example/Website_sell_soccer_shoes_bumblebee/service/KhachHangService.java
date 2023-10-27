@@ -14,6 +14,6 @@ public interface KhachHangService {
 
     KhachHang searchKhachHang(String maKhachHang);
 
-    String searchMaxHoaDon();
+    String searchMaxKH();
 
 }

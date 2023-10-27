@@ -115,7 +115,7 @@ CREATE TABLE KhachHang
     NgaySinh    DATE,
     DiaChi      NVARCHAR(255),
     SoDienThoai VARCHAR(15) UNIQUE,
-    Email       VARCHAR(100) UNIQUE,
+    Email       VARCHAR(100),
     TrangThai   INT
 )
     GO
@@ -131,7 +131,7 @@ CREATE TABLE NhanVien
     NgaySinh    DATE,
     DiaChi      NVARCHAR(255),
     SoDienThoai VARCHAR(15) UNIQUE,
-    Email       VARCHAR(100) UNIQUE,
+    Email       VARCHAR(100),
     TrangThai   INT
 )
     GO

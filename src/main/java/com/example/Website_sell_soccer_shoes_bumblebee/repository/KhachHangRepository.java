@@ -21,5 +21,5 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
     KhachHang searchKhachHang(String maKhachHang);
 
     @Query("select max(kh.ma) from KhachHang kh")
-    String searchMaxMaHoaDon();
+    String searchMaxMaKhachHang();
 }
