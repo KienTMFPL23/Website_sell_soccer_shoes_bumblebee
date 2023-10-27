@@ -105,14 +105,15 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public Page<HoaDon> searchByStatusBills(int status, Pageable pageable) {
-        return hoaDonRepository.searchByStatusBills(status,pageable);
+        return hoaDonRepository.searchByStatusBills(status, pageable);
     }
 
     @Override
     public HoaDon saveHoaDon(HoaDon hoaDon) {
         return hoaDonRepository.save(hoaDon);
     }
-//    @Override
+
+    //    @Override
 //    public SanPham udpateSanPham(SanPham sanPham, UUID id) {
 //        Optional<SanPham> exitingSanPham = sanPhamRepository.findById(id);
 //        if (exitingSanPham.isPresent()) {
@@ -127,7 +128,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 //        }
 //    }
     @Override
-    public HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon) {
+    public HoaDon updateHoaDon(UUID id, Integer trangThai, HoaDon hoaDon) {
         Optional<HoaDon> exitingHoaDon = hoaDonRepository.findById(id);
         if (exitingHoaDon.isPresent()) {
             HoaDon hdToUpdate = exitingHoaDon.get();
@@ -164,7 +165,6 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDon> getId(UUID id) {
         return hoaDonRepository.findId(id);
     }
-
 
 
     public void exportExcel(HttpServletResponse response) throws Exception {
@@ -223,17 +223,27 @@ public class HoaDonServiceImpl implements HoaDonService {
 
 
         int dataRowIndex = 1;
+
         for (HoaDon hd : hoaDon) {
             HSSFRow dataRow = sheet.createRow(dataRowIndex);
             DateFormat dateFormat = (DateFormat) new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+
             dataRow.createCell(0).setCellValue(String.valueOf(hd.getId()));
             dataRow.createCell(1).setCellValue(String.valueOf(hd.getMaHoaDon()));
-            dataRow.createCell(2).setCellValue(String.valueOf(hd.getNhanVien().getTen()));
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(2).setCellValue("");
+            } else {
+                dataRow.createCell(2).setCellValue(hd.getNhanVien().getTen());
+            }
             dataRow.createCell(3).setCellValue(dateFormat.format(hd.getNgayTao()));
             dataRow.createCell(4).setCellValue(dateFormat.format(hd.getNgayThanhToan()));
             dataRow.createCell(5).setCellValue(String.valueOf(hd.getTenNguoiNhan()));
-//            dataRow.createCell(6).setCellValue(String.valueOf(hd.getKhachHang().getTen()));
+            if (hd.getKhachHang() == null) {
+                dataRow.createCell(6).setCellValue("null");
+            } else {
+                dataRow.createCell(6).setCellValue(hd.getKhachHang().getTen());
+            }
             dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
             dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
             dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
@@ -250,7 +260,7 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public List<HoaDon> listHoaDonMua(UUID idKH) {
-        return hoaDonRepository.listHoaDonMua( idKH);
+        return hoaDonRepository.listHoaDonMua(idKH);
     }
 
     @Override

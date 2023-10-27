@@ -101,7 +101,7 @@
         border-radius: 10px;
     }
 
-    #selectTT{
+    .selectTT {
         width: 150px;
         border-radius: 10px;
         padding: 2px;
@@ -116,7 +116,7 @@
 </div>
 <div class="row">
     <div class="col-lg-4">
-        <input id="myInput" placeholder="Tìm kiếm theo mã, tên, số điện thoại"/>
+        <input id="myInput" placeholder="Tìm kiếm theo mã, tên, số điện thoại" />
     </div>
 
     <div class="col-lg-6">
@@ -158,13 +158,13 @@
         <%--                <form:option value="2">Chờ thanh toán</form:option>--%>
         <%--            </form:select>--%>
         <%--        </form:form>--%>
-        <form >
-            <select id="selectTT">
-                <option value="all">Tất cả</option>
-                <option value="Đã thanh toán">Đã thanh toán</option>
-                <option value="Chờ thanh toán">Chờ thanh toán</option>
-            </select>
-        </form>
+        <form:form action="/hoa-don/search-by-status" modelAttribute="searchStatus">
+            <form:select class="selectTT" path="status" onchange="submit()">
+                <form:option value="0">Tất cả</form:option>
+                <form:option value="1">Đã thanh toán</form:option>
+                <form:option value="2">Chờ thanh toán</form:option>
+            </form:select>
+        </form:form>
     </div>
 </div>
 
@@ -328,16 +328,16 @@
         <div class="text-center">
             <nav aria-label="Page navigation example" class="text-center">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="/hoa-don/hien-thi?page=0&keyword=${param.keyword}">Previous</a>
+                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=0&keyword=${param.keyword}">Previous</a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                                             href="/hoa-don/hien-thi?page=${list.number-1}&keyword=${param.keyword}"><<</a>
+                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.number-1}&keyword=${param.keyword}"><<</a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                                             href="/hoa-don/hien-thi?page=${list.number+1}&keyword=${param.keyword}">>></a>
+                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.number+1}&keyword=${param.keyword}">>></a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                                             href="//hoa-don/hien-thi?page=${list.totalPages-1}&keyword=${param.keyword}">Next</a>
+                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.totalPages-1}&keyword=${param.keyword}">Next</a>
                     </li>
                 </ul>
             </nav>
@@ -345,6 +345,7 @@
     </div>
 </div>
 
+<!-- -->
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -377,19 +378,6 @@
         $("#hoaDonTbody tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
-    });
-
-    $("#selectTT").change(function () {
-        var value = $(this).val().toLowerCase();
-        $("#hoaDonTbody tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-
-        console.log(value);
-
-        if ("all" == value) {
-            $("#hoaDonTbody tr").show();
-        }
     });
 
 </script>
