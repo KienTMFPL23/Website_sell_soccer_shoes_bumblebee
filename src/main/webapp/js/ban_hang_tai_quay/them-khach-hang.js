@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#sendKhachHang").submit(function (event) {
+    $("#sendKhachHang").submit(function () {
         var requestData = {
             "ten": document.getElementById('customer').value,
             "soDienThoai": document.getElementById('getSDT').value
@@ -8,7 +8,7 @@ $(document).ready(function () {
             type: "POST",
             url: "/bumblebee/ban-hang-tai-quay/them-khach-hang",
             data: requestData,
-            success: function () {
+            success: function (event) {
                 event.preventDefault();
                 console.log("thanh cong");
             },

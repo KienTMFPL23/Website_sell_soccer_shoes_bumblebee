@@ -228,6 +228,18 @@ public class BanHangTaiQuayController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
         Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
+        if (soLuong > soLuongTon){
+            hoaDonChiTiet.setSoLuong(soLuongTon);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), 0);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        }
+        if(soLuong <= 0){
+            hoaDonChiTiet.setSoLuong(1);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - 1);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        }
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setSoLuong(soLuong);
             chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - soLuong);
@@ -262,20 +274,17 @@ public class BanHangTaiQuayController {
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
-        String formatKhachHang = "KH" + String.format("%07d", maKhachHang);
-        KhachHang checkKH = khachHangRepository.searchKhachHang(formatKhachHang);
-        if (checkKH != null){
-            String maHoaDonMax = khachHangRepository.searchMaxMaHoaDon();
-            maKhachHang = Integer.valueOf(maHoaDonMax.substring(2));
+        String formatKH = "KH" + String.format("%07d", maKhachHang);
+        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
+        if (checkMa != null){
+            String maKHMax = khachHangService.searchMaxKH();
+            maKhachHang = Integer.valueOf(maKHMax.substring(2));
             maKhachHang++;
             String formatSoMa = "HD" + String.format("%07d", maKhachHang);
-            addKhachHang.setMa(formatSoMa);
+            addKhachHang.setMa(formatKH);
         }else {
-            addKhachHang.setMa(formatKhachHang);
+            addKhachHang.setMa(formatKH);
         }
-        Random random = new Random();
-        String maKhachHang = "KH" + random.nextInt(999999999);
-        addKhachHang.setMa(maKhachHang);
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
         khachHangService.saveKhachHang(addKhachHang);

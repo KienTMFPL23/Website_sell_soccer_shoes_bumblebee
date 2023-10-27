@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
+    <link rel="icon" href="../../../images_template/logo_bumblebee.png">
     <link href="/css/ban-hang/ban-hang.css" rel="stylesheet" type="text/css">
 </head>
 <style>
@@ -207,7 +208,7 @@
                                 </form>
                             </div>
                             <div class="col-lg-6">
-                                <div class="ban-hang">
+                                <div class="ban-hang vid">
                                     <video
                                             style="border: 1px solid"
                                             id="video"
