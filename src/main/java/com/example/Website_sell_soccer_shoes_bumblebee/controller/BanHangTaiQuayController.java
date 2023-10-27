@@ -308,10 +308,10 @@ public class BanHangTaiQuayController {
 
             document.add(MaHoaDon);
             document.add(Ngay);
-            Paragraph tennhanvien = new Paragraph("Nhan vien    :    "+hoaDonThanhToan.getNhanVien().getTen());
-            document.add(tennhanvien);
-            Paragraph tenKhac = new Paragraph("Khach hang    :    "+hoaDonThanhToan.getKhachHang().getTen());
-            document.add(tenKhac);
+//            Paragraph tennhanvien = new Paragraph("Nhan vien    :    "+hoaDonThanhToan.getNhanVien().getTen());
+//            document.add(tennhanvien);
+//            Paragraph tenKhac = new Paragraph("Khach hang    :    "+hoaDonThanhToan.getKhachHang().getTen());
+//            document.add(tenKhac);
 //            table.addCell(MaHoaDon);
 //            table.addCell(Ma);
 //            table.addCell(Ngay);

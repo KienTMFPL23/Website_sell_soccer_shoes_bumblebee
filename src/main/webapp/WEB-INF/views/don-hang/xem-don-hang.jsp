@@ -9,163 +9,545 @@
         crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
+<%
+
+    Date currentDate = new Date();
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    String formattedDate = dateFormat.format(currentDate);
+%>
+
+<style>
+    .img {
+        width: 30px;
+        height: 30px;
+    }
+
+    /*==Style cơ bản cho website==*/
+    body {
+        font-family: Nunito;
+        color: #333;
+        background-color: #F3F3F3;
+    }
+
+    .ps-main {
+        padding: 50px 100px 50px 100px;
+    }
+
+    .don-mua {
+        background-color: #FFFFFF;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    .don-hang {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .trang-thai-don-hang > p {
+        color: crimson;
+        float: right;
+        padding-top: 15px;
+        padding-bottom: -10px;
+    }
+
+    .table {
+        margin-bottom: 20px;
+    }
+
+    .tong-tien {
+        padding-bottom: 10px;
+        color: crimson;
+    }
+
+    .infor {
+        padding: 15px 0px 0px 20px;
+        border-bottom: 2px solid #D9D9D9;
+    }
+
+    .infor-img > img {
+        float: left;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .infor-name > h2 {
+        padding: 15px;
+        color: #0b0b0b;
+        font-weight: 600;
+    }
+
+    .img {
+        margin: 10px;
+    }
+
+    .menu-left > a {
+        color: #0b0b0b;
+        text-decoration: none;
+        font-size: 15px;
+    }
+
+    .menu-left > a:hover {
+        color: #37517E;
+        text-decoration: none;
+        font-size: 15px;
+    }
+
+    .table > a {
+        text-decoration: none;
+
+    }
+
+    .menu-right {
+        background-color: #FFFFFF;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 10px;
+    }
+
+    .col-lg-2 > a {
+        color: black;
+        text-decoration: none;
+        font-size: 15px;
+        padding-left: 15px;
+
+    }
+
+    .col-lg-10 > .ma-don {
+        float: right;
+        padding-right: 15px;
+        font-size: 15px;
+    }
+
+    span {
+        color: crimson;
+        font-size: 15px;
+    }
+
+    .menu-right {
+        margin-bottom: 20px;
+    }
+
+    .trang-thai {
+        /*border: 4px solid #D9D9D9;*/
+        border-radius: 50%;
+        display: flex;
+        margin: auto;
+
+    }
+
+    .status-order {
+        padding: 10px 0px 10px 0px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+
+    }
+
+
+    .status-order > .row > .col-lg-2 {
+        z-index: 1;
+    }
+
+
+    /*.inline{*/
+    /*    background-color: rgb(45, 194, 88);*/
+    /*    width: 100%;*/
+    /*    margin: 30px 60px 0px 60px;*/
+    /*    height: 3px;*/
+    /*    position: absolute;*/
+    /*    transition: width 1s cubic-bezier(.4,0,.2,1);*/
+    /*}*/
+
+    .stepper__line {
+        position: absolute;
+        top: 120px;
+        height: 4px;
+        width: 80%;
+    }
+
+    .stepper__line-background, .stepper__line-foreground {
+        position: absolute;
+        width: calc(100% - 300px);
+        margin: 0 70px;
+        height: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .stepper__line-foreground {
+        background: #D9D9D9;
+        transition: width 1s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    /*.stepper__line-background, .stepper__line-foreground {*/
+    /*    position: absolute;*/
+    /*    width: calc(100% - 120px);*/
+    /*    margin: 0 70px;*/
+    /*    height: 100%;*/
+    /*    -moz-box-sizing: border-box;*/
+    /*    box-sizing: border-box;*/
+    /*}*/
+
+    .col-lg-2 > p, h4 {
+        text-align: center;
+        margin-top: 10px;
+
+    }
+
+    .table {
+        margin-top: 30px;
+        border-radius: 10px;
+    }
+
+    .dia-chi {
+        background-color: #FFFFFF;
+        padding-left: 30px;
+        padding-top: 10px;
+        border-radius: 10px;
+    }
+</style>
 <div class="container">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-all-tab"
-         tabindex="0">
+    <form:form modelAttribute="hoaDon">
+        <c:if test="${hoaDon.trangThai < 6 }">
+            <div class="status-order" id="status-order">
+                <div class="row">
+                        <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
+                        <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Chờ xác nhận</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="2"
+                         data-status="Đã xác nhận thanh toán">
+                        <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Xác nhận thanh toán</h4>
+                            <%--                        <p>14:27 20/10/2023</p>--%>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">
+                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4> Đã giao cho DVVC</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="4"
+                         data-status="Đơn hàng đang được giao">
+                        <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đơn hàng đang được giao</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
+                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
+                             class="trang-thai">
+                        <h4>Hoàn thành</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                        <%--                        ;;;;;--%>
+                        <%--                <div class="col-lg-2 status-item" data-status-id="5" data-status="Đã huỷ">--%>
+                        <%--                    <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
+                        <%--                    <h4>Đơn hàng đã được hủy</h4>--%>
+                        <%--                    <p>14:27 20/10/2023</p>--%>
+                        <%--                </div>--%>
+                        <%--                <div class="col-lg-2 status-item" data-status-id="6" data-status="Đổi trả hàng">--%>
+                        <%--                    <img src="../../../img/istockphoto-1707893816-612x612.jpg" style="width: 60px; height: 60px;"--%>
+                        <%--                         class="trang-thai">--%>
+                        <%--                    <h4>Đổi trả</h4>--%>
+                        <%--                    <p>14:27 20/10/2023</p>--%>
+                        <%--                </div>--%>
+                        <%--                <div class="col-lg-2 status-item" data-status-id="7" data-status="Đã trả hàng">--%>
+                        <%--                    <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
+                        <%--                    <h4>Đơn hàng đã trả</h4>--%>
+                        <%--                    <p>14:27 20/10/2023</p>--%>
+                        <%--                </div>--%>
+                    <div class="inline"></div>
+                    <div class="stepper__line">
+                        <div class="stepper__line-background"></div>
+                        <div class="stepper__line-foreground"></div>
+                    </div>
+                </div>
 
-        </br>
-        </hr>
+            </div>
+        </c:if>
 
+        <%--        trạng thái chờ xác nhận--%>
+        <c:if test="${hoaDon.trangThai== 1}">
+            <h1 style="color: #2c9faf">Chờ xác nhận <i class="bi bi-calendar-check"></i></h1>
+            <hr class="border border-primary border-2 opacity-50">
+            <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"
+               class="btn btn-warning" onclick="return confirm('Chờ xác nhận ?');">Xác nhận</a>
 
-        <table class="table table-bordered">
-            <tr style="background-color: #2c9faf;color: white ">
-                <th>Mã hoá đơn</th>
-                <th>Mã khách hàng</th>
-                <th>Địa chỉ</th>
-                <th>Ngày tạo</th>
-                <th>Ngày cập nhật</th>
-                <th>Trạng Thái</th>
-                <th>Tổng tiền</th>
-                <th>Ghi chú</th>
-                <th>Action</th>
-            </tr>
+            <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"
+               onclick="return confirm('Bạn có chắc muốn huỷ đơn hàng ?');" style="border-radius: 20px">Huỷ</a>
+        </c:if>
+        <%--        trạng thái đang chuẩn bị--%>
+        <c:if test="${hoaDon.trangThai== 2}">
+            <h1 style="color: red">Chuẩn bị <i class="bi bi-box-seam"></i></h1>
+            <hr class="border border-primary border-2 opacity-50">
 
-            <tbody id="myTable">
-            <c:forEach items="${page.content}" var="hd">
-                <tr>
-                    <td>${hd.maHoaDon}</td>
-                    <td>${hd.khachHang.ma}</td>
-                    <td>${hd.diaChiShip}</td>
+            <a href="/don-hang/update-chuan-bi/${hoaDon.id}" style="border-radius: 20px"
+               class="btn btn-primary" onclick="return confirm('Bạn có chắc muốn giao hàng ?');">Giao hàng</a>
+            <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"
+               style="border-radius: 20px">Huỷ</a>
+        </c:if>
 
-                    <td>${hd.ngayTao}</td>
-                    <td>${hd.ngayThanhToan}</td>
+        <c:if test="${hoaDon.trangThai== 3}">
+            <h1 style="color: red"><i class="bi bi-truck"></i> Đã giao cho DVVC</h1>
+            <hr class="border border-primary border-2 opacity-50">
 
-                    <td>
-                        <c:if test="${hd.trangThai== 1  }">Chờ xác nhận</c:if>
-                        <c:if test="${hd.trangThai== 2 }">Đang chuẩn bị</c:if>
-                        <c:if test="${hd.trangThai== 3 }">Đang giao</c:if>
-                        <c:if test="${hd.trangThai== 4 }">Hoàn thành</c:if>
-                        <c:if test="${hd.trangThai== 5 }">Đã huỷ</c:if>
-                        <c:if test="${hd.trangThai== 6 }">Trả hàng</c:if>
-                        <c:if test="${hd.trangThai== 7 }">Đã hoàn trả</c:if>
-                    </td>
-                    <td>
-                        <c:set var="total" value="0"/>
-                        <c:forEach items="${hd.hoaDons}" var="hdct">
-                            <c:set var="total" value="${total+(hdct.soLuong * hdct.donGia)}"/>
-                        </c:forEach>
-                            ${total}
-                    </td>
-                    <td>${hd.ghiChu}</td>
-                    <td>
+            <a href="/don-hang/dang-giao/${hoaDon.id}" style="border-radius: 20px"
+               class="btn btn-success" onclick="return confirm('Xác nhận đã giao cho DVVC ?');">Xác nhận</a>
+        </c:if>
+        <c:if test="${hoaDon.trangThai== 4}">
+            <h1 style="color: red">Đang giao</h1>
+            <a href="/don-hang/xac-nhan-giao/${hoaDon.id}" style="border-radius: 20px"
+               class="btn btn-warning" onclick="return confirm('Xác nhận đang giao?');">Xác nhận</a>
+        </c:if>
+        <c:if test="${hoaDon.trangThai== 5}">
+            <h1 style="color: red">Hoàn thành</h1>
+            <hr class="border border-primary border-2 opacity-50">
 
-                        <button id="content" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#${hd.id}" style="border-radius: 20px">Xem
-                        </button>
-                        <div class="modal fade" id="${hd.id}" data-bs-backdrop="static" data-bs-keyboard="false"
-                             tabindex="-1"
-                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin đơn
-                                            hàng</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5 class="title">Hóa đơn chi tiết</h5>
-                                        <div class="row" style="margin-top: 20px">
-                                            <div class="col-lg-1"></div>
-                                            <div class="col-lg-10">
-                                                <table class="table table-striped">
-                                                    <thead class="hoa-don-chi-tiet-thead">
-                                                    <tr>
-                                                        <th scope="col">STT</th>
-                                                        <th scope="col">Tên Sản Phẩm</th>
-                                                        <th scope="col">Đơn Giá</th>
-                                                        <th scope="col">Số lượng</th>
-                                                        <th scope="col">Thành Tiền</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <c:forEach items="${hd.hoaDons}" varStatus="stt" var="hd">
-                                                        <tr>
-                                                            <th scope="row">${stt.index + 1}</th>
-                                                            <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
-                                                            <td>
-                                                                <fmt:formatNumber value="${hd.donGia}"
-                                                                                  type="number"/>
-                                                            </td>
-                                                            <td>${hd.soLuong}</td>
-                                                            <td>
-                                                                <fmt:formatNumber value="${hd.donGia * hd.soLuong}"
-                                                                                  type="number"/>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <h5 class="title" style="margin-top: 30px">Thông tin Khách Hàng</h5>
-                                        <div class="row" style="margin-top: 20px">
-                                            <div class="col-lg-1"></div>
-                                            <div class="col-lg-10">
-                                                <table class="table table-striped">
-                                                    <thead class="hoa-don-chi-tiet-thead">
-                                                    <tr>
-                                                        <th scope="col">Mã KH</th>
-                                                        <th scope="col">Tên Khách Hàng</th>
-                                                        <th scope="col">SĐT</th>
-                                                        <th scope="col">Địa Chỉ</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <%--                                                     <c:forEach var="hd" items="${hd.khachHang}">--%>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                        <%--                                                     </c:forEach>--%>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-1"></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer left">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Closes
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <%--            </c:if>--%>
-        <%--            <c:if test="${empty page.content}">--%>
-        <%--                <td colspan="8" class="text-center">Không có sản phẩm.</td>--%>
-        <%--            </c:if>--%>
-        <div class="text-center">
-            <nav aria-label="Page navigation text-center">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="/don-hang/list-all?p=0">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/don-hang/list-all?p=${page.number-1}"><<</a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/don-hang/list-all?p=${page.number+1}">>></a></li>
-                    <li class="page-item"><a class="page-link"
-                                             href="/don-hang/list-all?p=${page.totalPages-1}">Next</a></li>
-                </ul>
-            </nav>
+            <a href="/don-hang/tra-hang/${hoaDon.id}" style="border-radius: 20px"
+               class="btn btn-warning" onclick="return confirm('Xác nhận trả hàng ?');">Trả hàng</a>
+        </c:if>
+        <c:if test="${hoaDon.trangThai== 6}">
+            <h1 style="color: red"><img src="../../../img/istockphoto-1707893816-612x612.jpg"
+                                        style="width: 60px; height: 60px;"> Trả hàng
+            </h1>
+            <hr class="border border-primary border-2 opacity-50">
+            <a href="/don-hang/da-tra-hang/${hoaDon.id}" style="border-radius: 20px"
+               class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn trả hàng ?');">Xác nhận</a>
+        </c:if>
+        <c:if test="${hoaDon.trangThai== 7}">
+            <h1 style="color: red">Đã trả hàng</h1>
+
+        </c:if>
+        <c:if test="${hoaDon.trangThai== 8}">
+            <h1 style="color: red">Đơn hàng đã huỷ</h1>
+        </c:if>
+        <hr class="border border-secondary border-2 opacity-50">
+        <div class="row">
+            <div class="col-10">
+                <h2>Thông tin đơn hàng</h2>
+                <br>
+            </div>
+            <div class="col-2">
+                <div class="col-lg-2 rev-cpicker-column-inner-right">
+                    <a href="/don-hang/list-all" class=" btn btn-primary btnReload">
+                        <i class="bi bi-arrow-return-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
+
+        </hr>
+        <div class="row">
+            <div class="col-6">
+                <table>
+                    <tr>
+                        <th scope="col">Mã đơn hàng</th>
+                        <td></td>
+                        <td></td>
+                        <td>${hoaDon.maHoaDon}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="col">Trạng thái đơn hàng</th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <c:if test="${hoaDon.trangThai== 1 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Chờ xác
+                                    nhận
+                                </button>
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 2 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-warning">Đang chuẩn
+                                    bị
+                                </button>
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 3 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Đã giao cho
+                                    đơn vị vận chuyển
+                                </button>
+
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 4 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-warning">Đang giao
+                                </button>
+
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 5 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-danger"> Hoàn thành
+                                </button>
+
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 6 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-warning">Trả hàng
+                                </button>
+
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 7 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Đã hoàn trả
+                                </button>
+
+                            </c:if>
+                            <c:if test="${hoaDon.trangThai== 8 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Đã huỷ
+                                </button>
+
+                            </c:if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Loại đơn hàng</th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <c:if test="${hoaDon.loaiHoaDon== 0 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-secondary">Bán Online
+                                </button>
+
+                            </c:if>
+                            <c:if test="${hoaDon.loaiHoaDon== 1 }">
+                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Bán tại
+                                    quầy
+                                </button>
+
+                            </c:if>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+            <div class="col-6">
+
+                <table>
+                    <tr>
+                        <th scope="col">Tên khách hàng</th>
+                        <td></td>
+                        <td></td>
+                        <td>${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">SĐT</th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                                ${hoaDon.khachHang.soDienThoai}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Địa chỉ</th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                                ${hoaDon.khachHang.diaChi}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                                ${hoaDon.khachHang.email}
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </form:form>
+
+    <hr class="border border-danger border-2 opacity-50">
+
+    <form:form modelAttribute="hoaDon">
+        <%--        <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"--%>
+        <%--           class="btn btn-warning">Cập nhật</a>--%>
+
+        <h2>Thông tin sản phẩm</h2>
+        <br>
+        <div class="row">
+            <table class="table table-striped">
+                <thead class="hoa-don-chi-tiet-thead">
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Đơn Giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Thành Tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${hoaDon.hoaDons}" varStatus="stt" var="hdct">
+                    <tr>
+                        <th scope="row">${stt.index + 1}</th>
+                        <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>
+                            <fmt:formatNumber value="${hdct.donGia}"
+                                              type="number"/>
+                        </td>
+                        <td>${hdct.soLuong}</td>
+                        <td>
+                            <img src="../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
+                                 height="100px"/>
+
+                        </td>
+                        <td>
+                            <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
+                                              type="number"/>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <c:set var="hoaDonId" value="${hoaDon.id}"/>
+    </form:form>
+
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const statusItems = document.querySelectorAll(".status-item");
+        const hoaDonTrangThai = "${hoaDon.trangThai}";
+
+        statusItems.forEach(function (item) {
+            const status = item.getAttribute("data-status-id");
+            const imgElement = item.querySelector("img");
+
+            item.style.border = "none";
+            item.style.borderRadius = "0%";
+            imgElement.style.border = "4px solid rgb(45, 194, 88)";
+            imgElement.style.borderRadius = "90%";
+            if (status == 8) {
+                document.getElementById("status-order").hidden = true;
+            }
+
+            if (status > hoaDonTrangThai) {
+
+                document.getElementById("status").textShadow = "inset 6px -1px 15px 20px #888888";
+                imgElement.style.border = "4px solid #D9D9D9";
+                imgElement.style.borderRadius = "90%";
+
+            } else {
+                imgElement.style.border = "4px solid rgb(45, 194, 88)";
+                imgElement.style.textShadow = "inset 6px -1px 15px 20px #888888";
+                imgElement.style.borderRadius = "90%";
+
+
+            }
+
+        });
+    });
+</script>

@@ -155,108 +155,27 @@
 
                         <td>
                             <c:if test="${hd.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hd.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hd.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hd.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hd.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${hd.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hd.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hd.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hd.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hd.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hd.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hd.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hd.hoaDons}" var="hdct">
                                 <c:set var="total" value="${total+(hdct.soLuong * hdct.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hd.ghiChu}</td>
                         <td>
+                            <a href="/don-hang/xem-don-hang/${hd.id}" style="border-radius: 20px"
+                               class="btn btn-primary">Xem</a>
 
-                            <button id="content" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#${hd.id}" style="border-radius: 20px">Xem
-                            </button>
-                            <div class="modal fade" id="${hd.id}" data-bs-backdrop="static" data-bs-keyboard="false"
-                                 tabindex="-1"
-                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin đơn
-                                                hàng</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5 class="title">Hóa đơn chi tiết</h5>
-                                            <div class="row" style="margin-top: 20px">
-                                                <div class="col-lg-1"></div>
-                                                <div class="col-lg-10">
-                                                    <table class="table table-striped">
-                                                        <thead class="hoa-don-chi-tiet-thead">
-                                                        <tr>
-                                                            <th scope="col">STT</th>
-                                                            <th scope="col">Tên Sản Phẩm</th>
-                                                            <th scope="col">Đơn Giá</th>
-                                                            <th scope="col">Số lượng</th>
-                                                            <th scope="col">Thành Tiền</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <c:forEach items="${hd.hoaDons}" varStatus="stt" var="hd">
-                                                            <tr>
-                                                                <th scope="row">${stt.index + 1}</th>
-                                                                <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
-                                                                <td>
-                                                                    <fmt:formatNumber value="${hd.donGia}"
-                                                                                      type="number"/>
-                                                                </td>
-                                                                <td>${hd.soLuong}</td>
-                                                                <td>
-                                                                    <fmt:formatNumber value="${hd.donGia * hd.soLuong}"
-                                                                                      type="number"/>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <h5 class="title" style="margin-top: 30px">Thông tin Khách Hàng</h5>
-                                            <div class="row" style="margin-top: 20px">
-                                                <div class="col-lg-1"></div>
-                                                <div class="col-lg-10">
-                                                    <table class="table table-striped">
-                                                        <thead class="hoa-don-chi-tiet-thead">
-                                                        <tr>
-                                                            <th scope="col">Mã KH</th>
-                                                            <th scope="col">Tên Khách Hàng</th>
-                                                            <th scope="col">SĐT</th>
-                                                            <th scope="col">Địa Chỉ</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <%--                                                     <c:forEach var="hd" items="${hd.khachHang}">--%>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                            <%--                                                     </c:forEach>--%>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-lg-1"></div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer left">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Closes
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                 </c:forEach>
@@ -309,19 +228,21 @@
 
                         <td>
                             <c:if test="${hd1.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hd1.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hd1.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hd1.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hd1.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${hd1.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hd1.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hd1.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hd1.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hd1.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hd1.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hd1.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hd1.hoaDons}" var="hdct">
                                 <c:set var="total" value="${total+(hdct.soLuong * hdct.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hd1.ghiChu}</td>
                         <td>
@@ -372,8 +293,9 @@
                                                                 </td>
                                                                 <td>${hdct.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdct.donGia * hdct.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -409,7 +331,8 @@
                         <li class="page-item"><a class="page-link"
                                                  href="/don-hang/list-all?p=${listChoXacNhan.number+1}">>></a></li>
                         <li class="page-item"><a class="page-link"
-                                                 href="/don-hang/list-all?p=${listChoXacNhan.totalPages-1}">Next</a></li>
+                                                 href="/don-hang/list-all?p=${listChoXacNhan.totalPages-1}">Next</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -444,24 +367,27 @@
 
                         <td>
                             <c:if test="${hdcb.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hdcb.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hdcb.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hdcb.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hdcb.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${hdcb.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hdcb.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hdcb.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hdcb.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hdcb.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hdcb.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hdcb.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hdcb.hoaDons}" var="hdctcb">
                                 <c:set var="total" value="${total+(hdctcb.soLuong * hdctcb.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hdcb.ghiChu}</td>
                         <td>
-                            <span>   <a id="content2" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#${hdcb.id}2" style="border-radius: 20px">Xem
+                            <span>
+                                <a id="content2" type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                   data-bs-target="#${hdcb.id}2" style="border-radius: 20px">Xem
                             </a><a href="/don-hang/update-chuan-bi/${hdcb.id}" style="border-radius: 20px"
                                    class="btn btn-warning">Giao hàng</a>
 
@@ -496,7 +422,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${hdcb.hoaDons}" varStatus="stt" var="hdctdb2">
+                                                        <c:forEach items="${hdcb.hoaDons}" varStatus="stt"
+                                                                   var="hdctdb2">
                                                             <tr>
                                                                 <th scope="row">${stt.index + 1}</th>
                                                                 <td>${hdctdb2.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -506,8 +433,9 @@
                                                                 </td>
                                                                 <td>${hdctdb2.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdctdb2.donGia * hdctdb2.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdctdb2.donGia * hdctdb2.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -575,20 +503,22 @@
                         <td>${hd3.ngayTao}</td>
                         <td>${hd3.ngayThanhToan}</td>
 
-                        <td>  <c:if test="${hd3.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hd3.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hd3.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hd3.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hd3.trangThai== 5 }">Đã huỷ</c:if>
+                        <td><c:if test="${hd3.trangThai== 1  }">Chờ xác nhận</c:if>
+                            <c:if test="${hd3.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hd3.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hd3.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hd3.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hd3.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hd3.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hd3.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hd3.hoaDons}" var="hdct3">
                                 <c:set var="total" value="${total+(hdct3.soLuong * hdct3.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hd3.ghiChu}</td>
                         <td>
@@ -636,8 +566,9 @@
                                                                 </td>
                                                                 <td>${hd.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdct33.donGia * hdct33.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdct33.donGia * hdct33.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -708,19 +639,21 @@
 
                         <td>
                             <c:if test="${hdht.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hdht.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hdht.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hdht.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hdht.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${hdht.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hdht.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hdht.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hdht.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hdht.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hdht.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hdht.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hdht.hoaDons}" var="hdctht">
                                 <c:set var="total" value="${total+(hdctht.soLuong * hdctht.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hdht.ghiChu}</td>
                         <td>
@@ -758,7 +691,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${hdht.hoaDons}" varStatus="stt" var="hdctht1">
+                                                        <c:forEach items="${hdht.hoaDons}" varStatus="stt"
+                                                                   var="hdctht1">
                                                             <tr>
                                                                 <th scope="row">${stt.index + 1}</th>
                                                                 <td>${hdctht1.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -768,8 +702,9 @@
                                                                 </td>
                                                                 <td>${hdctht1.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdctht1.donGia * hdctht1.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdctht1.donGia * hdctht1.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -824,11 +759,8 @@
                     <th>Ngày cập nhật</th>
                     <th>Trạng Thái</th>
                     <th>
-                        <c:set var="total" value="0"/>
-                        <c:forEach items="${hd.hoaDons}" var="hdct">
-                            <c:set var="total" value="${total+(hdct.soLuong * hdct.donGia)}"/>
-                        </c:forEach>
-                        ${total}
+                        Tổng Tiền
+
                     </th>
                     <th>Ghi chú</th>
                     <th>Action</th>
@@ -845,19 +777,20 @@
 
                         <td>
                             <c:if test="${donHuy.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${donHuy.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${donHuy.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${donHuy.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${donHuy.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${donHuy.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${donHuy.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${donHuy.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${donHuy.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${donHuy.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${donHuy.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${donHuy.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
-                            <c:forEach items="${donHuy.hoaDons}" var="hdctHuy">
-                                <c:set var="total" value="${total+(hdctHuy.soLuong * hdctHuy.donGia)}"/>
+                            <c:forEach items="${donHuy.hoaDons}" var="hdct1">
+                                <c:set var="total" value="${total+(hdct1.soLuong * hdct1.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
                         </td>
                         <td>${donHuy.ghiChu}</td>
                         <td>
@@ -869,7 +802,8 @@
                             </p>
 
 
-                            <div class="modal fade" id="${donHuy.id}5" data-bs-backdrop="static" data-bs-keyboard="false"
+                            <div class="modal fade" id="${donHuy.id}5" data-bs-backdrop="static"
+                                 data-bs-keyboard="false"
                                  tabindex="-1"
                                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -896,7 +830,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${donHuy.hoaDons}" varStatus="stt" var="hdDaHuy">
+                                                        <c:forEach items="${donHuy.hoaDons}" varStatus="stt"
+                                                                   var="hdDaHuy">
                                                             <tr>
                                                                 <th scope="row">${stt.index + 1}</th>
                                                                 <td>${hdDaHuy.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -906,8 +841,9 @@
                                                                 </td>
                                                                 <td>${hdDaHuy.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdDaHuy.donGia * hdDaHuy.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdDaHuy.donGia * hdDaHuy.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -982,19 +918,21 @@
 
                         <td>
                             <c:if test="${hdtra.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hdtra.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hdtra.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hdtra.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hdtra.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${hdtra.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hdtra.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hdtra.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hdtra.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hdtra.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hdtra.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hdtra.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hdtra.hoaDons}" var="hdctTra">
                                 <c:set var="total" value="${total+(hdctTra.soLuong * hdctTra.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hdtra.ghiChu}</td>
                         <td>
@@ -1032,7 +970,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${hdtra.hoaDons}" varStatus="stt" var="hdctTraHang">
+                                                        <c:forEach items="${hdtra.hoaDons}" varStatus="stt"
+                                                                   var="hdctTraHang">
                                                             <tr>
                                                                 <th scope="row">${stt.index + 1}</th>
                                                                 <td>${hdctTraHang.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -1042,8 +981,9 @@
                                                                 </td>
                                                                 <td>${hdctTraHang.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdctTraHang.donGia * hdctTraHang.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdctTraHang.donGia * hdctTraHang.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -1114,19 +1054,21 @@
 
                         <td>
                             <c:if test="${hddt.trangThai== 1  }">Chờ xác nhận</c:if>
-                            <c:if test="${hddt.trangThai== 2 }">Đang chuẩn bị</c:if>
-                            <c:if test="${hddt.trangThai== 3 }">Đang giao</c:if>
-                            <c:if test="${hddt.trangThai== 4 }">Hoàn thành</c:if>
-                            <c:if test="${hddt.trangThai== 5 }">Đã huỷ</c:if>
+                            <c:if test="${hddt.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                            <c:if test="${hddt.trangThai== 3 }">Giao cho DVVC</c:if>
+                            <c:if test="${hddt.trangThai== 4 }">Đang giao</c:if>
+                            <c:if test="${hddt.trangThai== 5 }">Hoàn thành</c:if>
                             <c:if test="${hddt.trangThai== 6 }">Trả hàng</c:if>
                             <c:if test="${hddt.trangThai== 7 }">Đã hoàn trả</c:if>
+                            <c:if test="${hddt.trangThai== 8 }">Đã huỷ</c:if>
                         </td>
                         <td>
                             <c:set var="total" value="0"/>
                             <c:forEach items="${hddt.hoaDons}" var="hdctDaTra">
                                 <c:set var="total" value="${total+(hdctDaTra.soLuong * hdctDaTra.donGia)}"/>
                             </c:forEach>
-                                ${total}
+                            <fmt:formatNumber value="${total}" type="number"/>
+
                         </td>
                         <td>${hddt.ghiChu}</td>
                         <td>
@@ -1163,7 +1105,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${hddt.hoaDons}" varStatus="stt" var="hdctdatra">
+                                                        <c:forEach items="${hddt.hoaDons}" varStatus="stt"
+                                                                   var="hdctdatra">
                                                             <tr>
                                                                 <th scope="row">${stt.index + 1}</th>
                                                                 <td>${hdctdatra.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -1173,8 +1116,9 @@
                                                                 </td>
                                                                 <td>${hd.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber value="${hdctdatra.donGia * hdctdatra.soLuong}"
-                                                                                      type="number"/>
+                                                                    <fmt:formatNumber
+                                                                            value="${hdctdatra.donGia * hdctdatra.soLuong}"
+                                                                            type="number"/>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
