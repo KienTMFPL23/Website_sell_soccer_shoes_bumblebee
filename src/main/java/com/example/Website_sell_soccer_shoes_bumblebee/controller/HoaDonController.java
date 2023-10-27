@@ -50,9 +50,12 @@ public class HoaDonController {
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         Date toDate;
 
-        int status;
     }
 
+    @Data
+    public static class SearchStatus {
+        Integer status;
+    }
 
     @ModelAttribute("listHoaDon")
     List<HoaDon> listHoaDon() {
@@ -63,51 +66,51 @@ public class HoaDonController {
     @GetMapping("/hoa-don/hien-thi")
     public String index(@RequestParam(defaultValue = "0", name = "page") Integer page, Model model) {
         model.addAttribute("searchForm", new SearchForm());
-//        model.addAttribute("searchDate", new SearchDate());
-        Pageable pageable = PageRequest.of(page, 10);
+        model.addAttribute("searchStatus", new SearchStatus());
+        Pageable pageable = PageRequest.of(page, 8);
         Page<HoaDon> list = hdRepo.findAll(pageable);
         model.addAttribute("list", list);
         //model.addAttribute("listHD", hdRepo.listHoaDonByTrangThai());
         model.addAttribute("view", "../hoa_don/list.jsp");
         return "/admin/index";
     }
+
     @RequestMapping("/hoa-don/search-by-status")
-    public String searchByChatLieu(@ModelAttribute("seachForm") SearchForm searchForm, @RequestParam(defaultValue = "0") int p, Model model) {
-        if (p < 0) {
-            p = 0;
+    public String searchByChatLieu(@ModelAttribute("searchStatus") SearchStatus searchStatus, @RequestParam(defaultValue = "0" , name = "page") Integer page, Model model) {
+        if (page < 0) {
+            page = 0;
         }
         Page<HoaDon> hoaDonPage;
-        Pageable pageable = PageRequest.of(p, 5);
-        if (searchForm.status != -1 ) {
-            hoaDonPage = hoaDonService.searchByStatusBills(searchForm.status, pageable);
+        Pageable pageable = PageRequest.of(page, 8);
+        if (searchStatus.status > 0 ) {
+            hoaDonPage = hoaDonService.searchByStatusBills(searchStatus.status, pageable);
         } else {
             hoaDonPage = hdRepo.findAll(pageable);
         }
-        model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("searchForm" , new SearchForm());
         model.addAttribute("list", hoaDonPage);
-
         model.addAttribute("view", "../hoa_don/list.jsp");
         return "/admin/index";
     }
 
-    @GetMapping("/hoa-don-chi-tiet/hien-thi/{ma}")
-    public String hienThi(Model model, @PathVariable("ma") UUID id) {
-        model.addAttribute("searchForm", new SearchForm());
-        List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-        Double sumMoney = hoaDonChiTietService.getTotalMoney(listHDCT);
-        model.addAttribute("sumMoney", sumMoney);
-
-        System.out.println("Tổng tiền: " + sumMoney);
-        model.addAttribute("hoaDons", hoaDonChiTietService.getHoaDonById(id));
-        return "/admin/index";
-    }
+//    @GetMapping("/hoa-don-chi-tiet/hien-thi/{ma}")
+//    public String hienThi(Model model, @PathVariable("ma") UUID id) {
+//        model.addAttribute("searchForm", new SearchForm());
+//        List<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+//        Double sumMoney = hoaDonChiTietService.getTotalMoney(listHDCT);
+//        model.addAttribute("sumMoney", sumMoney);
+//
+//        System.out.println("Tổng tiền: " + sumMoney);
+//        model.addAttribute("hoaDons", hoaDonChiTietService.getHoaDonById(id));
+//        return "/admin/index";
+//    }
 
 
     @RequestMapping("/hoa-don/search")
     public String search(Model model, @ModelAttribute("searchForm") SearchForm searchForm,
                          @RequestParam(defaultValue = "0", name = "page") int page
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 8);
         Page<HoaDon> hoaDons = this.hdRepo.search(searchForm.keyword, pageable);
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("list", hoaDons);
@@ -121,9 +124,10 @@ public class HoaDonController {
                              @RequestParam(defaultValue = "0", name = "page") int page,
                              @ModelAttribute("searchForm") SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<HoaDon> listS = this.hoaDonService.searchALlBetweenDates(searchForm.fromDate, searchForm.toDate, pageable);
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<HoaDon> listS = this.hoaDonService.searchALlBetweenDates(searchForm.fromDate,  searchForm.toDate = new Date(new Date().getTime() + 86400000), pageable);
         model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("searchStatus", new SearchStatus());
         model.addAttribute("list", listS);
         model.addAttribute("view", "../hoa_don/list.jsp");
         return "/admin/index";
