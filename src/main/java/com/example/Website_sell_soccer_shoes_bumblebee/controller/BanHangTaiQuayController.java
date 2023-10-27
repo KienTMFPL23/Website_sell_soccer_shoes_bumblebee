@@ -333,10 +333,13 @@ public class BanHangTaiQuayController {
 
             document.add(MaHoaDon);
             document.add(Ngay);
+
+          
             Paragraph tennhanvien = new Paragraph("Nhan vien    :    " + nameNhanVien);
             document.add(tennhanvien);
             Paragraph tenKhac = new Paragraph("Khach hang    :    " + hoaDonThanhToan.getTenNguoiNhan());
             document.add(tenKhac);
+
 //            table.addCell(MaHoaDon);
 //            table.addCell(Ma);
 //            table.addCell(Ngay);

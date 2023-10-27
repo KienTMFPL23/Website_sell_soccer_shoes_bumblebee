@@ -142,8 +142,9 @@ public class HomeController {
     @RequestMapping("/bumblebee/home")
     public String home(Model model, @RequestParam(defaultValue = "0") int p, HttpSession session) {
         Pageable pageable = PageRequest.of(p, 8);
-        Page<ChiTietSanPham> listSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
-        model.addAttribute("listSP", listSP);
+        Page<ChiTietSanPham> pageSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
+        //Page<ChiTietSanPham> listSP = chiTietSanPhamService.getListSP(pageable);
+        model.addAttribute("pageSP", pageSP);
         model.addAttribute("view", "../template_home/home.jsp");
         return "template_home/index";
     }
@@ -719,7 +720,7 @@ public class HomeController {
         if ("all".equals(idLoaiGiayList)) {
 
             Pageable pageable = PageRequest.of(p, 12);
-            Page<ChiTietSanPham> pageSP = chiTietSanPhamService.getListSP(pageable);
+            Page<ChiTietSanPham> pageSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
             List<LoaiGiay> listLG = loaiGiayService.findAll();
             List<KichCo> listKC = kichCoService.getList();
             List<MauSac> listMS = mauSacService.getAll();

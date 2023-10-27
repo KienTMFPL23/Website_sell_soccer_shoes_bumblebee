@@ -241,11 +241,12 @@ public class HoaDonServiceImpl implements HoaDonService {
 
             dataRow.createCell(0).setCellValue(String.valueOf(hd.getId()));
             dataRow.createCell(1).setCellValue(String.valueOf(hd.getMaHoaDon()));
+
             if (hd.getNhanVien() == null) {
                 dataRow.createCell(2).setCellValue("");
             } else {
                 dataRow.createCell(2).setCellValue(hd.getNhanVien().getTen());
-            }
+           }
             dataRow.createCell(3).setCellValue(dateFormat.format(hd.getNgayTao()));
             dataRow.createCell(4).setCellValue(dateFormat.format(hd.getNgayThanhToan()));
             dataRow.createCell(5).setCellValue(String.valueOf(hd.getTenNguoiNhan()));

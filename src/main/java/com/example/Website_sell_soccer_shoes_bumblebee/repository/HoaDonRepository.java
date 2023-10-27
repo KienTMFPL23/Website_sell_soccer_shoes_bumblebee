@@ -42,7 +42,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     HoaDon listHoaDonByTrangThai();
 
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=5 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=8 ")
     Page<HoaDon> donHangDaHuy(Pageable pageable);
 
     @Query("select hd from HoaDon hd where  hd.trangThai=2 ")
@@ -57,10 +57,10 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query("select hd from HoaDon hd where  hd.trangThai=1 ")
     Page<HoaDon> donHangChoXacNhan(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=3 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=4 ")
     Page<HoaDon> donHangDangGiao(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=4 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=5 ")
     Page<HoaDon> donHangHoanThanh(Pageable pageable);
 
 

@@ -128,6 +128,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "    id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
             "FROM RankedCTSP\n" +
             "WHERE RowNum = 1;", nativeQuery = true)
+
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 
