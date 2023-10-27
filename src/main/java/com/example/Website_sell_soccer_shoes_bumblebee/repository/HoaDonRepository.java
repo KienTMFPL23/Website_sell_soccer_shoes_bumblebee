@@ -32,6 +32,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query(value = "select hd from HoaDon hd where hd.maHoaDon = ?1")
     HoaDon searchHoaDon(String hoaDon);
 
+    @Query("select max(hd.maHoaDon) from HoaDon hd")
+    String searchMaxMaHoaDon();
 
     @Query("SELECT hd FROM HoaDon hd WHERE (?1 IS NULL OR hd.trangThai = ?1)")
     Page<HoaDon> searchByStatusBills(Integer status, Pageable pageable);

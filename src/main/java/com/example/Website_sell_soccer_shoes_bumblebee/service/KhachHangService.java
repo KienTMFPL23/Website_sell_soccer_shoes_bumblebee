@@ -11,4 +11,9 @@ public interface KhachHangService {
     List<KhachHang> getAll();
 
     KhachHang findKHBySDT(String sdt);
+
+    KhachHang searchKhachHang(String maKhachHang);
+
+    String searchMaxKH();
+
 }
