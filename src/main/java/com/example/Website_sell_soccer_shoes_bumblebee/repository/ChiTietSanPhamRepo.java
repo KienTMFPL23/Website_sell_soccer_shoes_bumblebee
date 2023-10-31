@@ -71,7 +71,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select * from ChiTietSanPham where Idkichco = ?1", nativeQuery = true)
     Page<ChiTietSanPham> getCTSPBYKC(UUID idKC, Pageable pageable);
 
-    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.mauSac.id = ?1")
+    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.sanPham.id, c2.mauSac.id) and c.mauSac.id = ?1")
     Page<ChiTietSanPham> getCTSPBYMS(UUID idMS, Pageable pageable);
 
 
@@ -82,7 +84,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     UUID getOneToAddModal(UUID id);
 
 
-    @Query("SELECT c FROM ChiTietSanPham c WHERE c.loaiGiay.id IN ?1")
+    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.sanPham.id, c2.mauSac.id) and c.loaiGiay.id IN ?1")
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 
 
@@ -118,17 +122,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\tand kc.size = ?3", nativeQuery = true)
     String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
-    @Query(value = "WITH RankedCTSP AS (\n" +
-            "    SELECT\n" +
-            "        id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai,\n" +
-            "        ROW_NUMBER() OVER (PARTITION BY IdSP, IdMauSac ORDER BY Id) AS RowNum\n" +
-            "    FROM ChiTietSanPham\n" +
-            ")\n" +
-            "SELECT\n" +
-            "    id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
-            "FROM RankedCTSP\n" +
-            "WHERE RowNum = 1;", nativeQuery = true)
-
+    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.sanPham.id, c2.mauSac.id)")
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 

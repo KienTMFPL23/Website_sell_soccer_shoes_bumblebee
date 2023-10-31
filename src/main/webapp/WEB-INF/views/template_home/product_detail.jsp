@@ -69,7 +69,7 @@
                                 src="../../../images_template/shoe-detail/2.jpg" alt=""><img
                                 src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
                     </div>
-                    <form action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}"
+                    <form
                           method="post">
                         <div class="ps-product__info">
                             <h1>${ctsp.sanPham.tenSanPham}</h1>
@@ -97,10 +97,10 @@
                             </div>
                             <div class="ps-product__shopping">
                                 <div class="ps-product__button" style="margin-bottom: 20px">
-                                    <button class="btn-themgh" id="addToCartButton" type="submit"
+                                    <button formaction="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}" class="btn-themgh" id="addToCartButton" type="submit"
                                             style="background-color: #FFFFFF; color: #37517E;font-size: 15px;border: 1px solid #37517E;">
                                         Thêm vào giỏ hàng<i class="ps-icon-next"></i></button>
-                                    <button class="btn-mua" type="submit"
+                                    <button formaction="/bumblebee/mua-ngay?idCTSP=${ctsp.id}" class="btn-mua" type="submit"
                                             style="background-color: #37517E;font-size: 15px;width: 157px;margin-left: 30px">
                                         Mua ngay<i
                                             class="ps-icon-next"></i></button>

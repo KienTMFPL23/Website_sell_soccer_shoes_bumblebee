@@ -7,66 +7,76 @@
             <div class="ps-cart-listing">
                 ${thongBao}
                 <form method="post">
-                    <table class="table ps-cart__table" id="tableCart">
-                        <thead>
+                    <c:if test="${empty listGHCT}">
                         <tr>
-                            <th width="50px"></th>
-                            <th>SẢN PHẨM</th>
-                            <th>PHÂN LOẠI HÀNG</th>
-                            <th>ĐƠN GIÁ</th>
-                            <th>SỐ LƯỢNG</th>
-                            <th>TỔNG TIỀN</th>
-                            <th></th>
+                            <h2 style="text-align: center">Không có sản phẩm nào trong giỏ hàng</h2>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="item" items="${listGHCT}">
-                            <tr style="background-color: ${item.ctsp.soLuong == 0 ? '#e8e8e8':'white'}">
-                                <td>
-                                    <c:if test="${item.ctsp.soLuong == 0}">
-                                        <p>Hết Hàng</p>
-                                    </c:if>
-                                    <c:if test="${item.ctsp.soLuong > 0}">
-                                        <input class="checkCart" type="checkbox" name="idListCartDetail"
-                                               value="${item.ctsp.id}">
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <a class="ps-product__preview" href="/bumblebee/detail/${item.ctsp.id}">
-                                        <img class="mr-15" src="../../../uploads/${item.ctsp.hinhAnhs.tenanh}"
-                                             width="100px"
-                                             height="100px">
-                                            ${item.ctsp.sanPham.tenSanPham}
-                                    </a>
-                                </td>
-                                <td>${item.ctsp.mauSac.ten} - ${item.ctsp.kichCo.size}</td>
-                                <td id="donGia_${item.id}"><fmt:formatNumber value="${item.donGia}"
-                                                                             type="currency"/></td>
-                                <td>
-                                    <div class="form-group--number">
-                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
-                                           onclick="truSL('${item.id}')"
-                                           class="minus"><span>-</span></a>
-                                        <input class="form-control" id="soLuongCTSP_${item.id}" type="text"
-                                               value="${item.soLuong}"
-                                               style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''} onchange="thayDoiSoLuong('${item.id}')">
-                                        <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
-                                           onclick="themSL('${item.id}')"
-                                           class="plus"><span>+</span></a>
-                                        <input style="display: none" value="${item.ctsp.soLuong}" id="slCTSP_${item.id}">
-                                    </div>
-                                </td>
-                                <td id="thanhTien_${item.id}"><fmt:formatNumber
-                                        value="${item.donGia * item.soLuong}" type="currency"/></td>
-                                <td>
-                                    <a href="/bumblebee/remove-ghct/${item.id}">
-                                        <div class="ps-remove"></div>
-                                    </a>
-                                </td>
+                    </c:if>
+                    <c:if test="${not empty listGHCT}">
+                        <table class="table ps-cart__table" id="tableCart">
+                            <thead>
+                            <tr>
+                                <th width="50px"></th>
+                                <th>SẢN PHẨM</th>
+                                <th>PHÂN LOẠI HÀNG</th>
+                                <th>ĐƠN GIÁ</th>
+                                <th>SỐ LƯỢNG</th>
+                                <th>TỔNG TIỀN</th>
+                                <th></th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                            <c:forEach var="item" items="${listGHCT}">
+                                <tr style="background-color: ${item.ctsp.soLuong == 0 ? '#e8e8e8':'white'}">
+                                    <td>
+                                        <c:if test="${item.ctsp.soLuong == 0}">
+                                            <p>Hết Hàng</p>
+                                        </c:if>
+                                        <c:if test="${item.ctsp.soLuong > 0}">
+                                            <input class="checkCart" type="checkbox" name="idListCartDetail"
+                                                   value="${item.ctsp.id}">
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <a class="ps-product__preview" href="/bumblebee/detail/${item.ctsp.id}">
+                                            <img class="mr-15" src="../../../uploads/${item.ctsp.hinhAnhs.tenanh}"
+                                                 width="100px"
+                                                 height="100px">
+                                                ${item.ctsp.sanPham.tenSanPham}
+                                        </a>
+                                    </td>
+                                    <td>${item.ctsp.mauSac.ten} - ${item.ctsp.kichCo.size}</td>
+                                    <td id="donGia_${item.id}"><fmt:formatNumber value="${item.donGia}"
+                                                                                 type="currency"/></td>
+                                    <td>
+                                        <div class="form-group--number">
+                                            <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
+                                               onclick="truSL('${item.id}')"
+                                               class="minus"><span>-</span></a>
+                                            <input class="form-control" id="soLuongCTSP_${item.id}" type="text"
+                                                   value="${item.soLuong}"
+                                                   style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''}
+                                                   onchange="thayDoiSoLuong('${item.id}')">
+                                            <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
+                                               onclick="themSL('${item.id}')"
+                                               class="plus"><span>+</span></a>
+                                            <input style="display: none" value="${item.ctsp.soLuong}"
+                                                   id="slCTSP_${item.id}">
+                                        </div>
+                                    </td>
+                                    <td id="thanhTien_${item.id}"><fmt:formatNumber
+                                            value="${item.donGia * item.soLuong}" type="currency"/></td>
+                                    <td>
+                                        <a href="/bumblebee/remove-ghct/${item.id}">
+                                            <div class="ps-remove"></div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
                     <div class="ps-cart__actions">
                         <div class="ps-cart__promotion">
                             <div class="form-group">
@@ -122,7 +132,8 @@
     function themSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
         var soLuongMoi = soLuongHienTai + 1;
-
+        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
+        inputElement.value = soLuongMoi;
         capNhatThanhTien(itemId);
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
@@ -136,14 +147,14 @@
         };
         var data = JSON.stringify({productId: itemId, soLuong: soLuongMoi});
         xhr.send(data);
-        var inputElement = document.getElementById("soLuongCTSP_" + itemId);
-        inputElement.value = soLuongMoi;
+
+
     }
 
-    function thayDoiSoLuong(itemId){
+    function thayDoiSoLuong(itemId) {
         var soLuongMoi = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
-        var slCTSP = parseInt(document.getElementById("slCTSP_"+itemId).value);
-        if (soLuongMoi < 0){
+        var slCTSP = parseInt(document.getElementById("slCTSP_" + itemId).value);
+        if (Number(soLuongMoi) < 0) {
             document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
             capNhatThanhTien(itemId);
             var xhr = new XMLHttpRequest();
@@ -158,8 +169,7 @@
             };
             var data = JSON.stringify({productId: itemId, soLuong: Number(1)});
             xhr.send(data);
-        }
-        if (soLuongMoi > slCTSP){
+        } else if (soLuongMoi > slCTSP) {
             capNhatThanhTien(itemId);
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
@@ -173,7 +183,22 @@
             };
             var data = JSON.stringify({productId: itemId, soLuong: slCTSP});
             xhr.send(data);
-        }else {
+        } else if (Number(soLuongMoi) === 0) {
+            document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
+            capNhatThanhTien(itemId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
+                    document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
+                }
+            };
+            var data = JSON.stringify({productId: itemId, soLuong: Number(1)});
+            xhr.send(data);
+        } else {
             capNhatThanhTien(itemId);
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);

@@ -97,7 +97,7 @@
                                         <td style="text-align: center;padding-top: 25px;">${sp.ctsp.mauSac.ten}</td>
                                         <td style="text-align: center;padding-top: 25px;">${sp.soLuong}</td>
                                         <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
-                                                value="${sp.donGia}"
+                                                value="${sp.donGia * sp.soLuong}"
                                                 type="currency"/></td>
                                     </tr>
                                 </c:forEach>
