@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <!-- Modal -->
-                    <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}">
+                    <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}&idCTSP=${item.id}">
                         <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">
                             <div class="modal-dialog">
                                 <div class="modal-content">
