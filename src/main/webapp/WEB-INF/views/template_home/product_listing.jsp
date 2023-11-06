@@ -11,9 +11,10 @@
                         <form:select id="mySelect" path="key"
                                      cssStyle="height: 50px;background-color: #ddd; border: none; font-family: Montserrat; font-size: 17px"
                                      onchange="this.form.submit()">
-                            <form:option value="" label="Sắp xếp theo"/>
-                            <form:option value="sanPham.tenSanPham" label="Tên sản phẩm"/>
-                            <form:option value="giaBan" label="Tăng dần theo giá"/>
+                            <form:option value="no" label="Sắp xếp theo"/>
+                            <form:option value="moiNhat" label="Mới nhất"/>
+                            <form:option value="giaBanTangDan" label="Giá từ thấp đến cao"/>
+                            <form:option value="giaBanGiamDan" label="Giá từ cao đến thấp"/>
                         </form:select>
                     </form:form>
                 </form>
@@ -61,7 +62,7 @@
                         </div>
                     </div>
                     <!-- Modal -->
-                    <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}">
+                    <form method="post" action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}&idCTSP=${item.id}">
                         <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">
                             <div class="modal-dialog">
                                 <div class="modal-content">

@@ -1,6 +1,7 @@
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="../../../js/trang_chu/detail/product_detail.js"></script>
 <style>
     .bumblebee-alert-popup__message{
         margin-top: 2.5rem;
@@ -69,7 +70,7 @@
                                 src="../../../images_template/shoe-detail/2.jpg" alt=""><img
                                 src="../../../images_template/shoe-detail/3.jpg" alt=""></div>
                     </div>
-                    <form action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}"
+                    <form
                           method="post">
                         <div class="ps-product__info">
                             <h1>${ctsp.sanPham.tenSanPham}</h1>
@@ -97,10 +98,10 @@
                             </div>
                             <div class="ps-product__shopping">
                                 <div class="ps-product__button" style="margin-bottom: 20px">
-                                    <button class="btn-themgh" id="addToCartButton" type="submit"
+                                    <button formaction="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}" class="btn-themgh" id="addToCartButton" type="submit"
                                             style="background-color: #FFFFFF; color: #37517E;font-size: 15px;border: 1px solid #37517E;">
                                         Thêm vào giỏ hàng<i class="ps-icon-next"></i></button>
-                                    <button class="btn-mua" type="submit"
+                                    <button formaction="/bumblebee/mua-ngay?idCTSP=${ctsp.id}" class="btn-mua" type="submit"
                                             style="background-color: #37517E;font-size: 15px;width: 157px;margin-left: 30px">
                                         Mua ngay<i
                                             class="ps-icon-next"></i></button>
@@ -430,14 +431,15 @@
         </div>
     </div>
 </div>
-
 <script>
-
-    var kichCo = document.getElementById("kichCoList").value;
-    if (kichCo == 1) {
-        $(".btn-themgh").prop("disabled", true);
-        $(".btn-mua").prop("disabled", true);
+    var error = "${errorSL}";
+    if (error) {
+        var main = document.getElementById("main");
+        var modal = document.getElementById("errorModal");
+        modal.style.display = "block";
+        main.style.opacity = "0,5";
     }
+
     var response = null;
 
     function selectSize() {
@@ -475,42 +477,8 @@
         };
         xhr.send();
     }
-
     selectSize();
 
-    function thayDoiSoLuong() {
-        var sl = $("#sl").val();
-        if (Number(sl) < 1) {
-            document.getElementById("sl").value = Number(1);
-        }
-        if (Number(sl) >= response) {
-            document.getElementById("sl").value = Number(response);
-        }
-    }
-
-    document.getElementById("#sl").addEventListener("change", function () {
-        var sl = $("#sl").val();
-        if (Number(sl) < 0 || Number(sl) === 0) {
-            document.getElementById("sl").value = Number(1);
-        }
-        if (Number(sl) >= response) {
-            document.getElementById("sl").value = Number(response);
-        }
-    })
-</script>
-<script>
-    function closeErrorModal() {
-        var modal = document.getElementById("errorModal");
-        modal.style.display = "none";
-    }
-
-    var error = "${errorSL}";
-    if (error) {
-        var main = document.getElementById("main");
-        var modal = document.getElementById("errorModal");
-        modal.style.display = "block";
-        main.style.opacity = "0,5";
-    }
 </script>
 
 

@@ -259,10 +259,10 @@ public class BanHangTaiQuayController {
             String format = sdf.format(date);
             hoaDonThanhToan.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
             hoaDonThanhToan.setNhanVien(nhanVien);
-            hoaDonThanhToan.setTrangThai(1);
+            hoaDonThanhToan.setTrangThai(5);
             hoaDonThanhToan.setSdt(soDienThoai);
             KhachHang khachHang = khachHangRepository.findKHBySDT(soDienThoai);
-            hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
+            hoaDonThanhToan.setTenNguoiNhan(hoaDonThanhToan.getTenNguoiNhan());
             hoaDonThanhToan.setGhiChu(ghiChu);
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
@@ -274,17 +274,9 @@ public class BanHangTaiQuayController {
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
-        String formatKH = "KH" + String.format("%07d", maKhachHang);
-        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
-        if (checkMa != null){
-            String maKHMax = khachHangService.searchMaxKH();
-            maKhachHang = Integer.valueOf(maKHMax.substring(2));
-            maKhachHang++;
-            String formatSoMa = "HD" + String.format("%07d", maKhachHang);
-            addKhachHang.setMa(formatKH);
-        }else {
-            addKhachHang.setMa(formatKH);
-        }
+
+        Random random=new Random();
+        addKhachHang.setMa("KH"+random.nextInt(99999999));
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
         khachHangService.saveKhachHang(addKhachHang);

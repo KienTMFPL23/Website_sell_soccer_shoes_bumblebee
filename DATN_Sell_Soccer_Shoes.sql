@@ -1,5 +1,5 @@
 Create
-Database JAVA_DATN_Sell_Soccer_Shoes
+    Database JAVA_DATN_Sell_Soccer_Shoes
 GO
 Use JAVA_DATN_Sell_Soccer_Shoes
 GO
@@ -12,7 +12,7 @@ CREATE TABLE SanPham
     TenSanPham NVARCHAR(150),
     TrangThai  INT
 )
-    GO
+GO
 
 CREATE TABLE ChatLieu
 (
@@ -21,7 +21,7 @@ CREATE TABLE ChatLieu
     TenChatLieu NVARCHAR(150),
     TrangThai   INT
 )
-    GO
+GO
 
 CREATE TABLE KichCo
 (
@@ -31,7 +31,7 @@ CREATE TABLE KichCo
     GioiTinh  BIT,
     TrangThai INT
 )
-    GO
+GO
 
 CREATE TABLE LoaiGiay
 (
@@ -40,7 +40,7 @@ CREATE TABLE LoaiGiay
     TenTheLoai NVARCHAR(150),
     TrangThai  INT
 )
-    GO
+GO
 
 
 
@@ -51,7 +51,7 @@ CREATE TABLE DeGiay
     LoaiDe    NVARCHAR(150),
     TrangThai INT
 )
-    GO
+GO
 
 CREATE TABLE MauSac
 (
@@ -60,7 +60,7 @@ CREATE TABLE MauSac
     TenMau    NVARCHAR(150),
     TrangThai INT
 )
-    GO
+
 
 CREATE TABLE HinhAnh
 (
@@ -74,7 +74,6 @@ CREATE TABLE HinhAnh
     DuongDan5 VARCHAR(255),
     TrangThai INT
 )
-    GO
 
 
 
@@ -93,7 +92,22 @@ CREATE TABLE ChiTietSanPham
     NgayTao    DATETIME,
     TrangThai  INT
 )
-    GO
+GO
+
+CREATE TABLE HinhAnh
+(
+    Id        UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
+    IdCTSP    UNIQUEIDENTIFIER REFERENCES ChiTietSanPham (id),
+    TenAnh    VARCHAR(255),
+    DuongDan1 VARCHAR(255),
+    DuongDan2 VARCHAR(255),
+    DuongDan3 VARCHAR(255),
+    DuongDan4 VARCHAR(255),
+    DuongDan5 VARCHAR(255),
+    TrangThai INT
+)
+GO
+
 CREATE TABLE TaiKhoan
 (
     Id       UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
@@ -102,8 +116,11 @@ CREATE TABLE TaiKhoan
     Role     INT
 
 )
-    GO
+GO
 
+if OBJECT_ID('KhachHang') is not null
+    drop table KhachHang
+go
 CREATE TABLE KhachHang
 (
     Id          UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
@@ -115,11 +132,11 @@ CREATE TABLE KhachHang
     GioiTinh    BIT,
     NgaySinh    DATE,
     DiaChi      NVARCHAR(255),
-    SoDienThoai VARCHAR(15) UNIQUE,
+    SoDienThoai VARCHAR(15),
     Email       VARCHAR(100),
     TrangThai   INT
 )
-    GO
+GO
 CREATE TABLE NhanVien
 (
     Id          UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
@@ -135,7 +152,7 @@ CREATE TABLE NhanVien
     Email       VARCHAR(100),
     TrangThai   INT
 )
-    GO
+GO
 
 CREATE TABLE GioHang
 (
@@ -146,7 +163,7 @@ CREATE TABLE GioHang
     NgayThanhToan DATETIME,
     TrangThai     INT
 )
-    GO
+GO
 
 CREATE TABLE HoaDon
 (
@@ -164,7 +181,7 @@ CREATE TABLE HoaDon
     PhuongThucThanhToan INT,
     TrangThai           INT
 )
-    GO
+GO
 
 CREATE TABLE HoaDonChiTiet
 (
@@ -176,7 +193,7 @@ CREATE TABLE HoaDonChiTiet
     DonGiaKhiGiam MONEY,
     TrangThai     INT
 )
-    GO
+GO
 
 CREATE TABLE PhieuGiaoHang
 (
@@ -188,7 +205,7 @@ CREATE TABLE PhieuGiaoHang
     NgayNhan      DATETIME,
     DiaChi        NVARCHAR(200)
 )
-    GO
+GO
 
 CREATE TABLE GioHangChiTiet
 (
@@ -198,6 +215,7 @@ CREATE TABLE GioHangChiTiet
     SoLuong       INT,
     DonGia        MONEY,
     DonGiaKhiGiam MONEY
+
 )
 
 CREATE TABLE KhuyenMai
@@ -219,5 +237,8 @@ CREATE TABLE ChiTietKhuyenMai
     NgayKetThuc				DateTime,
     NgayCapNhat			DateTime,
     TrangThai		INT
+)
+
+
 )
 
