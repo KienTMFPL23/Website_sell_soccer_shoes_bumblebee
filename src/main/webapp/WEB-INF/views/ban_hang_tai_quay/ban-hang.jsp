@@ -56,7 +56,7 @@
                 </div>
             </c:forEach>
             <div style="margin-left: 20px">
-                <a id="themHoaDon" onclick="showAlertHoaDon(event)" form
+                <a id="themHoaDon" onclick="showAlertHoaDon(event)"
                    href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img
                         src="/images_template/add.png"></a>
             </div>
@@ -304,8 +304,8 @@
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                     <div class="dropdown mt-3">
-                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"
-                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>
+<%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
+<%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
                                 onclick="return confirm('Banj co muon thanh toan')"
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">

@@ -183,7 +183,26 @@
         background: #D9D9D9;
         transition: width 1s cubic-bezier(.4, 0, .2, 1);
     }
+    .stepper__line2 {
+        position: absolute;
+        top: 120px;
+        height: 4px;
+        width: 80%;
+    }
 
+    .stepper__line-background2, .stepper__line-foreground2 {
+        position: absolute;
+        width: calc(100% - 900px);
+        margin: 0 70px;
+        height: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .stepper__line-foreground2{
+        background: #D9D9D9;
+        transition: width 1s cubic-bezier(.4, 0, .2, 1);
+    }
     /*.stepper__line-background, .stepper__line-foreground {*/
     /*    position: absolute;*/
     /*    width: calc(100% - 120px);*/
@@ -213,7 +232,53 @@
 </style>
 <div class="container">
     <form:form modelAttribute="hoaDon">
-        <c:if test="${hoaDon.trangThai < 6 }">
+        <c:if test="${hoaDon.trangThai < 6 && hoaDon.loaiHoaDon==0}">
+        <div class="status-order" id="status-order">
+        <div class="row">
+                <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>
+            <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
+                <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
+                <h4>Chờ xác nhận</h4>
+                <p><%= formattedDate %>
+                </p>
+            </div>
+            <div class="col-lg-2 status-item" id="status" data-status-id="2"
+                 data-status="Đã xác nhận thanh toán">
+                <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                <h4>Xác nhận thanh toán</h4>
+                    <%--                        <p>14:27 20/10/2023</p>--%>
+                <p><%= formattedDate %>
+                </p>
+            </div>
+            <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">
+                <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                <h4> Đã giao cho DVVC</h4>
+                <p><%= formattedDate %>
+                </p>
+            </div>
+            <div class="col-lg-2 status-item" id="status" data-status-id="4"
+                 data-status="Đơn hàng đang được giao">
+                <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                <h4>Đơn hàng đang được giao</h4>
+                <p><%= formattedDate %>
+                </p>
+            </div>
+            <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
+                <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
+                     class="trang-thai">
+                <h4>Hoàn thành</h4>
+                <p><%= formattedDate %>
+                </p>
+            </div>
+            <div class="inline"></div>
+            <div class="stepper__line">
+                <div class="stepper__line-background"></div>
+                <div class="stepper__line-foreground"></div>
+            </div>
+        </div>
+        </div>
+        </c:if>
+        <c:if test="${hoaDon.loaiHoaDon==1}">
             <div class="status-order" id="status-order">
                 <div class="row">
                         <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>
@@ -223,27 +288,7 @@
                         <p><%= formattedDate %>
                         </p>
                     </div>
-                    <div class="col-lg-2 status-item" id="status" data-status-id="2"
-                         data-status="Đã xác nhận thanh toán">
-                        <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4>Xác nhận thanh toán</h4>
-                            <%--                        <p>14:27 20/10/2023</p>--%>
-                        <p><%= formattedDate %>
-                        </p>
-                    </div>
-                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">
-                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4> Đã giao cho DVVC</h4>
-                        <p><%= formattedDate %>
-                        </p>
-                    </div>
-                    <div class="col-lg-2 status-item" id="status" data-status-id="4"
-                         data-status="Đơn hàng đang được giao">
-                        <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4>Đơn hàng đang được giao</h4>
-                        <p><%= formattedDate %>
-                        </p>
-                    </div>
+
                     <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
@@ -251,34 +296,17 @@
                         <p><%= formattedDate %>
                         </p>
                     </div>
-                        <%--                        ;;;;;--%>
-                        <%--                <div class="col-lg-2 status-item" data-status-id="5" data-status="Đã huỷ">--%>
-                        <%--                    <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
-                        <%--                    <h4>Đơn hàng đã được hủy</h4>--%>
-                        <%--                    <p>14:27 20/10/2023</p>--%>
-                        <%--                </div>--%>
-                        <%--                <div class="col-lg-2 status-item" data-status-id="6" data-status="Đổi trả hàng">--%>
-                        <%--                    <img src="../../../img/istockphoto-1707893816-612x612.jpg" style="width: 60px; height: 60px;"--%>
-                        <%--                         class="trang-thai">--%>
-                        <%--                    <h4>Đổi trả</h4>--%>
-                        <%--                    <p>14:27 20/10/2023</p>--%>
-                        <%--                </div>--%>
-                        <%--                <div class="col-lg-2 status-item" data-status-id="7" data-status="Đã trả hàng">--%>
-                        <%--                    <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
-                        <%--                    <h4>Đơn hàng đã trả</h4>--%>
-                        <%--                    <p>14:27 20/10/2023</p>--%>
-                        <%--                </div>--%>
+
                     <div class="inline"></div>
-                    <div class="stepper__line">
-                        <div class="stepper__line-background"></div>
-                        <div class="stepper__line-foreground"></div>
+                    <div class="stepper__line2">
+                        <div class="stepper__line-background2"></div>
+                        <div class="stepper__line-foreground2"></div>
                     </div>
                 </div>
-
             </div>
         </c:if>
 
-        <%--        trạng thái chờ xác nhận--%>
+            <%--        trạng thái chờ xác nhận--%>
         <c:if test="${hoaDon.trangThai== 1}">
             <h1 style="color: #2c9faf">Chờ xác nhận <i class="bi bi-calendar-check"></i></h1>
             <hr class="border border-primary border-2 opacity-50">
@@ -288,7 +316,7 @@
             <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"
                onclick="return confirm('Bạn có chắc muốn huỷ đơn hàng ?');" style="border-radius: 20px">Huỷ</a>
         </c:if>
-        <%--        trạng thái đang chuẩn bị--%>
+            <%--        trạng thái đang chuẩn bị--%>
         <c:if test="${hoaDon.trangThai== 2}">
             <h1 style="color: red">Chuẩn bị <i class="bi bi-box-seam"></i></h1>
             <hr class="border border-primary border-2 opacity-50">
@@ -436,14 +464,29 @@
                         <th scope="col">Tên khách hàng</th>
                         <td></td>
                         <td></td>
-                        <td>${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}</td>
+                        <td>
+                            <c:if test="${hoaDon.tenNguoiNhan == null && hoaDon.sdt == null && hoaDon.diaChiShip == null}">
+                                ${hoaDon.tenNguoiNhan}
+                            </c:if>
+                            <c:if test="${hoaDon.tenNguoiNhan != null && hoaDon.sdt != null && hoaDon.diaChiShip != null}">
+                                ${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}
+                            </c:if>
+
+                        </td>
                     </tr>
                     <tr>
                         <th scope="col">SĐT</th>
                         <td></td>
                         <td></td>
                         <td>
+                            <c:if test="${hoaDon.tenNguoiNhan == null && hoaDon.sdt == null && hoaDon.diaChiShip == null}">
+                                ${hoaDon.sdt}
+                            </c:if>
+                            <c:if test="${hoaDon.tenNguoiNhan != null && hoaDon.sdt != null && hoaDon.diaChiShip != null}">
+
                                 ${hoaDon.khachHang.soDienThoai}
+                            </c:if>
+
                         </td>
                     </tr>
                     <tr>
@@ -451,103 +494,117 @@
                         <td></td>
                         <td></td>
                         <td>
+                            <c:if test="${hoaDon.tenNguoiNhan == null && hoaDon.sdt == null && hoaDon.diaChiShip == null}">
+                                ${hoaDon.diaChiShip}
+                            </c:if>
+                            <c:if test="${hoaDon.tenNguoiNhan != null && hoaDon.sdt != null && hoaDon.diaChiShip != null}">
+
                                 ${hoaDon.khachHang.diaChi}
+                            </c:if>
+
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="col">Email</th>
-                        <td></td>
-                        <td></td>
-                        <td>
-                                ${hoaDon.khachHang.email}
-                        </td>
-                    </tr>
+                        <%--                    <tr>--%>
+                        <%--                        <th scope="col">Email</th>--%>
+                        <%--                        <td></td>--%>
+                        <%--                        <td></td>--%>
+                        <%--                        <td>--%>
+                        <%--                            <c:if test="${hd.tenNguoiNhan == null && hd.sdt == null && hd.diaChiShip == null}">--%>
+                        <%--                                ${hd.diaChiShip}--%>
+                        <%--                            </c:if>--%>
+                        <%--                            <c:if test="${hd.tenNguoiNhan =! null && hd.sdt =! null && hd.diaChiShip =! null}">--%>
+
+                        <%--                                ${hoaDon.khachHang.diaChi}--%>
+                        <%--                            </c:if>--%>
+
+                        <%--                        </td>--%>
+                        <%--                    </tr>--%>
 
                 </table>
             </div>
 
         </div>
-    </form:form>
+        </form:form>
 
-    <hr class="border border-danger border-2 opacity-50">
+        <hr class="border border-danger border-2 opacity-50">
 
-    <form:form modelAttribute="hoaDon">
-        <%--        <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"--%>
-        <%--           class="btn btn-warning">Cập nhật</a>--%>
+        <form:form modelAttribute="hoaDon">
+            <%--        <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--           class="btn btn-warning">Cập nhật</a>--%>
 
-        <h2>Thông tin sản phẩm</h2>
-        <br>
-        <div class="row">
-            <table class="table table-striped">
-                <thead class="hoa-don-chi-tiet-thead">
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên Sản Phẩm</th>
-                    <th scope="col">Đơn Giá</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Hình ảnh</th>
-                    <th scope="col">Thành Tiền</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${hoaDon.hoaDons}" varStatus="stt" var="hdct">
+            <h2>Thông tin sản phẩm</h2>
+            <br>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead class="hoa-don-chi-tiet-thead">
                     <tr>
-                        <th scope="row">${stt.index + 1}</th>
-                        <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
-                        <td>
-                            <fmt:formatNumber value="${hdct.donGia}"
-                                              type="number"/>
-                        </td>
-                        <td>${hdct.soLuong}</td>
-                        <td>
-                            <img src="../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
-                                 height="100px"/>
-
-                        </td>
-                        <td>
-                            <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
-                                              type="number"/>
-                        </td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên Sản Phẩm</th>
+                        <th scope="col">Đơn Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Thành Tiền</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <c:set var="hoaDonId" value="${hoaDon.id}"/>
-    </form:form>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${hoaDon.hoaDons}" varStatus="stt" var="hdct">
+                        <tr>
+                            <th scope="row">${stt.index + 1}</th>
+                            <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
+                            <td>
+                                <fmt:formatNumber value="${hdct.donGia}"
+                                                  type="number"/>
+                            </td>
+                            <td>${hdct.soLuong}</td>
+                            <td>
+                                <img src="../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
+                                     height="100px"/>
 
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const statusItems = document.querySelectorAll(".status-item");
-        const hoaDonTrangThai = "${hoaDon.trangThai}";
+                            </td>
+                            <td>
+                                <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
+                                                  type="number"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <c:set var="hoaDonId" value="${hoaDon.id}"/>
+        </form:form>
 
-        statusItems.forEach(function (item) {
-            const status = item.getAttribute("data-status-id");
-            const imgElement = item.querySelector("img");
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusItems = document.querySelectorAll(".status-item");
+            const hoaDonTrangThai = "${hoaDon.trangThai}";
 
-            item.style.border = "none";
-            item.style.borderRadius = "0%";
-            imgElement.style.border = "4px solid rgb(45, 194, 88)";
-            imgElement.style.borderRadius = "90%";
-            if (status == 8) {
-                document.getElementById("status-order").hidden = true;
-            }
+            statusItems.forEach(function (item) {
+                const status = item.getAttribute("data-status-id");
+                const imgElement = item.querySelector("img");
 
-            if (status > hoaDonTrangThai) {
-
-                document.getElementById("status").textShadow = "inset 6px -1px 15px 20px #888888";
-                imgElement.style.border = "4px solid #D9D9D9";
-                imgElement.style.borderRadius = "90%";
-
-            } else {
+                item.style.border = "none";
+                item.style.borderRadius = "0%";
                 imgElement.style.border = "4px solid rgb(45, 194, 88)";
-                imgElement.style.textShadow = "inset 6px -1px 15px 20px #888888";
                 imgElement.style.borderRadius = "90%";
+                if (status == 8) {
+                    document.getElementById("status-order").hidden = true;
+                }
+
+                if (status > hoaDonTrangThai) {
+
+                    document.getElementById("status").textShadow = "inset 6px -1px 15px 20px #888888";
+                    imgElement.style.border = "4px solid #D9D9D9";
+                    imgElement.style.borderRadius = "90%";
+
+                } else {
+                    imgElement.style.border = "4px solid rgb(45, 194, 88)";
+                    imgElement.style.textShadow = "inset 6px -1px 15px 20px #888888";
+                    imgElement.style.borderRadius = "90%";
 
 
-            }
+                }
 
+            });
         });
-    });
-</script>
+    </script>
