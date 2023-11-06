@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -67,6 +68,9 @@ public class ChiTietSanPham {
     String moTaCT;
 
     @Column(name = "NgayTao")
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "không để trống")
     Date ngayTao;
 
 
@@ -80,12 +84,14 @@ public class ChiTietSanPham {
     @OneToMany(mappedBy = "ctsp")
     private List<GioHangChiTiet> gioHangChiTiet;
 
+    @OneToMany(mappedBy = "ctsp")
+    private List<ChiTietKhuyenMai> ctkm;
+
     public void loadFromViewModel(QLSanPham vm) {
         this.setChatLieu(vm.getChatLieu());
         this.setDeGiay(vm.getDeGiay());
         this.setGiaBan(vm.getGiaBan());
         this.setKichCo(vm.getKichCo());
-
         this.setSanPham(vm.getSanPham());
         this.setTrangThai(vm.getTrangThai());
         this.setMoTaCT(vm.getMoTaCT());
