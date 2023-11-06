@@ -122,9 +122,11 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\tand kc.size = ?3", nativeQuery = true)
     String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
+
     @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
             "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
             "GROUP BY c2.sanPham.id, c2.mauSac.id)")
+
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 

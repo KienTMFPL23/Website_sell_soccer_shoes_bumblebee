@@ -273,11 +273,13 @@ public class BanHangTaiQuayController {
             String format = sdf.format(date);
             hoaDonThanhToan.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
             hoaDonThanhToan.setNhanVien(nhanVien);
-            hoaDonThanhToan.setTrangThai(1);
+            hoaDonThanhToan.setTrangThai(5);
             hoaDonThanhToan.setSdt(soDienThoai);
             KhachHang khachHang = khachHangRepository.findKHBySDT(soDienThoai);
+
             hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
             hoaDonThanhToan.setPhuongThucThanhToan(1);
+
             hoaDonThanhToan.setGhiChu(ghiChu);
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
@@ -289,6 +291,7 @@ public class BanHangTaiQuayController {
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
+
         String formatKH = "KH" + String.format("%07d", maKhachHang);
         KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
         if (checkMa != null) {
@@ -302,7 +305,7 @@ public class BanHangTaiQuayController {
         }
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
-        addKhachHang.setTrangThai(1);
+        addKhachHang.setTrangThai(5);
         khachHangService.saveKhachHang(addKhachHang);
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
     }
