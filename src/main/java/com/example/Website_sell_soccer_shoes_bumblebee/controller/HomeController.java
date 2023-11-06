@@ -639,8 +639,20 @@ public class HomeController {
                        @ModelAttribute("sortForm") SortForm sortForm,
                        @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
                        HttpSession session) {
-        Sort sort = Sort.by(Sort.Direction.ASC, sortForm.key);
-        Pageable pageable = PageRequest.of(p, 12, sort);
+        Sort sort;
+        Pageable pageable;
+        if (sortForm.key.equals("giaBanTangDan")) {
+            sort = Sort.by(Sort.Direction.ASC, "giaBan");
+            pageable = PageRequest.of(p, 12, sort);
+        } else if (sortForm.key.equals("giaBanGiamDan")) {
+            sort = Sort.by(Sort.Direction.DESC, "giaBan");
+            pageable = PageRequest.of(p, 12, sort);
+        } else if (sortForm.key.equals("moiNhat")) {
+            sort = Sort.by(Sort.Direction.DESC, "ngayTao");
+            pageable = PageRequest.of(p, 12, sort);
+        }else{
+            pageable = PageRequest.of(p, 12);
+        }
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
         List<ChiTietSanPham> listSP = chiTietSanPhamService.getList();
         List<LoaiGiay> listLG = loaiGiayService.findAll();
