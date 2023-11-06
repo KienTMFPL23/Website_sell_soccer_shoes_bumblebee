@@ -6,18 +6,17 @@
         placeholder: "Search Loai Giay ....",
         ajax: {
             type: 'GET',
-            url: '/chi-tiet-san-pham/search2-loai-giay',
+            url: '/bumblebee/khuyen-mai/list',
             data: function (params) {
                 return {
                     keyword: params.term || '',
-
                 };
             },
             processResults: function (data) {
                 return {
                     results: $.map(data, function (item) {
                         return {
-                            text: item.tentheloai,
+                            text: item.tenKhuyenMai,
                             id: item.id
                         }
                     })

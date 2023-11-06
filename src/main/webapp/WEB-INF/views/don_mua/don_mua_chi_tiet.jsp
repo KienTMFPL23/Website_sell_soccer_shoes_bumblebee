@@ -273,7 +273,7 @@
                         <h4>Đổi trả</h4>
                         <p>14:27 20/10/2023</p>
                     </div>
-                    <div class="col-lg-2" style="display: none;">
+                    <div class="col-lg-2">
                         <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Đơn hàng đã được hủy</h4>
                         <p>14:27 20/10/2023</p>
@@ -285,11 +285,11 @@
                         <div class="stepper__line-foreground" id="content1"></div>
                     </div>
                 </div>
-                <div>
-                    <button type="button" id="id1">Button</button>
-                    <button type="button" id="id2">Button</button>
-                    <button type="button" id="id3">Button</button>
-                </div>
+<%--                <div>--%>
+<%--                    <button type="button" id="id1">Button</button>--%>
+<%--                    <button type="button" id="id2">Button</button>--%>
+<%--                    <button type="button" id="id3">Button</button>--%>
+<%--                </div>--%>
             </div>
 
             <div class="table">
