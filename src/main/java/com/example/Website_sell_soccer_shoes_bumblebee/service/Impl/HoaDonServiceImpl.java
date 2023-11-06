@@ -108,6 +108,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         NhanVien nhanVien = nhanVienRepository.findByIdTaiKhoan(taiKhoan.getId());
         hoaDon.setNhanVien(nhanVien);
         hoaDon.setTrangThai(0);
+        hoaDon.setLoaiHoaDon(1);
         return hoaDonRepository.save(hoaDon);
     }
 

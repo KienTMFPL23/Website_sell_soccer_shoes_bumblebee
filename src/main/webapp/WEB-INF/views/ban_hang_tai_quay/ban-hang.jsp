@@ -8,6 +8,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ban Hang</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+            href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+            rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -25,6 +31,8 @@
             crossorigin="anonymous"></script>
     <link rel="icon" href="../../../images_template/logo_bumblebee.png">
     <link href="/css/ban-hang/ban-hang.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
 </head>
 <style>
     #myInput {
@@ -52,11 +60,11 @@
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
                     <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
-                            src="/images_template/deleteHD.png"></a>
+                            src="/images_template/deleteHD.png" onclick="alertDelete()"></a>
                 </div>
             </c:forEach>
             <div style="margin-left: 20px">
-                <a id="themHoaDon" onclick="showAlertHoaDon(event)" form
+                <a id="themHoaDon" onclick="showAlertHoaDon(event)"
                    href="/bumblebee/ban-hang-tai-quay/create-hoadon"><img
                         src="/images_template/add.png"></a>
             </div>
@@ -254,7 +262,7 @@
                                                     type="number"/></td>
                                         <td>
                                             <a
-                                               href="/bumblebee/ban-hang-tai-quay/delete-hdct/${hdct.id}">
+                                                    href="/bumblebee/ban-hang-tai-quay/delete-hdct/${hdct.id}">
                                                 <img src="../../../img/delete.png">
                                             </a>
                                         </td>
@@ -348,7 +356,11 @@
         </div>
     </div>
 </div>
-</div>
+<script>
+    $(document).ready(function () {
+        $("#phoneNumber").select2();
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
@@ -359,8 +371,10 @@
         </c:forEach>
     };
 
-    function getTenKhachHang(sdt) {
+    function getTenKhachHang() {
         let textName = document.getElementById("tenKhachHang");
+        var comboBox = document.getElementById("phoneNumber");
+        var sdt = comboBox.value;
         if (sdt === "") {
             textName.innerText = "Không tìm thấy khách hàng nào";
         } else if (data[sdt] !== undefined) {
@@ -456,12 +470,12 @@
     });
 </script>
 
-<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
-
+<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
+<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -470,6 +484,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 <script src="../../../js/ban_hang_tai_quay/them-khach-hang.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     function downloadComplete() {
 
@@ -480,7 +496,6 @@
         return true;
     }
 </script>
-
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;
@@ -495,10 +510,29 @@
 </script>
 <script>
     var soLuongHoaDon = ${soLuongHD};
+
     function showAlertHoaDon(event) {
         if (soLuongHoaDon === 5) {
-            alert("Tối đa tạo 5 hóa đơn chờ!!!");
+            Swal.fire({
+                icon: 'error',
+                title: 'Tối đa tạo 5 hóa đơn chờ !!!',
+            })
             event.preventDefault();
+        }
+    }
+</script>
+<script>
+    function alertDelete() {
+        Swal.fire({
+            title: 'Bạn có muốn xóa hóa đơn?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No',
+        })
+        if (Swal.fire()) {
+            return true;
+        } else {
+            return false;
         }
     }
 </script>

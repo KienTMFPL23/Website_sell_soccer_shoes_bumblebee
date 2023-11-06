@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $("#sendKhachHang").submit(function () {
+    $("#sendKhachHang").submit(function (event) {
+        event.preventDefault();
         var requestData = {
             "ten": document.getElementById('customer').value,
             "soDienThoai": document.getElementById('getSDT').value
@@ -10,7 +11,6 @@ $(document).ready(function () {
             data: requestData,
             success: function (event) {
                 event.preventDefault();
-                console.log("thanh cong");
             },
             error: function () {
                 $("#ten").html("Error send data");
