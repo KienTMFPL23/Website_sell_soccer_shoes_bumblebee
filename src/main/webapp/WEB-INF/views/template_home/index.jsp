@@ -38,7 +38,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <%@include file="header.jsp" %>
-<jsp:include page="${view}"/>
+<div>
+    <jsp:include page="${view}"/>
+</div>
 <%@include file="footer.jsp" %>
 
 <!-- JS Library-->
@@ -56,17 +58,9 @@
 <script type="text/javascript" src="../../../plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="../../../plugins/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
-<script type="text/javascript"
-        src="../../../plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
-<script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
 <script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script type="text/javascript"
-        src="../../../plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
 <script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
 <script type="text/javascript"

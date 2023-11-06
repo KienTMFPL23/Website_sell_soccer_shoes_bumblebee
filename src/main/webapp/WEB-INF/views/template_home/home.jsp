@@ -2,39 +2,47 @@
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <main class="ps-main">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="/img/banner3.jpg" height="565px" alt="First slide">
+    <div class="banner" style="">
+        <div class="container">
+            <div class="col-md-3">
+                <div class="banner-left">
+                    <img src="/img/banner-left.jpg" height="300px" style="width: 100%">
+                </div>
             </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/banner1.jpg" height="565px" alt="Second slide">
+            <div class="col-md-6">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height: 300px">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="/img/banner3.jpg" height="300px" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="/img/banner1.jpg" height="300px" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="/img/banner2.jpg" height="300px" alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/banner2.jpg" height="565px" alt="Third slide">
+            <div class="col-md-3">
+                <div class="banner-right">
+                    <img src="/img/banner-right.jpg" height="300px" style="width: 100%">
+                </div>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
     <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100">
         <div class="ps-container">
             <div class="ps-section__header mb-50">
                 <h3 class="ps-section__title" data-mask="features">SẢN PHẨM TIÊU BIỂU</h3>
-                <ul class="ps-masonry__filter">
-                    <li class="current"><a href="#" data-filter="*">All </a></li>
-                    <li><a href="#" data-filter=".nike">Nike </a></li>
-                    <li><a href="#" data-filter=".adidas">Adidas </a></li>
-                    <li><a href="#" data-filter=".men">Men </a></li>
-                    <li><a href="#" data-filter=".women">Women </a></li>
-                    <li><a href="#" data-filter=".kids">Kids </a></li>
-                </ul>
             </div>
             <div class="ps-section__content pb-50">
                 <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="30"
@@ -111,19 +119,23 @@
                                                         <p>Chọn Size</p>
                                                         <select id="kichCoSelect_${item.sanPham.id}_${item.mauSac.id}"
                                                                 class="form-control"
-                                                                style="width: 100px;font-size: 15px"  name="kichCo" onchange="selectSize('${item.sanPham.id}','${item.mauSac.id}')">
+                                                                style="width: 100px;font-size: 15px" name="kichCo"
+                                                                onchange="selectSize('${item.sanPham.id}','${item.mauSac.id}')">
                                                             <option id=""></option>
                                                         </select>
                                                     </div>
                                                     <div class="soLuongAddCart">
                                                         <p>Chọn số lượng</p>
                                                         <input type="number" style="width: 100px;font-size: 15px"
-                                                               name="soLuong" value="1" class="slchon"
-                                                               onchange="themsl(this.value)">
+                                                               name="soLuong" value="1" id="slchon"
+                                                               onchange="thayDoiSoLuong('${item.sanPham.id}','${item.mauSac.id}')"
+                                                               oninput="chonSoLuong('${item.sanPham.id}','${item.mauSac.id}',event)">
                                                     </div>
-                                                    <p style="margin-top: 10px">${item.soLuong} sản phẩm có sẵn</p>
-                                                    <input type="hidden" value="${item.soLuong}"
-                                                           id="slcosan">
+                                                    <p style="margin-top: 10px"><span
+                                                            id="slsp_${item.sanPham.id}_${item.mauSac.id}">${item.soLuong}</span>
+                                                        sản phẩm có sẵn</p>
+                                                    <input type="hidden"
+                                                           id="spcosan_${item.sanPham.id}_${item.mauSac.id}">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -131,6 +143,7 @@
                                                         data-dismiss="modal">Đóng
                                                 </button>
                                                 <button class="btn"
+                                                        id="btn-themgh_${item.sanPham.id}_${item.mauSac.id}"
                                                         style="font-size:15px;background-color: #37517E; color: white"
                                                         href="/bumblebee/add-to-cart">Thêm vào giỏ hàng
                                                 </button>
@@ -264,18 +277,6 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
-    function selectSize(x,y) {
-        var size = $("#op-size").val();
-        console.log(size);
-    }
-
-    function themsl(slchon) {
-        var slcosan = document.getElementById("slcosan");
-        console.log(slcosan.value);
-        console.log(slchon);
-    }
-
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");
@@ -299,6 +300,38 @@
             });
         });
     });
+    var response = null;
+
+    function selectSize(idsp, idms) {
+        var kichCo = document.getElementById("kichCoSelect_" + idsp + "_" + idms).value;
+        var idMS = idms;
+        var idSP = idsp;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/bumblebee/select-slsp?idMS=" + idMS + "&idSP=" + idSP + "&size=" + kichCo, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                response = xhr.responseText;
+                console.log(response);
+                document.getElementById("slsp_" + idSP + "_" + idMS).innerHTML = response;
+                if (Number(response) === 0) {
+                    $("#btn-themgh").prop("disabled", true);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function chonSoLuong(idSP, idMS, event) {
+        var slcosan = document.getElementById("slsp_" + idSP + "_" + idMS).innerHTML;
+        console.log(slcosan);
+        const newValue = event.target.value;
+        console.log(newValue)
+        if (Number(newValue) > Number(slcosan) || Number(newValue) <= 0) {
+            $("#btn-themgh_" + idSP + "_" + idMS).prop("disabled", true);
+        } else {
+            $("#btn-themgh_" + idSP + "_" + idMS).prop("disabled", false);
+        }
+    }
 </script>
 
 

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,6 +65,9 @@ public class ChiTietSanPham {
     @Column(name = "MoTaCT")
     @NotBlank(message = "không để trống")
     String moTaCT;
+
+    @Column(name = "NgayTao")
+    Date ngayTao;
 
 
     @Column(name = "Trangthai")
