@@ -278,7 +278,7 @@
         </div>
         </div>
         </c:if>
-        <c:if test="${hoaDon.loaiHoaDon==1}">
+        <c:if test="${hoaDon.trangThai < 6 &&hoaDon.loaiHoaDon==1}">
             <div class="status-order" id="status-order">
                 <div class="row">
                         <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>

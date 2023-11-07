@@ -100,6 +100,7 @@ public class DonHangController {
     //7 : đã hoàn trả
     //8 : đã huỷ
     // xác nhận -> đang chuẩn bị
+    //loại đơn: 0:on/ 1:tại quầy
 
 
     @RequestMapping("/don-hang/update-xac-nhan/{id}")
