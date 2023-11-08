@@ -284,6 +284,10 @@ public class BanHangTaiQuayController {
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
+            model.addAttribute("successThanhToan","Thanh toán thất bại");
+        }else {
+            model.addAttribute("errorThanhToan","Thanh toan that bai");
+            return "redirect:/bumblebee/ban-hang-tai-quay/sell";
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }

@@ -66,7 +66,7 @@
                                 Chủ</a>
                             </li>
                             <li class="menu-item"><a href="/bumblebee/product_list">Sản Phẩm</a></li>
-                            <li class="menu-item"><a href="#">Giới Thiệu</a>
+                            <li class="menu-item"><a href="/bumblebee/chinh-sach-doi-tra">Chính sách đổi trả</a>
                             </li>
                             <li class="menu-item"><a href="#">Liên Hệ</a></li>
                         </ul>
