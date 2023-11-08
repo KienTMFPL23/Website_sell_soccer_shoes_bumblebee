@@ -770,4 +770,10 @@ public class HomeController {
 
         return "template_home/index";
     }
+
+    @GetMapping("/bumblebee/chinh-sach-doi-tra")
+    public String chinhSach(Model model){
+        model.addAttribute("view", "../template_home/chinh-sach.jsp");
+        return "template_home/index";
+    }
 }

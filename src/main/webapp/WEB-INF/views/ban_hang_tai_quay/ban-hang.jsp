@@ -60,7 +60,7 @@
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
                     <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
-                            src="/images_template/deleteHD.png" onclick="alertDelete()"></a>
+                            src="/images_template/deleteHD.png"></a>
                 </div>
             </c:forEach>
             <div style="margin-left: 20px">
@@ -315,7 +315,7 @@
 <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
 <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
-                                onclick="return confirm('Banj co muon thanh toan')"
+                                onclick="alertThanhToan()"
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
                             Thanh toán
                         </button>
@@ -533,6 +533,17 @@
             return true;
         } else {
             return false;
+        }
+    }
+</script>
+<script>
+    function alertThanhToan(){
+        var confirmResult =  confirm("Bạn có muốn thanh toán không?");
+        if (confirmResult == true ){
+            Swal.fire({
+                title: "Thanh toán thành công",
+                icon: "success"
+            });
         }
     }
 </script>
