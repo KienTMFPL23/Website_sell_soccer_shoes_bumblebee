@@ -68,9 +68,7 @@ public class ChiTietSanPham {
     String moTaCT;
 
     @Column(name = "NgayTao")
-
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @NotNull(message = "không để trống")
     Date ngayTao;
 
 

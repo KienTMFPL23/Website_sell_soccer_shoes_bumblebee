@@ -1,12 +1,10 @@
-
-
-    $(document).ready(function () {
+$(document).ready(function () {
     $('#searchName').select2({
         width: 150,
         placeholder: "Search Loai Giay ....",
         ajax: {
             type: 'GET',
-            url: '/bumblebee/khuyen-mai/list',
+            url: '/chi-tiet-san-pham/search2-loai-giay',
             data: function (params) {
                 return {
                     keyword: params.term || '',
@@ -16,7 +14,7 @@
                 return {
                     results: $.map(data, function (item) {
                         return {
-                            text: item.tenKhuyenMai,
+                            text: item.tentheloai,
                             id: item.id
                         }
                     })
