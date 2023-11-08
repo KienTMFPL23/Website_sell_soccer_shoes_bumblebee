@@ -408,7 +408,7 @@ public class HomeController {
         hoaDon.setSdt(sdt);
         hoaDon.setDiaChiShip(diaChiShip);
         hoaDon.setGhiChu(ghiChu);
-        hoaDon.setLoaiHoaDon(1);
+        hoaDon.setLoaiHoaDon(0);
         if (payment.intValue() == 2) {
             return "redirect:/pay";
         } else {
@@ -491,9 +491,9 @@ public class HomeController {
                     hdct.setDonGia(ghct.getDonGia());
                     hdct.setTrangThai(3);
                     hoaDonChiTietService.save(hdct);
-                    //gioHangChiTietService.deleteGHCT(ghct.getId());
+                    gioHangChiTietService.deleteGHCT(ghct.getId());
                 }
-                return "redirect:/bumblebee/bill/" + hoaDon.getId();
+                return "redirect:/bumblebee/don-mua/cho-xac-nhan";
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
