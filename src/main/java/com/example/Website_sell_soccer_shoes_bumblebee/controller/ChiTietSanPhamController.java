@@ -157,16 +157,6 @@ public class ChiTietSanPhamController {
         return "/admin/index";
     }
 
-    // search 2 loại giầy
-    @GetMapping("/chi-tiet-san-pham/search2-loai-giay")
-    public ResponseEntity<?> search2LoaiGiay(@RequestParam(name = "keyword") String keyword) {
-
-        if (keyword == null || keyword == "") {
-            return ResponseEntity.ok(chiTietSanPhamRepo.listLoaiGiay());
-        } else {
-            return ResponseEntity.ok(service.search2("%" + keyword + "%"));
-        }
-    }
 
     @GetMapping("/chi-tiet-san-pham/search2-kich-co")
     public ResponseEntity<List<KichCo>> search2KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
