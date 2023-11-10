@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,25 +55,12 @@ public class KhuyenMaiController {
 
 
     @GetMapping("/bumblebee/khuyen-mai/list")
-    public String hienThi(
-            Model model,
-            @RequestParam(defaultValue = "0", name = "p1") Integer page1,
-            @RequestParam(defaultValue = "0", name = "p2") Integer page2
-    ) {
+    public String hienThi( Model model) {
         // Quản lý khuyến mại
-        if (page1 < 0) {
-            page1 = 0;
-        }
-        Pageable pageable1 = PageRequest.of(page1, 10);
-        Page<KhuyenMai> list = khuyenMaiService.getAll(pageable1);
-        model.addAttribute("page", list);
 
+        model.addAttribute("page", khuyenMaiService.findAll());
         // Sản phẩm khuyến mại
-        if (page2 < 0) {
-            page2 = 0;
-        }
-        Pageable pageable2 = PageRequest.of(page2, 10);
-        Page<ChiTietKhuyenMai> listCTKM = chiTietKhuyenMaiService.getAll(pageable2);
+        List<ChiTietKhuyenMai> listCTKM = chiTietKhuyenMaiRepository.findAll();
         model.addAttribute("listCTKM", listCTKM);
 
         model.addAttribute("listCTSP", chiTietSanPhamService.getList());
@@ -231,6 +219,37 @@ public class KhuyenMaiController {
         String format = sdf.format(date);
         km.setNgayTao(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(format));
         khuyenMaiService.save(km);
+        return "redirect:/bumblebee/khuyen-mai/list";
+
+    }
+
+    @GetMapping("/bumblebee/khuyen-mai/view-update-ctkm/{id}")
+    public String viewUpdateCTKM(Model model, @PathVariable(name = "id") UUID id) {
+        ChiTietKhuyenMai chiTietKhuyenMai = chiTietKhuyenMaiService.findID(id);
+        model.addAttribute("ctkm", chiTietKhuyenMai);
+        model.addAttribute("action", "/bumblebee/khuyen-mai/update-ctkm/" + chiTietKhuyenMai.getId());
+
+        model.addAttribute("view", "../khuyen-mai/update_ctkm.jsp");
+        return "admin/index";
+    }
+
+    @PostMapping("/bumblebee/khuyen-mai/update-ctkm/{id}")
+    public String updateCTKM(
+            Model model,
+            @PathVariable(name = "id") UUID id,
+            @RequestParam(name = "ngayBatDau") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayBatDau,
+            @RequestParam(name = "ngayKetThuc") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayKetThuc
+            ) {
+        ChiTietKhuyenMai ctkm = chiTietKhuyenMaiService.findID(id);
+        LocalDateTime localDateTimeNgayBatDau = ngayBatDau;
+        Instant instant1 = localDateTimeNgayBatDau.atZone(ZoneId.systemDefault()).toInstant();
+        Date date1 = Date.from(instant1);
+        ctkm.setNgayBatDau(date1);
+        LocalDateTime localDateTimeNgayKetThuc = ngayKetThuc;
+        Instant instant2 = localDateTimeNgayKetThuc.atZone(ZoneId.systemDefault()).toInstant();
+        Date date2 = Date.from(instant2);
+        ctkm.setNgayKetThuc(date2);
+        chiTietKhuyenMaiService.save(ctkm);
         return "redirect:/bumblebee/khuyen-mai/list";
 
     }

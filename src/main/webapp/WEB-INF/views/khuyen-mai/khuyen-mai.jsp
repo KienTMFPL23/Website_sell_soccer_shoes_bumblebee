@@ -4,6 +4,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 
@@ -124,6 +125,27 @@
         margin-bottom: 10px;
     }
 
+    ui.table > thead > tr > th {
+        background-color: #37517E;
+        color: #FFFFFF;
+        font-size: 28px;
+    }
+
+    .ui.form input[type=search] {
+        background: #fff;
+        border: 2px solid #37517E;
+        border-radius: 20px;
+        width: 400px;
+    }
+
+    .ui input {
+        border-radius: 20px;
+    }
+
+    .ui.table > tbody > tr > td {
+        font-size: 16px;
+    }
+
 
 </style>
 <body>
@@ -145,13 +167,11 @@
             </a>
         </div>
     </div>
+<%--    <input id="myInput1" placeholder="Tìm kiếm sản phẩm">--%>
+<%--    <div>--%>
 
-    <input id="myInput1" placeholder="Tìm kiếm sản phẩm">
-    <div>
-
-    </div>
-    <div class="table">
-        <table>
+<%--    </div>--%>
+        <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>STT</th>
@@ -166,12 +186,12 @@
             </thead>
 
             <tbody id="myTable1">
-            <c:forEach items="${page.content}" var="km" varStatus="i">
+            <c:forEach items="${page}" var="km" varStatus="i">
                 <tr>
                     <td>${i.index + 1}</td>
                     <td>${km.maKhuyenMai}</td>
                     <td>${km.tenKhuyenMai}</td>
-                    <td>${km.giaTri}</td>
+                    <td>${km.giaTri * 100}%</td>
                     <td>${km.ngayTao}</td>
                     <td>
                         <c:if test="${km.trangThai == 0}">Hoạt động</c:if>
@@ -295,22 +315,7 @@
             </c:forEach>
             </tbody>
         </table>
-    </div>
-    <div class="text-center">
-        <nav aria-label="Page navigation text-center">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href=/bumblebee/khuyen-mai/list?p1=0">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link"
-                                         href="/bumblebee/khuyen-mai/list?p1=${page.number-1}"><<</a></li>
-                <li class="page-item"><a class="page-link"
-                                         href="/bumblebee/khuyen-mai/list?p1=${page.number+1}">>></a></li>
-                <li class="page-item"><a class="page-link"
-                                         href="/bumblebee/khuyen-mai/list?p1=${page.totalPages-1}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+
 </div>
 
 <div id="Paris" class="tabcontent">
@@ -318,10 +323,8 @@
         <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>
     </div>
 
-    <input id="myInput2" placeholder="Tìm kiếm sản phẩm">
 
-    <div class="table">
-        <table>
+        <table id="tableChiTietKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>STT</th>
@@ -333,16 +336,17 @@
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Trạng thái</th>
+                <th></th>
             </tr>
             </thead>
 
             <tbody id="myTable2">
-            <c:forEach items="${listCTKM.content}" var="ctkm" varStatus="i">
+            <c:forEach items="${listCTKM}" var="ctkm" varStatus="i">
                 <tr>
                     <td>${i.index + 1}</td>
                     <td>${ctkm.ctsp.sanPham.tenSanPham}</td>
                     <td>${ctkm.khuyenMai.maKhuyenMai}</td>
-                    <td>${ctkm.khuyenMai.giaTri}</td>
+                    <td>${ctkm.khuyenMai.giaTri * 100}%</td>
                     <td>${ctkm.ctsp.giaBan}</td>
                     <td>${ctkm.ctsp.giaBan - (ctkm.khuyenMai.giaTri * ctkm.ctsp.giaBan)} </td>
                     <td>${ctkm.ngayBatDau}</td>
@@ -351,33 +355,41 @@
                         <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
                         <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
                     </td>
+                    <td>
+                        <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">
+                            <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>
+                        </a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
 
-    </div>
 
-    <div class="text-center">
-        <nav aria-label="Page navigation text-center">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href=/bumblebee/khuyen-mai/list?p2=0">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link"
-                                         href="/bumblebee/khuyen-mai/list?p2=${listCTKM.number-1}"><<</a></li>
-                <li class="page-item"><a class="page-link"
-                                         href="/bumblebee/khuyen-mai/list?p2=${listCTKM.number+1}">>></a></li>
-                <li class="page-item"><a class="page-link"
-                                         href="/bumblebee/khuyen-mai/list?p2=${listCTKM.totalPages-1}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
 
 </div>
 
-
 <script>
+    $(document).ready(function() {
+        $('#tableKhuyenMai').DataTable({
+            info: false,
+            language: {
+                search: "",
+                searchPlaceholder: "Tìm kiếm ......",
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#tableChiTietKhuyenMai').DataTable({
+            info: false,
+            language: {
+                search: "",
+                searchPlaceholder: "Tìm kiếm ......",
+            }
+        });
+    });
+
     function openCity(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -391,20 +403,6 @@
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-
-    $("#myInput1").keyup(function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable1 tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
-    $("#myInput2").keyup(function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable2 tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
 
     $("#myInput3").keyup(function () {
         var value = $(this).val().toLowerCase();
@@ -462,7 +460,6 @@
         }
 
     });
-
 
 </script>
 </body>

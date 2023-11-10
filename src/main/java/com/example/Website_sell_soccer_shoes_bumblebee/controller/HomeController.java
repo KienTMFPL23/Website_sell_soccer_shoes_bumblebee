@@ -495,9 +495,9 @@ public class HomeController {
                     hdct.setDonGia(ghct.getDonGia());
                     hdct.setTrangThai(3);
                     hoaDonChiTietService.save(hdct);
-                    //gioHangChiTietService.deleteGHCT(ghct.getId());
+                    gioHangChiTietService.deleteGHCT(ghct.getId());
                 }
-                return "redirect:/bumblebee/bill/" + hoaDon.getId();
+                return "redirect:/bumblebee/don-mua/cho-xac-nhan";
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
@@ -772,6 +772,12 @@ public class HomeController {
             model.addAttribute("view", "../template_home/product_listing.jsp");
         }
 
+        return "template_home/index";
+    }
+
+    @GetMapping("/bumblebee/chinh-sach-doi-tra")
+    public String chinhSach(Model model){
+        model.addAttribute("view", "../template_home/chinh-sach.jsp");
         return "template_home/index";
     }
 }

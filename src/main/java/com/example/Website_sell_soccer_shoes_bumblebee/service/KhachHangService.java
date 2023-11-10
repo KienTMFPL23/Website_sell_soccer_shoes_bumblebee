@@ -16,4 +16,7 @@ public interface KhachHangService {
 
     String searchMaxKH();
 
+    void createMaKH(KhachHang khachHang);
+
+    List<KhachHang>  getAllKHOderBy();
 }

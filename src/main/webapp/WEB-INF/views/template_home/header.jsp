@@ -42,6 +42,7 @@
                             <li><a href="#">Giới Thiệu</a></li>
                             <li><a href="#">Liên Hệ</a></li>
                             <li><a href="contact.html">Chính Sách</a></li>
+
                         </ul>
                         <ul class="navbar_user">
                             <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
