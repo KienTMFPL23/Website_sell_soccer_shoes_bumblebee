@@ -154,7 +154,7 @@ public class HomeController {
     @RequestMapping("/bumblebee/home")
     public String home(Model model, @RequestParam(defaultValue = "0") int p, HttpSession session) {
         int page = p; // Trang đầu tiên
-        int pageSize = 8;
+        int pageSize = 10;
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ChiTietSanPham> pageSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
         model.addAttribute("pageSP", pageSP);
@@ -319,18 +319,22 @@ public class HomeController {
     }
 
     @RequestMapping("/bumblebee/mua-ngay")
-    public String muaNgay(Model model, HttpSession session, @RequestParam UUID idCTSP, @RequestParam int soLuong) {
+    public String muaNgay(Model model, HttpSession session, @RequestParam int kichCo,
+                          @RequestParam UUID idMS,
+                          @RequestParam UUID idSP,
+                          @RequestParam int soLuong) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
             model.addAttribute("listKH", taiKhoan.getKhachHangKH());
             listGHCT = new ArrayList<>();
-            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+            KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
             GioHangChiTiet ghct = new GioHangChiTiet();
             ghct.setCtsp(chiTietSanPham);
             ghct.setSoLuong(soLuong);
-            ghct.setDonGia(chiTietSanPham.getGiaBan() * soLuong);
+            ghct.setDonGia(chiTietSanPham.getGiaBan());
             listGHCT.add(ghct);
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("totalPrice", chiTietSanPham.getGiaBan() * soLuong);
@@ -408,7 +412,7 @@ public class HomeController {
         hoaDon.setSdt(sdt);
         hoaDon.setDiaChiShip(diaChiShip);
         hoaDon.setGhiChu(ghiChu);
-        hoaDon.setLoaiHoaDon(1);
+        hoaDon.setLoaiHoaDon(0);
         if (payment.intValue() == 2) {
             return "redirect:/pay";
         } else {

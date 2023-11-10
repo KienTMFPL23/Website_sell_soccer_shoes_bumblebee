@@ -25,6 +25,12 @@
 <link rel="stylesheet" href="../../../css_template/style.css">
 <link rel="stylesheet" href="../../../css_update_template/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<%----%>
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/main_styles.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/responsive.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/animate.css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -67,3 +73,35 @@
         src="../../../plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
 <!-- Custom scripts-->
 <script type="text/javascript" src="../../../js_template/main.js"></script>
+<script>
+    function setHeader()
+    {
+        if(window.innerWidth < 992)
+        {
+            if($(window).scrollTop() > 100)
+            {
+                header.css({'top':"0"});
+            }
+            else
+            {
+                header.css({'top':"0"});
+            }
+        }
+        else
+        {
+            if($(window).scrollTop() > 100)
+            {
+                header.css({'top':"-50px"});
+            }
+            else
+            {
+                header.css({'top':"0"});
+            }
+        }
+        if(window.innerWidth > 991 && menuActive)
+        {
+            closeMenu();
+        }
+    }
+    setHeader();
+</script>

@@ -3,7 +3,6 @@ Create
 GO
 Use JAVA_DATN_Sell_Soccer_Shoes
 GO
-
 CREATE TABLE SanPham
 (
     Id         UNIQUEIDENTIFIER
@@ -240,5 +239,5 @@ CREATE TABLE ChiTietKhuyenMai
 )
 
 
-)
+
 
