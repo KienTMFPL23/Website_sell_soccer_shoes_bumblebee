@@ -1,111 +1,74 @@
 <%@ page pageEncoding="utf-8" %>
-<title>
-    Giày đá bóng Bumblebee
-</title>
 <link rel="icon" href="../../../images_template/logo_bumblebee.png">
-
-
-<header class="header_index header">
-    <div>
-        <div class="header_top">
-            <div class="container">
-                <div class="container-flex">
-                    <form class="ps-search" action="/bumblebee/product_list" style="width: 300px" method="post">
-                        <input type="text" placeholder="Search Product…">
-                        <button><i class="ps-icon-search"></i></button>
-                    </form>
-                    <div class="header-policy">
-                        <div class="item-policy item_policy_top_hed flex middle" bis_skin_checked="1">
-                            <a href="#">
-                                <img src="https://www.mayxaydungtudong.com/img/policy1.png" alt="">
-                            </a>
-                            <div class="info a-left" bis_skin_checked="1">
-                                <a href="#"><b>Giao hàng</b></a>
-                                <p>Miễn phí trên toàn quốc</p>
-                            </div>
-                        </div>
-                        <div class="item-policy flex middle" bis_skin_checked="1">
-                            <a href="#">
-                                <img src="https://www.mayxaydungtudong.com/img/icon-phone-header.jpg" alt="">
-                            </a>
-                            <div class="info a-left" bis_skin_checked="1">
-                                <a href="#"><b>Hỗ trợ 24/7</b></a>
-                                <div class="tit_header_box">
-                                    <p> Tư vấn khách hàng: <a href="tel:032 878 6363"> <b>032 878 6363</b></a></p>
-                                    <p> Chăm sóc khách hàng: <a href="tel:032 878 6363"> <b>094 357 2345</b></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-policy flex middle" bis_skin_checked="1">
-                            <a href="#">
-                                <img src="https://www.mayxaydungtudong.com/img/policy3.png" alt="x`">
-                            </a>
-                            <div class="info a-left" bis_skin_checked="1">
-                                <a href="#"><b>Giờ làm việc</b></a>
-                                <p>Tất cả các ngày trong tuần</p>
-                            </div>
-                        </div>
-                    </div>
+<div class="header">
+    <div class="top_nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="top_nav_left">free shipping on all u.s orders over $50</div>
                 </div>
-            </div>
-        </div>
-        <div class="header_bottom">
-            <div class="container">
-                <div class="container-flex">
-                    <div class="header_bottom--logo">
-                        <div class="img-logo">
-                            <a href="/bumblebee/home">
-                                <img src="../../../images_template/logo_bumblebee.png" width="50px">
-                                <span style="font-size: 18px;color: white;margin-left: 10px">Bumblebee</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="header_bottom--menu">
-                        <ul class="main-menu">
-                            <li class="menu-item"><a class="menu-link" href="/bumblebee/home">Trang
-                                Chủ</a>
+                <div class="col-md-6 text-right">
+                    <div class="top_nav_right">
+                        <ul class="top_nav_menu">
+                            <li class="account">
+                                <a href="#">
+                                    My Account
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="account_selection">
+                                    <li><a href="/bumblebee/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a></li>
+                                    <li><a href="/bumblebee/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
+                                    <li><a href="/bumblebee/register"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng kí</a></li>
+                                </ul>
                             </li>
-                            <li class="menu-item"><a href="/bumblebee/product_list">Sản Phẩm</a></li>
-                            <li class="menu-item"><a href="#">Giới Thiệu</a>
-                            </li>
-                            <li class="menu-item"><a href="#">Liên Hệ</a></li>
                         </ul>
-                    </div>
-                    <div>
-                        <div class="navigation__column right">
-                            <div class="info  user-icon" style="">
-                                <div class="info_right">
-                                    <c:if test="${userLogged.username == null}">
-                                        <p style="margin-bottom: 0px;color: white;margin-right: 10px"></p>
-                                        <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt=""
-                                                                          width="30px"></a>
-                                    </c:if>
-                                    <c:if test="${userLogged.username != null}">
-                                        <p style="margin-bottom: 0px;color: white;margin-right: 10px;font-size: 15px">${userLogged.username}</p>
-                                        <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt=""
-                                                                          width="30px"></a>
-                                    </c:if>
-
-                                </div>
-                                <div class="dropdown-content">
-                                    <a class="dropdown-item" href="#">Đăng nhập</a>
-                                    <a class="dropdown-item" href="#">Đăng Ký</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Đăng Xuất</a>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="ps-cart">
-                                    <a class="ps-cart__toggle" href="/bumblebee/cart" style="top: 0px;">
-                                        <span style="background-color: #37517E;display: ${slGioHang == null ?"none":"block"}"><i>${slGioHang}</i></span>
-                                        <i class="ps-icon-shopping-cart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</header>
+    <div class="main_nav_container">
+        <div class="container-fluid" style="padding: 0 40px;">
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <div class="logo_container">
+                        <a href="/bumblebee/home">Bumblebee</a>
+                    </div>
+                    <nav class="navbar">
+                        <ul class="navbar_menu" style="margin-bottom: 0px">
+                            <li><a class="menu-link" href="/bumblebee/home">Trang
+                                Chủ</a></li>
+                            <li><a href="/bumblebee/product_list">Sản Phẩm</a></li>
+                            <li><a href="#">Giới Thiệu</a></li>
+                            <li><a href="#">Liên Hệ</a></li>
+                            <li><a href="contact.html">Chính Sách</a></li>
+
+                        </ul>
+                        <ul class="navbar_user">
+                            <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                            <c:if test="${userLogged.username == null}">
+                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            </c:if>
+                            <c:if test="${userLogged.username != null}">
+                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            </c:if>
+
+                            <li class="checkout">
+                                <a href="/bumblebee/cart">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <span id="checkout_items" class="checkout_items" style="display: ${slGioHang == null ?"none":"block"}">${slGioHang}</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="hamburger_container">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../js_template/custom.js"></script>
+
+

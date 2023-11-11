@@ -154,7 +154,7 @@ public class HomeController {
     @RequestMapping("/bumblebee/home")
     public String home(Model model, @RequestParam(defaultValue = "0") int p, HttpSession session) {
         int page = p; // Trang đầu tiên
-        int pageSize = 8;
+        int pageSize = 10;
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ChiTietSanPham> pageSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
         model.addAttribute("pageSP", pageSP);
@@ -319,18 +319,22 @@ public class HomeController {
     }
 
     @RequestMapping("/bumblebee/mua-ngay")
-    public String muaNgay(Model model, HttpSession session, @RequestParam UUID idCTSP, @RequestParam int soLuong) {
+    public String muaNgay(Model model, HttpSession session, @RequestParam int kichCo,
+                          @RequestParam UUID idMS,
+                          @RequestParam UUID idSP,
+                          @RequestParam int soLuong) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
             model.addAttribute("listKH", taiKhoan.getKhachHangKH());
             listGHCT = new ArrayList<>();
-            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+            KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
             GioHangChiTiet ghct = new GioHangChiTiet();
             ghct.setCtsp(chiTietSanPham);
             ghct.setSoLuong(soLuong);
-            ghct.setDonGia(chiTietSanPham.getGiaBan() * soLuong);
+            ghct.setDonGia(chiTietSanPham.getGiaBan());
             listGHCT.add(ghct);
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("totalPrice", chiTietSanPham.getGiaBan() * soLuong);
@@ -491,9 +495,9 @@ public class HomeController {
                     hdct.setDonGia(ghct.getDonGia());
                     hdct.setTrangThai(3);
                     hoaDonChiTietService.save(hdct);
-                    //gioHangChiTietService.deleteGHCT(ghct.getId());
+                    gioHangChiTietService.deleteGHCT(ghct.getId());
                 }
-                return "redirect:/bumblebee/bill/" + hoaDon.getId();
+                return "redirect:/bumblebee/don-mua/cho-xac-nhan";
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
@@ -770,6 +774,12 @@ public class HomeController {
             model.addAttribute("view", "../template_home/product_listing.jsp");
         }
 
+        return "template_home/index";
+    }
+
+    @GetMapping("/bumblebee/chinh-sach-doi-tra")
+    public String chinhSach(Model model){
+        model.addAttribute("view", "../template_home/chinh-sach.jsp");
         return "template_home/index";
     }
 }
