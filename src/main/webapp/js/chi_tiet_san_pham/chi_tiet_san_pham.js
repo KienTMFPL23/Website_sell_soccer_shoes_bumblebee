@@ -1,5 +1,7 @@
+
 $(document).ready(function () {
-    $('#searchName').select2({
+
+  $('#searchName').select2({
         width: 150,
         placeholder: "Search Loai Giay ....",
         ajax: {
@@ -23,7 +25,32 @@ $(document).ready(function () {
         }
     });
 });
+  $(document).ready(function () {
 
+    $('#searchName0').select2({
+        width: 150,
+        placeholder: "Search Loai Giay ....",
+        ajax: {
+            type: 'GET',
+            url: '/chi-tiet-san-pham/search2-loai-giay',
+            data: function (params) {
+                return {
+                    keyword: params.term || '',
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.tentheloai,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+    });
  $(document).ready(function () {
     $('#searchName1').select2({
         width: 150,

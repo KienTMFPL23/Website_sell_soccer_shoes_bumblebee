@@ -68,8 +68,11 @@ public class ChiTietSanPham {
     String moTaCT;
 
     @Column(name = "NgayTao")
+
+  
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    Date ngayTao;
+
+  Date ngayTao;
 
 
     @Column(name = "Trangthai")

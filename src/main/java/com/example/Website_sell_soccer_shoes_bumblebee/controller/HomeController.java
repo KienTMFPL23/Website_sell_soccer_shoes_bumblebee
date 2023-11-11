@@ -589,6 +589,8 @@ public class HomeController {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonTraHang(taiKhoan.getKhachHangKH().getId()));
+
+
         model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
     }

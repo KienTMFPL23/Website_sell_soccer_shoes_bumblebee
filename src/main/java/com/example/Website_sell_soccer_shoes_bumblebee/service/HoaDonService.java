@@ -52,5 +52,7 @@ public interface HoaDonService {
 
     HoaDon hoaDonFindId(UUID id);
 
+    Page<HoaDon> searchLoaiHoaDon(Integer key,Pageable pageable);
+
 
 }
