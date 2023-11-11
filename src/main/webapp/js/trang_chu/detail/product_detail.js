@@ -4,7 +4,6 @@ if (kichCo == 1) {
     $(".btn-mua").prop("disabled", true);
 }
 
-selectSize();
 
 function thayDoiSoLuong() {
     var sl = $("#sl").val();
