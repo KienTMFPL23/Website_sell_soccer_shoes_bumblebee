@@ -408,7 +408,7 @@ public class HomeController {
         hoaDon.setSdt(sdt);
         hoaDon.setDiaChiShip(diaChiShip);
         hoaDon.setGhiChu(ghiChu);
-        hoaDon.setLoaiHoaDon(1);
+        hoaDon.setLoaiHoaDon(0);
         if (payment.intValue() == 2) {
             return "redirect:/pay";
         } else {
@@ -585,6 +585,8 @@ public class HomeController {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonTraHang(taiKhoan.getKhachHangKH().getId()));
+
+
         model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
     }

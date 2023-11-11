@@ -1,7 +1,32 @@
+  $(document).ready(function () {
 
-
-    $(document).ready(function () {
     $('#searchName').select2({
+        width: 150,
+        placeholder: "Search Loai Giay ....",
+        ajax: {
+            type: 'GET',
+            url: '/bumblebee/khuyen-mai/list',
+            data: function (params) {
+                return {
+                    keyword: params.term || '',
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.tenKhuyenMai,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+});
+  $(document).ready(function () {
+
+    $('#searchName0').select2({
         width: 150,
         placeholder: "Search Loai Giay ....",
         ajax: {
@@ -24,8 +49,7 @@
             }
         }
     });
-});
-
+    });
  $(document).ready(function () {
     $('#searchName1').select2({
         width: 150,

@@ -58,7 +58,7 @@
     <div class="row">
         <div class="col-8">
             <a href="/chi-tiet-san-pham/view-add/${idsp}" class="btnAdd" >
-                <i class="bi bi-plus-circle-fill"></i><p>Thêm CT Sản Phẩm</p></a>
+                <i class="bi bi-plus-circle-fill"></i><span>Thêm CT Sản Phẩm</span></a>
             <br>
             <div class="col-4 col-md-4 col-sm-2">
                 <a href="/chi-tiet-san-pham/hien-thi" class="btn"

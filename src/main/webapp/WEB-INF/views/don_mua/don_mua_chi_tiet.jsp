@@ -2,6 +2,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
+<%
+
+    Date currentDate = new Date();
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    String formattedDate = dateFormat.format(currentDate);
+%>
 
 <style>
     .img {
@@ -242,54 +252,120 @@
                 </div>
             </div>
 
-            <div class="status-order">
-                <div class="row" >
-                    <div class="col-lg-2" >
-                        <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai"
-                             id="img1">
-                        <h4>Đơn hàng đã được đặt</h4>
-                        <p>14:27 20/10/2023</p>
+            <%--            <div class="status-order">--%>
+            <%--                <div class="row" >--%>
+            <%--                    <div class="col-lg-2" >--%>
+            <%--                        <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai"--%>
+            <%--                             id="img1">--%>
+            <%--                        <h4>Đơn hàng đã được đặt</h4>--%>
+            <%--                        <p>14:27 20/10/2023</p>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="col-lg-2" >--%>
+            <%--                        <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai"--%>
+            <%--                             id="img2">--%>
+            <%--                        <h4>Đã xác nhận thanh toán</h4>--%>
+            <%--                        <p>14:27 20/10/2023</p>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="col-lg-2" >--%>
+            <%--                        <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai"--%>
+            <%--                             id="img3">--%>
+            <%--                        <h4>Đơn hàng đang được giao</h4>--%>
+            <%--                        <p>14:27 20/10/2023</p>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="col-lg-2" >--%>
+            <%--                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
+            <%--                        <h4>Đã nhận được hàng</h4>--%>
+            <%--                        <p>14:27 20/10/2023</p>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="col-lg-2">--%>
+            <%--                        <img src="../../../img/istockphoto-1707893816-612x612.jpg" style="width: 60px; height: 60px;"--%>
+            <%--                             class="trang-thai">--%>
+            <%--                        <h4>Đổi trả</h4>--%>
+            <%--                        <p>14:27 20/10/2023</p>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="col-lg-2">--%>
+            <%--                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
+            <%--                        <h4>Đơn hàng đã được hủy</h4>--%>
+            <%--                        <p>14:27 20/10/2023</p>--%>
+            <%--                    </div>--%>
+
+            <%--                    &lt;%&ndash;                    <div class="inline"></div>&ndash;%&gt;--%>
+            <%--                    <div class="stepper__line">--%>
+            <%--                        <div class="stepper__line-background" id="content2"></div>--%>
+            <%--                        <div class="stepper__line-foreground" id="content1"></div>--%>
+            <%--                    </div>--%>
+            <%--                </div>--%>
+
+            <%--            </div>--%>
+
+            <div class="status-order" id="status-order">
+                <div class="row">
+                    <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
+                        <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Chờ xác nhận</h4>
+                        <p><%= formattedDate %>
+                        </p>
                     </div>
-                    <div class="col-lg-2" >
-                        <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai"
-                             id="img2">
-                        <h4>Đã xác nhận thanh toán</h4>
-                        <p>14:27 20/10/2023</p>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="2"
+                         data-status="Đã xác nhận thanh toán">
+                        <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Xác nhận thanh toán</h4>
+                        <%--                        <p>14:27 20/10/2023</p>--%>
+                        <p><%= formattedDate %>
+                        </p>
                     </div>
-                    <div class="col-lg-2" >
-                        <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai"
-                             id="img3">
-                        <h4>Đơn hàng đang được giao</h4>
-                        <p>14:27 20/10/2023</p>
-                    </div>
-                    <div class="col-lg-2" >
+                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4>Đã nhận được hàng</h4>
-                        <p>14:27 20/10/2023</p>
+                        <h4> Đã giao cho DVVC</h4>
+                        <p><%= formattedDate %>
+                        </p>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 status-item" id="status" data-status-id="4"
+                         data-status="Đơn hàng đang được giao">
+                        <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Đơn hàng đang được giao</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
+                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
+                             class="trang-thai">
+                        <h4>Hoàn thành</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
+                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;"
+                             class="trang-thai">
+                        <h4>Đã huỷ</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" data-status-id="6" data-status="Đổi trả hàng">
                         <img src="../../../img/istockphoto-1707893816-612x612.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
                         <h4>Đổi trả</h4>
                         <p>14:27 20/10/2023</p>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 status-item" data-status-id="7" data-status="Đã trả hàng">
                         <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4>Đơn hàng đã được hủy</h4>
+                        <h4>Đơn hàng đã trả</h4>
                         <p>14:27 20/10/2023</p>
                     </div>
-
-                    <%--                    <div class="inline"></div>--%>
+                    <div class="inline"></div>
                     <div class="stepper__line">
-                        <div class="stepper__line-background" id="content2"></div>
-                        <div class="stepper__line-foreground" id="content1"></div>
+                        <div class="stepper__line-background"></div>
+                        <div class="stepper__line-foreground"></div>
+                    </div>
+
+
+                    <div class="inline"></div>
+                    <div class="stepper__line2">
+                        <div class="stepper__line-background2"></div>
+                        <div class="stepper__line-foreground2"></div>
                     </div>
                 </div>
-<%--                <div>--%>
-<%--                    <button type="button" id="id1">Button</button>--%>
-<%--                    <button type="button" id="id2">Button</button>--%>
-<%--                    <button type="button" id="id3">Button</button>--%>
-<%--                </div>--%>
             </div>
 
             <div class="table">
@@ -353,15 +429,48 @@
 
                     </div>
                     <div class="col-lg-3">
-                        <span>Tổng tiền: <fmt:formatNumber
-                                value="${sumMoney}"
-                                type="currency"/> </span>
+                        <span>Tổng tiền: <fmt:formatNumber value="${sumMoney}" type="currency"/></span>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusItems = document.querySelectorAll(".status-item");
+            const hoaDonTrangThai = "${hoaDon.trangThai}";
+
+            statusItems.forEach(function (item) {
+                const status = item.getAttribute("data-status-id");
+                const imgElement = item.querySelector("img");
+
+                item.style.border = "none";
+                item.style.borderRadius = "0%";
+                imgElement.style.border = "4px solid rgb(45, 194, 88)";
+                imgElement.style.borderRadius = "90%";
+                if (status == 8) {
+                    document.getElementById("status-order").hidden = true;
+                }
+
+                if (status > hoaDonTrangThai) {
+
+                    document.getElementById("status").textShadow = "inset 6px -1px 15px 20px #888888";
+                    imgElement.style.border = "4px solid #D9D9D9";
+                    imgElement.style.borderRadius = "90%";
+
+                } else {
+                    imgElement.style.border = "4px solid rgb(45, 194, 88)";
+                    imgElement.style.textShadow = "inset 6px -1px 15px 20px #888888";
+                    imgElement.style.borderRadius = "90%";
+
+
+                }
+
+            });
+        });
+    </script>
+
 </main>
 </body>
 

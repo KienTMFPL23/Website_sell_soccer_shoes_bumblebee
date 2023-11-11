@@ -116,7 +116,7 @@
             <div class="right ">
                 <div class="item-right">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select type="text" id="searchName" path="loaiGiay">
+                    <form:select type="text" id="searchName0" path="loaiGiay">
                         <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
@@ -202,20 +202,20 @@
                             <form:input path="tentheloai" class="form-control"/>
 
                         </div>
-                        <form:errors path="tentheloai"/>
+                        <form:errors path="tentheloai" id="tentheloai "/>
                         <div style="margin-left: 10px;color: red">${errorTen}</div>
                         <div class="mb-3 form-check-inline ">
                             <label class="form-label">Trạng Thái</label>
                             <form:radiobuttons items="${dsTrangThai}" path="trangthai"
                                                class="form-check-input"/>
-                            <form:errors path="trangthai" cssStyle="color: crimson"/>
+                            <form:errors path="trangthai" id="trangthai" cssStyle="color: crimson"/>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button id="submitButton" type="submit" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
@@ -435,6 +435,47 @@
         </div>
     </div>
 </div>
+<script>
+
+    $(document).ready(function() {
+        // Sự kiện click cho nút "Submit" trên modal
+        $('#submitButton').click(function(event) {
+            // Kiểm tra và thu thập dữ liệu từ form
+            var tentheloaiValue = $('#tentheloai').val();
+
+            // Kiểm tra dữ liệu và gửi yêu cầu POST bằng AJAX
+            if (tentheloaiValue.trim() === '') {
+                $('#errorTen').text('Tên không được để trống.');
+            } else if (tentheloaiValue.length < 5) {
+                $('#errorTen').text('Tên phải có ít nhất 5 kí tự.');
+            } else {
+                $('#errorTen').text('');
+
+                // Lấy URL từ attribute "action4" trong modal
+                var url = $('#modalId').data('action4'); // Thay #modalId bằng id của modal của bạn
+
+                // Sử dụng AJAX để gửi yêu cầu POST
+                $.ajax({
+                    type: 'POST',
+                    url: url, // Sử dụng URL từ attribute "action4"
+                    data: {
+                        tentheloai: tentheloaiValue
+                    },
+                    success: function(data) {
+                        // Xử lý kết quả thành công
+                        $('#exampleModal').modal('hide');
+
+                    },
+                    error: function(error) {
+                        // Xử lý lỗi
+                        $('#error-message').text('Lỗi: ' + error.responseText);
+
+                    }
+                });
+            }
+        });
+    });
+</script>
 <div class="text-center" style="color: crimson">${mess}</div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

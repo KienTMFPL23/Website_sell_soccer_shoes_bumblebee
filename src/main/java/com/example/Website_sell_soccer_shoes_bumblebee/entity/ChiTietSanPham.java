@@ -69,8 +69,8 @@ public class ChiTietSanPham {
 
     @Column(name = "NgayTao")
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @NotNull(message = "không để trống")
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
+//    @NotNull(message = "không để trống")
     Date ngayTao;
 
 
