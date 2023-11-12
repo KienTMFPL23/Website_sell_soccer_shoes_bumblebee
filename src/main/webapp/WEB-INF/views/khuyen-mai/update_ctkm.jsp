@@ -94,7 +94,12 @@
                 <label>Giá trị:</label>
             </div>
             <div class="col-lg-8">
-                <input type="text" class="form-control" value="${ctkm.khuyenMai.giaTri * 100}%" disabled/>
+                <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                    <input type="text" class="form-control" value="${ctkm.khuyenMai.giaTri}%" disabled/>
+                </c:if>
+                <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                    <input type="text" class="form-control" value="${ctkm.khuyenMai.giaTri}" disabled/>
+                </c:if>
             </div>
         </div>
 
@@ -114,7 +119,13 @@
                 <label>Giá khuyến mại:</label>
             </div>
             <div class="col-lg-8">
-                <input type="text" class="form-control" value="${ctkm.ctsp.giaBan - (ctkm.khuyenMai.giaTri * ctkm.ctsp.giaBan)}" disabled/>
+                <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                    <input type="text" class="form-control" value="${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}" disabled/>
+                </c:if>
+                <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                    <input type="text" class="form-control" value="${ctkm.ctsp.giaBan- ctkm.khuyenMai.giaTri}" disabled/>
+                </c:if>
+
             </div>
         </div>
 

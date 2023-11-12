@@ -18,8 +18,8 @@ public class ChiTietKhuyenMaiServiceImpl implements ChiTietKhuyenMaiService {
     private ChiTietKhuyenMaiRepository repo;
 
     @Override
-    public Page<ChiTietKhuyenMai> getAll(Pageable pageable) {
-        return repo.getAll(pageable);
+    public List<ChiTietKhuyenMai> getAll() {
+        return repo.findAll();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ChiTietKhuyenMaiServiceImpl implements ChiTietKhuyenMaiService {
     }
 
     @Override
-    public List<ChiTietKhuyenMai> findIdCTSP(UUID idCTSP) {
+    public ChiTietKhuyenMai findIdCTSP(UUID idCTSP) {
         return repo.findIdCTSP(idCTSP);
     }
 
