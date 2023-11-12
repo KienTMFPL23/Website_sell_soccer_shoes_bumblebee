@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,11 +19,15 @@ public interface ChiTietKhuyenMaiRepository extends JpaRepository<ChiTietKhuyenM
     Page<ChiTietKhuyenMai> getAll(Pageable pageable);
 
     @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.ctsp.id = ?1")
-    List<ChiTietKhuyenMai> findIdCTSP(UUID idCTSP);
+    ChiTietKhuyenMai findIdCTSP(UUID idCTSP);
 
     @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.id = ?1")
     ChiTietKhuyenMai findId(UUID id);
 
     @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.ctsp.id = ?1 and ctkm.khuyenMai.id = ?2")
     ChiTietKhuyenMai findCtkmByIdKmAndCtsp(UUID idCTSP, UUID idKM);
+
+    @Query(value = "update ChiTietKhuyenMai set TrangThai = 1 where NgayKetThuc < getdate()", nativeQuery = true)
+    List<ChiTietKhuyenMai> updateTrangThaiByNgayKetThuc();
+
 }
