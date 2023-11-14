@@ -30,4 +30,7 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     @Query(value = "DELETE FROM HoaDon where Id = ?1"+
                    "ALTER TABLE HoaDonChiTiet WITH CHECK CHECK CONSTRAINT FK_HoaDonChiTiet_HoaDon", nativeQuery = true)
     void removeHD(UUID idHoaDon);
+
+    @Query(value = "select hdct from HoaDonChiTiet  hdct where hdct.chiTietSanPham.id = ?1")
+    HoaDonChiTiet getHDCtByIdCTSP(UUID idCTSP);
 }

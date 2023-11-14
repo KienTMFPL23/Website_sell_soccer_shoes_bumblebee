@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public interface ChiTietKhuyenMaiService {
 
-    Page<ChiTietKhuyenMai> getAll(Pageable pageable);
+    List<ChiTietKhuyenMai> getAll();
 
     ChiTietKhuyenMai save(ChiTietKhuyenMai ctkm);
 
-    List<ChiTietKhuyenMai> findIdCTSP(UUID idCTSP);
+    ChiTietKhuyenMai findIdCTSP(UUID idCTSP);
 
     ChiTietKhuyenMai findID(UUID idCTKM);
 

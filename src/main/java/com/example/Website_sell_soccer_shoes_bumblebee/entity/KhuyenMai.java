@@ -40,7 +40,11 @@ public class KhuyenMai {
 
     @Column(name = "GiaTri")
     @NotNull(message = "Giá trị không được để trống")
-    private Double giaTri;
+    private Integer giaTri;
+
+    @Column(name = "DonVi")
+    @NotNull(message = "Đơn vị không được để trống")
+    private String donVi;
 
     @Column(name = "NgayTao")
     //@NotNull(message = "Ngày tạo không được để trống")
