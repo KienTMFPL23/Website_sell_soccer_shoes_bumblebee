@@ -39,6 +39,7 @@
         </br>
         <br>
         <br>
+
         <div class="row" style="padding-bottom: 30px">
             <div class="col-lg-2 ">
                 <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
@@ -112,6 +113,25 @@
                 </form:form>
             </div>
         </div>
+        <%-- Hiển thị thông báo lỗi nếu có --%>
+        <% if (request.getAttribute("error") != null) { %>
+        <div style="color: red;">
+            <%= request.getAttribute("error") %>
+        </div>
+        <% } %>
+
+        <% if (request.getAttribute("success") != null) { %>
+        <div style="color: green;">
+            <%= request.getAttribute("success") %>
+        </div>
+        <% } %>
+
+
+        <form action="/chi-tiet-san-pham/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Chọn tệp Excel:</label>
+            <input type="file" name="file" id="file" accept=".xls, .xlsx" required>
+            <button type="submit">Tải lên</button>
+        </form>
         <c:if test="${not empty page.content}">
 
             <table class="table table-bordered">

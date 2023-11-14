@@ -4,6 +4,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.ExcelServiceImpl;
 import com.example.Website_sell_soccer_shoes_bumblebee.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+//import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,7 +41,8 @@ public class ChiTietSanPhamController {
     ChiTietSanPhamService service;
     @Autowired
     DeGiayRepository deGiayRepo;
-
+    @Autowired
+    ExcelServiceImpl excelService;
     @Autowired
     ChatLieuRepository chatLieuRepo;
     @Autowired
@@ -889,5 +892,35 @@ public class ChiTietSanPhamController {
         hinhAnhRepository.save(hinhAnh);
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + sp.getId();
     }
+    @PostMapping("/chi-tiet-san-pham/upload")
+    public String uploadExcelFile(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            // Kiểm tra loại tệp Excel
+//            List<ChiTietSanPham> persons = ExcelUtil.readExcel(file);
+//
+//            for (ChiTietSanPham person : persons) {
+//                if (StringUtils.isEmpty(person.getSoLuong())) {
+//                    model.addAttribute("error", "Trường 'số lượng' không được để trống.");
+//                    return "forward:/chi-tiet-san-pham/hien-thi";
+//                }if(StringUtils.isEmpty())
+//                // Kiểm tra các trường thuộc tính khác và xử lý tương tự nếu cần.
+//            }
+
+            if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
+                model.addAttribute("error", "Vui lòng chọn một tệp Excel (.xls hoặc .xlsx).");
+                return "redirect:/chi-tiet-san-pham/hien-thi";
+            }
+
+            // Tiếp tục xử lý nếu là tệp Excel hợp lệ
+            excelService.saveDataFromExcel(file);
+            model.addAttribute("success", "Dữ liệu đã được chèn thành công.");
+            return "redirect:/chi-tiet-san-pham/hien-thi";
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
+            return "forward:/chi-tiet-san-pham/hien-thi";
+        }
+    }
+
 
 }
