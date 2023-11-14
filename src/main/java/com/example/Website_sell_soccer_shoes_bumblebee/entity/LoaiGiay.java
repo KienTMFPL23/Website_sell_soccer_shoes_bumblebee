@@ -25,6 +25,6 @@ public class LoaiGiay {
     @NotBlank(message = "khong de trong ten")
     String tentheloai;
 
-    Boolean trangthai;
+    Integer trangthai;
 
 }

@@ -4,17 +4,13 @@ import com.example.Website_sell_soccer_shoes_bumblebee.config.PaypalPaymentInten
 import com.example.Website_sell_soccer_shoes_bumblebee.config.PaypalPaymentMethod;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import com.itextpdf.forms.xfdf.Mode;
 import com.paypal.api.payments.Links;
@@ -93,6 +89,7 @@ public class HomeController {
     @Autowired
     TaiKhoanService taiKhoanService;
 
+    private static int maHoaDon = 1;
 
     @Data
     public static class SortForm {
@@ -382,6 +379,8 @@ public class HomeController {
 
 
     private HoaDon hoaDon;
+    @Autowired
+    HoaDonRepository hoaDonRepository;
 
     @RequestMapping("/bumblebee/dat-hang")
     public String datHang(
@@ -399,8 +398,17 @@ public class HomeController {
 
         // Tạo hóa đơn
         hoaDon = new HoaDon();
-        Random random = new Random();
-        hoaDon.setMaHoaDon("HĐ-" + random.nextInt());
+        String formatHoaDon = "HD" + String.format("%07d", maHoaDon);
+        HoaDon checkMa = hoaDonRepository.searchHoaDon(formatHoaDon);
+        if (checkMa != null) {
+            String maHoaDonMax = hoaDonRepository.searchMaxMaHoaDon();
+            maHoaDon = Integer.valueOf(maHoaDonMax.substring(2));
+            maHoaDon++;
+            String formatSoMa = "HD" + String.format("%07d", maHoaDon);
+            hoaDon.setMaHoaDon(formatSoMa);
+        } else {
+            hoaDon.setMaHoaDon(formatHoaDon);
+        }
         hoaDon.setNgayTao(new Date());
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -656,7 +664,7 @@ public class HomeController {
         } else if (sortForm.key.equals("moiNhat")) {
             sort = Sort.by(Sort.Direction.DESC, "ngayTao");
             pageable = PageRequest.of(p, 12, sort);
-        }else{
+        } else {
             pageable = PageRequest.of(p, 12);
         }
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
@@ -778,7 +786,7 @@ public class HomeController {
     }
 
     @GetMapping("/bumblebee/chinh-sach-doi-tra")
-    public String chinhSach(Model model){
+    public String chinhSach(Model model) {
         model.addAttribute("view", "../template_home/chinh-sach.jsp");
         return "template_home/index";
     }
