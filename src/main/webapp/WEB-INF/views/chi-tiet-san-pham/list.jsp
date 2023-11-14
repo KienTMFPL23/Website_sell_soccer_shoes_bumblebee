@@ -48,7 +48,7 @@
             <div class="col-lg-2 ">
                 <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select type="text" id="searchName" path="idLG" onchange="submit()">
+                    <form:select type="text" id="searchName0" path="idLG" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
