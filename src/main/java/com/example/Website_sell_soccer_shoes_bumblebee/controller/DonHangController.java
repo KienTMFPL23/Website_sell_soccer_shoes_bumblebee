@@ -2,9 +2,12 @@ package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonChiTietService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.HoaDonServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,16 +18,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class DonHangController {
 
     @Autowired
     HoaDonService hoaDonService;
+    @Autowired
+    HoaDonServiceImpl hoaDonServiceImpl;
+
+    @Data
+    public static class SearchLoaiHoaDon {
+        Integer key;
+    }
+
+    @ModelAttribute("dsLoaiDon")
+    public Map<Integer, String> getDSTrangThai() {
+        Map<Integer, String> dsLoaiDon = new HashMap<>();
+        dsLoaiDon.put(0, "Bán Online");
+        dsLoaiDon.put(1, "Bán tại quầy");
+        return dsLoaiDon;
+    }
 
     @Data
     public static class SearchForm {
@@ -37,12 +55,108 @@ public class DonHangController {
         Date toDate;
     }
 
+    @ModelAttribute("countHDCho")
+    Integer countTTCho() {
+        return hoaDonService.countHDCho();
+    }
+
+    @ModelAttribute("countHDXacNhan")
+    Integer countTTXacNhan() {
+        return hoaDonService.countHDXacNhan();
+    }
+
+    @ModelAttribute("countHDGiaoDVVC")
+    Integer countTTGiaoDVVC() {
+        return hoaDonService.countHDGiaoDVVC();
+    }
+
+    @ModelAttribute("countHDDangGiao")
+    Integer countTTDangGiao() {
+        return hoaDonService.countHDDangGiao();
+    }
+
+    @ModelAttribute("countHDHT")
+    Integer countTTHoanThanh() {
+        return hoaDonService.countHDHoanThanh();
+    }
+
+    @ModelAttribute("countHDTraHang")
+    Integer countTTTraHang() {
+        return hoaDonService.countHDTraHang();
+    }
+
+    @ModelAttribute("countHDDaTra")
+    Integer countTTDT() {
+        return hoaDonService.countHDDaHoanTra();
+    }
+
+    @ModelAttribute("countHDHuy")
+    Integer countTTHuy() {
+        return hoaDonService.countHDHuy();
+    }
+
     @Autowired
     HoaDonRepository hoaDonRepository;
+
+    @RequestMapping("/don-hang/search-loai-don")
+    public String searchLoaiHoaDon(@ModelAttribute("searchLoaiDon") SearchLoaiHoaDon searchLoaiHoaDon, @RequestParam(defaultValue = "0", name = "page") Integer page, Model model) {
+        if (page < 0) {
+            page = 0;
+        }
+        Page<HoaDon> hoaDonPage;
+        Pageable pageable = PageRequest.of(page, 8);
+        if (searchLoaiHoaDon.key >= 0) {
+            hoaDonPage = hoaDonService.searchLoaiHoaDon(searchLoaiHoaDon.key, pageable);
+        } else {
+            hoaDonPage = hoaDonRepository.findAll(pageable);
+        }
+        model.addAttribute("searchForm", new SearchForm());
+
+        model.addAttribute("page", hoaDonPage);
+        Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
+        model.addAttribute("listChoXacNhan", donHangCho);
+
+        Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
+        model.addAttribute("listHuy", pageDonDaHuy);
+
+        Page<HoaDon> pageChuanBi = hoaDonRepository.donHangDangChuanBi(pageable);
+        model.addAttribute("listChuanBi", pageChuanBi);
+
+        Page<HoaDon> donDangGiao = hoaDonRepository.donHangDangGiao(pageable);
+        model.addAttribute("listDonGiao", donDangGiao);
+
+        Page<HoaDon> donHoanThanh = hoaDonRepository.donHangHoanThanh(pageable);
+        model.addAttribute("listHoanThanh", donHoanThanh);
+
+        Page<HoaDon> donTra = hoaDonRepository.donHangTra(pageable);
+        model.addAttribute("listDonTra", donTra);
+
+        Page<HoaDon> donDaTra = hoaDonRepository.donHangDaTra(pageable);
+        model.addAttribute("listDonDaTra", donDaTra);
+
+        model.addAttribute("view", "../don-hang/listdh.jsp");
+        return "/admin/index";
+    }
+
+    @GetMapping("/don-hang/exportExcel")
+    public void exportToExcel(HttpServletResponse response) throws Exception {
+        response.setContentType("application/octet-stream");
+
+        String headerKey = "Content-Disposition";
+        DateFormat dateFormat = (DateFormat) new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String current = dateFormat.format(new Date());
+        String filename = "bills_" + current + ".xls";
+        String headerValue = "attachment;filename=" + filename;
+
+        response.setHeader(headerKey, headerValue);
+
+        hoaDonServiceImpl.exportExcel(response);
+    }
 
     @GetMapping("/don-hang/list-all")
     public String getAllDonHang(@RequestParam(defaultValue = "0", name = "p") Integer page, Model model) {
         model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         if (page < 0) {
             page = 0;
         }
@@ -82,10 +196,32 @@ public class DonHangController {
                              @RequestParam(defaultValue = "0", name = "p") int page,
                              @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<HoaDon> listS = this.hoaDonService.searchALlBetweenDates(searchForm.fromDate, searchForm.toDate, pageable);
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("page", listS);
+        Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
+        model.addAttribute("listChoXacNhan", donHangCho);
+
+        Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
+        model.addAttribute("listHuy", pageDonDaHuy);
+
+        Page<HoaDon> pageChuanBi = hoaDonRepository.donHangDangChuanBi(pageable);
+        model.addAttribute("listChuanBi", pageChuanBi);
+
+        Page<HoaDon> donDangGiao = hoaDonRepository.donHangDangGiao(pageable);
+        model.addAttribute("listDonGiao", donDangGiao);
+
+        Page<HoaDon> donHoanThanh = hoaDonRepository.donHangHoanThanh(pageable);
+        model.addAttribute("listHoanThanh", donHoanThanh);
+
+        Page<HoaDon> donTra = hoaDonRepository.donHangTra(pageable);
+        model.addAttribute("listDonTra", donTra);
+
+        Page<HoaDon> donDaTra = hoaDonRepository.donHangDaTra(pageable);
+        model.addAttribute("listDonDaTra", donDaTra);
+
         model.addAttribute("view", "../don-hang/listdh.jsp");
         return "/admin/index";
     }
@@ -100,6 +236,7 @@ public class DonHangController {
     //7 : đã hoàn trả
     //8 : đã huỷ
     // xác nhận -> đang chuẩn bị
+    //loại đơn: 0:on/ 1:tại quầy
 
 
     @RequestMapping("/don-hang/update-xac-nhan/{id}")
@@ -107,9 +244,11 @@ public class DonHangController {
                                        @RequestParam(defaultValue = "0", name = "p") int page, @PathVariable UUID id,
                                        @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
+
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("listChoXacNhan", donHangCho);
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
@@ -119,7 +258,7 @@ public class DonHangController {
 
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
     }
 
     @RequestMapping("/don-hang/update-chuan-bi/{id}")
@@ -127,8 +266,9 @@ public class DonHangController {
                                    @RequestParam(defaultValue = "0", name = "p") int page, @PathVariable UUID id,
                                    @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
         model.addAttribute("listChoXacNhan", donHangCho);
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -138,7 +278,8 @@ public class DonHangController {
         System.out.println("Đơn hàng  cập nhật được trạng thái");
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+//        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
 
     }
 
@@ -147,8 +288,9 @@ public class DonHangController {
                              @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                              @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
         model.addAttribute("listHuy", pageDonDaHuy);
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -159,7 +301,8 @@ public class DonHangController {
 
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+//        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
 
     }
 
@@ -168,18 +311,20 @@ public class DonHangController {
                                @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                                @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
-
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
-            hoaDonService.updateHoaDon(id, 4, hoaDonDB);
+            // reuturn 4
+            hoaDonService.updateHoaDon(id, 5, hoaDonDB);
         }
         System.out.println("Đơn hàng  cập nhật được trạng thái");
 
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+//        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
 
     }
 
@@ -188,24 +333,28 @@ public class DonHangController {
                           @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                           @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
             hoaDonService.updateHoaDon(id, 6, hoaDonDB);
         }
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         System.out.println("Đơn hàng không cập nhật được trạng thái");
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+//        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
 
     }
+
     @RequestMapping("/don-hang/xac-nhan-giao/{id}")
     public String giaoDVVC(Model model, @ModelAttribute("hoaDon") HoaDon hoaDon,
-                          @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
-                          @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
+                           @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
+                           @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
@@ -214,7 +363,8 @@ public class DonHangController {
         System.out.println("Đơn hàng không cập nhật được trạng thái");
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+//        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
 
     }
 
@@ -223,7 +373,8 @@ public class DonHangController {
                             @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                             @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
+        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
@@ -232,7 +383,8 @@ public class DonHangController {
         System.out.println("Đơn hàng không cập nhật được trạng thái");
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
-        return "redirect:/don-hang/xem-don-hang/" + id;
+//        return "redirect:/don-hang/xem-don-hang/" + id;
+        return "redirect:/don-hang/list-all";
 
     }
 

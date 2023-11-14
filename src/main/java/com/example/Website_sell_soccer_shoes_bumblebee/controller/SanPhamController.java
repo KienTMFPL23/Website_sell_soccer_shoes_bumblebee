@@ -86,8 +86,8 @@ public class SanPhamController {
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
-        dsTrangThai.put(1, "Hoạt động");
-        dsTrangThai.put(0, "Ngừng hoạt động");
+        dsTrangThai.put(0, "Hoạt động");
+        dsTrangThai.put(1, "Ngừng hoạt động");
         return dsTrangThai;
     }
 
@@ -306,7 +306,7 @@ public class SanPhamController {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
-        loaiGiay.setTrangthai(true);
+        loaiGiay.setTrangthai(1);
         loaiGiayRepo.save(loaiGiay);
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();

@@ -14,10 +14,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.*;
 
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.math3.analysis.function.Identity;
@@ -89,17 +86,20 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
+
+
         String formatHoaDon = "HD" + String.format("%07d", maHoaDon);
         HoaDon checkMa = hoaDonRepository.searchHoaDon(formatHoaDon);
-        if (checkMa != null){
+        if (checkMa != null) {
             String maHoaDonMax = hoaDonRepository.searchMaxMaHoaDon();
             maHoaDon = Integer.valueOf(maHoaDonMax.substring(2));
             maHoaDon++;
             String formatSoMa = "HD" + String.format("%07d", maHoaDon);
             hoaDon.setMaHoaDon(formatSoMa);
-        }else {
+        } else {
             hoaDon.setMaHoaDon(formatHoaDon);
         }
+
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String format = sdf.format(date);
@@ -107,7 +107,8 @@ public class HoaDonServiceImpl implements HoaDonService {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         NhanVien nhanVien = nhanVienRepository.findByIdTaiKhoan(taiKhoan.getId());
         hoaDon.setNhanVien(nhanVien);
-        hoaDon.setTrangThai(0);
+        hoaDon.setTrangThai(1);
+        hoaDon.setLoaiHoaDon(1);
         return hoaDonRepository.save(hoaDon);
     }
 
@@ -212,7 +213,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         row.createCell(4).setCellValue("Ngày Thanh Toán");
         row.getCell(4).setCellStyle(style);
 
-        row.createCell(5).setCellValue("Người Nhận");
+        row.createCell(5).setCellValue("Loại Hoá Đơn");
         row.getCell(5).setCellStyle(style);
 
         row.createCell(6).setCellValue("Khách Hàng");
@@ -246,19 +247,53 @@ public class HoaDonServiceImpl implements HoaDonService {
                 dataRow.createCell(2).setCellValue("");
             } else {
                 dataRow.createCell(2).setCellValue(hd.getNhanVien().getTen());
-           }
+            }
             dataRow.createCell(3).setCellValue(dateFormat.format(hd.getNgayTao()));
             dataRow.createCell(4).setCellValue(dateFormat.format(hd.getNgayThanhToan()));
-            dataRow.createCell(5).setCellValue(String.valueOf(hd.getTenNguoiNhan()));
-            if (hd.getKhachHang() == null) {
-                dataRow.createCell(6).setCellValue("null");
+
+//            dataRow.createCell(5).setCellValue(String.valueOf(hd.getTenNguoiNhan()));
+            if (hd.getLoaiHoaDon() == 0) {
+                dataRow.createCell(5).setCellValue("Bán Online");
             } else {
-                dataRow.createCell(6).setCellValue(hd.getKhachHang().getTen());
+                dataRow.createCell(5).setCellValue(" ");
+            }
+            if (hd.getLoaiHoaDon() == 1) {
+                dataRow.createCell(5).setCellValue("Bán Tại Quầy");
+            } else {
+                dataRow.createCell(5).setCellValue(" ");
+            }
+            if (hd.getKhachHang() == null) {
+                if (hd.getTenNguoiNhan() != null) {
+                    dataRow.createCell(6).setCellValue(String.valueOf(hd.getTenNguoiNhan()));
+                } else {
+                    dataRow.createCell(6).setCellValue("Unknown");
+                }
+            } else {
+                dataRow.createCell(6).setCellValue(hd.getKhachHang().getHo() + " " + hd.getKhachHang().getTenDem() + " " + hd.getKhachHang().getTen());
             }
             dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
             dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
             dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
-            dataRow.createCell(10).setCellValue(hd.getTrangThai());
+            if (hd.getTrangThai() == 1) {
+                dataRow.createCell(10).setCellValue("Chờ xác nhận");
+            } else if (hd.getTrangThai() == 2) {
+                dataRow.createCell(10).setCellValue("Đang chuẩn bị(xác nhận thanh toán)");
+            } else if (hd.getTrangThai() == 3) {
+                dataRow.createCell(10).setCellValue("Giao cho DVVC");
+            } else if (hd.getTrangThai() == 4) {
+                dataRow.createCell(10).setCellValue("Đang giao");
+            } else if (hd.getTrangThai() == 5) {
+                dataRow.createCell(10).setCellValue("Hoàn thành");
+            } else if (hd.getTrangThai() == 6) {
+                dataRow.createCell(10).setCellValue("Trả hàng");
+            } else if (hd.getTrangThai() == 7) {
+                dataRow.createCell(10).setCellValue("Đã hoàn trả");
+            } else if (hd.getTrangThai() == 8) {
+                dataRow.createCell(10).setCellValue("Đã huỷ");
+            } else {
+                dataRow.createCell(10).setCellValue(" ");
+            }
+//            dataRow.createCell(10).setCellValue(hd.getTrangThai());
             sheet.setDefaultColumnWidth(20);
             dataRowIndex++;
 
@@ -312,6 +347,51 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public HoaDon hoaDonFindId(UUID id) {
         return hoaDonRepository.hoaDonFindId(id);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDon(Integer key, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDon(key, pageable);
+    }
+
+    @Override
+    public Integer countHDCho() {
+        return hoaDonRepository.countHDCho();
+    }
+
+    @Override
+    public Integer countHDXacNhan() {
+        return hoaDonRepository.countHDXacNhan();
+    }
+
+    @Override
+    public Integer countHDGiaoDVVC() {
+        return hoaDonRepository.countHDGiaoDVVC();
+    }
+
+    @Override
+    public Integer countHDDangGiao() {
+        return hoaDonRepository.countHDDangGiao();
+    }
+
+    @Override
+    public Integer countHDHoanThanh() {
+        return hoaDonRepository.countHDHoanThanh();
+    }
+
+    @Override
+    public Integer countHDTraHang() {
+        return hoaDonRepository.countHDTraHang();
+    }
+
+    @Override
+    public Integer countHDDaHoanTra() {
+        return hoaDonRepository.countHDDaHoanTra();
+    }
+
+    @Override
+    public Integer countHDHuy() {
+        return hoaDonRepository.countHDHuy();
     }
 
 }

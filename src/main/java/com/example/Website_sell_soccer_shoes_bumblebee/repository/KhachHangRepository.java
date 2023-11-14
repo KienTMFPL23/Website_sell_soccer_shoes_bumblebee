@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
@@ -22,4 +23,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
 
     @Query("select max(kh.ma) from KhachHang kh")
     String searchMaxMaKhachHang();
+
+    @Query("select kh from KhachHang  kh  order by kh.ma")
+    List<KhachHang> getListKhachHang();
 }

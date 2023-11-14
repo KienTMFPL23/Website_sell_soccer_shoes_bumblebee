@@ -38,17 +38,36 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select d from LoaiGiay d where d.tentheloai LIKE :keyword ")
     List<LoaiGiay> search(@Param("keyword") String keyword);
 
+    @Query(value = "select d from LoaiGiay d where d.tentheloai LIKE :keyword and d.trangthai=:trangThai")
+    List<LoaiGiay> search22LG(@Param("keyword") String keyword, @Param("trangThai") Integer trangThai);
+
     @Query(value = "select lg from LoaiGiay lg")
     List<LoaiGiay> listLoaiGiay();
+
+    @Query(value = "select lg from LoaiGiay lg where lg.trangthai=:trangThai")
+    List<LoaiGiay> listLG22(@Param("trangThai") Integer trangThai);
 
     @Query(value = "select de from DeGiay de where de.loaiDe LIKE :keyword ")
     List<DeGiay> searchDG(@Param("keyword") String keyword);
 
+    @Query(value = "select de from DeGiay de where de.loaiDe LIKE :keyword and de.trangThai=:trangThai")
+    List<DeGiay> search22DG(@Param("keyword") String keyword, @Param("trangThai") Integer trangThai);
+
+
     @Query(value = "select lg from DeGiay lg")
     List<DeGiay> listDeGiay();
 
+    @Query(value = "select d from DeGiay d where d.trangThai=:trangThai")
+    List<DeGiay> listDeGiay22(@Param("trangThai") Integer trangThai);
+
     @Query(value = "select m from MauSac m where m.ten LIKE :keyword ")
     List<MauSac> searchMS(@Param("keyword") String keyword);
+
+    @Query(value = "select m from MauSac m where m.ten LIKE :keyword and m.tt=:trangThai")
+    List<MauSac> search22MS(@Param("keyword") String keyword, @Param("trangThai") Integer trangThai);
+
+    @Query(value = "select m from MauSac m where m.tt=:trangThai")
+    List<MauSac> listMauSac22(@Param("trangThai") Integer trangThai);
 
     @Query(value = "select lg from MauSac lg")
     List<MauSac> listMauSac();
@@ -56,14 +75,26 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select c from ChatLieu c where c.ten LIKE :keyword ")
     List<ChatLieu> searchCL(@Param("keyword") String keyword);
 
+    @Query(value = "select c from ChatLieu c where c.ten LIKE :keyword and c.trangThai=:trangThai")
+    List<ChatLieu> search22CL(@Param("keyword") String keyword, @Param("trangThai") Integer trangThai);
+
     @Query(value = "select lg from ChatLieu lg")
     List<ChatLieu> lítChatLieu();
+
+    @Query(value = "select c from ChatLieu c where c.trangThai=:trangThai")
+    List<ChatLieu> listChatLieu22(@Param("trangThai") Integer trangThai);
 
     @Query(value = "select k from KichCo k")
     List<KichCo> listKC();
 
+    @Query(value = "select k from KichCo k where k.trangThai=:trangThai")
+    List<KichCo> listKichCo22(@Param("trangThai") Integer trangThai);
+
     @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword)")
     List<KichCo> search2KC(@Param("keyword") Integer size);
+
+    @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword) and k.trangThai=:trangThai")
+    List<KichCo> search22KC(@Param("keyword") Integer size,@Param("trangThai") Integer trangThai);
 
     @Query("select ctsp from ChiTietSanPham  ctsp where ctsp.giaBan between ?1 and ?2")
     Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable);
@@ -71,7 +102,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select * from ChiTietSanPham where Idkichco = ?1", nativeQuery = true)
     Page<ChiTietSanPham> getCTSPBYKC(UUID idKC, Pageable pageable);
 
-    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.mauSac.id = ?1")
+    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.sanPham.id, c2.mauSac.id) and c.mauSac.id = ?1")
     Page<ChiTietSanPham> getCTSPBYMS(UUID idMS, Pageable pageable);
 
 
@@ -82,7 +115,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     UUID getOneToAddModal(UUID id);
 
 
-    @Query("SELECT c FROM ChiTietSanPham c WHERE c.loaiGiay.id IN ?1")
+    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.sanPham.id, c2.mauSac.id) and c.loaiGiay.id IN ?1")
     Page<ChiTietSanPham> searchCTSPByLoaiGiayList(List<UUID> idLoaiGiayList, Pageable pageable);
 
 
@@ -118,17 +153,10 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\tand kc.size = ?3", nativeQuery = true)
     String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
-    @Query(value = "WITH RankedCTSP AS (\n" +
-            "    SELECT\n" +
-            "        id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai,\n" +
-            "        ROW_NUMBER() OVER (PARTITION BY IdSP, IdMauSac ORDER BY Id) AS RowNum\n" +
-            "    FROM ChiTietSanPham\n" +
-            ")\n" +
-            "SELECT\n" +
-            "    id, IdSP, IdMauSac, IdTheLoai, IdKichCo, IdChatLieu, IdDeGiay, GiaBan, SoLuong, MoTaCT, TrangThai\n" +
-            "FROM RankedCTSP\n" +
-            "WHERE RowNum = 1;", nativeQuery = true)
 
+    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.sanPham.id, c2.mauSac.id)")
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 

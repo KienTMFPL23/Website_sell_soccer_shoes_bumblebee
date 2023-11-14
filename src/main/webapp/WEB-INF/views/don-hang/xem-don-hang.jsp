@@ -184,6 +184,27 @@
         transition: width 1s cubic-bezier(.4, 0, .2, 1);
     }
 
+    .stepper__line2 {
+        position: absolute;
+        top: 120px;
+        height: 4px;
+        width: 80%;
+    }
+
+    .stepper__line-background2, .stepper__line-foreground2 {
+        position: absolute;
+        width: calc(100% - 900px);
+        margin: 0 70px;
+        height: 100%;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .stepper__line-foreground2 {
+        background: #D9D9D9;
+        transition: width 1s cubic-bezier(.4, 0, .2, 1);
+    }
+
     /*.stepper__line-background, .stepper__line-foreground {*/
     /*    position: absolute;*/
     /*    width: calc(100% - 120px);*/
@@ -213,7 +234,7 @@
 </style>
 <div class="container">
     <form:form modelAttribute="hoaDon">
-        <c:if test="${hoaDon.trangThai < 6 }">
+        <c:if test="${hoaDon.trangThai < 6 && hoaDon.loaiHoaDon==0}">
             <div class="status-order" id="status-order">
                 <div class="row">
                         <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>
@@ -251,30 +272,39 @@
                         <p><%= formattedDate %>
                         </p>
                     </div>
-                        <%--                        ;;;;;--%>
-                        <%--                <div class="col-lg-2 status-item" data-status-id="5" data-status="Đã huỷ">--%>
-                        <%--                    <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
-                        <%--                    <h4>Đơn hàng đã được hủy</h4>--%>
-                        <%--                    <p>14:27 20/10/2023</p>--%>
-                        <%--                </div>--%>
-                        <%--                <div class="col-lg-2 status-item" data-status-id="6" data-status="Đổi trả hàng">--%>
-                        <%--                    <img src="../../../img/istockphoto-1707893816-612x612.jpg" style="width: 60px; height: 60px;"--%>
-                        <%--                         class="trang-thai">--%>
-                        <%--                    <h4>Đổi trả</h4>--%>
-                        <%--                    <p>14:27 20/10/2023</p>--%>
-                        <%--                </div>--%>
-                        <%--                <div class="col-lg-2 status-item" data-status-id="7" data-status="Đã trả hàng">--%>
-                        <%--                    <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
-                        <%--                    <h4>Đơn hàng đã trả</h4>--%>
-                        <%--                    <p>14:27 20/10/2023</p>--%>
-                        <%--                </div>--%>
                     <div class="inline"></div>
                     <div class="stepper__line">
                         <div class="stepper__line-background"></div>
                         <div class="stepper__line-foreground"></div>
                     </div>
                 </div>
+            </div>
+        </c:if>
+        <c:if test="${hoaDon.trangThai < 6 &&hoaDon.loaiHoaDon==1}">
+            <div class="status-order" id="status-order">
+                <div class="row">
+                        <%--                <c:if test="${hoaDon.trangThai}"></c:if>--%>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
+                        <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
+                        <h4>Chờ xác nhận</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
 
+                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
+                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
+                             class="trang-thai">
+                        <h4>Hoàn thành</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+
+                    <div class="inline"></div>
+                    <div class="stepper__line2">
+                        <div class="stepper__line-background2"></div>
+                        <div class="stepper__line-foreground2"></div>
+                    </div>
+                </div>
             </div>
         </c:if>
 
@@ -289,7 +319,7 @@
                onclick="return confirm('Bạn có chắc muốn huỷ đơn hàng ?');" style="border-radius: 20px">Huỷ</a>
         </c:if>
         <%--        trạng thái đang chuẩn bị--%>
-        <c:if test="${hoaDon.trangThai== 2}">
+        <c:if test="${hoaDon.trangThai== 2 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red">Chuẩn bị <i class="bi bi-box-seam"></i></h1>
             <hr class="border border-primary border-2 opacity-50">
 
@@ -299,14 +329,14 @@
                style="border-radius: 20px">Huỷ</a>
         </c:if>
 
-        <c:if test="${hoaDon.trangThai== 3}">
+        <c:if test="${hoaDon.trangThai== 3 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red"><i class="bi bi-truck"></i> Đã giao cho DVVC</h1>
             <hr class="border border-primary border-2 opacity-50">
 
             <a href="/don-hang/dang-giao/${hoaDon.id}" style="border-radius: 20px"
                class="btn btn-success" onclick="return confirm('Xác nhận đã giao cho DVVC ?');">Xác nhận</a>
         </c:if>
-        <c:if test="${hoaDon.trangThai== 4}">
+        <c:if test="${hoaDon.trangThai== 4 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red">Đang giao</h1>
             <a href="/don-hang/xac-nhan-giao/${hoaDon.id}" style="border-radius: 20px"
                class="btn btn-warning" onclick="return confirm('Xác nhận đang giao?');">Xác nhận</a>
@@ -436,30 +466,46 @@
                         <th scope="col">Tên khách hàng</th>
                         <td></td>
                         <td></td>
-                        <td>${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${not empty hoaDon.tenNguoiNhan }">
+                                    ${hoaDon.tenNguoiNhan}
+                                </c:when>
+                                <c:when test="${not empty hoaDon.khachHang.ten}">
+                                    ${hoaDon.khachHang.ho} ${hoaDon.khachHang.tenDem} ${hoaDon.khachHang.ten}
+                                </c:when>
+                            </c:choose>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="col">SĐT</th>
                         <td></td>
                         <td></td>
                         <td>
-                                ${hoaDon.khachHang.soDienThoai}
+                            <c:choose>
+                                <c:when test="${not empty hoaDon.sdt }">
+                                    ${hoaDon.sdt}
+                                </c:when>
+                                <c:when test="${not empty hoaDon.khachHang.soDienThoai}">
+                                    ${hoaDon.khachHang.soDienThoai}
+                                </c:when>
+                            </c:choose>
                         </td>
                     </tr>
                     <tr>
                         <th scope="col">Địa chỉ</th>
                         <td></td>
                         <td></td>
+
                         <td>
-                                ${hoaDon.khachHang.diaChi}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Email</th>
-                        <td></td>
-                        <td></td>
-                        <td>
-                                ${hoaDon.khachHang.email}
+                            <c:choose>
+                                <c:when test="${not empty hoaDon.diaChiShip }">
+                                    ${hoaDon.diaChiShip}
+                                </c:when>
+                                <c:when test="${not empty hoaDon.khachHang.diaChi}">
+                                    ${hoaDon.khachHang.diaChi}
+                                </c:when>
+                            </c:choose>
                         </td>
                     </tr>
 

@@ -26,7 +26,7 @@ public interface HoaDonService {
 
     HoaDon saveHoaDon(HoaDon hoaDon);
 
-    HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon);
+    HoaDon updateHoaDon(UUID id, Integer trangThai, HoaDon hoaDon);
 
     HoaDon deleteHoaDon(UUID id);
 
@@ -52,5 +52,22 @@ public interface HoaDonService {
 
     HoaDon hoaDonFindId(UUID id);
 
+    Page<HoaDon> searchLoaiHoaDon(Integer key, Pageable pageable);
 
+    //13.11.2023
+    Integer countHDCho();
+
+    Integer countHDXacNhan();
+
+    Integer countHDGiaoDVVC();
+
+    Integer countHDDangGiao();
+
+    Integer countHDHoanThanh();
+
+    Integer countHDTraHang();
+
+    Integer countHDDaHoanTra();
+
+    Integer countHDHuy();
 }

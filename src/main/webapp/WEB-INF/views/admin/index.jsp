@@ -150,15 +150,23 @@
             <a class="nav-link" href="/don-hang/list-all">
                 <i class="bx bxs-truck"></i>
 
-                <b>Quản lý đơn hàng</b></a
+                <b>Quản lý hoá đơn</b></a
             >
         </li>
 
-        <!-- Nav Item - Quản lý hóa đơn -->
+<%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
+<%--        <li class="nav-item">--%>
+<%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
+<%--                <i class="fas fa-fw fa-chart-area"></i>--%>
+<%--                <b>Quản lý hóa đơn</b></a--%>
+<%--            >--%>
+<%--        </li>--%>
+
+        <!-- Nav Item - Quản lý khuyến mãi -->
         <li class="nav-item">
-            <a class="nav-link" href="/hoa-don/hien-thi">
+            <a class="nav-link" href="/bumblebee/khuyen-mai/list">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <b>Quản lý hóa đơn</b></a
+                <b>Quản lý khuyến mại</b></a
             >
         </li>
 
@@ -404,7 +412,6 @@
 
 <script src="../../../js/hinh_anh/hinh_anh.js"></script>
 <script src="../../../js/hinh_anh/select2.js"></script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

@@ -22,4 +22,7 @@ public interface ChatLieuRepository extends JpaRepository<ChatLieu, UUID> {
     @Query("select cl from ChatLieu cl where  cl.ma =?1")
 
     ChatLieu getSanPhamByMaSP(String maCl);
+
+    //12.11.2023
+
 }

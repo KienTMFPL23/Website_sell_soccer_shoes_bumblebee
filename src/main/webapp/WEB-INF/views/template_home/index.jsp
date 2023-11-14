@@ -25,6 +25,12 @@
 <link rel="stylesheet" href="../../../css_template/style.css">
 <link rel="stylesheet" href="../../../css_update_template/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<%----%>
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/main_styles.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/responsive.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/animate.css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -38,7 +44,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <%@include file="header.jsp" %>
-<jsp:include page="${view}"/>
+<div>
+    <jsp:include page="${view}"/>
+</div>
 <%@include file="footer.jsp" %>
 
 <!-- JS Library-->
@@ -56,20 +64,44 @@
 <script type="text/javascript" src="../../../plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="../../../plugins/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
-<script type="text/javascript" src="../../../plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
-<script type="text/javascript"
-        src="../../../plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
-<script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
 <script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script type="text/javascript"
-        src="../../../plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
 <script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
 <script type="text/javascript"
         src="../../../plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
 <!-- Custom scripts-->
 <script type="text/javascript" src="../../../js_template/main.js"></script>
+<script>
+    function setHeader()
+    {
+        if(window.innerWidth < 992)
+        {
+            if($(window).scrollTop() > 100)
+            {
+                header.css({'top':"0"});
+            }
+            else
+            {
+                header.css({'top':"0"});
+            }
+        }
+        else
+        {
+            if($(window).scrollTop() > 100)
+            {
+                header.css({'top':"-50px"});
+            }
+            else
+            {
+                header.css({'top':"0"});
+            }
+        }
+        if(window.innerWidth > 991 && menuActive)
+        {
+            closeMenu();
+        }
+    }
+    setHeader();
+</script>

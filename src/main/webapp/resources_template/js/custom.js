@@ -285,7 +285,6 @@
             map.gmap3({
                 address: map.data('address'),
                 zoom: map.data('zoom'),
-                scrollwheel: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 scrollwheel: false,
                 styles: [{
@@ -618,7 +617,6 @@
                     origo: "slidercenter",
                     speed: 1000,
                     levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 100, 55],
-                    type: "scroll",
                 },
                 shadow: 0,
                 spinner: "off",

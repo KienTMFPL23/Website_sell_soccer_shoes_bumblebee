@@ -116,7 +116,7 @@
             <div class="right ">
                 <div class="item-right">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select type="text" id="searchName" path="loaiGiay">
+                    <form:select type="text" id="searchName10" path="loaiGiay">
                         <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
@@ -128,7 +128,7 @@
 
                 <div class="item-right">
                     <label class="form-label">Kích cỡ: </label>
-                    <form:select type="text" id="searchName1" path="kichCo" cssClass=".searchName1">
+                    <form:select type="text" id="searchName11" path="kichCo" cssClass=".searchName1">
                         <form:option value="">Chọn kích cỡ</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="item-right">
                     <label class="form-label">Màu sắc: </label>
-                    <form:select type="text" id="searchName2" path="mauSac" cssClass=".searchName2">
+                    <form:select type="text" id="searchName12" path="mauSac" cssClass=".searchName2">
                         <form:option value="">Chọn màu sắc</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="item-right">
                     <label class="form-label">Chất liệu: </label>
-                    <form:select type="text" id="searchName4" path="chatLieu">
+                    <form:select type="text" id="searchName14" path="chatLieu">
                         <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="item-right">
                     <label class="form-label">Đế giầy: </label>
-                    <form:select type="text" id="searchName3" path="deGiay" cssClass=".searchName4">
+                    <form:select type="text" id="searchName13" path="deGiay" cssClass=".searchName4">
                         <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
@@ -202,20 +202,20 @@
                             <form:input path="tentheloai" class="form-control"/>
 
                         </div>
-                        <form:errors path="tentheloai"/>
+                        <form:errors path="tentheloai" id="tentheloai "/>
                         <div style="margin-left: 10px;color: red">${errorTen}</div>
                         <div class="mb-3 form-check-inline ">
                             <label class="form-label">Trạng Thái</label>
                             <form:radiobuttons items="${dsTrangThai}" path="trangthai"
                                                class="form-check-input"/>
-                            <form:errors path="trangthai" cssStyle="color: crimson"/>
+                            <form:errors path="trangthai" id="trangthai" cssStyle="color: crimson"/>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button id="submitButton" type="submit" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
@@ -435,7 +435,49 @@
         </div>
     </div>
 </div>
+<script>
+
+    $(document).ready(function() {
+        // Sự kiện click cho nút "Submit" trên modal
+        $('#submitButton').click(function(event) {
+            // Kiểm tra và thu thập dữ liệu từ form
+            var tentheloaiValue = $('#tentheloai').val();
+
+            // Kiểm tra dữ liệu và gửi yêu cầu POST bằng AJAX
+            if (tentheloaiValue.trim() === '') {
+                $('#errorTen').text('Tên không được để trống.');
+            } else if (tentheloaiValue.length < 5) {
+                $('#errorTen').text('Tên phải có ít nhất 5 kí tự.');
+            } else {
+                $('#errorTen').text('');
+
+                // Lấy URL từ attribute "action4" trong modal
+                var url = $('#modalId').data('action4'); // Thay #modalId bằng id của modal của bạn
+
+                // Sử dụng AJAX để gửi yêu cầu POST
+                $.ajax({
+                    type: 'POST',
+                    url: url, // Sử dụng URL từ attribute "action4"
+                    data: {
+                        tentheloai: tentheloaiValue
+                    },
+                    success: function(data) {
+                        // Xử lý kết quả thành công
+                        $('#exampleModal').modal('hide');
+
+                    },
+                    error: function(error) {
+                        // Xử lý lỗi
+                        $('#error-message').text('Lỗi: ' + error.responseText);
+
+                    }
+                });
+            }
+        });
+    });
+</script>
 <div class="text-center" style="color: crimson">${mess}</div>
+<script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
         crossorigin="anonymous"></script>

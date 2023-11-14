@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
@@ -49,8 +50,8 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idHoaDon,UUID idSP) {
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.getSanPhamInHDCT(idHoaDon,idSP);
+    public HoaDonChiTiet getAndUpdateSanPhamInHDCT(UUID idHoaDon, UUID idSP) {
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.getSanPhamInHDCT(idHoaDon, idSP);
         if (hoaDonChiTiet != null) {
             hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + 1);
             hoaDonChiTietRepository.save(hoaDonChiTiet);
@@ -64,11 +65,43 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public Double getTotalMoney(List<HoaDonChiTiet> list) {
         Double sum = 0.0;
-        for (HoaDonChiTiet hdct : list){
-            sum += hdct.getDonGia() * hdct.getSoLuong();
+        Double sumGoc = 0.0;
+        Double sumKhuyenMai = 0.0;
+        for (HoaDonChiTiet hdct : list) {
+            if (hdct.getChiTietSanPham().getCtkm().isEmpty()) {
+                sumGoc += hdct.getDonGia() * hdct.getSoLuong();
+            } else {
+                sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+            }
+            sum = sumGoc + sumKhuyenMai;
+        }
+
+        return sum;
+    }
+
+    @Override
+    public Double tongTienKhuyenMai(List<HoaDonChiTiet> list) {
+        Double sum = 0.0;
+        for (HoaDonChiTiet hdct : list) {
+
         }
         return sum;
     }
+
+
+    @Override
+    public Double getDonGiaKhiGiam(List<ChiTietKhuyenMai> listCTKM) {
+        Double donGiaKhiGiam = 0.0;
+        for (ChiTietKhuyenMai ctkm : listCTKM) {
+            if (ctkm.getKhuyenMai().getDonVi().equals("%")) {
+                donGiaKhiGiam = ctkm.getCtsp().getGiaBan() - ((Double.valueOf(ctkm.getKhuyenMai().getGiaTri()) / 100) * ctkm.getCtsp().getGiaBan());
+            } else {
+                donGiaKhiGiam = ctkm.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+            }
+        }
+        return donGiaKhiGiam;
+    }
+
 
     @Override
     public HoaDonChiTiet save(HoaDonChiTiet hdct) {
@@ -88,6 +121,16 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public List<HoaDonChiTiet> getHoaDonTheoHoaDonChiTiet(UUID id) {
         return hoaDonChiTietRepository.getHoaDonTheoHoaDonChiTiet(id);
+    }
+
+    @Override
+    public void removeHDCT(UUID idHoaDon) {
+        hoaDonChiTietRepository.removeHDCT(idHoaDon);
+    }
+
+    @Override
+    public void removeHD(UUID idHoaDon) {
+        hoaDonChiTietRepository.removeHD(idHoaDon);
     }
 
 

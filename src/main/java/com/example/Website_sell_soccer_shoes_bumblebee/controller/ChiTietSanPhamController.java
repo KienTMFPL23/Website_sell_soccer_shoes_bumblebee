@@ -217,6 +217,65 @@ public class ChiTietSanPhamController {
         }
     }
 
+    // 12/11/2023
+// search 2 loại giầy
+    @GetMapping("/chi-tiet-san-pham/search22-loai-giay")
+    public ResponseEntity<?> search22LoaiGiay(@RequestParam(name = "keyword") String keyword) {
+
+        if (keyword == null || keyword == "") {
+            return ResponseEntity.ok(service.listLG22(1));
+        } else {
+            return ResponseEntity.ok(service.search22LG("%" + keyword + "%", 1));
+        }
+    }
+
+    @GetMapping("/chi-tiet-san-pham/search22-kich-co")
+    public ResponseEntity<List<KichCo>> search22KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
+        List<KichCo> result;
+        if (size != null) {
+            // Xử lý khi 'size' có giá trị
+            result = service.search22KC(size, 1);
+        } else {
+            // Xử lý khi 'size' là null (không được truyền vào)
+            result = service.listKichCo22(1);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    // search 2 màu sắc
+    @GetMapping("/chi-tiet-san-pham/search22-mau-sac")
+    public ResponseEntity<?> search22MS(@RequestParam(name = "keyword") String ten) {
+
+        if (ten == null || ten.equals("")) {
+            return ResponseEntity.ok(service.listMauSac22(1));
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.search22MS("%" + ten + "%", 1));
+        }
+    }
+
+    // search 2 đế giầy
+    @GetMapping("/chi-tiet-san-pham/search22-de-giay")
+    public ResponseEntity<?> search22DG(@RequestParam(name = "keyword") String loaiDe) {
+
+        if (loaiDe == null || loaiDe.equals("")) {
+            return ResponseEntity.ok(service.listDeGiay22(1));
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.search22DG("%" + loaiDe + "%", 1));
+        }
+    }
+
+    // search 2 chất liệu
+    @GetMapping("/chi-tiet-san-pham/search22-chat-lieu")
+    public ResponseEntity<?> search22CL(@RequestParam(name = "keyword") String ten) {
+
+        if (ten == null || ten.equals("")) {
+            return ResponseEntity.ok(service.listChatLieu22(1));
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.search22CL("%" + ten + "%", 1));
+        }
+    }
+
+    //
     @RequestMapping("/chi-tiet-san-pham/search")
     public String searchSP(@ModelAttribute("searchForm") SearchFormSP searchFormSP, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {
@@ -345,7 +404,6 @@ public class ChiTietSanPhamController {
         model.addAttribute("sortForm", new SortFormSP());
         return "/admin/index";
     }
-
 
 
     // filer with combobox chat lieu
@@ -600,7 +658,7 @@ public class ChiTietSanPhamController {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/chi-tiet-san-pham/view-update/" + id;
         }
-        loaiGiay.setTrangthai(true);
+        loaiGiay.setTrangthai(1);
         loaiGiayRepo.save(loaiGiay);
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
@@ -767,8 +825,8 @@ public class ChiTietSanPhamController {
                        @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                        @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                        @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                       @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                       @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                       @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                       @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                        @PathVariable UUID id,
                        @RequestParam(name = "ctsp") ChiTietSanPham ctsp
     ) {
@@ -808,12 +866,12 @@ public class ChiTietSanPhamController {
                         case 3:
                             hinhAnh.setDuongdan3(fileName);
                             break;
-                        case 4:
-                            hinhAnh.setDuongdan4(fileName);
-                            break;
-                        case 5:
-                            hinhAnh.setDuongdan5(fileName);
-                            break;
+//                        case 4:
+//                            hinhAnh.setDuongdan4(fileName);
+//                            break;
+//                        case 5:
+//                            hinhAnh.setDuongdan5(fileName);
+//                            break;
 
                         default:
                             break;
@@ -833,8 +891,8 @@ public class ChiTietSanPhamController {
                                   @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                                   @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                                   @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                                  @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                                  @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                                  @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                                  @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                                   @PathVariable UUID id,
                                   @RequestParam(name = "ctsp") ChiTietSanPham ctsp
     ) {
@@ -874,12 +932,12 @@ public class ChiTietSanPhamController {
                         case 3:
                             hinhAnh.setDuongdan3(fileName);
                             break;
-                        case 4:
-                            hinhAnh.setDuongdan4(fileName);
-                            break;
-                        case 5:
-                            hinhAnh.setDuongdan5(fileName);
-                            break;
+//                        case 4:
+//                            hinhAnh.setDuongdan4(fileName);
+//                            break;
+//                        case 5:
+//                            hinhAnh.setDuongdan5(fileName);
+//                            break;
 
                         default:
                             break;

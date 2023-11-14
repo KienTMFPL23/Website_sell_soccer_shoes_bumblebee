@@ -1,62 +1,74 @@
 <%@ page pageEncoding="utf-8" %>
-<title>
-    Giày đá bóng Bumblebee
-</title>
 <link rel="icon" href="../../../images_template/logo_bumblebee.png">
-
-
-<header class="header" style="background-color: #37517E;padding: 0px 10px">
-    <nav class="navigation">
-        <div class="container-fluid" style="display: flex;align-items: center">
-            <div class="navigation__column left">
-                <div class="header__logo">
-                    <a class="ps-logo" href="/bumblebee/home" style="padding: 0">
-                        <img src="../../../images_template/logo_bumblebee.png" width="80px">
-                    </a>
-                    <span style="color: white;font-weight: 600;font-size: 16px;margin-left: 20px">BUMBLEBEE</span>
+<div class="header">
+    <div class="top_nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="top_nav_left">free shipping on all u.s orders over $50</div>
                 </div>
-            </div>
-            <div class="navigation__column center">
-                <ul class="main-menu menu">
-                    <li class="menu-item menu-item-has-children dropdown"><a class="menu-link" href="/bumblebee/home">Trang
-                        Chủ</a>
-                    </li>
-                    <li class="menu-item"><a href="/bumblebee/product_list">Sản Phẩm</a></li>
-                    <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Giới Thiệu</a>
-                    </li>
-                    <li class="menu-item"><a href="#">Liên Hệ</a></li>
-                </ul>
-            </div>
-            <div class="navigation__column right" style="display: flex;flex-direction: column;
-    gap: 10px;">
-                <div class="info" style="">
-                    <div class="info_right">
-                        <c:if test="${userLogged.username == null}">
-                            <p style="margin-bottom: 0px;color: white;margin-right: 10px"></p>
-                            <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt="" width="30px"></a>
-                        </c:if>
-                        <c:if test="${userLogged.username != null}">
-                            <p style="margin-bottom: 0px;color: white;margin-right: 10px">${userLogged.username}</p>
-                            <a href="/bumblebee/don-mua"><img src="../../../img/in4.png" alt="" width="30px"></a>
-                        </c:if>
-
-                    </div>
-                </div>
-                <div>
-                    <form class="ps-search--header" action="/bumblebee/product_list" method="post"
-                          style="top: 0px;margin-right: 30px">
-                        <input class="form-control" type="text" placeholder="Search Product…">
-                        <button><i class="ps-icon-search"></i></button>
-                    </form>
-                    <div class="ps-cart">
-                        <a class="ps-cart__toggle" href="/bumblebee/cart" style="top: 0px;">
-                            <span style="background-color: #37517E"><i>${slGioHang}</i></span>
-                            <i class="ps-icon-shopping-cart"></i>
-                        </a>
+                <div class="col-md-6 text-right">
+                    <div class="top_nav_right">
+                        <ul class="top_nav_menu">
+                            <li class="account">
+                                <a href="#">
+                                    My Account
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="account_selection">
+                                    <li><a href="/bumblebee/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a></li>
+                                    <li><a href="/bumblebee/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
+                                    <li><a href="/bumblebee/register"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng kí</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="main_nav_container">
+        <div class="container-fluid" style="padding: 0 40px;">
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <div class="logo_container">
+                        <a href="/bumblebee/home">Bumblebee</a>
+                    </div>
+                    <nav class="navbar">
+                        <ul class="navbar_menu" style="margin-bottom: 0px">
+                            <li><a class="menu-link" href="/bumblebee/home">Trang
+                                Chủ</a></li>
+                            <li><a href="/bumblebee/product_list">Sản Phẩm</a></li>
+                            <li><a href="#">Giới Thiệu</a></li>
+                            <li><a href="#">Liên Hệ</a></li>
+                            <li><a href="contact.html">Chính Sách</a></li>
 
-    </nav>
-</header>
+                        </ul>
+                        <ul class="navbar_user">
+                            <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                            <c:if test="${userLogged.username == null}">
+                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            </c:if>
+                            <c:if test="${userLogged.username != null}">
+                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            </c:if>
+
+                            <li class="checkout">
+                                <a href="/bumblebee/cart">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <span id="checkout_items" class="checkout_items" style="display: ${slGioHang == null ?"none":"block"}">${slGioHang}</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="hamburger_container">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../js_template/custom.js"></script>
+
+
