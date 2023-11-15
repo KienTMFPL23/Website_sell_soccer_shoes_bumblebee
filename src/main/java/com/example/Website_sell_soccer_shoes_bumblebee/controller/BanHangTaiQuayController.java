@@ -30,11 +30,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -272,10 +274,12 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
+
     public String thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
                             @RequestParam("soDienThoai") String soDienThoai,
                             @RequestParam("ghiChu") String ghiChu) throws ParseException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+
 
         if (hoaDonThanhToan != null) {
             Date date = new Date();
@@ -294,6 +298,7 @@ public class BanHangTaiQuayController {
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
+
             model.addAttribute("successThanhToan", "Thanh toán thất bại");
         } else {
             model.addAttribute("errorThanhToan", "Thanh toan that bai");
@@ -339,6 +344,7 @@ public class BanHangTaiQuayController {
         }
 
 
+
     }
 //    @RequestMapping("/print/{id}")
 //    public void xuatFilePdf(HttpServletResponse response, Model model, @PathVariable("id") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon) throws ParseException {
@@ -378,6 +384,7 @@ public class BanHangTaiQuayController {
 //            //// Table
 //            Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    " + hoaDonThanhToan.getMaHoaDon());
 //            Paragraph ma = new Paragraph();
+
 //            Paragraph Ngay = new Paragraph("Ngay Mua    :    " + hoaDonThanhToan.getNgayTao());
 //
 //            document.add(MaHoaDon);
@@ -506,4 +513,5 @@ public class BanHangTaiQuayController {
 ////        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
 //
 //    }
+
 }

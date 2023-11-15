@@ -379,7 +379,9 @@
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+
                                 onclick="alertThanhToan()"
+
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
                             Thanh toán
                         </button>
@@ -428,6 +430,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script>
+    function downloadComplete() {
+
+        window.onload = function () {
+
+            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
+        };
+        return true;
+    }
+</script>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">

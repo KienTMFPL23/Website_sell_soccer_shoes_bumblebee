@@ -1,10 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.VnPayServiceImpl;
@@ -12,7 +9,6 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -80,6 +76,7 @@ public class HomeController {
     @Autowired
     TaiKhoanService taiKhoanService;
 
+    private static int maHoaDon = 1;
 
     @Data
     public static class SortForm {
@@ -214,10 +211,14 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
-        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+//        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+//        KhachHang khachHang = taiKhoan.getKhachHangKH();
+//        GioHang gioHang = gioHangRepo.getGioHang(khachHang.getId());
+//        int slspgh = chiTietSanPhamRepo.getSLGioHangBySPAndGH(idCTSP,gioHang.getId());
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+//        model.addAttribute("slSPGH",slspgh);
         model.addAttribute("idCTSP", idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         model.addAttribute("listKC", listKCBySP);
@@ -292,7 +293,6 @@ public class HomeController {
             List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("listCTSP", listCTSP);
-
             model.addAttribute("view", "../template_home/cart.jsp");
             return "redirect:/bumblebee/cart";
 
@@ -363,6 +363,8 @@ public class HomeController {
 
 
     private HoaDon hoaDon;
+    @Autowired
+    HoaDonRepository hoaDonRepository;
 
     @RequestMapping("/bumblebee/dat-hang")
     public String datHang(
@@ -380,8 +382,17 @@ public class HomeController {
 
         // Tạo hóa đơn
         hoaDon = new HoaDon();
-        Random random = new Random();
-        hoaDon.setMaHoaDon("HĐ-" + random.nextInt());
+        String formatHoaDon = "HD" + String.format("%07d", maHoaDon);
+        HoaDon checkMa = hoaDonRepository.searchHoaDon(formatHoaDon);
+        if (checkMa != null) {
+            String maHoaDonMax = hoaDonRepository.searchMaxMaHoaDon();
+            maHoaDon = Integer.valueOf(maHoaDonMax.substring(2));
+            maHoaDon++;
+            String formatSoMa = "HD" + String.format("%07d", maHoaDon);
+            hoaDon.setMaHoaDon(formatSoMa);
+        } else {
+            hoaDon.setMaHoaDon(formatHoaDon);
+        }
         hoaDon.setNgayTao(new Date());
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -638,7 +649,7 @@ public class HomeController {
         } else if (sortForm.key.equals("moiNhat")) {
             sort = Sort.by(Sort.Direction.DESC, "ngayTao");
             pageable = PageRequest.of(p, 12, sort);
-        }else{
+        } else {
             pageable = PageRequest.of(p, 12);
         }
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
@@ -760,7 +771,7 @@ public class HomeController {
     }
 
     @GetMapping("/bumblebee/chinh-sach-doi-tra")
-    public String chinhSach(Model model){
+    public String chinhSach(Model model) {
         model.addAttribute("view", "../template_home/chinh-sach.jsp");
         return "template_home/index";
     }

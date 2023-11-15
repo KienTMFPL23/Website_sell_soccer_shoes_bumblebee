@@ -306,7 +306,7 @@ public class SanPhamController {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
-        loaiGiay.setTrangthai(true);
+        loaiGiay.setTrangthai(1);
         loaiGiayRepo.save(loaiGiay);
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();

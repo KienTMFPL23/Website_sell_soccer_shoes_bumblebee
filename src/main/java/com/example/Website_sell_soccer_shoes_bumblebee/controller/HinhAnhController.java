@@ -151,8 +151,8 @@ public class HinhAnhController {
                          @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                          @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                          @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                         @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                         @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                         @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                         @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                          @RequestParam(name = "ctsp") ChiTietSanPham ctsp, Model model) {
         HinhAnh hinhAnh = service.findById(id);
         model.addAttribute("hinhANh", hinhAnh);
@@ -175,14 +175,14 @@ public class HinhAnhController {
             String newDuongdan3 = saveImage(duongdan3);
             hinhAnh.setDuongdan3(newDuongdan3);
         }
-        if (!duongdan4.isEmpty()) {
-            String newDuongdan4 = saveImage(duongdan4);
-            hinhAnh.setDuongdan4(newDuongdan4);
-        }
-        if (!duongdan5.isEmpty()) {
-            String newDuongdan5 = saveImage(duongdan5);
-            hinhAnh.setDuongdan5(newDuongdan5);
-        }
+//        if (!duongdan4.isEmpty()) {
+//            String newDuongdan4 = saveImage(duongdan4);
+//            hinhAnh.setDuongdan4(newDuongdan4);
+//        }
+//        if (!duongdan5.isEmpty()) {
+//            String newDuongdan5 = saveImage(duongdan5);
+//            hinhAnh.setDuongdan5(newDuongdan5);
+//        }
 
 
         repository.save(hinhAnh);
@@ -197,8 +197,8 @@ public class HinhAnhController {
                                     @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                                     @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                                     @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                                    @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                                    @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                                    @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                                    @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                                     @RequestParam(name = "ctsp") ChiTietSanPham ctsp, Model model) {
         HinhAnh hinhAnh = service.findById(id);
         model.addAttribute("hinhANh", hinhAnh);
@@ -222,14 +222,14 @@ public class HinhAnhController {
             String newDuongdan3 = saveImage(duongdan3);
             hinhAnh.setDuongdan3(newDuongdan3);
         }
-        if (!duongdan4.isEmpty()) {
-            String newDuongdan4 = saveImage(duongdan4);
-            hinhAnh.setDuongdan4(newDuongdan4);
-        }
-        if (!duongdan5.isEmpty()) {
-            String newDuongdan5 = saveImage(duongdan5);
-            hinhAnh.setDuongdan5(newDuongdan5);
-        }
+//        if (!duongdan4.isEmpty()) {
+//            String newDuongdan4 = saveImage(duongdan4);
+//            hinhAnh.setDuongdan4(newDuongdan4);
+//        }
+//        if (!duongdan5.isEmpty()) {
+//            String newDuongdan5 = saveImage(duongdan5);
+//            hinhAnh.setDuongdan5(newDuongdan5);
+//        }
 
 
         repository.save(hinhAnh);
@@ -244,8 +244,8 @@ public class HinhAnhController {
                                 @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                                 @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                                 @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                                @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                                @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                                @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                                @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                                 @RequestParam(name = "ctsp") ChiTietSanPham ctsp, Model model) {
         HinhAnh hinhAnh = service.findById(id);
         model.addAttribute("hinhANh", hinhAnh);
@@ -268,14 +268,14 @@ public class HinhAnhController {
             String newDuongdan3 = saveImage(duongdan3);
             hinhAnh.setDuongdan3(newDuongdan3);
         }
-        if (!duongdan4.isEmpty()) {
-            String newDuongdan4 = saveImage(duongdan4);
-            hinhAnh.setDuongdan4(newDuongdan4);
-        }
-        if (!duongdan5.isEmpty()) {
-            String newDuongdan5 = saveImage(duongdan5);
-            hinhAnh.setDuongdan5(newDuongdan5);
-        }
+//        if (!duongdan4.isEmpty()) {
+//            String newDuongdan4 = saveImage(duongdan4);
+//            hinhAnh.setDuongdan4(newDuongdan4);
+//        }
+//        if (!duongdan5.isEmpty()) {
+//            String newDuongdan5 = saveImage(duongdan5);
+//            hinhAnh.setDuongdan5(newDuongdan5);
+//        }
 
 
         repository.save(hinhAnh);
