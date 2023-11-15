@@ -126,7 +126,6 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
             "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
             "GROUP BY c2.sanPham.id, c2.mauSac.id)")
-
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
 
@@ -140,4 +139,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "where giohang.IdKH = ?1", nativeQuery = true)
     Integer getSLGioHang(UUID idKH);
 
+    @Query(value = "select soluong from giohangchitiet" +
+            " where IdChiTietSP = ?1 and IdGioHang = ?2",nativeQuery = true)
+    Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
 }

@@ -232,10 +232,14 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
-        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+//        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+//        KhachHang khachHang = taiKhoan.getKhachHangKH();
+//        GioHang gioHang = gioHangRepo.getGioHang(khachHang.getId());
+//        int slspgh = chiTietSanPhamRepo.getSLGioHangBySPAndGH(idCTSP,gioHang.getId());
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+//        model.addAttribute("slSPGH",slspgh);
         model.addAttribute("idCTSP", idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         model.addAttribute("listKC", listKCBySP);
@@ -311,7 +315,6 @@ public class HomeController {
             List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("listCTSP", listCTSP);
-
             model.addAttribute("view", "../template_home/cart.jsp");
             return "redirect:/bumblebee/cart";
 

@@ -204,6 +204,7 @@ public class ChiTietSanPhamController {
         }
     }
 
+
     @RequestMapping("/chi-tiet-san-pham/search")
     public String searchSP(@ModelAttribute("searchForm") SearchFormSP searchFormSP, @RequestParam(defaultValue = "0") int p, Model model) {
         if (p < 0) {

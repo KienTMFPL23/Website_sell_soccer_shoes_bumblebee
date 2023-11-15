@@ -91,7 +91,7 @@ public class DangNhapController {
         taikhoan.setRole(3);
         taiKhoanService.dangKy(taikhoan);
         session.setAttribute("userLogged", taikhoan);
-        return "redirect:/bumblebee/home";
+        return "redirect:/bumblebee/login";
     }
 
     @GetMapping("/bumblebee/logout")

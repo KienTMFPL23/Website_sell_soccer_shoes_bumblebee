@@ -5,7 +5,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="top_nav_left">free shipping on all u.s orders over $50</div>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="top_nav_right">
@@ -39,9 +38,8 @@
                             <li><a class="menu-link" href="/bumblebee/home">Trang
                                 Chủ</a></li>
                             <li><a href="/bumblebee/product_list">Sản Phẩm</a></li>
-                            <li><a href="#">Giới Thiệu</a></li>
                             <li><a href="#">Liên Hệ</a></li>
-                            <li><a href="contact.html">Chính Sách</a></li>
+                            <li><a href="/bumblebee/chinh-sach-doi-tra">Chính Sách Đổi Trả</a></li>
 
                         </ul>
                         <ul class="navbar_user">
@@ -56,7 +54,7 @@
                             <li class="checkout">
                                 <a href="/bumblebee/cart">
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="checkout_items" class="checkout_items" style="display: ${slGioHang == null ?"none":"block"}">${slGioHang}</span>
+                                    <span id="checkout_items" class="checkout_items" style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>
                                 </a>
                             </li>
                         </ul>
