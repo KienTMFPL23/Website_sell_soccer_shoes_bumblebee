@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChatLieu;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.MauSac;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.MauSacReponsitory;
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,30 +85,18 @@ public class MauSacController {
     }
 
     @RequestMapping("mau-sac/update")
-    public String update(@Valid @ModelAttribute("ms") MauSac ms, BindingResult result, Model model) {
-        Boolean hasE = result.hasErrors();
-        List<MauSac> list = msr.findAll();
-        for(int i = 0;i<list.size();i++){
-            if (result.hasErrors()) {
-                return "mau_sac/update";
-            }else if(ms.getMa().length()==0){
-                model.addAttribute("errorMa", "Ma màu khong duoc bo trong");
-                hasE = true;
-            }
-            else if(list.get(i).getMa().equals(ms.getMa())){
-                model.addAttribute("errorMa", "Ma màu khong duoc trung");
-                hasE = true;
-            }else if(list.get(i).getTen().equals(ms.getTen())){
-                model.addAttribute("errorMa", "tên màu khong duoc trung");
-                hasE = true;
-            }
-            if(hasE){
-                return "mau_sac/update";
-            } else{
-                this.msr.save(ms);
-            }
+    public String update( Model model,
+                         @Valid @ModelAttribute("ms") MauSac cl,
+                         BindingResult result
+    ) {
+        Boolean hasError = result.hasErrors();
+        if (hasError) {
+            // Báo lỗi
+            model.addAttribute("view", "../chat_lieu/add_update.jsp");
+            return "/admin/index";
         }
 
+        this.msr.save(cl);
         model.addAttribute("view", "../mau_sac/index.jsp");
         return "redirect:/mau-sac/hien-thi";
     }
@@ -149,5 +140,16 @@ public class MauSacController {
         model.addAttribute("view", "../mau_sac/list.jsp");
         return "/admin/index";
     }
-
+    @PostMapping("/mau-sac/import")
+    public String uploadExcelFile(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            mss.saveDataFromExcel(file);
+//        return ResponseEntity.ok("File uploaded successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while uploading the file.");
+        }
+        model.addAttribute("view", "../mau_sac/index.jsp");
+        return "redirect:/mau-sac/hien-thi";
+    }
 }

@@ -115,7 +115,7 @@
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                          aria-labelledby="exampleModalLabel"
                                          aria-hidden="true">
-                                        <div class="modal-dialog modal-xl">
+                                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách
@@ -190,7 +190,7 @@
                                                             <th scope="col"></th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody id="myTable">
+                                                        <tbody id="myTable" >
                                                         <c:forEach items="${listSanPham}" var="sp" varStatus="i">
                                                             <tr>
                                                                 <td>${i.count}</td>
@@ -201,7 +201,32 @@
                                                                 <td>${sp.deGiay.loaiDe}</td>
                                                                 <td>${sp.kichCo.size}</td>
                                                                 <td>${sp.loaiGiay.tentheloai}</td>
-                                                                <td>${sp.giaBan}</td>
+                                                                <td>
+
+                                                                    <c:if test="${sp.ctkm != null}">
+                                                                        <c:forEach items="${sp.ctkm}" var="ctkm">
+                                                                            <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                                                <fmt:formatNumber>
+                                                                                    ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
+                                                                                </fmt:formatNumber>
+                                                                                <del style="color: crimson;">
+                                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                                                </del>
+                                                                            </c:if>
+                                                                            <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                                                <fmt:formatNumber>
+                                                                                    ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
+                                                                                </fmt:formatNumber>
+                                                                                <del style="color: crimson;">
+                                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                                                </del>
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                    </c:if>
+                                                                    <c:if test="${empty sp.ctkm}">
+                                                                        ${sp.giaBan}
+                                                                    </c:if>
+                                                                </td>
                                                                 <td>
                                                                     <a href="/bumblebee/ban-hang-tai-quay/add-gio-hang/${sp.id}"
                                                                        class="btn btn-primary">Add</a></td>
@@ -254,12 +279,51 @@
                                                    style="width:100px;">
                                         </td>
                                         <td>
-                                            <fmt:formatNumber value="${hdct.chiTietSanPham.giaBan}" type="number"/>
+                                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                                <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
+                                                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                        <del style="color: crimson; margin-right: 10px;">
+                                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                        </del>
+                                                        <fmt:formatNumber>
+                                                            ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
+                                                        </fmt:formatNumber>
+
+                                                    </c:if>
+                                                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                        <del style="color: crimson; margin-right: 10px;">
+                                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                        </del>
+                                                        <fmt:formatNumber>
+                                                            ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
+                                                        </fmt:formatNumber>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty hdct.chiTietSanPham.ctkm}">
+                                                <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                            </c:if>
                                         </td>
                                         <td>
-                                            <fmt:formatNumber
-                                                    value="${hdct.soLuong * hdct.chiTietSanPham.giaBan}"
-                                                    type="number"/></td>
+                                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                                <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
+                                                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                        <fmt:formatNumber
+                                                                value="${hdct.soLuong * (ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan))}"
+                                                                type="number"/>
+                                                    </c:if>
+                                                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                        <fmt:formatNumber
+                                                                value="${hdct.soLuong * (ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri)}"
+                                                                type="number"/>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty hdct.chiTietSanPham.ctkm}">
+                                                <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
+                                            </c:if>
+
+                                        </td>
                                         <td>
                                             <a
                                                     href="/bumblebee/ban-hang-tai-quay/delete-hdct/${hdct.id}">
@@ -312,10 +376,12 @@
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                     <div class="dropdown mt-3">
-<%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
-<%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
+                            <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
+                            <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+
                                 onclick="alertThanhToan()"
+
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
                             Thanh toán
                         </button>
@@ -365,6 +431,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script>
+    function downloadComplete() {
+
+        window.onload = function () {
+
+            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
+        };
+        return true;
+    }
+</script>
+<script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
         "${k.soDienThoai}": "${k.ho} ${k.tenDem} ${k.ten}",
@@ -400,11 +476,21 @@
 
 </script>
 <script>
+
     $("#myInput").keyup(function () {
         var value = $(this).val().toLowerCase();
+        var table = document.getElementById("myTable");
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            table.style.display = "block"
         });
+
+        // var table = document.getElementById("myTable");
+        // if (table.style.display === "none") {
+        //     table.style.display = "block";
+        // } else {
+        //     table.style.display = "none";
+        // }
     });
 
     $("#searchSPGioHang").keyup(function () {
@@ -537,9 +623,9 @@
     }
 </script>
 <script>
-    function alertThanhToan(){
-        var confirmResult =  confirm("Bạn có muốn thanh toán không?");
-        if (confirmResult == true ){
+    function alertThanhToan() {
+        var confirmResult = confirm("Bạn có muốn thanh toán không?");
+        if (confirmResult == true) {
             Swal.fire({
                 title: "Thanh toán thành công",
                 icon: "success"

@@ -5,6 +5,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonChiTietService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
@@ -29,11 +30,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +74,9 @@ public class BanHangTaiQuayController {
     @Autowired
     KhachHangService khachHangService;
 
+    @Autowired
+    HoaDonChiTietRepository hoaDonChiTietRepository;
+
 
     @Getter
     @Setter
@@ -85,6 +91,7 @@ public class BanHangTaiQuayController {
     private Double sumMoney = 0.0;
     private String nameNhanVien = "";
     private static int maKhachHang = 1;
+    private UUID idCTSP = null;
     //    private UUID idHoaDonCT = null;
 
     //khach hang
@@ -181,13 +188,11 @@ public class BanHangTaiQuayController {
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         sumMoney = hoaDonChiTietService.getTotalMoney(list);
         model.addAttribute("sumMoney", sumMoney);
-
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
         model.addAttribute("listDeGiay", chiTietSanPhamRepo.listDeGiay());
         model.addAttribute("listChatLieu", chiTietSanPhamRepo.lítChatLieu());
-
 
         idHoaDonCT = id;
         return "ban_hang_tai_quay/ban-hang";
@@ -200,6 +205,7 @@ public class BanHangTaiQuayController {
 //        if (idHoaDon == null) {
 //            return "redirect:/bumblebee/ban-hang-tai-quay/sell";
 //        }
+        this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
         HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
         if (sanPhamInHDCT != null) {
@@ -213,6 +219,12 @@ public class BanHangTaiQuayController {
             hoaDonChiTiet.setSoLuong(1);
             hoaDonChiTiet.setDonGia(sp.getGiaBan());
             hoaDonChiTiet.setTrangThai(1);
+            if (sp.getCtkm() != null) {
+                Double donGiaKhiGiam = hoaDonChiTietService.getDonGiaKhiGiam(sp.getCtkm());
+                hoaDonChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+            } else {
+                hoaDonChiTiet.setDonGiaKhiGiam(0.0);
+            }
             Integer soLuong = sp.getSoLuong() - 1;
             chiTietSanPhamService.updateSoLuongTon(id, soLuong);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
@@ -262,10 +274,12 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
+
     public String thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
                             @RequestParam("soDienThoai") String soDienThoai,
-                            @RequestParam("ghiChu") String ghiChu) throws ParseException{
+                            @RequestParam("ghiChu") String ghiChu) throws ParseException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+
 
         if (hoaDonThanhToan != null) {
             Date date = new Date();
@@ -284,9 +298,10 @@ public class BanHangTaiQuayController {
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
-            model.addAttribute("successThanhToan","Thanh toán thất bại");
-        }else {
-            model.addAttribute("errorThanhToan","Thanh toan that bai");
+
+            model.addAttribute("successThanhToan", "Thanh toán thất bại");
+        } else {
+            model.addAttribute("errorThanhToan", "Thanh toan that bai");
             return "redirect:/bumblebee/ban-hang-tai-quay/sell";
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
@@ -313,6 +328,7 @@ public class BanHangTaiQuayController {
         khachHangService.saveKhachHang(addKhachHang);
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
     }
+
     @RequestMapping("/print/{id}")
     public void xuatPDF() throws IOException, DocumentException, PrinterException {
         Document document = new Document();
@@ -326,6 +342,7 @@ public class BanHangTaiQuayController {
         if (job.printDialog()) {
             job.print();
         }
+
 
 
     }
@@ -367,6 +384,7 @@ public class BanHangTaiQuayController {
 //            //// Table
 //            Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    " + hoaDonThanhToan.getMaHoaDon());
 //            Paragraph ma = new Paragraph();
+
 //            Paragraph Ngay = new Paragraph("Ngay Mua    :    " + hoaDonThanhToan.getNgayTao());
 //
 //            document.add(MaHoaDon);
@@ -495,4 +513,5 @@ public class BanHangTaiQuayController {
 ////        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
 //
 //    }
+
 }

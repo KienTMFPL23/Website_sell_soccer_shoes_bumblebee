@@ -116,7 +116,7 @@
             <div class="right ">
                 <div class="item-right">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select type="text" id="searchName0" path="loaiGiay">
+                    <form:select type="text" id="searchName10" path="loaiGiay">
                         <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
@@ -128,7 +128,7 @@
 
                 <div class="item-right">
                     <label class="form-label">Kích cỡ: </label>
-                    <form:select type="text" id="searchName1" path="kichCo" cssClass=".searchName1">
+                    <form:select type="text" id="searchName11" path="kichCo" cssClass=".searchName1">
                         <form:option value="">Chọn kích cỡ</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="item-right">
                     <label class="form-label">Màu sắc: </label>
-                    <form:select type="text" id="searchName2" path="mauSac" cssClass=".searchName2">
+                    <form:select type="text" id="searchName12" path="mauSac" cssClass=".searchName2">
                         <form:option value="">Chọn màu sắc</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="item-right">
                     <label class="form-label">Chất liệu: </label>
-                    <form:select type="text" id="searchName4" path="chatLieu">
+                    <form:select type="text" id="searchName14" path="chatLieu">
                         <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="item-right">
                     <label class="form-label">Đế giầy: </label>
-                    <form:select type="text" id="searchName3" path="deGiay" cssClass=".searchName4">
+                    <form:select type="text" id="searchName13" path="deGiay" cssClass=".searchName4">
                         <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
@@ -477,6 +477,7 @@
     });
 </script>
 <div class="text-center" style="color: crimson">${mess}</div>
+<script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
         crossorigin="anonymous"></script>

@@ -50,45 +50,52 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="pills-choxacnhan-tab" data-bs-toggle="pill"
+                <button class="nav-link rounded-5 position-relative" id="pills-choxacnhan-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-choxacnhan" type="button" role="tab" aria-controls="pills-choxacnhan"
                         aria-selected="false">Chờ xác nhận
+                    <span class="badge text-bg-secondary">${countHDCho}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="pills-chuanbi-tab" data-bs-toggle="pill"
+                <button class="nav-link rounded-5 position-relative" id="pills-chuanbi-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-chuanbi"
                         type="button" role="tab" aria-controls="pills-chuanbi" aria-selected="false">Đang chuẩn bị
+                    <span class="badge text-bg-secondary">${countHDXacNhan}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link rounded-5" id="pills-danggiao-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-danggiao"
                         type="button" role="tab" aria-controls="pills-danggiao" aria-selected="false">Đang giao
+                    <span class="badge text-bg-secondary">${countHDDangGiao}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link rounded-5" id="pills-hoanthanh-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-hoanthanh" type="button" role="tab" aria-controls="pills-hoanthanh"
                         aria-selected="false">Hoàn thành
+                    <span class="badge text-bg-secondary">${countHDHT}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link rounded-5" id="pills-dahuy-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-dahuy"
                         type="button" role="tab" aria-controls="pills-dahuy" aria-selected="false">Đã huỷ
+                    <span class="badge text-bg-secondary">${countHDHuy}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link rounded-5" id="pills-trahang-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-trahang"
                         type="button" role="tab" aria-controls="pills-trahang" aria-selected="false">Trả hàng
+                    <span class="badge text-bg-secondary">${countHDTraHang}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link rounded-5" id="pills-dahoantra-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-dahoantra"
                         type="button" role="tab" aria-controls="pills-dahoantra" aria-selected="false">Đã hoàn trả
+                    <span class="badge text-bg-secondary">${countHDDaTra}</span>
                 </button>
             </li>
         </ul>
