@@ -22,6 +22,15 @@
     .ps-btn btnDatHang {
         margin-left: 100px;
     }
+
+    .ps-payment-method li img {
+        max-width: 150px;
+        height: 40px;
+        background-color: #F3F3F3;
+        padding-left: 30px;
+        margin-top: -10px;
+    }
+
 </style>
 
 <main class="ps-main">
@@ -139,18 +148,19 @@
                                                 <input class="form-control" type="radio" id="rdo01" name="payment" value="1"
                                                        checked>
                                                 <label for="rdo01">Thanh toán khi nhận hàng</label>
-
+                                                <ul class="ps-payment-method">
+                                                    <li><a href="#"><img src="../../../img/logo-cod.png" alt="" id="cod-logo"></a></li>
+                                                </ul>
                                             </div>
                                         </div>
 
                                         <div class="form-group paypal">
                                             <div class="ps-radio ps-radio--inline">
                                                 <input class="form-control" type="radio" name="payment" id="rdo02" value="2">
-                                                <label for="rdo02">Thanh toán Paypal</label>
+                                                <label for="rdo02">Thanh toán VN Pay</label>
                                             </div>
                                             <ul class="ps-payment-method">
-                                                <li><a href="#"><img src="../../../img/paypal.png" alt="" width="150px"
-                                                                     height="30px"></a></li>
+                                                <li><a href="#"><img src="../../../img/vnpay-logo.png" alt=""></a></li>
                                             </ul>
                                         </div>
 

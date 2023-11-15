@@ -135,7 +135,7 @@ public class HoaDonController {
 
 
     @RequestMapping(value = "/hoa-don/update/{maHoaDon}", method = RequestMethod.POST)
-    public String updateStatus(@PathVariable("maHoaDon") String maHoaDon, @RequestBody() String data, Model model) {
+    public String updateStatus(@PathVariable("maHoaDon") String maHoaDon, @RequestBody() String data) {
         HoaDon hoaDon = hoaDonService.searchHoaDon(maHoaDon);
         data = data.substring(0, data.indexOf("="));
         hoaDon.setTrangThai(Integer.valueOf(data));
