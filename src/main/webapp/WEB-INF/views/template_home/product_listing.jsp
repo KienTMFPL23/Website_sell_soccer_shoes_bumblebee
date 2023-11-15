@@ -22,13 +22,13 @@
                         <div class="page_current">
                             <span>1</span>
                             <ul class="page_selection">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
+                                <li><a href="/bumblebee/product_list?p=0&keyword=${param.keyword}">1</a></li>
+                                <li><a href="/bumblebee/product_list?p=1&keyword=${param.keyword}">2</a></li>
+                                <li><a href="/bumblebee/product_list?p=2&keyword=${param.keyword}">3</a></li>
                             </ul>
                         </div>
-                        <div class="page_total"><span>of</span> 3</div>
-                        <div id="next_page" class="page_next"><a href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></div>
+                        <div class="page_total"><span>of</span>${pageSP.totalPages}</div>
+                        <div id="next_page" class="page_next"><a href="/bumblebee/product_list?p=${pageSP.number+1}&keyword=${param.keyword}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></div>
                     </div>
                 </div>
                 <div class="ps-product__column row">
@@ -76,8 +76,8 @@
                                         <div class="modal-body">
                                             <div class="col-md-5">
                                                 <img src="../../../uploads/${item.hinhAnhs.tenanh}"
-                                                     width="80px"
-                                                     height="80px">
+                                                     width="150px"
+                                                     height="150px">
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="sizeAddCart">
@@ -120,18 +120,6 @@
                             </div>
                         </form>
                     </c:forEach>
-                </div>
-                <div class="ps-product-action">
-                    <div class="ps-pagination">
-                        <ul class="pagination">
-                            <li><a href="/bumblebee/product_list?p=${pageSP.number-1}&keyword=${param.keyword}">Pre</a></li>
-                            <li><a href="/bumblebee/product_list?p=0&keyword=${param.keyword}">1</a></li>
-                            <li><a href="/bumblebee/product_list?p=1&keyword=${param.keyword}">2</a></li>
-                            <li><a href="/bumblebee/product_list?p=2&keyword=${param.keyword}">3</a></li>
-                            <li><a href="/bumblebee/product_list?p=${pageSP.number+1}&keyword=${param.keyword}">Next</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="ps-sidebar" data-mh="product-listing">

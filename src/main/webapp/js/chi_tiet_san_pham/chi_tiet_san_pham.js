@@ -1,6 +1,4 @@
-
 $(document).ready(function () {
-
   $('#searchName0').select2({
         width: 150,
         placeholder: "Search Loai Giay ....",
@@ -25,6 +23,7 @@ $(document).ready(function () {
         }
     });
 });
+
 
  $(document).ready(function () {
     $('#searchName1').select2({

@@ -170,4 +170,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "where giohang.IdKH = ?1", nativeQuery = true)
     Integer getSLGioHang(UUID idKH);
 
+    @Query(value = "select soluong from giohangchitiet" +
+            " where IdChiTietSP = ?1 and IdGioHang = ?2",nativeQuery = true)
+    Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
 }
