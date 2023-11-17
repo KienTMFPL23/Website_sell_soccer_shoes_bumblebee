@@ -140,6 +140,10 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+
+    public List<ChiTietSanPham> listCTSPSuDung() {
+        return repo.getListCTSPSuDung();
+
     public List<LoaiGiay> listLG22(Integer trangThai) {
         return repo.listLG22(trangThai);
     }
@@ -187,6 +191,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     @Override
     public List<KichCo> search22KC(Integer size, Integer trangThai) {
         return repo.search22KC(size, trangThai);
+
     }
 
     @Override

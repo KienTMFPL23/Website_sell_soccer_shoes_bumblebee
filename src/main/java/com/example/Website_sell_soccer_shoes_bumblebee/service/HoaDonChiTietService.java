@@ -37,5 +37,9 @@ public interface HoaDonChiTietService {
     void removeHDCT(UUID idHoaDon);
     void removeHD(UUID idHoaDon);
 
+
+    List<HoaDonChiTiet> hoaDonMuonDoi(String maHoaDon);
+
     Double getDonGiaKhiGiam(List<ChiTietKhuyenMai> listCTKM);
+
 }

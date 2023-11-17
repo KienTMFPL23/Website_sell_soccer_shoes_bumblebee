@@ -70,6 +70,10 @@ public interface ChiTietSanPhamService {
 
 
     Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable);
+
+
+    List<ChiTietSanPham> listCTSPSuDung();
+
     //13.11.2023
     List<LoaiGiay> listLG22(Integer trangThai);
     List<DeGiay> listDeGiay22(Integer trangThai);
@@ -81,4 +85,5 @@ public interface ChiTietSanPhamService {
     List<MauSac> search22MS(String keyword, Integer trangThai);
     List<ChatLieu> search22CL(String keyword, Integer trangThai);
     List<KichCo> search22KC(Integer size, Integer trangThai);
+
 }

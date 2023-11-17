@@ -162,7 +162,7 @@
                                             <td>${sp.deGiay.loaiDe}</td>
                                             <td>${sp.kichCo.size}</td>
                                             <td>${sp.loaiGiay.tentheloai}</td>
-                                            <td>${sp.giaBan}</td>
+                                            <td><fmt:formatNumber value="${sp.giaBan}" type="number"/></td>
                                             <td><a href="/bumblebee/ban-hang-tai-quay/add-gio-hang/${sp.id}"
                                                    class="btn btn-primary">Add</a></td>
                                         </tr>

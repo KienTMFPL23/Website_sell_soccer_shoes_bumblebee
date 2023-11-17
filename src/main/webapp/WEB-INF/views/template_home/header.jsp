@@ -39,7 +39,8 @@
                                 Chủ</a></li>
                             <li><a href="/bumblebee/product_list">Sản Phẩm</a></li>
                             <li><a href="#">Liên Hệ</a></li>
-                            <li><a href="/bumblebee/chinh-sach-doi-tra">Chính Sách Đổi Trả</a></li>
+
+                            <li><a href="/bumblebee/chinh-sach-doi-tra">Chính Sách</a></li>
 
                         </ul>
                         <ul class="navbar_user">
