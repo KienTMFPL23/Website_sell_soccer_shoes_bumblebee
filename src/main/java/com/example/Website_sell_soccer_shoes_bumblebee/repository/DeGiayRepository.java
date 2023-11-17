@@ -25,4 +25,7 @@ public interface DeGiayRepository extends JpaRepository<DeGiay, UUID> {
 
     @Query(value = "select d from DeGiay d where d.ma = ?1")
     DeGiay findByMa(String ma);
+
+    @Query(value = "select d from DeGiay d where d.loaiDe = ?1")
+    DeGiay findByLoaiDe(String loaide);
 }

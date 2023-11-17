@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -118,6 +119,32 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select count(*) from HoaDon hd where hd.TrangThai=8", nativeQuery = true)
     Integer countHDHuy();
-//
 
+    //
+    @Query(value = "select count(*) from HoaDon hd", nativeQuery = true)
+    Integer countHD();
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =1")
+    Page<HoaDon> searchLoaiHoaDonChoXacNhan(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =8")
+    Page<HoaDon> searchLoaiHoaDonDaHuy(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =2")
+    Page<HoaDon> searchLoaiHoaDonChuanBi(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =3")
+    Page<HoaDon> searchLoaiHoaDonGiaoDVVC(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =4")
+    Page<HoaDon> searchLoaiHoaDonDangGiao(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =5")
+    Page<HoaDon> searchLoaiHoaDonHoanThanh(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =6")
+    Page<HoaDon> searchLoaiHoaDonTraHang(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =7")
+    Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
 }

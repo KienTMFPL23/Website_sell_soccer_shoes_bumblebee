@@ -59,8 +59,8 @@ public class ChiTietSanPhamController {
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
-        dsTrangThai.put(0, "Hoạt động");
-        dsTrangThai.put(1, "Ngưng Hoạt động");
+        dsTrangThai.put(1, "Hoạt động");
+        dsTrangThai.put(0, "Ngưng Hoạt động");
         return dsTrangThai;
     }
 
@@ -687,7 +687,7 @@ public class ChiTietSanPhamController {
     }
 
     @PostMapping("/chi-tiet-san-pham/mau-sac/add/{id}")
-    public String add(@Valid @ModelAttribute("ms") MauSac ms, @PathVariable("id") UUID id, BindingResult result, Model model) {
+    public String add( Model model,@Valid @ModelAttribute("ms") MauSac ms, @PathVariable("id") UUID id, BindingResult result) {
         UUID idSP = service.getOneToAddModal(id);
         SanPham sanPham2 = sanPhamRepo.findById(idSP).orElse(null);
         model.addAttribute("idsp", idSP);
@@ -752,18 +752,22 @@ public class ChiTietSanPhamController {
         if (result.hasErrors()) {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "redirect:/chi-tiet-san-pham/view-update/" + id;
+//            return "/admin/index";
         }
 
         if (deGiayRepo.findByMa(degiay.getMa()) != null) {
             model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "redirect:/chi-tiet-san-pham/view-update/" + id;
+//            return "/admin/index";
         }
 
         deGiayRepo.save(degiay);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
+//        return "/admin/index";
     }
+
 
     // hình ảnh
 
