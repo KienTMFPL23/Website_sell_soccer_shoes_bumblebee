@@ -394,4 +394,49 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.countHDHuy();
     }
 
+    @Override
+    public Integer countHD() {
+        return hoaDonRepository.countHD();
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonChoXacNhan(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonChoXacNhan(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonDaHuy(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonDaHuy(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonChuanBi(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonChuanBi(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonGiaoDVVC(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonGiaoDVVC(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonDangGiao(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonDangGiao(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonHoanThanh(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonHoanThanh(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonTraHang(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonTraHang(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonDaTra(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonDaTra(loaiDon,pageable);
+    }
+
 }

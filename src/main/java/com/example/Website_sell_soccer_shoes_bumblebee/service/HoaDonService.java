@@ -3,6 +3,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.service;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.text.ParseException;
@@ -70,4 +71,23 @@ public interface HoaDonService {
     Integer countHDDaHoanTra();
 
     Integer countHDHuy();
+
+    Integer countHD();
+
+    Page<HoaDon> searchLoaiHoaDonChoXacNhan(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonDaHuy(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonChuanBi(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonGiaoDVVC(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonDangGiao(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonHoanThanh(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonTraHang(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
 }

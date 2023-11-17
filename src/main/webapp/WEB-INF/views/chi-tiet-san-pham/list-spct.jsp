@@ -122,7 +122,7 @@
                     <td><fmt:formatNumber value="${sp.giaBan}" maxFractionDigits="20" type="number"/></td>
 
                     <td>${sp.soLuong}</td>
-                    <td>${sp.trangThai==0?"Hoạt động":"Không hoạt động"}</td>
+                    <td>${sp.trangThai==0?"Không hoạt động":"Hoạt động"}</td>
                     <td>
                         <c:choose>
                             <c:when test="${empty sp.hinhAnhs.tenanh}">
