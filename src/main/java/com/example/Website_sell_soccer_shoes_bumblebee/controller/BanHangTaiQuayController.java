@@ -101,7 +101,6 @@ public class BanHangTaiQuayController {
     public String banHang(Model model) {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
-        model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         this.idHoaDon = null;
         this.sumMoney = 0.0;
         getTaiKhoan(model);
@@ -172,7 +171,7 @@ public class BanHangTaiQuayController {
         idHoaDon = id;
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
-        model.addAttribute("listSanPham", chiTietSanPhamService.getList());
+        model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
         model.addAttribute("listHDCT", hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id));
         model.addAttribute("idHoaDon", this.idHoaDon);
         model.addAttribute("listKhachHang", khachHangService.getAllKHOderBy());

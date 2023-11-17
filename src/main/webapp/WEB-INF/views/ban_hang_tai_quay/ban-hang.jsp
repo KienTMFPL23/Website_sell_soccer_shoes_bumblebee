@@ -59,8 +59,10 @@
                        href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
-                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick="confirmDelete(false)"
+                       class="btndele"><img
                             src="/images_template/deleteHD.png"></a>
+
                 </div>
             </c:forEach>
             <div style="margin-left: 20px">
@@ -312,8 +314,8 @@
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                     <div class="dropdown mt-3">
-<%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
-<%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
+                            <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
+                            <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
                                 onclick="alertThanhToan()"
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
@@ -470,8 +472,8 @@
     });
 </script>
 
-<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
+<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
+<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
@@ -522,29 +524,26 @@
     }
 </script>
 <script>
-    function alertDelete() {
-        Swal.fire({
-            title: 'Bạn có muốn xóa hóa đơn?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: 'No',
-        })
-        if (Swal.fire()) {
-            return true;
-        } else {
+    function confirmDelete() {
+        var result = confirm('ban co muon xoa');
+        if (result){
+
+        }else {
             return false;
         }
+
     }
+
 </script>
 <script>
-    function alertThanhToan(){
-        var confirmResult =  confirm("Bạn có muốn thanh toán không?");
-        if (confirmResult == true ){
-            Swal.fire({
-                title: "Thanh toán thành công",
-                icon: "success"
-            });
-        }
+    function alertThanhToan() {
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
 </script>
 </body>

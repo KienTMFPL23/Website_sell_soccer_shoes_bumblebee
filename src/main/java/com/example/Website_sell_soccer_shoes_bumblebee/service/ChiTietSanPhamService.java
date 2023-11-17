@@ -69,4 +69,6 @@ public interface ChiTietSanPhamService {
 
 
     Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable);
+
+    List<ChiTietSanPham> listCTSPSuDung();
 }

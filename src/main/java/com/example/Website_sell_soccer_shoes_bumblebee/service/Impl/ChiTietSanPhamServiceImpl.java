@@ -140,6 +140,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public List<ChiTietSanPham> listCTSPSuDung() {
+        return repo.getListCTSPSuDung();
+    }
+
+    @Override
     public Page<ChiTietSanPham> searchCL(UUID idCL, Pageable pageable) {
         return repo.searchByChatLieu(idCL, pageable);
     }

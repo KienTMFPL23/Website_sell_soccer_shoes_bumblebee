@@ -41,7 +41,7 @@
                             <li><a href="/bumblebee/product_list">Sản Phẩm</a></li>
                             <li><a href="#">Giới Thiệu</a></li>
                             <li><a href="#">Liên Hệ</a></li>
-                            <li><a href="contact.html">Chính Sách</a></li>
+                            <li><a href="/bumblebee/chinh-sach-doi-tra">Chính Sách</a></li>
 
                         </ul>
                         <ul class="navbar_user">

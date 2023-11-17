@@ -140,4 +140,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "where giohang.IdKH = ?1", nativeQuery = true)
     Integer getSLGioHang(UUID idKH);
 
+
+    @Query(value = "select ctsp from ChiTietSanPham  ctsp where  ctsp.soLuong > 0 and ctsp.trangThai = 0")
+    List<ChiTietSanPham> getListCTSPSuDung();
 }
