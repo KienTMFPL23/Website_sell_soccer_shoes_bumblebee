@@ -19,7 +19,7 @@
 
     .formAdd {
         width: 700px;
-        height: 500px;
+        height: 560px;
         background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
@@ -95,13 +95,29 @@
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
+                <label>Đơn vị:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:select type="text" class="form-select" aria-label="Default select example" path="donVi" name="donVi">
+                    <form:option value="VNĐ">VNĐ</form:option>
+                    <form:option value="%">%</form:option>
+                </form:select>
+                <form:errors path="donVi" cssStyle="color: crimson"></form:errors>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
                 <label>Giá trị:</label>
             </div>
             <div class="col-lg-8">
                 <form:input type="text" class="form-control" path="giaTri" name="giaTri"/>
                 <form:errors path="giaTri" cssStyle="color: crimson"></form:errors>
+                ${errorGiaTri}
             </div>
         </div>
+
 
         <div class="row mb-3">
             <div class="col-lg-1"></div>

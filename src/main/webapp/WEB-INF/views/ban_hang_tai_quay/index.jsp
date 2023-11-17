@@ -302,16 +302,25 @@
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
                 </div>
                 <div class="dropdown mt-3">
-                        <%--                    <button class="btn btn-primary">In hóa đơn</button>--%>
+                    <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"  onclick="return downloadComplete()">In hóa đơn</a>
                     <button type="submit" class="btn btn-primary"
-                            onclick="return confirm('Bạn có muốn thanh toán không')">Thanh toán
+                            onclick="return confirm('Bạn có muốn thanh toán không')"  onclick="return downloadComplete()">Thanh toán
                     </button>
                 </div>
             </form:form>
         </div>
     </div>
 </div>
+    <script>
+        function downloadComplete() {
 
+            window.onload = function () {
+
+                window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
+            };
+            return true;
+        }
+    </script>
 <script>
     $("#themHoaDon").click(function (event) {
         event.preventDefault();

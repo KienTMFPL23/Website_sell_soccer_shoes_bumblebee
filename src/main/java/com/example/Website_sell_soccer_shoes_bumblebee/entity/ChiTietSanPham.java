@@ -71,8 +71,7 @@ public class ChiTietSanPham {
 
   
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-
-  Date ngayTao;
+    Date ngayTao;
 
 
     @Column(name = "Trangthai")

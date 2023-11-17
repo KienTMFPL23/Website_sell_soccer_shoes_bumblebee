@@ -1,5 +1,7 @@
+
 Create
     Database JAVA_DATN_Sell_Soccer_Shoes
+
 GO
 Use JAVA_DATN_Sell_Soccer_Shoes
 GO
@@ -20,7 +22,9 @@ CREATE TABLE ChatLieu
     TenChatLieu NVARCHAR(150),
     TrangThai   INT
 )
+
 GO
+
 
 CREATE TABLE KichCo
 (
@@ -30,7 +34,9 @@ CREATE TABLE KichCo
     GioiTinh  BIT,
     TrangThai INT
 )
+
 GO
+
 
 CREATE TABLE LoaiGiay
 (
@@ -41,7 +47,7 @@ CREATE TABLE LoaiGiay
 )
 GO
 
-
+	select * from HoaDon
 
 CREATE TABLE DeGiay
 (
@@ -50,7 +56,9 @@ CREATE TABLE DeGiay
     LoaiDe    NVARCHAR(150),
     TrangThai INT
 )
+
 GO
+
 
 CREATE TABLE MauSac
 (
@@ -115,7 +123,9 @@ CREATE TABLE TaiKhoan
     Role     INT
 
 )
+
 GO
+
 
 if OBJECT_ID('KhachHang') is not null
     drop table KhachHang
@@ -151,7 +161,9 @@ CREATE TABLE NhanVien
     Email       VARCHAR(100),
     TrangThai   INT
 )
+
 GO
+
 
 CREATE TABLE GioHang
 (

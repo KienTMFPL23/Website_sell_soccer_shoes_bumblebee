@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
+    @Query("SELECT s FROM SanPham s WHERE s.tenSanPham = :tensp")
+    SanPham findByTenSp(@Param("tensp") String tensp);
 
     @Query("select  sp from SanPham  sp")
     Page<SanPham> findALlSP(Pageable pageable);

@@ -3,6 +3,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.service;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.text.ParseException;
@@ -26,7 +27,7 @@ public interface HoaDonService {
 
     HoaDon saveHoaDon(HoaDon hoaDon);
 
-    HoaDon updateHoaDon(UUID id,Integer trangThai,HoaDon hoaDon);
+    HoaDon updateHoaDon(UUID id, Integer trangThai, HoaDon hoaDon);
 
     HoaDon deleteHoaDon(UUID id);
 
@@ -52,7 +53,41 @@ public interface HoaDonService {
 
     HoaDon hoaDonFindId(UUID id);
 
-    Page<HoaDon> searchLoaiHoaDon(Integer key,Pageable pageable);
+    Page<HoaDon> searchLoaiHoaDon(Integer key, Pageable pageable);
 
+    //13.11.2023
+    Integer countHDCho();
+
+    Integer countHDXacNhan();
+
+    Integer countHDGiaoDVVC();
+
+    Integer countHDDangGiao();
+
+    Integer countHDHoanThanh();
+
+    Integer countHDTraHang();
+
+    Integer countHDDaHoanTra();
+
+    Integer countHDHuy();
+
+    Integer countHD();
+
+    Page<HoaDon> searchLoaiHoaDonChoXacNhan(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonDaHuy(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonChuanBi(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonGiaoDVVC(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonDangGiao(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonHoanThanh(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonTraHang(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
 
 }

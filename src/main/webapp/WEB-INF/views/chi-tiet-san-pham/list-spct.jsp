@@ -19,48 +19,17 @@
         float: right;
     }
 
-    .btnAdd {
-        background-color: #EEEDED;
-        margin-left: 50px;
-        margin-bottom: 30px;
-        border: 2px solid #37517E;
-        border-radius: 10px;
-        width: 200px;
-        float: left;
-        height: 40px;
-        font-size: 18px;
-        font-weight: 500;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-    }
-
-    .btnAdd:hover {
-        background-color: #37517E;
-        border: 2px solid #FFFFFF;
-        color: #FFFFFF;
-        text-decoration: none;
-    }
-
-    .btnAdd > i {
-        margin-top: 3px;
-        margin-left: 15px;
-        float: left;
-    }
-
-    .btnAdd > p {
-        margin-top: 7px;
-        margin-right: 10px;
-        font-size: 15px;
-    }
 </style>
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <a href="/chi-tiet-san-pham/view-add/${idsp}" class="btnAdd" >
-                <i class="bi bi-plus-circle-fill"></i><span>Thêm CT Sản Phẩm</span></a>
+            <div class="col-4 col-md-4 col-sm-4">
+                <a href="/chi-tiet-san-pham/view-add/${idsp}" class="btn"
+                   style="background: #0d6efd; color: whitesmoke">
+                    <i class="bi bi-plus-circle-fill"></i><span>Thêm CT Sản Phẩm</span></a>
+            </div>
             <br>
-            <div class="col-4 col-md-4 col-sm-2">
+            <div class="col-4 col-md-4 col-sm-4">
                 <a href="/chi-tiet-san-pham/hien-thi" class="btn"
                    style="background: #0d6efd; color: whitesmoke"><i class="bi bi-eye-fill"></i>Danh sách
                     chi tiết</a>
@@ -72,21 +41,17 @@
             <input class="form-control" placeholder="Nhập mã hoặc loại tên sản phẩm" id="myInput"/>
 
         </div>
-        </br>
-        <br>
-        <br>
     </div>
+    <br>
     <div class="row" style="padding-bottom: 30px">
         <div class="col-2 col-md-2 col-sm-2">
-                        <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
-                            <label class="form-label">Loại giầy: </label>
-                            <form:select type="text" id="searchName" path="idLG" onchange="submit()" cssClass="form-control">
-                                <form:option value="">Tất cả</form:option>
-                                <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
-                            </form:select>
-                        </form:form>
-
-
+            <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
+                <label class="form-label">Loại giầy: </label>
+                <form:select type="text" id="searchName0" path="idLG" onchange="submit()" cssClass="form-control">
+                    <form:option value="">Tất cả</form:option>
+                    <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
+                </form:select>
+            </form:form>
         </div>
 
         <div class="col-2 col-md-2 col-sm-2">
@@ -133,14 +98,10 @@
 
             </form:form>
         </div>
-        </br>
-
     </div>
     </br>
 
-
     <table class="table table-bordered">
-
         <tr style="background: #37517E;color: white ">
             <th>STT</th>
             <th>Mã sản phẩm</th>
@@ -161,7 +122,7 @@
                     <td><fmt:formatNumber value="${sp.giaBan}" maxFractionDigits="20" type="number"/></td>
 
                     <td>${sp.soLuong}</td>
-                    <td>${sp.trangThai==0?"Hoạt động":"Không hoạt động"}</td>
+                    <td>${sp.trangThai==0?"Không hoạt động":"Hoạt động"}</td>
                     <td>
                         <c:choose>
                             <c:when test="${empty sp.hinhAnhs.tenanh}">

@@ -4,6 +4,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.ExcelServiceImpl;
 import com.example.Website_sell_soccer_shoes_bumblebee.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+//import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,7 +41,8 @@ public class ChiTietSanPhamController {
     ChiTietSanPhamService service;
     @Autowired
     DeGiayRepository deGiayRepo;
-
+    @Autowired
+    ExcelServiceImpl excelService;
     @Autowired
     ChatLieuRepository chatLieuRepo;
     @Autowired
@@ -56,8 +59,8 @@ public class ChiTietSanPhamController {
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
-        dsTrangThai.put(0, "Hoạt động");
-        dsTrangThai.put(1, "Ngưng Hoạt động");
+        dsTrangThai.put(1, "Hoạt động");
+        dsTrangThai.put(0, "Ngưng Hoạt động");
         return dsTrangThai;
     }
 
@@ -157,6 +160,16 @@ public class ChiTietSanPhamController {
         return "/admin/index";
     }
 
+    // search 2 loại giầy
+    @GetMapping("/chi-tiet-san-pham/search2-loai-giay")
+    public ResponseEntity<?> search2LoaiGiay(@RequestParam(name = "keyword") String keyword) {
+
+        if (keyword == null || keyword == "") {
+            return ResponseEntity.ok(chiTietSanPhamRepo.listLoaiGiay());
+        } else {
+            return ResponseEntity.ok(service.search2("%" + keyword + "%"));
+        }
+    }
 
     @GetMapping("/chi-tiet-san-pham/search2-kich-co")
     public ResponseEntity<List<KichCo>> search2KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
@@ -203,6 +216,67 @@ public class ChiTietSanPhamController {
             return ResponseEntity.ok(chiTietSanPhamRepo.searchCL("%" + ten + "%"));
         }
     }
+
+
+    // 12/11/2023
+// search 2 loại giầy
+    @GetMapping("/chi-tiet-san-pham/search22-loai-giay")
+    public ResponseEntity<?> search22LoaiGiay(@RequestParam(name = "keyword") String keyword) {
+
+        if (keyword == null || keyword == "") {
+            return ResponseEntity.ok(service.listLG22(1));
+        } else {
+            return ResponseEntity.ok(service.search22LG("%" + keyword + "%", 1));
+        }
+    }
+
+    @GetMapping("/chi-tiet-san-pham/search22-kich-co")
+    public ResponseEntity<List<KichCo>> search22KichCo(@RequestParam(name = "keyword", required = false) Integer size) {
+        List<KichCo> result;
+        if (size != null) {
+            // Xử lý khi 'size' có giá trị
+            result = service.search22KC(size, 1);
+        } else {
+            // Xử lý khi 'size' là null (không được truyền vào)
+            result = service.listKichCo22(1);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    // search 2 màu sắc
+    @GetMapping("/chi-tiet-san-pham/search22-mau-sac")
+    public ResponseEntity<?> search22MS(@RequestParam(name = "keyword") String ten) {
+
+        if (ten == null || ten.equals("")) {
+            return ResponseEntity.ok(service.listMauSac22(1));
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.search22MS("%" + ten + "%", 1));
+        }
+    }
+
+    // search 2 đế giầy
+    @GetMapping("/chi-tiet-san-pham/search22-de-giay")
+    public ResponseEntity<?> search22DG(@RequestParam(name = "keyword") String loaiDe) {
+
+        if (loaiDe == null || loaiDe.equals("")) {
+            return ResponseEntity.ok(service.listDeGiay22(1));
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.search22DG("%" + loaiDe + "%", 1));
+        }
+    }
+
+    // search 2 chất liệu
+    @GetMapping("/chi-tiet-san-pham/search22-chat-lieu")
+    public ResponseEntity<?> search22CL(@RequestParam(name = "keyword") String ten) {
+
+        if (ten == null || ten.equals("")) {
+            return ResponseEntity.ok(service.listChatLieu22(1));
+        } else {
+            return ResponseEntity.ok(chiTietSanPhamRepo.search22CL("%" + ten + "%", 1));
+        }
+    }
+
+    //
 
     @RequestMapping("/chi-tiet-san-pham/search")
     public String searchSP(@ModelAttribute("searchForm") SearchFormSP searchFormSP, @RequestParam(defaultValue = "0") int p, Model model) {
@@ -332,7 +406,6 @@ public class ChiTietSanPhamController {
         model.addAttribute("sortForm", new SortFormSP());
         return "/admin/index";
     }
-
 
 
     // filer with combobox chat lieu
@@ -587,7 +660,7 @@ public class ChiTietSanPhamController {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/chi-tiet-san-pham/view-update/" + id;
         }
-        loaiGiay.setTrangthai(true);
+        loaiGiay.setTrangthai(1);
         loaiGiayRepo.save(loaiGiay);
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
@@ -614,7 +687,7 @@ public class ChiTietSanPhamController {
     }
 
     @PostMapping("/chi-tiet-san-pham/mau-sac/add/{id}")
-    public String add(@Valid @ModelAttribute("ms") MauSac ms, @PathVariable("id") UUID id, BindingResult result, Model model) {
+    public String add( Model model,@Valid @ModelAttribute("ms") MauSac ms, @PathVariable("id") UUID id, BindingResult result) {
         UUID idSP = service.getOneToAddModal(id);
         SanPham sanPham2 = sanPhamRepo.findById(idSP).orElse(null);
         model.addAttribute("idsp", idSP);
@@ -679,18 +752,22 @@ public class ChiTietSanPhamController {
         if (result.hasErrors()) {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "redirect:/chi-tiet-san-pham/view-update/" + id;
+//            return "/admin/index";
         }
 
         if (deGiayRepo.findByMa(degiay.getMa()) != null) {
             model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "redirect:/chi-tiet-san-pham/view-update/" + id;
+//            return "/admin/index";
         }
 
         deGiayRepo.save(degiay);
         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
         return "redirect:/chi-tiet-san-pham/view-update/" + id;
+//        return "/admin/index";
     }
+
 
     // hình ảnh
 
@@ -754,8 +831,8 @@ public class ChiTietSanPhamController {
                        @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                        @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                        @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                       @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                       @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                       @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                       @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                        @PathVariable UUID id,
                        @RequestParam(name = "ctsp") ChiTietSanPham ctsp
     ) {
@@ -795,12 +872,12 @@ public class ChiTietSanPhamController {
                         case 3:
                             hinhAnh.setDuongdan3(fileName);
                             break;
-                        case 4:
-                            hinhAnh.setDuongdan4(fileName);
-                            break;
-                        case 5:
-                            hinhAnh.setDuongdan5(fileName);
-                            break;
+//                        case 4:
+//                            hinhAnh.setDuongdan4(fileName);
+//                            break;
+//                        case 5:
+//                            hinhAnh.setDuongdan5(fileName);
+//                            break;
 
                         default:
                             break;
@@ -820,8 +897,8 @@ public class ChiTietSanPhamController {
                                   @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                                   @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                                   @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-                                  @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-                                  @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+//                                  @RequestParam(name = "duongdan4") MultipartFile duongdan4,
+//                                  @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                                   @PathVariable UUID id,
                                   @RequestParam(name = "ctsp") ChiTietSanPham ctsp
     ) {
@@ -861,12 +938,12 @@ public class ChiTietSanPhamController {
                         case 3:
                             hinhAnh.setDuongdan3(fileName);
                             break;
-                        case 4:
-                            hinhAnh.setDuongdan4(fileName);
-                            break;
-                        case 5:
-                            hinhAnh.setDuongdan5(fileName);
-                            break;
+//                        case 4:
+//                            hinhAnh.setDuongdan4(fileName);
+//                            break;
+//                        case 5:
+//                            hinhAnh.setDuongdan5(fileName);
+//                            break;
 
                         default:
                             break;
@@ -879,5 +956,35 @@ public class ChiTietSanPhamController {
         hinhAnhRepository.save(hinhAnh);
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + sp.getId();
     }
+    @PostMapping("/chi-tiet-san-pham/upload")
+    public String uploadExcelFile(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            // Kiểm tra loại tệp Excel
+//            List<ChiTietSanPham> persons = ExcelUtil.readExcel(file);
+//
+//            for (ChiTietSanPham person : persons) {
+//                if (StringUtils.isEmpty(person.getSoLuong())) {
+//                    model.addAttribute("error", "Trường 'số lượng' không được để trống.");
+//                    return "forward:/chi-tiet-san-pham/hien-thi";
+//                }if(StringUtils.isEmpty())
+//                // Kiểm tra các trường thuộc tính khác và xử lý tương tự nếu cần.
+//            }
+
+            if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
+                model.addAttribute("error", "Vui lòng chọn một tệp Excel (.xls hoặc .xlsx).");
+                return "redirect:/chi-tiet-san-pham/hien-thi";
+            }
+
+            // Tiếp tục xử lý nếu là tệp Excel hợp lệ
+            excelService.saveDataFromExcel(file);
+            model.addAttribute("success", "Dữ liệu đã được chèn thành công.");
+            return "redirect:/chi-tiet-san-pham/hien-thi";
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
+            return "forward:/chi-tiet-san-pham/hien-thi";
+        }
+    }
+
 
 }

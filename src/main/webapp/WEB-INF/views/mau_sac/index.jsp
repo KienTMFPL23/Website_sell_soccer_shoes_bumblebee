@@ -78,11 +78,15 @@
 
 <br>
 <body>
-<h1 style="text-align: center; margin-top: -20px; margin-bottom: 20px;">QUẢN LÝ MÀU SẮC</h1>
+<%--<h1 style="text-align: center; margin-top: -20px; margin-bottom: 20px;">QUẢN LÝ MÀU SẮC</h1>--%>
 <body>
 
 <div class="container">
 
+<%--    <form action="/mau-sac/import" method="post" enctype="multipart/form-data">--%>
+<%--        <input type="file" name="file" accept=".xls,.xlsx"/>--%>
+<%--        <button type="submit">Import</button>--%>
+<%--    </form>--%>
 
     <div class="row" id="icon-class-add">
         <h3 class="title-h3">Danh Sách Màu Sắc</h3>

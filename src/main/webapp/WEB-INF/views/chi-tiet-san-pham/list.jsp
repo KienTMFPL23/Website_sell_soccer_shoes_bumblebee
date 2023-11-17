@@ -44,11 +44,12 @@
         </br>
         <br>
         <br>
+
         <div class="row" style="padding-bottom: 30px">
             <div class="col-lg-2 ">
                 <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
                     <label class="form-label">Loại giầy: </label>
-                    <form:select type="text" id="searchName" path="idLG" onchange="submit()">
+                    <form:select type="text" id="searchName0" path="idLG" onchange="submit()">
                         <form:option value="">Tất cả</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
@@ -117,6 +118,25 @@
                 </form:form>
             </div>
         </div>
+        <%-- Hiển thị thông báo lỗi nếu có --%>
+        <% if (request.getAttribute("error") != null) { %>
+        <div style="color: red;">
+            <%= request.getAttribute("error") %>
+        </div>
+        <% } %>
+
+        <% if (request.getAttribute("success") != null) { %>
+        <div style="color: green;">
+            <%= request.getAttribute("success") %>
+        </div>
+        <% } %>
+
+
+        <form action="/chi-tiet-san-pham/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Chọn tệp Excel:</label>
+            <input type="file" name="file" id="file" accept=".xls, .xlsx" required>
+            <button type="submit">Tải lên</button>
+        </form>
         <c:if test="${not empty page.content}">
 
             <table class="table table-bordered">
@@ -141,7 +161,7 @@
                         <td><fmt:formatNumber value="${sp.giaBan}" maxFractionDigits="20" type="number"/></td>
 
                         <td>${sp.soLuong}</td>
-                        <td>${sp.trangThai==0 ?"Hoạt động":"Không hoạt động"}</td>
+                        <td>${sp.trangThai==0 ?"Không hoạt động":"Hoạt động"}</td>
                         <td><c:choose>
                             <c:when test="${empty sp.hinhAnhs.tenanh}">
                                 <i class="bi bi-image"></i><span class="text-muted">no image</span>

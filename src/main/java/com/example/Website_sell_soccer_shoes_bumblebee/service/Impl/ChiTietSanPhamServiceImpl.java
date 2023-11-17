@@ -140,8 +140,58 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+
     public List<ChiTietSanPham> listCTSPSuDung() {
         return repo.getListCTSPSuDung();
+
+    public List<LoaiGiay> listLG22(Integer trangThai) {
+        return repo.listLG22(trangThai);
+    }
+
+    @Override
+    public List<DeGiay> listDeGiay22(Integer trangThai) {
+        return repo.listDeGiay22(trangThai);
+    }
+
+    @Override
+    public List<MauSac> listMauSac22(Integer trangThai) {
+        return repo.listMauSac22(trangThai);
+    }
+
+    @Override
+    public List<ChatLieu> listChatLieu22(Integer trangThai) {
+        return repo.listChatLieu22(trangThai);
+    }
+
+    @Override
+    public List<KichCo> listKichCo22(Integer trangThai) {
+        return repo.listKichCo22(trangThai);
+    }
+
+    @Override
+    public List<LoaiGiay> search22LG(String keyword, Integer trangThai) {
+        return repo.search22LG(keyword, trangThai);
+    }
+
+    @Override
+    public List<DeGiay> search22DG(String keyword, Integer trangThai) {
+        return repo.search22DG(keyword, trangThai);
+    }
+
+    @Override
+    public List<MauSac> search22MS(String keyword, Integer trangThai) {
+        return repo.search22MS(keyword, trangThai);
+    }
+
+    @Override
+    public List<ChatLieu> search22CL(String keyword, Integer trangThai) {
+        return repo.search22CL(keyword, trangThai);
+    }
+
+    @Override
+    public List<KichCo> search22KC(Integer size, Integer trangThai) {
+        return repo.search22KC(size, trangThai);
+
     }
 
     @Override

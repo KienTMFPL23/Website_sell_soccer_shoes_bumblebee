@@ -150,9 +150,10 @@
             <a class="nav-link" href="/don-hang/list-all">
                 <i class="bx bxs-truck"></i>
 
-                <b>Quản lý đơn hàng</b></a
+                <b>Quản lý hoá đơn</b></a
             >
         </li>
+
 
 
         <!-- Nav Item - Quản lý khuyến mãi -->
@@ -162,6 +163,15 @@
                 <b>Quản lý khuyến mại</b></a
             >
         </li>
+
+<%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
+<%--        <li class="nav-item">--%>
+<%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
+<%--                <i class="fas fa-fw fa-chart-area"></i>--%>
+<%--                <b>Quản lý hóa đơn</b></a--%>
+<%--            >--%>
+<%--        </li>--%>
+
 
         <!-- Nav Item - Quản lý đổi trả -->
         <li class="nav-item">

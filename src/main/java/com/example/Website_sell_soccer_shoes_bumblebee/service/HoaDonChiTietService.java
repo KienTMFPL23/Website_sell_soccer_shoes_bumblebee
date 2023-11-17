@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
@@ -23,6 +24,8 @@ public interface HoaDonChiTietService {
 
     Double getTotalMoney(List<HoaDonChiTiet> list);
 
+    Double tongTienKhuyenMai(List<HoaDonChiTiet> list);
+
     HoaDonChiTiet save(HoaDonChiTiet hdct);
 
     List<HoaDonChiTiet> saveAll(List<HoaDonChiTiet> hdct);
@@ -34,5 +37,9 @@ public interface HoaDonChiTietService {
     void removeHDCT(UUID idHoaDon);
     void removeHD(UUID idHoaDon);
 
+
     List<HoaDonChiTiet> hoaDonMuonDoi(String maHoaDon);
+
+    Double getDonGiaKhiGiam(List<ChiTietKhuyenMai> listCTKM);
+
 }

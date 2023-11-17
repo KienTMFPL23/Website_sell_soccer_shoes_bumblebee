@@ -123,7 +123,7 @@ public class LoaiGiayController {
             model.addAttribute("view", "../loai-giay/form.jsp");
             return "/admin/index";
         }
-        loaiGiay.setTrangthai(true);
+        loaiGiay.setTrangthai(1);
         repo.addLG(loaiGiay);
         return "redirect:/admin/index";
     }

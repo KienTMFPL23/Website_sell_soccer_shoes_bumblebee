@@ -1,5 +1,5 @@
 <%@ page pageEncoding="utf-8" %>
-<div class="container">
+<div class="container" style="margin-top: 140px">
     <h2 style="text-align: center;font-size: 30px">Chính sách đổi sản phẩm khi mua hàng</h2>
     <div>
         <strong style="font-size: 20px">I.Nội dung chính sách :</strong>
