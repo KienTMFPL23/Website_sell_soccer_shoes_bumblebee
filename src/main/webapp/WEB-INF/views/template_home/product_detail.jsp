@@ -82,19 +82,19 @@
                                     <c:forEach var="km" items="${ctsp.ctkm}">
                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                             <label>
-                                                <fmt:formatNumber  value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}" type="currency"/>
+                                                <fmt:formatNumber  value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}" type="number"/>
                                             </label>
                                         </c:if>
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                             <label>
-                                                <fmt:formatNumber  value="${ctsp.giaBan - km.khuyenMai.giaTri}" type="currency"/>
+                                                <fmt:formatNumber  value="${ctsp.giaBan - km.khuyenMai.giaTri}" type="number"/>
                                             </label>
                                         </c:if>
-                                        <span><fmt:formatNumber  value="${ctsp.giaBan}" type="currency"/></span>
+                                        <span><fmt:formatNumber  value="${ctsp.giaBan}" type="number"/></span>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty ctsp.ctkm}">
-                                    <fmt:formatNumber  value="${ctsp.giaBan}" type="currency"/>
+                                    <fmt:formatNumber  value="${ctsp.giaBan}" type="number"/>
                                 </c:if>
                             </div>
                             <div id="spcosan" style="color: #fe4c50;font-weight: bold"></div>

@@ -84,22 +84,22 @@
                                                     <c:if test="${km.khuyenMai.donVi == '%'}">
                                                         <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                 value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
-                                                                type="currency"/></label>
+                                                                type="number"/>đ</label>
                                                         <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                type="currency"/></span>
+                                                                                type="number"/></span>
                                                     </c:if>
                                                     <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                         <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                 value="${item.giaBan - km.khuyenMai.giaTri}"
-                                                                type="currency"/></label>
+                                                                type="number"/></label>
                                                         <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                type="currency"/></span>
+                                                                                type="number"/></span>
                                                     </c:if>
                                                 </c:forEach>
                                             </c:if>
                                             <c:if test="${empty item.ctkm}">
                                                 <label>
-                                                    <fmt:formatNumber value="${item.giaBan}" type="currency"/>
+                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/>
                                                 </label>
                                             </c:if>
 

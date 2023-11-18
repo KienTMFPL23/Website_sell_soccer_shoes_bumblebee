@@ -227,24 +227,24 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-<%--                                            <c:forEach items="${hd.hoaDons}" var="hdct">--%>
-<%--                                                <tr>--%>
-<%--                                                    <td>--%>
-<%--                                                        <img src="../../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}"--%>
-<%--                                                             width="100px" height="100px">--%>
-<%--                                                    </td>--%>
-<%--                                                    <td style="padding-top: 25px;">--%>
-<%--                                                            ${hdct.chiTietSanPham.sanPham.tenSanPham}<br>--%>
-<%--                                                        <p>${hdct.chiTietSanPham.mauSac.ten}--%>
-<%--                                                            - ${hdct.chiTietSanPham.kichCo.size}</p>--%>
-<%--                                                        <h5>Số lượng: ${hdct.soLuong}</h5>--%>
-<%--                                                    </td>--%>
-<%--                                                    <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber--%>
-<%--                                                            value="${hdct.donGia}"--%>
-<%--                                                            type="currency"/>--%>
-<%--                                                    </td>--%>
-<%--                                                </tr>--%>
-<%--                                            </c:forEach>--%>
+                                            <c:forEach items="${hd.hoaDons}" var="hdct">
+                                                <tr>
+                                                    <td>
+                                                        <img src="../../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}"
+                                                             width="100px" height="100px">
+                                                    </td>
+                                                    <td style="padding-top: 25px;">
+                                                            ${hdct.chiTietSanPham.sanPham.tenSanPham}<br>
+                                                        <p>${hdct.chiTietSanPham.mauSac.ten}
+                                                            - ${hdct.chiTietSanPham.kichCo.size}</p>
+                                                        <h5>Số lượng: ${hdct.soLuong}</h5>
+                                                    </td>
+                                                    <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
+                                                            value="${hdct.donGia}"
+                                                            type="currency"/>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                         </table>
                                     </a>
                                 </div>

@@ -143,7 +143,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     public List<ChiTietSanPham> listCTSPSuDung() {
         return repo.getListCTSPSuDung();
-
+    }
     public List<LoaiGiay> listLG22(Integer trangThai) {
         return repo.listLG22(trangThai);
     }
