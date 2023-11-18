@@ -107,7 +107,7 @@
             </form:form>
         </div>
         <div class="col-lg-3">
-            <input class="form-control" placeholder="Nhập mã hoặc loại tên sản phẩm" id="myInput"/>
+            <input class="form-control" placeholder="Nhập mã hoá đơn hoặc tên khách hàng" id="myInput"/>
 
         </div>
         <div class="col-lg-2">

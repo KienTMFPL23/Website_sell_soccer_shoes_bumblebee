@@ -97,26 +97,26 @@
                                                             <label id="thanhTien_${item.id}"
                                                                    class="thanhTien"><fmt:formatNumber
                                                                     value="${(item.ctsp.giaBan - (item.ctsp.giaBan * km.khuyenMai.giaTri/100)*item.soLuong)}"
-                                                                    type="currency"/></label>
+                                                                    type="number"/>đ</label>
                                                             <span id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
                                                                     value="${item.ctsp.giaBan*item.soLuong}"
-                                                                    type="currency"/></span>
+                                                                    type="number"/></span>
                                                         </c:if>
                                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                             <label id="thanhTien_${item.id}"
                                                                    class="thanhTien"><fmt:formatNumber
                                                                     value="${(item.ctsp.giaBan - km.khuyenMai.giaTri)*item.soLuong}"
-                                                                    type="currency"/></label>
+                                                                    type="number"/></label>
                                                             <span id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
                                                                     value="${item.ctsp.giaBan*item.soLuong}"
-                                                                    type="currency"/></span>
+                                                                    type="number"/></span>
                                                         </c:if>
                                                     </c:forEach>
                                                 </c:if>
                                                 <c:if test="${empty item.ctsp.ctkm}">
                                                     <label id="thanhTien_${item.id}" class="thanhTien"><fmt:formatNumber
                                                             value="${item.donGia*item.soLuong}"
-                                                            type="currency"/>
+                                                            type="number"/>
                                                     </label>
                                                 </c:if>
                                             </td>
