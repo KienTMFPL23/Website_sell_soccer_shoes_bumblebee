@@ -77,7 +77,7 @@
             <div class="col-lg-8">
                 <form:input type="text" class="form-control" path="maKhuyenMai" name="maKhuyenMai"/>
                 <form:errors path="maKhuyenMai" cssStyle="color: crimson"></form:errors>
-                    ${mess_Ma}
+                <span style="color: crimson">${mess_Ma}</span>
             </div>
         </div>
 
@@ -114,7 +114,7 @@
             <div class="col-lg-8">
                 <form:input type="text" class="form-control" path="giaTri" name="giaTri"/>
                 <form:errors path="giaTri" cssStyle="color: crimson"></form:errors>
-                ${errorGiaTri}
+                <span style="color: crimson">${errorGiaTri}</span>
             </div>
         </div>
 

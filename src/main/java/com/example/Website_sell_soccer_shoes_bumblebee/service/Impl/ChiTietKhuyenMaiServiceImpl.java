@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,5 +41,10 @@ public class ChiTietKhuyenMaiServiceImpl implements ChiTietKhuyenMaiService {
     @Override
     public ChiTietKhuyenMai findCtkmByIdKmAndCtsp(UUID idCTSP, UUID idKM) {
         return repo.findCtkmByIdKmAndCtsp(idCTSP, idKM);
+    }
+
+    @Override
+    public List<ChiTietKhuyenMai> searchKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
+        return repo.searchKhoangNgay(ngayBatDau, ngayKetThuc);
     }
 }

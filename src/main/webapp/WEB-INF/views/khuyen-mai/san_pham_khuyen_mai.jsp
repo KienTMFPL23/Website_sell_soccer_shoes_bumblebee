@@ -65,6 +65,7 @@
     <h1 style="text-align: center; font-family: Nunito;">Sản phẩm khuyến mãi</h1>
 </div>
 
+
 <div class="table">
     <table>
         <thead>
