@@ -35,11 +35,6 @@ public class HinhAnh {
     @Column(name = "DuongDan3")
     String duongdan3;
 
-    @Column(name = "DuongDan4")
-    String duongdan4;
-
-    @Column(name = "DuongDan5")
-    String duongdan5;
 
     @Column(name = "Trangthai")
     int trangthai;

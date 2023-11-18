@@ -470,6 +470,8 @@ section
 	visibility: visible;
 	opacity: 1;
 	top: 100%;
+	padding-left: 0;
+	padding-right: 0;
 }
 .account_selection
 {
@@ -492,8 +494,6 @@ section
 }
 .account_selection li
 {
-	padding-left: 10px;
-	padding-right: 10px;
 	line-height: 50px;
 }
 .account_selection li a
@@ -809,7 +809,7 @@ section
 {
 	color: #fe4c50;
 }
-.red_button {
+.btn-themgh {
 
 	display: -moz-inline-box;
 	display: -ms-inline-flexbox;
@@ -818,6 +818,8 @@ section
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 160px;
+	margin-left: 19px;
 	width: auto;
 	height: 40px;
 	color: white;
@@ -830,12 +832,7 @@ section
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-.red_button:hover
-{
-	background: #ffffff !important;
-	color: black;
-	border: 1px solid black;
-}
+
 .red_button a
 {
 	display: block;
@@ -1033,7 +1030,6 @@ section
 	color: black;
 	font-weight: 500;
 	line-height: 30px;
-	margin-top: 20px;
 }
 .star_rating
 {
@@ -1111,8 +1107,6 @@ section
 	text-transform: uppercase;
 	font-size: 12px;
 	border: white;
-	width: 160px;
-	margin-left: 19px;
 	font-size: 12px !important;
 }
 .product_favorite
@@ -1636,4 +1630,31 @@ section
 .site-option {
 	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
+}
+#errorKCModal.show {
+	display: flex;
+	animation: fadeIn 0.3s ease-out;
+}
+
+/* Thêm hiệu ứng cho modal khi nó tắt đi */
+#errorKCModal.hide {
+	animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
 }

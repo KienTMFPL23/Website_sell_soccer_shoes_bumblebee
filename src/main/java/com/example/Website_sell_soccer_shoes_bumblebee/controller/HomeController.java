@@ -1,54 +1,37 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.config.PaypalPaymentIntent;
-import com.example.Website_sell_soccer_shoes_bumblebee.config.PaypalPaymentMethod;
-import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepo;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.HinhAnhRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.VnPayServiceImpl;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.LoaiGiayService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.MauSacService;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
-import com.itextpdf.forms.xfdf.Mode;
-import com.paypal.api.payments.Links;
-import com.paypal.api.payments.Payment;
-import com.paypal.base.rest.PayPalRESTException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.AbstractPersistable_;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.*;
 
@@ -93,6 +76,7 @@ public class HomeController {
     @Autowired
     TaiKhoanService taiKhoanService;
 
+    private static int maHoaDon = 1;
 
     @Data
     public static class SortForm {
@@ -105,11 +89,6 @@ public class HomeController {
     @Autowired
     HoaDonChiTietService hoaDonChiTietService;
 
-    @Autowired
-    private PayPalService service;
-
-    public static final String SUCCESS_URL = "pay/success";
-    public static final String CANCEL_URL = "pay/cancel";
 
     @Data
     public static class SearchFormByKichCo {
@@ -139,6 +118,12 @@ public class HomeController {
     public ResponseEntity<String> getSLBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
         String sl = chiTietSanPhamService.getSoLuongByKichCo(idMS, idSP, size);
         return ResponseEntity.ok(sl);
+    }
+
+    @RequestMapping("/bumblebee/select-giaban")
+    public ResponseEntity<ChiTietSanPham> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
+        ChiTietSanPham giaBan = chiTietSanPhamRepo.getCTSPByKichCo(idMS,idSP,size);
+        return ResponseEntity.ok(giaBan);
     }
 
     @GetMapping("/bumblebee/select-size")
@@ -230,10 +215,10 @@ public class HomeController {
         return "redirect:/bumblebee/cart";
     }
 
-    @RequestMapping("/bumblebee/detail")
-    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
-        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
+    @GetMapping("/bumblebee/detail")
+    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+        System.out.println(chiTietSanPham.getSoLuong());
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
         model.addAttribute("idCTSP", idCTSP);
@@ -242,7 +227,6 @@ public class HomeController {
         model.addAttribute("ctsp", chiTietSanPham);
         model.addAttribute("view", "../template_home/product_detail.jsp");
         return "template_home/index";
-
     }
 
 
@@ -305,13 +289,25 @@ public class HomeController {
             GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setCtsp(ctsp);
             gioHangChiTiet.setGioHang(gioHang);
+            if (ctsp.getCtkm() != null) {
+                double donGiaKhiGiam = 0;
+                for (ChiTietKhuyenMai ctkm : ctsp.getCtkm()) {
+                    if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                        donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                    if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                        donGiaKhiGiam = ctsp.getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                }
+            }
             gioHangChiTiet.setDonGia(ctsp.getGiaBan());
             gioHangChiTiet.setSoLuong(sl);
             gioHangChiTietRepo.save(gioHangChiTiet);
             List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("listCTSP", listCTSP);
-
             model.addAttribute("view", "../template_home/cart.jsp");
             return "redirect:/bumblebee/cart";
 
@@ -382,6 +378,8 @@ public class HomeController {
 
 
     private HoaDon hoaDon;
+    @Autowired
+    HoaDonRepository hoaDonRepository;
 
     @RequestMapping("/bumblebee/dat-hang")
     public String datHang(
@@ -399,8 +397,17 @@ public class HomeController {
 
         // Tạo hóa đơn
         hoaDon = new HoaDon();
-        Random random = new Random();
-        hoaDon.setMaHoaDon("HĐ-" + random.nextInt());
+        String formatHoaDon = "HD" + String.format("%07d", maHoaDon);
+        HoaDon checkMa = hoaDonRepository.searchHoaDon(formatHoaDon);
+        if (checkMa != null) {
+            String maHoaDonMax = hoaDonRepository.searchMaxMaHoaDon();
+            maHoaDon = Integer.valueOf(maHoaDonMax.substring(2));
+            maHoaDon++;
+            String formatSoMa = "HD" + String.format("%07d", maHoaDon);
+            hoaDon.setMaHoaDon(formatSoMa);
+        } else {
+            hoaDon.setMaHoaDon(formatHoaDon);
+        }
         hoaDon.setNgayTao(new Date());
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -414,7 +421,7 @@ public class HomeController {
         hoaDon.setGhiChu(ghiChu);
         hoaDon.setLoaiHoaDon(0);
         if (payment.intValue() == 2) {
-            return "redirect:/pay";
+            return "redirect:/VnPay";
         } else {
             hoaDon.setPhuongThucThanhToan(1);
             hoaDon.setTrangThai(1);
@@ -427,6 +434,9 @@ public class HomeController {
             hdct.setHoaDon(hoaDon);
             hdct.setChiTietSanPham(ghct.getCtsp());
             hdct.setSoLuong(ghct.getSoLuong());
+            if (ghct.getCtsp().getCtkm() != null) {
+                hdct.setDonGiaKhiGiam(ghct.getDonGiaKhiGiam());
+            }
             hdct.setDonGia(ghct.getDonGia());
             hdct.setTrangThai(3);
             hoaDonChiTietService.save(hdct);
@@ -449,60 +459,60 @@ public class HomeController {
 //        return "/paypal/paypal";
 //    }
 
-    // THANH TOÁN PAYPAL
-    @RequestMapping("/pay")
-    public String pay(HttpServletRequest request
-    ) {
-        String cancelUrl = "http://localhost:8080/" + CANCEL_URL;
-        String successUrl = "http://localhost:8080/" + SUCCESS_URL;
+
+    // THANH TOÁN VNPAY
+    @Autowired
+    private VnPayServiceImpl vnPayService;
+
+
+    @GetMapping("/VnPay")
+    public String home(Model model) {
         Double price = gioHangChiTietService.getTotalMoney(listGHCT);
-        try {
-            Payment payment = service.createPayment(
-                    price,
-                    "USD",
-                    PaypalPaymentMethod.paypal,
-                    PaypalPaymentIntent.sale,
-                    "payment description",
-                    cancelUrl,
-                    successUrl);
-            for (Links links : payment.getLinks()) {
-                if (links.getRel().equals("approval_url")) {
-                    return "redirect:" + links.getHref();
-                }
-            }
-        } catch (PayPalRESTException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/";
+        Integer amount = price.intValue();
+        model.addAttribute("amount", amount);
+        return "VnPay/index";
     }
 
-    @GetMapping(SUCCESS_URL)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String
-            payerId) {
-        try {
-            Payment payment = service.executePayment(paymentId, payerId);
-            System.out.println(payment.toJSON());
-            if (payment.getState().equals("approved")) {
-                hoaDon.setPhuongThucThanhToan(2);
-                hoaDon.setTrangThai(1);
-                hoaDonService.saveHoaDon(hoaDon);
-                // Tạo hóa đơn chi tiết
-                for (GioHangChiTiet ghct : listGHCT) {
-                    HoaDonChiTiet hdct = new HoaDonChiTiet();
-                    hdct.setHoaDon(hoaDon);
-                    hdct.setChiTietSanPham(ghct.getCtsp());
-                    hdct.setSoLuong(ghct.getSoLuong());
-                    hdct.setDonGia(ghct.getDonGia());
-                    hdct.setTrangThai(3);
-                    hoaDonChiTietService.save(hdct);
-                    gioHangChiTietService.deleteGHCT(ghct.getId());
-                }
-                return "redirect:/bumblebee/don-mua/cho-xac-nhan";
+    @PostMapping("/submitOrder")
+    public String submidOrder(@RequestParam("amount") Integer orderTotal,
+                              @RequestParam("orderInfo") String orderInfo,
+                              HttpServletRequest request) {
+
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
+        return "redirect:" + vnpayUrl;
+    }
+
+    @GetMapping("/vnpay-payment")
+    public String GetMapping(HttpServletRequest request, Model model) {
+        int paymentStatus = vnPayService.orderReturn(request);
+        if (paymentStatus == 1) {
+            hoaDon.setPhuongThucThanhToan(2);
+            hoaDon.setTrangThai(1);
+            hoaDonService.saveHoaDon(hoaDon);
+            // Tạo hóa đơn chi tiết
+            for (GioHangChiTiet ghct : listGHCT) {
+                HoaDonChiTiet hdct = new HoaDonChiTiet();
+                hdct.setHoaDon(hoaDon);
+                hdct.setChiTietSanPham(ghct.getCtsp());
+                hdct.setSoLuong(ghct.getSoLuong());
+                hdct.setDonGia(ghct.getDonGia());
+                hdct.setTrangThai(3);
+                hoaDonChiTietService.save(hdct);
+                gioHangChiTietService.deleteGHCT(ghct.getId());
             }
-        } catch (PayPalRESTException e) {
-            System.out.println(e.getMessage());
         }
-        return "redirect:/";
+        String orderInfo = request.getParameter("vnp_OrderInfo");
+        String paymentTime = request.getParameter("vnp_PayDate");
+        String transactionId = request.getParameter("vnp_TransactionNo");
+        String totalPrice = request.getParameter("vnp_Amount");
+
+        model.addAttribute("orderId", orderInfo);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("paymentTime", paymentTime);
+        model.addAttribute("transactionId", transactionId);
+
+        return paymentStatus == 1 ? "redirect:/bumblebee/don-mua/cho-xac-nhan" : "redirect:/bumblebee/thanh-toan";
     }
 
 
@@ -544,6 +554,10 @@ public class HomeController {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId()));
+        for (HoaDon hd : hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId())){
+            System.out.println(hd.getMaHoaDon());
+            System.out.println("a");
+        }
         model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
     }
@@ -656,7 +670,7 @@ public class HomeController {
         } else if (sortForm.key.equals("moiNhat")) {
             sort = Sort.by(Sort.Direction.DESC, "ngayTao");
             pageable = PageRequest.of(p, 12, sort);
-        }else{
+        } else {
             pageable = PageRequest.of(p, 12);
         }
         Page<ChiTietSanPham> pageCTSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
@@ -778,7 +792,7 @@ public class HomeController {
     }
 
     @GetMapping("/bumblebee/chinh-sach-doi-tra")
-    public String chinhSach(Model model){
+    public String chinhSach(Model model) {
         model.addAttribute("view", "../template_home/chinh-sach.jsp");
         return "template_home/index";
     }

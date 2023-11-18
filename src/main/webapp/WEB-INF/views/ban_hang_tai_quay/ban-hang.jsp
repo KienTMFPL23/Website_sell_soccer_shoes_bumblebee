@@ -59,8 +59,10 @@
                        href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
-                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" class="btndele"><img
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick="confirmDelete(false)"
+                       class="btndele"><img
                             src="/images_template/deleteHD.png"></a>
+
                 </div>
             </c:forEach>
             <div style="margin-left: 20px">
@@ -379,7 +381,9 @@
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+
                                 onclick="alertThanhToan()"
+
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
                             Thanh toán
                         </button>
@@ -428,6 +432,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script>
+    function downloadComplete() {
+
+        window.onload = function () {
+
+            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
+        };
+        return true;
+    }
+</script>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
@@ -544,8 +558,8 @@
     });
 </script>
 
-<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
+<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
+<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
@@ -596,29 +610,29 @@
     }
 </script>
 <script>
-    function alertDelete() {
-        Swal.fire({
-            title: 'Bạn có muốn xóa hóa đơn?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: 'No',
-        })
-        if (Swal.fire()) {
-            return true;
-        } else {
+    function confirmDelete() {
+        var result = confirm('ban co muon xoa');
+        if (result){
+
+        }else {
             return false;
         }
+
     }
+
 </script>
 <script>
     function alertThanhToan() {
+
         var confirmResult = confirm("Bạn có muốn thanh toán không?");
         if (confirmResult == true) {
             Swal.fire({
+                position: "top-end",
                 title: "Thanh toán thành công",
                 icon: "success"
             });
         }
+
     }
 </script>
 </body>

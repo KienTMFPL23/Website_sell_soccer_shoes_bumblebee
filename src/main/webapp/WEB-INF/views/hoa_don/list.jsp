@@ -328,16 +328,16 @@
         <div class="text-center">
             <nav aria-label="Page navigation example" class="text-center">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=0&keyword=${param.keyword}">Previous</a>
+                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=0">Previous</a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.number-1}&keyword=${param.keyword}"><<</a>
+                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.number-1}"><<</a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.number+1}&keyword=${param.keyword}">>></a>
+                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.number+1}">>></a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.totalPages-1}&keyword=${param.keyword}">Next</a>
+                                             href="${pageContext.request.contextPath}/hoa-don/hien-thi?page=${list.totalPages-1}">Next</a>
                     </li>
                 </ul>
             </nav>

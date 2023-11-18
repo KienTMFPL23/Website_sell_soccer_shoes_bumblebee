@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.GioHangChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepository;
@@ -44,7 +45,6 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             }
             sum = sumGoc + sumKhuyenMai;
         }
-
         return sum;
     }
 

@@ -2,6 +2,14 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<br>
 
 <style>
     .img {
@@ -24,22 +32,22 @@
     #menu ul {
         background: #FFFFFF;
         list-style-type: none;
-        text-align: center;
         height: 50px;
         width: 100%;
         border-bottom: 1px solid #D9D9D9;
         border-radius: 10px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
     }
 
     #menu li {
         color: #37517E;
         display: inline-block;
-        width: 120px;
         height: 50px;
         line-height: 50px;
-        margin-left: -5px;
         border--radius: 10px;
+        padding-right: 2rem;
     }
 
     #menu a {
@@ -170,7 +178,6 @@
                 <div class="menu-left">
                     <a href="/bumblebee/don-mua"><img class="img" src="../../../img/bill.png">Đơn mua</a>
                 </div>
-
             </div>
         </div>
         <div class="col-lg-9">
@@ -210,7 +217,6 @@
                                     <c:if test="${hd.phuongThucThanhToan == 1}"><p>Chưa thanh toán</p></c:if>
                                     <c:if test="${hd.phuongThucThanhToan == 2}"><p>Đã thanh toán</p></c:if>
                                 </div>
-
                                 <div class="table">
                                     <a href="/bumblebee/don-mua/${hd.id}">
                                         <table class="table ps-checkout__products">
@@ -221,26 +227,24 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <c:forEach items="${hd.hoaDons}" var="hdct">
-                                                <tr>
-                                                    <td>
-                                                        <img src="../../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}"
-                                                             width="100px" height="100px">
-                                                    </td>
-                                                    <td style="padding-top: 25px;">
-                                                            ${hdct.chiTietSanPham.sanPham.tenSanPham}<br>
-                                                        <p>${hdct.chiTietSanPham.mauSac.ten}
-                                                            - ${hdct.chiTietSanPham.kichCo.size}</p>
-                                                        <h5>Số lượng: ${hdct.soLuong}</h5>
-                                                    </td>
-                                                    <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
-                                                            value="${hdct.donGia}"
-                                                            type="currency"/>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                            </tbody>
+<%--                                            <c:forEach items="${hd.hoaDons}" var="hdct">--%>
+<%--                                                <tr>--%>
+<%--                                                    <td>--%>
+<%--                                                        <img src="../../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}"--%>
+<%--                                                             width="100px" height="100px">--%>
+<%--                                                    </td>--%>
+<%--                                                    <td style="padding-top: 25px;">--%>
+<%--                                                            ${hdct.chiTietSanPham.sanPham.tenSanPham}<br>--%>
+<%--                                                        <p>${hdct.chiTietSanPham.mauSac.ten}--%>
+<%--                                                            - ${hdct.chiTietSanPham.kichCo.size}</p>--%>
+<%--                                                        <h5>Số lượng: ${hdct.soLuong}</h5>--%>
+<%--                                                    </td>--%>
+<%--                                                    <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber--%>
+<%--                                                            value="${hdct.donGia}"--%>
+<%--                                                            type="currency"/>--%>
+<%--                                                    </td>--%>
+<%--                                                </tr>--%>
+<%--                                            </c:forEach>--%>
                                         </table>
                                     </a>
                                 </div>

@@ -133,5 +133,10 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         hoaDonChiTietRepository.removeHD(idHoaDon);
     }
 
+    @Override
+    public List<HoaDonChiTiet> hoaDonMuonDoi(String maHoaDon) {
+        return hoaDonChiTietRepository.listHoaDonMuonDoi(maHoaDon);
+    }
+
 
 }

@@ -318,23 +318,3 @@ jQuery(document).ready(function($)
 	}
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-	var siteOptions = document.querySelectorAll(".site-option");
-
-	siteOptions.forEach(function(option) {
-		option.addEventListener("click", function() {
-			// Kiểm tra nếu ô site đã có lớp "selected"
-			var isSelected = option.classList.contains("selected");
-
-			// Xóa lớp "selected" từ tất cả các ô site
-			siteOptions.forEach(function(opt) {
-				opt.classList.remove("selected");
-			});
-
-			// Nếu ô site chưa được chọn, thêm lớp "selected"
-			if (!isSelected) {
-				option.classList.add("selected");
-			}
-		});
-	});
-});

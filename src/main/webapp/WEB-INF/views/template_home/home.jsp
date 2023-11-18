@@ -2,10 +2,10 @@
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <main class="ps-main">
-    <div class="banner">
-        <img src="/img/slider_1.jpg" class="img_banner">
+    <div class="main_slider" style="background-image: url(../../../img/banner1.jpg)">
+        <%--        <img src="/img/slider_1.jpg" class="img_banner">--%>
         <div class="container fill_height">
-            <div class="row align-items-center fill_height">
+            <div class="row align-items-center">
                 <div class="col" style="padding: 0 40px">
                     <div class="main_slider_content">
                         <h6>Spring / Summer Collection 2023</h6>
@@ -28,20 +28,20 @@
             <div class="row align-items-center">
                 <div class="col text-center">
                     <div class="new_arrivals_sorting">
-                        <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"
-                                data-filter="*">all
-                            </li>
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".women">women's
-                            </li>
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".accessories">accessories
-                            </li>
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"
-                                data-filter=".men">men's
-                            </li>
-                        </ul>
+                        <%--                        <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"--%>
+                        <%--                                data-filter="*">all--%>
+                        <%--                            </li>--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
+                        <%--                                data-filter=".women">women's--%>
+                        <%--                            </li>--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
+                        <%--                                data-filter=".accessories">accessories--%>
+                        <%--                            </li>--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
+                        <%--                                data-filter=".men">men's--%>
+                        <%--                            </li>--%>
+                        <%--                        </ul>--%>
                     </div>
                 </div>
             </div>
@@ -62,12 +62,47 @@
                                                 src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
                                     </div>
                                     <div class="favorite favorite_left"></div>
+                                    <c:forEach var="km" items="${item.ctkm}">
+                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
+                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                        </c:if>
+                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                            <div class="product_bubble product_bubble_left product_bubble_green ">
+                                                <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
+                                                                          type="currency"/></span>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
                                     <div class="product_info">
                                         <h6 class="product_name"><a
                                                 href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
                                         </h6>
-                                        <div class="product_price"><fmt:formatNumber value="${item.giaBan}"
-                                                                                     type="currency"/><span>$590.00</span>
+                                        <div class="product_price">
+                                            <c:if test="${item.ctkm != null}">
+                                                <c:forEach var="km" items="${item.ctkm}">
+                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
+                                                                type="currency"/></label>
+                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                type="currency"/></span>
+                                                    </c:if>
+                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                value="${item.giaBan - km.khuyenMai.giaTri}"
+                                                                type="currency"/></label>
+                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                type="currency"/></span>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty item.ctkm}">
+                                                <label>
+                                                    <fmt:formatNumber value="${item.giaBan}" type="currency"/>
+                                                </label>
+                                            </c:if>
+
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +115,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- Modaclass="soLuongAddCart"l -->
+                            <!-- Modal -->
                             <form method="post"
                                   action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}&idCTSP=${item.id}">
                                 <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">
@@ -95,15 +130,15 @@
                                             <div class="modal-body">
                                                 <div class="col-md-5">
                                                     <img src="../../../uploads/${item.hinhAnhs.tenanh}"
-                                                         width="80px"
-                                                         height="80px">
+                                                         width="150px"
+                                                         height="150px">
                                                 </div>
                                                 <div class="col-md-7">
                                                     <div class="sizeAddCart">
                                                         <p>Chọn Size</p>
                                                         <select id="kichCoSelect_${item.sanPham.id}_${item.mauSac.id}"
-                                                                class="form-control"
-                                                                style="width: 100px;font-size: 15px" name="kichCo"
+                                                                style="width: 100px;font-size: 15px;height: 27px;border: 1px solid #b1b1b8"
+                                                                name="kichCo"
                                                                 onchange="selectSize('${item.sanPham.id}','${item.mauSac.id}')">
                                                             <option id=""></option>
                                                         </select>
@@ -111,12 +146,12 @@
                                                     <div class="soLuongAddCart">
                                                         <p>Chọn số lượng</p>
                                                         <input type="number"
-                                                               style="width: 100px;font-size: 15px;padding-left: 10px"
+                                                               style="width: 100px;font-size: 15px;padding-left: 10px;height: 27px;border: 1px solid #b1b1b8"
                                                                name="soLuong" value="1" id="slchon"
                                                                onchange="thayDoiSoLuong('${item.sanPham.id}','${item.mauSac.id}')"
                                                                oninput="chonSoLuong('${item.sanPham.id}','${item.mauSac.id}',event)">
                                                     </div>
-                                                    <p style="margin-top: 10px"><span
+                                                    <p style="margin-top: 10px;"><span
                                                             id="slsp_${item.sanPham.id}_${item.mauSac.id}">${item.soLuong}</span>
                                                         sản phẩm có sẵn</p>
                                                     <input type="hidden"
@@ -148,21 +183,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="banner_item align-items-center" style="background-image:url(../../../img/banner_1.jpg)">
+                    <div class="banner_item align-items-center" style="background-image: url(../../../img/banner2.jpg)">
                         <div class="banner_category">
                             <a href="categories.html">women's</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="banner_item align-items-center" style="background-image:url(../../../img/banner_2.jpg)">
+                    <div class="banner_item align-items-center" style="background-image: url(../../../img/banner3.jpg)">
                         <div class="banner_category">
                             <a href="categories.html">accessories's</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="banner_item align-items-center" style="background-image:url(../../../img/banner_3.jpg)">
+                    <div class="banner_item align-items-center" style="background-image: url(../../../img/banner4.png)">
                         <div class="banner_category">
                             <a href="categories.html">men's</a>
                         </div>
@@ -195,16 +230,18 @@
                                                         <div class="product_image">
                                                             <a
                                                                     class="ps-shoe__overlay"
-                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
+                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}&kichCo=${item.kichCo.size}"><img
+                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}"
+                                                                    alt=""></a>
                                                         </div>
                                                         <div class="favorite favorite_left"></div>
                                                         <div class="product_info">
                                                             <h6 class="product_name"><a
                                                                     href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
                                                             </h6>
-                                                            <div class="product_price"><fmt:formatNumber value="${item.giaBan}"
-                                                                                                         type="currency"/><span>$590.00</span>
+                                                            <div class="product_price"><fmt:formatNumber
+                                                                    value="${item.giaBan}"
+                                                                    type="currency"/><span>$590.00</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -212,7 +249,6 @@
                                             </div>
                                         </div>
                                     </c:forEach>
-
                                 </div>
                             </div>
                             <div class="owl-nav disabled">
@@ -235,184 +271,6 @@
             </div>
         </div>
     </div>
-
-    <%--    <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100">--%>
-    <%--        <div class="ps-container">--%>
-    <%--            <div class="ps-section__header mb-50">--%>
-    <%--                <h3 class="hangmoi" style="text-align: center" data-mask="features">Tất cả sản phẩm</h3>--%>
-    <%--            </div>--%>
-    <%--            <div class="ps-section__content pb-50">--%>
-    <%--                <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="30"--%>
-    <%--                     data-radio="100%">--%>
-    <%--                    <div class="ps-masonry row">--%>
-    <%--                        <div class="grid-sizer"></div>--%>
-    <%--                        <c:forEach var="item" items="${pageSP.content}" varStatus="loop">--%>
-    <%--                            <div class="grid-item col-md-3">--%>
-    <%--                                <div class="grid-item__content-wrapper">--%>
-    <%--                                    <div class="ps-shoe mb-30">--%>
-    <%--                                        <div class="ps-shoe__thumbnail">--%>
-    <%--                                            <img--%>
-    <%--                                                    src="../../../uploads/${item.hinhAnhs.tenanh}" height="250px"--%>
-    <%--                                                    width="250px"--%>
-    <%--                                                        alt=""><a--%>
-    <%--                                                    class="ps-shoe__overlay"--%>
-    <%--                                                        href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"></a>--%>
-    <%--                                        </div>--%>
-    <%--                                        <div class="ps-shoe__content">--%>
-    <%--                                            <div class="ps-shoe__variants" style="margin-top: 10px">--%>
-    <%--                                                <div class="ps-shoe__variant normal">--%>
-    <%--                                                    <img src="../../../uploads/${item.hinhAnhs.duongdan1}">--%>
-    <%--                                                    <img src="../../../uploads/${item.hinhAnhs.duongdan2}">--%>
-    <%--                                                    <img src="../../../uploads/${item.hinhAnhs.duongdan3}">--%>
-    <%--                                                    <img src="../../../uploads/${item.hinhAnhs.duongdan4}">--%>
-    <%--                                                </div>--%>
-    <%--                                                <div class=" butAddCart">--%>
-    <%--                                                    <button class="addToCartBtn"--%>
-    <%--                                                                data-toggle="modal"--%>
-    <%--                                                                data-target="#kichCoModal_${loop.index}"--%>
-    <%--                                                                style="color: white"--%>
-    <%--                                                                data-item-id="${item.sanPham.id}"--%>
-    <%--                                                                data-item-mausac="${item.mauSac.id}"--%>
-    <%--                                                    >Thêm giỏ hàng--%>
-    <%--                                                    </button>--%>
-    <%--                                                </div>--%>
-    <%--                                            </div>--%>
-    <%--                                            <div class="ps-shoe__detail" style="margin-top: 10px">--%>
-    <%--                                                <div class="product_name">--%>
-    <%--                                                    <a href="#" style="font-weight: 600;">${item.sanPham.tenSanPham}</a>--%>
-    <%--                                                </div>--%>
-    <%--                                                <div class="product_price">--%>
-    <%--                                                <span>--%>
-    <%--                                                        <fmt:formatNumber value="${item.giaBan}"--%>
-    <%--                                                                          type="currency"/>--%>
-    <%--                                                </span>--%>
-    <%--                                                </div>--%>
-    <%--                                            </div>--%>
-    <%--                                        </div>--%>
-    <%--                                    </div>--%>
-    <%--                                </div>--%>
-    <%--                            </div>--%>
-    <%--                                <!-- Modal -->--%>
-    <%--                                <form method="post"--%>
-    <%--                                      action="/bumblebee/add-to-cart?idMS=${item.mauSac.id}&idSP=${item.sanPham.id}&idCTSP=${item.id}">--%>
-    <%--                                    <div class="modal fade" id="kichCoModal_${loop.index}" style="margin-top: 200px">--%>
-    <%--                                        <div class="modal-dialog">--%>
-    <%--                                            <div class="modal-content">--%>
-    <%--                                                <div class="modal-header">--%>
-    <%--                                                    <h4 class="modal-title">Thêm Sản phẩm vào giỏ hàng</h4>--%>
-    <%--                                                    <button type="button" class="close"--%>
-    <%--                                                            data-dismiss="modal">&times;--%>
-    <%--                                                    </button>--%>
-    <%--                                                </div>--%>
-    <%--                                                <div class="modal-body">--%>
-    <%--                                                    <div class="col-md-5">--%>
-    <%--                                                        <img src="../../../uploads/${item.hinhAnhs.tenanh}"--%>
-    <%--                                                             width="80px"--%>
-    <%--                                                             height="80px">--%>
-    <%--                                                    </div>--%>
-    <%--                                                    <div class="col-md-7">--%>
-    <%--                                                        <div class="sizeAddCart">--%>
-    <%--                                                            <p>Chọn Size</p>--%>
-    <%--                                                            <select id="kichCoSelect_${item.sanPham.id}_${item.mauSac.id}"--%>
-    <%--                                                                    class="form-control"--%>
-    <%--                                                                    style="width: 100px;font-size: 15px" name="kichCo"--%>
-    <%--                                                                    onchange="selectSize('${item.sanPham.id}','${item.mauSac.id}')">--%>
-    <%--                                                                <option id=""></option>--%>
-    <%--                                                            </select>--%>
-    <%--                                                        </div>--%>
-    <%--                                                        <div class="soLuongAddCart">--%>
-    <%--                                                            <p>Chọn số lượng</p>--%>
-    <%--                                                            <input type="number" style="width: 100px;font-size: 15px"--%>
-    <%--                                                                   name="soLuong" value="1" id="slchon"--%>
-    <%--                                                                   onchange="thayDoiSoLuong('${item.sanPham.id}','${item.mauSac.id}')"--%>
-    <%--                                                                   oninput="chonSoLuong('${item.sanPham.id}','${item.mauSac.id}',event)">--%>
-    <%--                                                        </div>--%>
-    <%--                                                        <p style="margin-top: 10px"><span--%>
-    <%--                                                                id="slsp_${item.sanPham.id}_${item.mauSac.id}">${item.soLuong}</span>--%>
-    <%--                                                            sản phẩm có sẵn</p>--%>
-    <%--                                                        <input type="hidden"--%>
-    <%--                                                               id="spcosan_${item.sanPham.id}_${item.mauSac.id}">--%>
-    <%--                                                    </div>--%>
-    <%--                                                </div>--%>
-    <%--                                                <div class="modal-footer">--%>
-    <%--                                                    <button style="font-size: 15px" type="button" class="btn btn-danger"--%>
-    <%--                                                            data-dismiss="modal">Đóng--%>
-    <%--                                                    </button>--%>
-    <%--                                                    <button class="btn"--%>
-    <%--                                                            id="btn-themgh_${item.sanPham.id}_${item.mauSac.id}"--%>
-    <%--                                                            style="font-size:15px;background-color: #37517E; color: white"--%>
-    <%--                                                            href="/bumblebee/add-to-cart">Thêm vào giỏ hàng--%>
-    <%--                                                    </button>--%>
-    <%--                                                </div>--%>
-    <%--                                            </div>--%>
-    <%--                                        </div>--%>
-    <%--                                    </div>--%>
-    <%--                                </form>--%>
-    <%--                        </c:forEach>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
-    <%--    <div class="ps-section ps-section--top-sales ps-owl-root pt-80 pb-80">--%>
-    <%--        <div class="ps-container">--%>
-    <%--            <div class="ps-section__header mb-50">--%>
-    <%--                <div class="row">--%>
-    <%--                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">--%>
-    <%--                        <h3 class="ps-section__title" data-mask="BEST SALE">- Top Sales</h3>--%>
-    <%--                    </div>--%>
-    <%--                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">--%>
-    <%--                        <div class="ps-owl-actions"><a class="ps-prev" href="#"><i class="ps-icon-arrow-right"></i>Prev</a><a--%>
-    <%--                                class="ps-next" href="#">Next<i class="ps-icon-arrow-left"></i></a></div>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
-    <%--            <div class="ps-section__content">--%>
-    <%--                <div class="ps-owl--colection owl-slider" data-owl-auto="true" data-owl-loop="true"--%>
-    <%--                     data-owl-speed="5000" data-owl-gap="30" data-owl-nav="false" data-owl-dots="false"--%>
-    <%--                     data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3"--%>
-    <%--                     data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on">--%>
-    <%--                    <c:forEach var="item" items="${pageSP.content}">--%>
-    <%--                        <div class="ps-shoes--carousel">--%>
-    <%--                            <div class="ps-shoe">--%>
-    <%--                                <div class="ps-shoe__thumbnail">--%>
-    <%--                                    <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>--%>
-    <%--                                    <img--%>
-    <%--                                            src="../../../uploads/${item.hinhAnhs.tenanh}" height="250px" alt=""><a--%>
-    <%--                                        class="ps-shoe__overlay"--%>
-    <%--                                        href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"></a>--%>
-
-    <%--                                </div>--%>
-    <%--                                <div class="ps-shoe__content">--%>
-    <%--                                    <div class="ps-shoe__variants" style="margin-top: 10px">--%>
-    <%--                                        <div class="ps-shoe__variant normal">--%>
-    <%--                                            <img src="../../../uploads/${item.hinhAnhs.duongdan1}">--%>
-    <%--                                            <img src="../../../uploads/${item.hinhAnhs.duongdan2}">--%>
-    <%--                                            <img src="../../../uploads/${item.hinhAnhs.duongdan3}">--%>
-    <%--                                            <img src="../../../uploads/${item.hinhAnhs.duongdan4}">--%>
-    <%--                                        </div>--%>
-    <%--                                        <div class="ps-shoe__variant butAddCart">--%>
-    <%--                                            <button style="color: white" href="/bumblebee/select-size">Thêm giỏ hàng--%>
-    <%--                                            </button>--%>
-    <%--                                        </div>--%>
-    <%--                                    </div>--%>
-    <%--                                    <div class="ps-shoe__detail">--%>
-    <%--                                        <div class="product_name">--%>
-    <%--                                            <a href="#" style="font-weight: 600;">${item.sanPham.tenSanPham}</a>--%>
-    <%--                                        </div>--%>
-    <%--                                        <div class="product_price">--%>
-    <%--                                            <span id="formattedPrice"><fmt:formatNumber value="${item.giaBan}"--%>
-    <%--                                                                                        type="currency"/></span>--%>
-    <%--                                        </div>--%>
-    <%--                                    </div>--%>
-    <%--                                </div>--%>
-    <%--                            </div>--%>
-    <%--                        </div>--%>
-    <%--                    </c:forEach>--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

@@ -87,16 +87,16 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon createHoaDon() throws ParseException {
         HoaDon hoaDon = new HoaDon();
 
-      
+
         String formatHoaDon = "HD" + String.format("%07d", maHoaDon);
         HoaDon checkMa = hoaDonRepository.searchHoaDon(formatHoaDon);
-        if (checkMa != null){
+        if (checkMa != null) {
             String maHoaDonMax = hoaDonRepository.searchMaxMaHoaDon();
             maHoaDon = Integer.valueOf(maHoaDonMax.substring(2));
             maHoaDon++;
             String formatSoMa = "HD" + String.format("%07d", maHoaDon);
             hoaDon.setMaHoaDon(formatSoMa);
-        }else {
+        } else {
             hoaDon.setMaHoaDon(formatHoaDon);
         }
 
@@ -185,28 +185,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("hoaDon");
 //        sheet.setDefaultColumnWidth(30);
-// Tạo border cho tất cả các ô
-        CellStyle cellBorderStyle = workbook.createCellStyle();
-        cellBorderStyle.setBorderBottom(BorderStyle.THIN);
-        cellBorderStyle.setBorderTop(BorderStyle.THIN);
-        cellBorderStyle.setBorderRight(BorderStyle.THIN);
-        cellBorderStyle.setBorderLeft(BorderStyle.THIN);
 
-// Áp dụng border cho dòng đầu tiên (header)
-        HSSFRow headerRow = sheet.getRow(0);
-        for (int i = 0; i <= 10; i++) {
-            Cell cell = headerRow.getCell(i);
-            cell.setCellStyle(cellBorderStyle);
-        }
-
-// Áp dụng border cho tất cả các ô dữ liệu
-        for (int i = 1; i <= hoaDon.size(); i++) {
-            HSSFRow dataRow = sheet.getRow(i);
-            for (int j = 0; j <= 10; j++) {
-                Cell cell = dataRow.getCell(j);
-                cell.setCellStyle(cellBorderStyle);
-            }
-        }
         // create style for header cells
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
@@ -275,12 +254,12 @@ public class HoaDonServiceImpl implements HoaDonService {
 //            dataRow.createCell(5).setCellValue(String.valueOf(hd.getTenNguoiNhan()));
             if (hd.getLoaiHoaDon() == 0) {
                 dataRow.createCell(5).setCellValue("Bán Online");
-            }else{
+            } else {
                 dataRow.createCell(5).setCellValue(" ");
             }
             if (hd.getLoaiHoaDon() == 1) {
                 dataRow.createCell(5).setCellValue("Bán Tại Quầy");
-            }else{
+            } else {
                 dataRow.createCell(5).setCellValue(" ");
             }
             if (hd.getKhachHang() == null) {
@@ -292,9 +271,25 @@ public class HoaDonServiceImpl implements HoaDonService {
             } else {
                 dataRow.createCell(6).setCellValue(hd.getKhachHang().getHo() + " " + hd.getKhachHang().getTenDem() + " " + hd.getKhachHang().getTen());
             }
-            dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
-            dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
-            dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(7).setCellValue(" ");
+
+            }else{
+                dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
+
+            }
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(8).setCellValue(" ");
+            }else{
+                dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
+            }
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(9).setCellValue(" ");
+
+            }else{
+                dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
+
+            }
             if (hd.getTrangThai() == 1) {
                 dataRow.createCell(10).setCellValue("Chờ xác nhận");
             } else if (hd.getTrangThai() == 2) {
@@ -373,6 +368,91 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public Page<HoaDon> searchLoaiHoaDon(Integer key, Pageable pageable) {
         return hoaDonRepository.searchLoaiHoaDon(key, pageable);
+    }
+
+    @Override
+    public Integer countHDCho() {
+        return hoaDonRepository.countHDCho();
+    }
+
+    @Override
+    public Integer countHDXacNhan() {
+        return hoaDonRepository.countHDXacNhan();
+    }
+
+    @Override
+    public Integer countHDGiaoDVVC() {
+        return hoaDonRepository.countHDGiaoDVVC();
+    }
+
+    @Override
+    public Integer countHDDangGiao() {
+        return hoaDonRepository.countHDDangGiao();
+    }
+
+    @Override
+    public Integer countHDHoanThanh() {
+        return hoaDonRepository.countHDHoanThanh();
+    }
+
+    @Override
+    public Integer countHDTraHang() {
+        return hoaDonRepository.countHDTraHang();
+    }
+
+    @Override
+    public Integer countHDDaHoanTra() {
+        return hoaDonRepository.countHDDaHoanTra();
+    }
+
+    @Override
+    public Integer countHDHuy() {
+        return hoaDonRepository.countHDHuy();
+    }
+
+    @Override
+    public Integer countHD() {
+        return hoaDonRepository.countHD();
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonChoXacNhan(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonChoXacNhan(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonDaHuy(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonDaHuy(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonChuanBi(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonChuanBi(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonGiaoDVVC(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonGiaoDVVC(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonDangGiao(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonDangGiao(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonHoanThanh(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonHoanThanh(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonTraHang(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonTraHang(loaiDon,pageable);
+    }
+
+    @Override
+    public Page<HoaDon> searchLoaiHoaDonDaTra(Integer loaiDon, Pageable pageable) {
+        return hoaDonRepository.searchLoaiHoaDonDaTra(loaiDon,pageable);
     }
 
 }

@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class SanPhamController {
@@ -86,8 +83,8 @@ public class SanPhamController {
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDSTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
-        dsTrangThai.put(0, "Hoạt động");
-        dsTrangThai.put(1, "Ngừng hoạt động");
+        dsTrangThai.put(1, "Hoạt động");
+        dsTrangThai.put(0, "Ngừng hoạt động");
         return dsTrangThai;
     }
 
@@ -214,31 +211,12 @@ public class SanPhamController {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/admin/index";
+//            return "redirect:/chi-tiet-san-pham/view-add/" + id;
         }
         SanPham sanPham1 = sanPhamService.getOne(id);
         sp.setSanPham(sanPham1);
         ChiTietSanPham ctsp = new ChiTietSanPham();
         ctsp.loadFromViewModel(sp);
-//        MultipartFile multipartFile = sp.getHinhAnh();
-//        String fileName = multipartFile.getOriginalFilename();
-//        try {
-//            FileCopyUtils.copy(sp.getHinhAnh().getBytes(), new File(this.fileUpload + fileName));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ctsp.setHinhAnh(fileName);
-        // Lấy đường dẫn thư mục "static/images"
-//        String uploadDir = new File("src/main/resources/static/image/").getAbsolutePath();
-//
-//        MultipartFile multipartFile = sp.getHinhAnh();
-//        String fileName = multipartFile.getOriginalFilename();
-//        try {
-//            FileCopyUtils.copy(multipartFile.getBytes(), new File(uploadDir + File.separator + fileName));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ctsp.setHinhAnh(fileName);
-        //
 
         model.addAttribute("tensp", sanPham1.getTenSanPham());
         service.addKC(ctsp);
@@ -247,16 +225,10 @@ public class SanPhamController {
         String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
         String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
         new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
-//
+
 //        // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
-//        List<ChiTietSanPham> qlSanPhams = service.getList();
-//        if (qlSanPhams.size() != 0) {
-//            for (ChiTietSanPham ct : qlSanPhams
-//            ) {
-//                QRCodeGenerator.generatorQRCode(ct);
-//            }
-//        }
+
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }
 
@@ -306,7 +278,7 @@ public class SanPhamController {
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/chi-tiet-san-pham/view-add/" + sanPham1.getId();
         }
-        loaiGiay.setTrangthai(true);
+        loaiGiay.setTrangthai(1);
         loaiGiayRepo.save(loaiGiay);
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
@@ -326,12 +298,10 @@ public class SanPhamController {
             model.addAttribute("mess", "Chi tiết sản phẩm chưa tồn tại");
             return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
 
-
         }
 
         kichCoService.addKC(kichCo);
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
-
     }
 
     @PostMapping("/san-pham/mau-sac/add/{id}")
@@ -386,31 +356,88 @@ public class SanPhamController {
         return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
     }
 
+    //    @PostMapping("/san-pham/de-giay/add/{id}")
+//    public String add(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
+//        SanPham sanPham1 = sanPhamService.getOne(id);
+//        model.addAttribute("idsp", sanPham1.getId());
+//        model.addAttribute("tensp", sanPham1.getTenSanPham());
+//        model.addAttribute("ms", new MauSac());
+//        model.addAttribute("vm", new ChatLieu());
+//        model.addAttribute("kichco", new KichCo());
+//        model.addAttribute("lg", new LoaiGiay());
+//        if (result.hasErrors()) {
+//            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+//            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+//        }
+//
+//        if (deGiayRepo.findByMa(degiay.getMa()) != null) {
+//            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
+//            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+//            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+//        }
+//
+//        deGiayRepo.save(degiay);
+//        model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+//        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+//    }
+//    @PostMapping("/san-pham/de-giay/add/{id}")
+//    @ResponseBody
+//    public Map<String, Object> add(@PathVariable("id") UUID id, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
+//        Map<String, Object> response = new HashMap<>();
+//        SanPham sanPham = sanPhamService.getOne(id);
+//        if (result.hasErrors()) {
+//            response.put("status", "error");
+//            response.put("errors", getErrors(result));
+//            return response;
+//        }
+//
+//        if (deGiayRepo.findByMa(degiay.getMa()) != null) {
+//            result.rejectValue("ma", "duplicate", "Lỗi! Mã không được trùng");
+//            response.put("status", "error");
+//            response.put("errors", getErrors(result));
+//            return response;
+//        }
+//        deGiayRepo.save(degiay);
+//
+//        response.put("status", "success");
+//        return response;
+//    }
+//
+//    private List<String> getErrors(BindingResult result) {
+//        List<String> errors = new ArrayList<>();
+//        result.getFieldErrors().forEach(error -> errors.add(error.getField() + ": " + error.getDefaultMessage()));
+//        return errors;
+//    }
     @PostMapping("/san-pham/de-giay/add/{id}")
-    public String add(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
-        SanPham sanPham1 = sanPhamService.getOne(id);
-        model.addAttribute("idsp", sanPham1.getId());
-        model.addAttribute("tensp", sanPham1.getTenSanPham());
-        model.addAttribute("ms", new MauSac());
-        model.addAttribute("vm", new ChatLieu());
-        model.addAttribute("kichco", new KichCo());
-        model.addAttribute("lg", new LoaiGiay());
+    @ResponseBody
+    public Map<String, Object> add(@PathVariable("id") UUID id, @Valid @ModelAttribute("degiay") DeGiay degiay, BindingResult result) {
+        Map<String, Object> response = new HashMap<>();
+        SanPham sanPham = sanPhamService.getOne(id);
+
         if (result.hasErrors()) {
-            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+            response.put("status", "error");
+            response.put("errors", getErrors(result));
+            return response;
         }
 
         if (deGiayRepo.findByMa(degiay.getMa()) != null) {
-            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
-            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-            return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+            result.rejectValue("ma", "duplicate", "Lỗi! Mã không được trùng");
+            response.put("status", "error");
+            response.put("errors", getErrors(result));
+            response.put("field", "ma"); // Thêm trường field để xác định lỗi của trường nào
+            return response;
         }
 
         deGiayRepo.save(degiay);
-        model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-        return "redirect:/chi-tiet-san-pham/view-add/" + sanPham1.getId();
+        response.put("status", "success");
+        return response;
     }
 
+    private List<String> getErrors(BindingResult result) {
+        List<String> errors = new ArrayList<>();
+        result.getFieldErrors().forEach(error -> errors.add(error.getField() + ": " + error.getDefaultMessage()));
+        return errors;
+    }
     //list ctsp theo id
     @RequestMapping("/chi-tiet-san-pham/list-san-pham/{id}")
 

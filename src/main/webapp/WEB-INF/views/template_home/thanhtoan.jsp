@@ -22,6 +22,15 @@
     .ps-btn btnDatHang {
         margin-left: 100px;
     }
+
+    .ps-payment-method li img {
+        max-width: 150px;
+        height: 40px;
+        background-color: #F3F3F3;
+        padding-left: 30px;
+        margin-top: -10px;
+    }
+
 </style>
 
 <main class="ps-main">
@@ -50,17 +59,17 @@
                             <div class="mb-3">
                                 <label class="form-label"></label>
                                 <input type="text" class="form-control" name="tenNguoiNhan"
-                                       placeholder="Tên người nhận hàng"/>
+                                       value="${listKH.ho} ${listKH.tenDem} ${listKH.ten}"/>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"></label>
                                 <input type="text" class="form-control" name="sdt"
-                                       placeholder="Số điện thoại"/>
+                                       value="${listKH.soDienThoai}"/>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"></label>
                                 <input type="text" class="form-control" name="diaChiShip"
-                                       placeholder="Địa chỉ nhận"/>
+                                       value="${listKH.diaChi}"/>
                             </div>
                         </div>
                     </div>
@@ -96,17 +105,27 @@
                                         <td style="text-align: center; padding-top: 25px;">${sp.ctsp.kichCo.size}</td>
                                         <td style="text-align: center;padding-top: 25px;">${sp.ctsp.mauSac.ten}</td>
                                         <td style="text-align: center;padding-top: 25px;">${sp.soLuong}</td>
-                                        <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
-                                                value="${sp.donGia * sp.soLuong}"
-                                                type="currency"/></td>
+                                        <td style="text-align: center;padding-top: 25px;" class="thanhTien">
+                                            <c:if test="${not empty sp.ctsp.ctkm}">
+                                                <fmt:formatNumber
+                                                        value="${sp.donGiaKhiGiam * sp.soLuong}"
+                                                        type="currency"/>
+                                            </c:if>
+                                            <c:if test="${empty sp.ctsp.ctkm}">
+                                                <fmt:formatNumber
+                                                        value="${sp.donGia * sp.soLuong}"
+                                                        type="currency"/>
+                                            </c:if>
+
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 <td style="padding-top: 20px;">Ghi chú</td>
                                 <td>
                                         <textarea class="form-control" id="textarea" rows="3"
                                                   name="ghiChu"
-                                                  placeholder="Ghi chú cho người bán..."></textarea>
-
+                                                  placeholder="Ghi chú cho người bán...">
+                                        </textarea>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -121,8 +140,7 @@
                             <div class="col-lg-8"></div>
                             <div class="col-lg-4" style="padding-bottom: 20px;">
                                 <span style="font-size: 18px; font-weight: 600;">Tổng tiền hàng: </span>
-                                <span style="font-size: 18px; "><fmt:formatNumber value="${totalPrice}"
-                                                                                  type="currency"/></span>
+                                <span style="font-size: 18px; " id="tongTien"></span>
                             </div>
                         </div>
                     </div>
@@ -136,21 +154,25 @@
 
                                         <div class="form-group cheque">
                                             <div class="ps-radio">
-                                                <input class="form-control" type="radio" id="rdo01" name="payment" value="1"
+                                                <input class="form-control" type="radio" id="rdo01" name="payment"
+                                                       value="1"
                                                        checked>
                                                 <label for="rdo01">Thanh toán khi nhận hàng</label>
-
+                                                <ul class="ps-payment-method">
+                                                    <li><a href="#"><img src="../../../img/logo-cod.png" alt=""
+                                                                         id="cod-logo"></a></li>
+                                                </ul>
                                             </div>
                                         </div>
 
                                         <div class="form-group paypal">
                                             <div class="ps-radio ps-radio--inline">
-                                                <input class="form-control" type="radio" name="payment" id="rdo02" value="2">
-                                                <label for="rdo02">Thanh toán Paypal</label>
+                                                <input class="form-control" type="radio" name="payment" id="rdo02"
+                                                       value="2">
+                                                <label for="rdo02">Thanh toán VN Pay</label>
                                             </div>
                                             <ul class="ps-payment-method">
-                                                <li><a href="#"><img src="../../../img/paypal.png" alt="" width="150px"
-                                                                     height="30px"></a></li>
+                                                <li><a href="#"><img src="../../../img/vnpay-logo.png" alt=""></a></li>
                                             </ul>
                                         </div>
 
@@ -176,4 +198,15 @@
     function conFirm() {
         alert("Đơn hàng của bạn được đặt thành công")
     }
+    function capNhatTongTien(){
+        var thanhTienList = document.getElementsByClassName("thanhTien");
+        var total = 0;
+        for (let i = 0; i < thanhTienList.length; i++) {
+            var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
+            total += donGia;
+        }
+        var totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        document.getElementById("tongTien").innerHTML = totalFormatted;
+    }
+capNhatTongTien()
 </script>

@@ -27,10 +27,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <%----%>
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/main_styles.css">
+<link rel="stylesheet" type="text/css" href="../../../css_update_template/single_styles.css">
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/responsive.css">
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/animate.css">
+<%--<link rel="stylesheet" type="text/css" href="../../../css_update_template/categories_styles.css">--%>
+<%--<link rel="stylesheet" type="text/css" href="../../../css_update_template/categories_responsive.css">--%>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -73,6 +76,7 @@
         src="../../../plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
 <!-- Custom scripts-->
 <script type="text/javascript" src="../../../js_template/main.js"></script>
+<script type="text/javascript" src="../../../js_template/custom.js"></script>
 <script>
     function setHeader()
     {

@@ -150,23 +150,34 @@
             <a class="nav-link" href="/don-hang/list-all">
                 <i class="bx bxs-truck"></i>
 
-                <b>Quản lý đơn hàng</b></a
+                <b>Quản lý hoá đơn</b></a
             >
         </li>
 
-        <!-- Nav Item - Quản lý hóa đơn -->
-        <li class="nav-item">
-            <a class="nav-link" href="/hoa-don/hien-thi">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <b>Quản lý hóa đơn</b></a
-            >
-        </li>
+
 
         <!-- Nav Item - Quản lý khuyến mãi -->
         <li class="nav-item">
             <a class="nav-link" href="/bumblebee/khuyen-mai/list">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <b>Quản lý khuyến mại</b></a
+            >
+        </li>
+
+<%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
+<%--        <li class="nav-item">--%>
+<%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
+<%--                <i class="fas fa-fw fa-chart-area"></i>--%>
+<%--                <b>Quản lý hóa đơn</b></a--%>
+<%--            >--%>
+<%--        </li>--%>
+
+
+        <!-- Nav Item - Quản lý đổi trả -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/doi-hang/list">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <b>Quản lý đổi trả</b></a
             >
         </li>
 
@@ -197,26 +208,6 @@
                 >
                     <i class="fa fa-bars"></i>
                 </button>
-
-                <!-- Topbar Search -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-                >
-                    <div class="input-group">
-                        <input
-                                type="text"
-                                class="form-control bg-light border-0 small"
-                                placeholder="Search for..."
-                                aria-label="Search"
-                                aria-describedby="basic-addon2"
-                        />
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -285,14 +276,6 @@
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a
                                     class="dropdown-item"
@@ -347,7 +330,6 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                 <button
                         class="close"
                         type="button"
@@ -358,7 +340,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Select "Logout" below if you are ready to end your current session.
+                Bạn có muốn đăng xuất không ?
             </div>
             <div class="modal-footer">
                 <button

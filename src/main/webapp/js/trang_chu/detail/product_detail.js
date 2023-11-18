@@ -1,9 +1,3 @@
-var kichCo = document.getElementById("kichCoList").value;
-if (kichCo == 1) {
-    $(".btn-themgh").prop("disabled", true);
-    $(".btn-mua").prop("disabled", true);
-}
-
 
 function thayDoiSoLuong() {
     var sl = $("#sl").val();
@@ -27,6 +21,13 @@ document.getElementById("#sl").addEventListener("change", function () {
 
 function closeErrorModal() {
     var modal = document.getElementById("errorModal");
+    var modal1 = document.getElementById("errorKCModal");
+    modal1.classList.remove('show');
+    modal1.classList.add('hide');
+    setTimeout(function() {
+        modal1.style.display = 'none';
+        modal1.classList.remove('hide');
+    }, 300);
     modal.style.display = "none";
 }
 

@@ -92,35 +92,35 @@
                     </div>
                 </div>
                 <%--   Row 3   --%>
-                <div class="row mb-3">
-                    <div class="col-lg-5">
-                        <label>Ảnh 5:</label>
+<%--                <div class="row mb-3">--%>
+<%--                    <div class="col-lg-5">--%>
+<%--                        <label>Ảnh 5:</label>--%>
 
-                        <form:input type="file" id="upload" class="form-control" path="duongdan4"
-                                    onchange="imageFileAsUrl5(this)"/>
+<%--                        <form:input type="file" id="upload" class="form-control" path="duongdan4"--%>
+<%--                                    onchange="imageFileAsUrl5(this)"/>--%>
 
-                    </div>
-                    <div class="col-lg-2"></div>
+<%--                    </div>--%>
+<%--                    <div class="col-lg-2"></div>--%>
 
-                    <div class="col-lg-5">
-                        <label>Ảnh 6:</label>
+<%--                    <div class="col-lg-5">--%>
+<%--                        <label>Ảnh 6:</label>--%>
 
-                        <form:input type="file" id="upload" class="form-control" path="duongdan5"
-                                    onchange="imageFileAsUrl6(this)"/>
+<%--                        <form:input type="file" id="upload" class="form-control" path="duongdan5"--%>
+<%--                                    onchange="imageFileAsUrl6(this)"/>--%>
 
-                    </div>
-                </div>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                <div class="row mb-3">
-                    <div class="col-lg-5">
-                        <img src="../../../uploads/${listHinhAnh.duongdan4}" id="image5" width="200px" height="200px"/>
-                    </div>
-                    <div class="col-lg-2"></div>
+<%--                <div class="row mb-3">--%>
+<%--                    <div class="col-lg-5">--%>
+<%--                        <img src="../../../uploads/${listHinhAnh.duongdan4}" id="image5" width="200px" height="200px"/>--%>
+<%--                    </div>--%>
+<%--                    <div class="col-lg-2"></div>--%>
 
-                    <div class="col-lg-5">
-                        <img src="../../../uploads/${listHinhAnh.duongdan5}" id="image6" width="200px" height="200px"/>
-                    </div>
-                </div>
+<%--                    <div class="col-lg-5">--%>
+<%--                        <img src="../../../uploads/${listHinhAnh.duongdan5}" id="image6" width="200px" height="200px"/>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
 
                 <div class="buttonSubmit text-center">
@@ -175,27 +175,27 @@
             reader.readAsDataURL(fileInput.files[0]);
         }
     }
-    function imageFileAsUrl5(fileInput) {
-        if (fileInput.files && fileInput.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#image5').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    }
-
-    function imageFileAsUrl6(fileInput) {
-        if (fileInput.files && fileInput.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#image6').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    }
+    // function imageFileAsUrl5(fileInput) {
+    //     if (fileInput.files && fileInput.files[0]) {
+    //         var reader = new FileReader();
+    //
+    //         reader.onload = function (e) {
+    //             $('#image5').attr('src', e.target.result);
+    //         }
+    //         reader.readAsDataURL(fileInput.files[0]);
+    //     }
+    // }
+    //
+    // function imageFileAsUrl6(fileInput) {
+    //     if (fileInput.files && fileInput.files[0]) {
+    //         var reader = new FileReader();
+    //
+    //         reader.onload = function (e) {
+    //             $('#image6').attr('src', e.target.result);
+    //         }
+    //         reader.readAsDataURL(fileInput.files[0]);
+    //     }
+    // }
 </script>
 </body>
 
