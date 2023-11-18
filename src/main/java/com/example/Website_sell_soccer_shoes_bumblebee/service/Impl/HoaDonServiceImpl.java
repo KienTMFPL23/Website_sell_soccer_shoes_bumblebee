@@ -271,9 +271,25 @@ public class HoaDonServiceImpl implements HoaDonService {
             } else {
                 dataRow.createCell(6).setCellValue(hd.getKhachHang().getHo() + " " + hd.getKhachHang().getTenDem() + " " + hd.getKhachHang().getTen());
             }
-            dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
-            dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
-            dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(7).setCellValue(" ");
+
+            }else{
+                dataRow.createCell(7).setCellValue(String.valueOf(hd.getDiaChiShip()));
+
+            }
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(8).setCellValue(" ");
+            }else{
+                dataRow.createCell(8).setCellValue(String.valueOf(hd.getSdt()));
+            }
+            if (hd.getNhanVien() == null) {
+                dataRow.createCell(9).setCellValue(" ");
+
+            }else{
+                dataRow.createCell(9).setCellValue(String.valueOf(hd.getGhiChu()));
+
+            }
             if (hd.getTrangThai() == 1) {
                 dataRow.createCell(10).setCellValue("Chờ xác nhận");
             } else if (hd.getTrangThai() == 2) {

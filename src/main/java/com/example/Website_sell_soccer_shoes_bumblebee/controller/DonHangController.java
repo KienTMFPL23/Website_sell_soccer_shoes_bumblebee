@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Controller
@@ -49,10 +51,10 @@ public class DonHangController {
     public static class SearchForm {
         String keyword = "";
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @DateTimeFormat( pattern="yyyy-MM-dd HH:mm:ss")
         Date fromDate;
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @DateTimeFormat( pattern="yyyy-MM-dd HH:mm:ss")
         Date toDate;
     }
 
@@ -161,7 +163,8 @@ public class DonHangController {
             page = 0;
         }
         Page<HoaDon> hoaDonPage;
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 50);
+        model.addAttribute("donHang","search-loai-don");
 
         if (searchLoaiHoaDon.key >= 0) {
             hoaDonPage = hoaDonService.searchLoaiHoaDon(searchLoaiHoaDon.key, pageable);
@@ -425,7 +428,13 @@ public class DonHangController {
                              @RequestParam(defaultValue = "0", name = "p") int page,
                              @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 50);
+        if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.fromDate.equals(searchForm.toDate)) {
+            LocalDate localEndDate = searchForm.toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            localEndDate = localEndDate.plusDays(1);
+            searchForm.toDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+        model.addAttribute("donHang","searchDate");
         Page<HoaDon> listS = this.hoaDonService.searchALlBetweenDates(searchForm.fromDate, searchForm.toDate, pageable);
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
