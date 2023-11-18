@@ -58,7 +58,7 @@
                                     <div class="product_image">
                                         <a
                                                 class="ps-shoe__overlay"
-                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}&kichCo=${item.kichCo.size}"><img
+                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
                                                 src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
                                     </div>
                                     <div class="favorite favorite_left"></div>
