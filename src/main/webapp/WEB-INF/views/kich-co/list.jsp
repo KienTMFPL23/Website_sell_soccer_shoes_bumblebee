@@ -53,11 +53,6 @@
         margin-right: 10px;
     }
 
-    .ui.table > thead > tr > th {
-        background-color: #37517E;
-        color: #FFFFFF;
-        font-size: 18px;
-    }
 
     .ui.form input[type=search] {
         background: #fff;
