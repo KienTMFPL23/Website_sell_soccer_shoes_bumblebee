@@ -1140,7 +1140,14 @@ section {
 }
 
 .product_bubble_green {
+    width: 70px;
     background: #51a042;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product_bubble_green span{
+   font-size: 10px;
 }
 
 .product_bubble_left {
@@ -1683,4 +1690,14 @@ section {
 .footer_social ul li a:hover {
     color: #fe4c50;
 
+}
+.product_bubble_right{
+    justify-content: center;
+    align-items: center;
+}
+.tTien span{
+    color: #b5aec4;
+    text-decoration: line-through;
+    margin-left: 10px;
+    font-size: 12px;
 }

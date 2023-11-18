@@ -618,7 +618,6 @@ ul {
     border: 0;
     width: 50px;
     text-align: center;
-    margin: 0 20px;
 }
 
 .form-group--number a {
@@ -652,7 +651,6 @@ ul {
 
 .tb tr {
     display: flex;
-    justify-content: space-between;
     margin-bottom: 20px;
     align-items: center;
 }

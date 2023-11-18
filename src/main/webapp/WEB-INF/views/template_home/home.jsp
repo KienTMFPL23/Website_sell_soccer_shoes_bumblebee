@@ -28,20 +28,20 @@
             <div class="row align-items-center">
                 <div class="col text-center">
                     <div class="new_arrivals_sorting">
-<%--                        <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">--%>
-<%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"--%>
-<%--                                data-filter="*">all--%>
-<%--                            </li>--%>
-<%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
-<%--                                data-filter=".women">women's--%>
-<%--                            </li>--%>
-<%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
-<%--                                data-filter=".accessories">accessories--%>
-<%--                            </li>--%>
-<%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
-<%--                                data-filter=".men">men's--%>
-<%--                            </li>--%>
-<%--                        </ul>--%>
+                        <%--                        <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"--%>
+                        <%--                                data-filter="*">all--%>
+                        <%--                            </li>--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
+                        <%--                                data-filter=".women">women's--%>
+                        <%--                            </li>--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
+                        <%--                                data-filter=".accessories">accessories--%>
+                        <%--                            </li>--%>
+                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
+                        <%--                                data-filter=".men">men's--%>
+                        <%--                            </li>--%>
+                        <%--                        </ul>--%>
                     </div>
                 </div>
             </div>
@@ -58,19 +58,51 @@
                                     <div class="product_image">
                                         <a
                                                 class="ps-shoe__overlay"
-                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
+                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}&kichCo=${item.kichCo.size}"><img
                                                 src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
                                     </div>
                                     <div class="favorite favorite_left"></div>
-<%--                                    <c:forEach var="km" items="${item.ctkm}">--%>
-<%--                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>--%>
-<%--                                    </c:forEach>--%>
+                                    <c:forEach var="km" items="${item.ctkm}">
+                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
+                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                        </c:if>
+                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                            <div class="product_bubble product_bubble_left product_bubble_green ">
+                                                <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
+                                                                          type="currency"/></span>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
                                     <div class="product_info">
                                         <h6 class="product_name"><a
                                                 href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
                                         </h6>
-                                        <div class="product_price"><fmt:formatNumber value="${item.giaBan}"
-                                                                                     type="currency"/><span>$590.00</span>
+                                        <div class="product_price">
+                                            <c:if test="${item.ctkm != null}">
+                                                <c:forEach var="km" items="${item.ctkm}">
+                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
+                                                                type="currency"/></label>
+                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                type="currency"/></span>
+                                                    </c:if>
+                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                value="${item.giaBan - km.khuyenMai.giaTri}"
+                                                                type="currency"/></label>
+                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                type="currency"/></span>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty item.ctkm}">
+                                                <label>
+                                                    <fmt:formatNumber value="${item.giaBan}" type="currency"/>
+                                                </label>
+                                            </c:if>
+
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +230,7 @@
                                                         <div class="product_image">
                                                             <a
                                                                     class="ps-shoe__overlay"
-                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
+                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}&kichCo=${item.kichCo.size}"><img
                                                                     src="../../../uploads/${item.hinhAnhs.tenanh}"
                                                                     alt=""></a>
                                                         </div>

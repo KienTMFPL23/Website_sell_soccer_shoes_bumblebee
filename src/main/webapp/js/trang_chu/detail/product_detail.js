@@ -1,9 +1,3 @@
-var kichCo = document.getElementById("kichCoList").value;
-if (kichCo == 1) {
-    $(".btn-themgh").prop("disabled", true);
-    $(".btn-mua").prop("disabled", true);
-}
-
 
 function thayDoiSoLuong() {
     var sl = $("#sl").val();
