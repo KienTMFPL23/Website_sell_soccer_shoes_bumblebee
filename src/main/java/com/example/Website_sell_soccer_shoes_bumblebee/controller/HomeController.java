@@ -216,8 +216,8 @@ public class HomeController {
     }
 
     @GetMapping("/bumblebee/detail")
-    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS,@RequestParam String kichCo) {
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamRepo.getCTSPByKichCo(idMS,idSP,kichCo);
+    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
         System.out.println(chiTietSanPham.getSoLuong());
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);

@@ -270,17 +270,17 @@
             }
         };
         xhr.send();
-
-        xhr2.open("GET", "/bumblebee/detail?idSP=" + idSP + "&idCTSP=" + idCTSP + "&idMS=" + idMS + "&kichCo=" + kichCo, true);
-        xhr2.onreadystatechange = function () {
-            if (xhr2.readyState === 4 && xhr2.status === 200){
-                response2 = xhr2.response;
-            }
-        };
-        xhr2.send();
-        xhr2.onerror = function() {
-            console.error("Request failed");
-        };
+        //
+        // xhr2.open("GET", "/bumblebee/detail?idSP=" + idSP + "&idCTSP=" + idCTSP + "&idMS=" + idMS + "&kichCo=" + kichCo, true);
+        // xhr2.onreadystatechange = function () {
+        //     if (xhr2.readyState === 4 && xhr2.status === 200){
+        //         response2 = xhr2.response;
+        //     }
+        // };
+        // xhr2.send();
+        // xhr2.onerror = function() {
+        //     console.error("Request failed");
+        // };
 
     }
 
