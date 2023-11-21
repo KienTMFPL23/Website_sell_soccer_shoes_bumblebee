@@ -440,6 +440,15 @@
         return true;
     }
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Kiểm tra nếu hóa đơn đã được tải về, thì làm trang load lại
+    var isDownloaded = /*[[${isDownloaded}]]*/ false;
+    if (isDownloaded) {
+        location.reload();
+    }
+    /*]]>*/
+</script>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">

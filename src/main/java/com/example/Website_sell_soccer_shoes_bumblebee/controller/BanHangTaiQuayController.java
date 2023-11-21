@@ -277,7 +277,7 @@ public class BanHangTaiQuayController {
 
     public String thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
                             @RequestParam("soDienThoai") String soDienThoai,
-                            @RequestParam("ghiChu") String ghiChu) throws ParseException {
+                            @RequestParam("ghiChu") String ghiChu) throws ParseException, DocumentException, IOException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
 
 
@@ -298,7 +298,9 @@ public class BanHangTaiQuayController {
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
-
+            byte[] pdfBytes = createPDF(hoaDonThanhToan,id);
+            downloadPDF(response, pdfBytes);
+            model.addAttribute("isDownloaded", true);
             model.addAttribute("successThanhToan", "Thanh toán thất bại");
         } else {
             model.addAttribute("errorThanhToan", "Thanh toan that bai");
@@ -306,7 +308,112 @@ public class BanHangTaiQuayController {
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
+    private byte[] createPDF(HoaDon hoaDonThanhToan,@PathVariable("id") UUID id) throws DocumentException {
+        Document document = new Document();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, byteArrayOutputStream);
+        document.open();
 
+        hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+
+        List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
+
+
+//            document.setPageSize(PageSize.A4);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            PdfWriter.getInstance(document, baos);
+//
+//
+//            ////
+//            document.open();
+
+            String qrCodeData = hoaDonThanhToan.getMaHoaDon();
+            BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
+            com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
+//
+            qrCodeImage.setAbsolutePosition(400, 400);
+
+            document.add(qrCodeImage);
+
+            Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
+            ////////////// hoá đơn
+            Paragraph HoaDon = new Paragraph(" BUMBLEBEE SHOES" + "\n", largeFont);
+
+            HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(HoaDon);
+            Paragraph khoangTrang = new Paragraph("-");
+
+            khoangTrang.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(khoangTrang);
+            Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
+            //// Table
+            Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    " + hoaDonThanhToan.getMaHoaDon());
+            Paragraph ma = new Paragraph();
+
+            Paragraph Ngay = new Paragraph("Ngay Mua    :    " + hoaDonThanhToan.getNgayTao());
+
+            document.add(MaHoaDon);
+            document.add(Ngay);
+
+
+            Paragraph tennhanvien = new Paragraph("Nhan vien    :    " + nameNhanVien);
+            document.add(tennhanvien);
+            Paragraph tenKhac = new Paragraph("Khach hang    :    " + hoaDonThanhToan.getTenNguoiNhan());
+            document.add(tenKhac);
+
+//            table.addCell(MaHoaDon);
+//            table.addCell(Ma);
+//            table.addCell(Ngay);
+//            table.addCell(ngay);
+//            document.add(table);
+            Paragraph khoangtrang2 = new Paragraph("✿✿✿");
+            khoangtrang2.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(khoangtrang2);
+            ////
+            PdfPTable productTable1 = new PdfPTable(4);
+            productTable1.setWidthPercentage(100);
+            productTable1.addCell(new Paragraph("Ten san pham"));
+            productTable1.addCell(new Paragraph("So luong"));
+            productTable1.addCell(new Paragraph("Gia tien"));
+            productTable1.addCell(new Paragraph("Thanh tien"));
+            document.add(productTable1);
+            for (HoaDonChiTiet hoaDon1 : listHoaDon1) {
+                PdfPTable productTable = new PdfPTable(4);
+                productTable.setWidthPercentage(100);
+                productTable.addCell(hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
+                productTable.addCell(String.valueOf(hoaDon1.getSoLuong()));
+                productTable.addCell(String.valueOf(hoaDon1.getDonGia()));
+                productTable.addCell(String.valueOf(hoaDon1.getDonGia() * hoaDon1.getSoLuong()));
+                document.add(productTable);
+            }
+        Paragraph dong = new Paragraph("==========================================================================");
+
+            document.add(dong);
+            List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+            sumMoney = hoaDonChiTietService.getTotalMoney(list);
+            Double TinhTong = 0.0;
+//            for(HoaDonChiTiet hoadon1 : listHoaDon1){
+//
+//                TinhTong += hoadon1.getSoLuong()* hoadon1.getDonGia();
+//
+//
+//            }
+            Paragraph TongCong = new Paragraph("Tong cong       :    " + sumMoney);
+
+            document.add(TongCong);
+
+            Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
+            DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
+            Paragraph camOn = new Paragraph("CAM ON QUY KHACH DA SU DUNG DICH VU");
+            camOn.setAlignment(Paragraph.ALIGN_CENTER);
+            document.close();
+            return byteArrayOutputStream.toByteArray();
+        }
+    private void downloadPDF(HttpServletResponse response, byte[] pdfBytes) throws IOException {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment;filename=hoadon.pdf");
+        response.getOutputStream().write(pdfBytes);
+    }
     @RequestMapping("/them-khach-hang")
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
