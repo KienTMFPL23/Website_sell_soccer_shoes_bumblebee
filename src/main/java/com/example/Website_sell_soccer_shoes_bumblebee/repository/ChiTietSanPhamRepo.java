@@ -164,9 +164,14 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             @Param("size") String size
     );
 
-    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
-            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
-            "GROUP BY c2.sanPham.id, c2.mauSac.id)")
+    @Query(value = "SELECT DISTINCT c.*\n" +
+            "FROM ChiTietSanPham c\n" +
+            "INNER JOIN (\n" +
+            "    SELECT idSP, idMauSac, MIN(id) AS min_id\n" +
+            "    FROM ChiTietSanPham\n" +
+            "    GROUP BY idSP, idMauSac\n" +
+            ") c2 ON c.id = c2.min_id\n" +
+            "ORDER BY c.idSP, c.idMauSac;", nativeQuery = true)
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
@@ -188,6 +193,12 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             " where IdChiTietSP = ?1 and IdGioHang = ?2",nativeQuery = true)
     Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
 
+
+    @Query("SELECT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.mauSac.id, c2.sanPham.id HAVING c2.sanPham.id = ?1)")
+    List<ChiTietSanPham> getCTSPByIdSP(UUID idSP);
+
     @Query(value = "select sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
             "from ChiTietSanPham ctsp join SanPham sp on ctsp.IdSP = sp.Id\n" +
             "\t\t\t\t\t\t join MauSac ms on ctsp.IdMauSac = ms.Id\n" +
@@ -196,5 +207,6 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
             "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 0",nativeQuery = true)
     List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
+
 
 }

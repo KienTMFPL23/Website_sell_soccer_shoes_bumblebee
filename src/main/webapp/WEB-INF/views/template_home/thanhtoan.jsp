@@ -110,12 +110,12 @@
                                             <c:if test="${not empty sp.ctsp.ctkm}">
                                                 <fmt:formatNumber
                                                         value="${sp.donGiaKhiGiam * sp.soLuong}"
-                                                        type="number"/>
+                                                        type="number"/> đ
                                             </c:if>
                                             <c:if test="${empty sp.ctsp.ctkm}">
                                                 <fmt:formatNumber
                                                         value="${sp.donGia * sp.soLuong}"
-                                                        type="number"/>
+                                                        type="number"/> đ
                                             </c:if>
 
                                         </td>

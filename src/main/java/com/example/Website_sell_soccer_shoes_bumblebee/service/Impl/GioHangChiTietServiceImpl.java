@@ -45,6 +45,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             }
             sum = sumGoc + sumKhuyenMai;
         }
+
         return sum;
     }
 

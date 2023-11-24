@@ -57,6 +57,8 @@ public class DangNhapController {
         } else if (taiKhoanDB != null && taiKhoanDB.getRole() == 3) {
             session.setAttribute("userLogged", taiKhoanDB);
             return "redirect:/bumblebee/home";
+        }else{
+            session.setAttribute("userLogged", null);
         }
 
         // Login false

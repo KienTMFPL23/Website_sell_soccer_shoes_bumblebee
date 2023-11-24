@@ -206,7 +206,6 @@
                                                                 <td>${sp.kichCo.size}</td>
                                                                 <td>${sp.loaiGiay.tentheloai}</td>
                                                                 <td>
-
                                                                     <c:if test="${sp.ctkm != null}">
                                                                         <c:forEach items="${sp.ctkm}" var="ctkm">
                                                                             <c:if test="${ctkm.khuyenMai.donVi == '%'}">
