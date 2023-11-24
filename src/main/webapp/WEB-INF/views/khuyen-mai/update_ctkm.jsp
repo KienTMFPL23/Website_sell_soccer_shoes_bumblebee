@@ -109,7 +109,7 @@
                 <label>Giá bán:</label>
             </div>
             <div class="col-lg-8">
-                <input type="text" class="form-control" value="${ctkm.ctsp.giaBan}" disabled/>
+                <input type="text" class="form-control" value="<fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>" disabled/>
             </div>
         </div>
 
@@ -120,7 +120,7 @@
             </div>
             <div class="col-lg-8">
                 <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                    <input type="text" class="form-control" value="${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}" disabled/>
+                    <input type="text" class="form-control" value="<fmt:formatNumber>${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>" disabled/>
                 </c:if>
                 <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
                     <input type="text" class="form-control" value="${ctkm.ctsp.giaBan- ctkm.khuyenMai.giaTri}" disabled/>
@@ -132,7 +132,7 @@
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Giá khuyến mại:</label>
+                <label>Ngày bắt đầu:</label>
             </div>
             <div class="col-lg-8">
                 <input type="datetime-local" class="form-control" value="${ctkm.ngayBatDau}" name="ngayBatDau"/>
@@ -142,7 +142,7 @@
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Giá khuyến mại:</label>
+                <label>Ngày kết thúc:</label>
             </div>
             <div class="col-lg-8">
                 <input type="datetime-local" class="form-control" value="${ctkm.ngayKetThuc}" name="ngayKetThuc"/>

@@ -77,7 +77,26 @@
                             <p>${ctsp.moTaCT}</p>
                         </div>
                         <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px">
-                            <div class="product_price"><fmt:formatNumber value="${ctsp.giaBan}" type="currency"/></div>
+                            <div class="product_price">
+                                <c:if test="${ctsp.ctkm != null}">
+                                    <c:forEach var="km" items="${ctsp.ctkm}">
+                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                            <label>
+                                                <fmt:formatNumber  value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}" type="number"/>
+                                            </label>
+                                        </c:if>
+                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                            <label>
+                                                <fmt:formatNumber  value="${ctsp.giaBan - km.khuyenMai.giaTri}" type="number"/>
+                                            </label>
+                                        </c:if>
+                                        <span><fmt:formatNumber  value="${ctsp.giaBan}" type="number"/></span>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${empty ctsp.ctkm}">
+                                    <fmt:formatNumber  value="${ctsp.giaBan}" type="number"/>
+                                </c:if>
+                            </div>
                             <div id="spcosan" style="color: #fe4c50;font-weight: bold"></div>
                         </div>
                         <div class="product_size">
@@ -227,44 +246,42 @@
     });
 
     var response = null;
+    var response2 = null;
 
     function selectSize(kichCo) {
         document.getElementById("kichCoInput").value = kichCo;
+        console.log(kichCo)
         document.getElementById("addToCartButton").disabled = false;
         document.getElementById("muaNgayButton").disabled = false;
-
-        if (kichCo == null) {
-            $(".btn-themgh").prop("disabled", true);
-            $(".btn-mua").prop("disabled", true);
-        }
-        if (kichCo != null) {
-            $(".btn-themgh").prop("disabled", false);
-            $(".btn-mua").prop("disabled", false);
-        }
         var idMS = "${ctsp.mauSac.id}";
         var idSP = "${ctsp.sanPham.id}";
-        if (kichCo == 1) {
-            document.getElementById("spcosan").innerHTML = "Chọn kích cỡ trước";
-            return;
-        }
+        var idCTSP = "${ctsp.id}"
         var xhr = new XMLHttpRequest();
+        var xhr2 = new XMLHttpRequest();
         xhr.open("GET", "/bumblebee/select-slsp?idMS=" + idMS + "&idSP=" + idSP + "&size=" + kichCo, true);
-
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 response = xhr.responseText;
                 if (selectedOption !== null) {
                     document.getElementById("spcosan").innerHTML = "Sản phẩm có sẵn: " + response;
-                    if (Number(response) === 0) {
-                        $(".btn-themgh").prop("disabled", true);
-                        $(".btn-mua").prop("disabled", true);
-                    }
                 } else {
                     document.getElementById("spcosan").innerHTML = "";
                 }
             }
         };
         xhr.send();
+        //
+        // xhr2.open("GET", "/bumblebee/detail?idSP=" + idSP + "&idCTSP=" + idCTSP + "&idMS=" + idMS + "&kichCo=" + kichCo, true);
+        // xhr2.onreadystatechange = function () {
+        //     if (xhr2.readyState === 4 && xhr2.status === 200){
+        //         response2 = xhr2.response;
+        //     }
+        // };
+        // xhr2.send();
+        // xhr2.onerror = function() {
+        //     console.error("Request failed");
+        // };
+
     }
 
     function submitForm() {

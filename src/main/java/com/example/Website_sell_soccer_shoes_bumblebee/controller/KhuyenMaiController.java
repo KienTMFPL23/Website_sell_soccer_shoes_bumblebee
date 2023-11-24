@@ -47,6 +47,7 @@ public class KhuyenMaiController {
 
 
     private UUID idKhuyenMai = null;
+
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
@@ -57,7 +58,7 @@ public class KhuyenMaiController {
 
 
     @GetMapping("/bumblebee/khuyen-mai/list")
-    public String hienThi( Model model) {
+    public String hienThi(Model model) {
         // Quản lý khuyến mại
 
         model.addAttribute("page", khuyenMaiService.findAll());
@@ -126,7 +127,7 @@ public class KhuyenMaiController {
 //            tongKhuyenMai = tongKhuyenMai + km.getGiaTri();
 //            System.out.println("Tổng khuyến mại: " + tongKhuyenMai);
 
-            if (ngayBatDau == null && ngayKetThuc == null){
+            if (ngayBatDau == null && ngayKetThuc == null) {
                 model.addAttribute("error_ngayBatDau", "Ngày bắt đầu không được trống");
                 model.addAttribute("error_ngayKetThuc", "Ngày kết thúc không được trống");
                 model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
@@ -141,12 +142,12 @@ public class KhuyenMaiController {
                 return "admin/index";
             } else
 
-            // Validate Một sản phẩm chỉ đc một khuyến mạ
-            if (chiTietKhuyenMai1 != null){
-                model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
-                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
-                return "admin/index";
-            }
+                // Validate Một sản phẩm chỉ đc một khuyến mạ
+                if (chiTietKhuyenMai1 != null) {
+                    model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
+                    model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+                    return "admin/index";
+                }
 
 //            // Validate tổng giá trị khuyến mại < 40%
 //            else if (tongKhuyenMai > 0.4) {
@@ -155,21 +156,21 @@ public class KhuyenMaiController {
 //                return "admin/index";
 //            }
 
-            else {
-                ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
-                ctkm.setCtsp(ctsp);
-                ctkm.setKhuyenMai(km);
-                LocalDateTime localDateTimeNgayBatDau = ngayBatDau;
-                Instant instant1 = localDateTimeNgayBatDau.atZone(ZoneId.systemDefault()).toInstant();
-                Date date1 = Date.from(instant1);
-                ctkm.setNgayBatDau(date1);
-                LocalDateTime localDateTimeNgayKetThuc = ngayKetThuc;
-                Instant instant2 = localDateTimeNgayKetThuc.atZone(ZoneId.systemDefault()).toInstant();
-                Date date2 = Date.from(instant2);
-                ctkm.setNgayKetThuc(date2);
-                ctkm.setTrangThai(0);
-                chiTietKhuyenMaiService.save(ctkm);
-            }
+                else {
+                    ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
+                    ctkm.setCtsp(ctsp);
+                    ctkm.setKhuyenMai(km);
+                    LocalDateTime localDateTimeNgayBatDau = ngayBatDau;
+                    Instant instant1 = localDateTimeNgayBatDau.atZone(ZoneId.systemDefault()).toInstant();
+                    Date date1 = Date.from(instant1);
+                    ctkm.setNgayBatDau(date1);
+                    LocalDateTime localDateTimeNgayKetThuc = ngayKetThuc;
+                    Instant instant2 = localDateTimeNgayKetThuc.atZone(ZoneId.systemDefault()).toInstant();
+                    Date date2 = Date.from(instant2);
+                    ctkm.setNgayKetThuc(date2);
+                    ctkm.setTrangThai(0);
+                    chiTietKhuyenMaiService.save(ctkm);
+                }
         }
         return "redirect:/bumblebee/khuyen-mai/list";
     }
@@ -195,18 +196,26 @@ public class KhuyenMaiController {
         }
 
         if (khuyenMaiService.findMa(km.getMaKhuyenMai()) != null) {
-            model.addAttribute("mess_Ma", "Lỗi! Mã không được trùng");
+            model.addAttribute("mess_Ma", "Mã không được trùng");
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
             return "admin/index";
         }
 
-        if (donVi.equals("%")){
-            if (giaTri > 100){
+        if (donVi.equals("%")) {
+            if (giaTri > 100) {
                 model.addAttribute("errorGiaTri", "Giá trị không đươc nhập quá 100");
                 model.addAttribute("view", "../khuyen-mai/add_update.jsp");
                 return "admin/index";
             }
         }
+
+        if (giaTri <= 0) {
+            model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
+            model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+            return "admin/index";
+        }
+
+
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String format = sdf.format(date);
@@ -255,7 +264,7 @@ public class KhuyenMaiController {
             @PathVariable(name = "id") UUID id,
             @RequestParam(name = "ngayBatDau") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayBatDau,
             @RequestParam(name = "ngayKetThuc") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayKetThuc
-            ) {
+    ) {
         ChiTietKhuyenMai ctkm = chiTietKhuyenMaiService.findID(id);
         LocalDateTime localDateTimeNgayBatDau = ngayBatDau;
         Instant instant1 = localDateTimeNgayBatDau.atZone(ZoneId.systemDefault()).toInstant();
@@ -265,7 +274,7 @@ public class KhuyenMaiController {
         Instant instant2 = localDateTimeNgayKetThuc.atZone(ZoneId.systemDefault()).toInstant();
         Date date2 = Date.from(instant2);
         ctkm.setNgayKetThuc(date2);
-        if (ngayKetThuc.isAfter(LocalDateTime.now())){
+        if (ngayKetThuc.isAfter(LocalDateTime.now())) {
             ctkm.setTrangThai(0);
         } else {
             ctkm.setTrangThai(1);
@@ -275,5 +284,36 @@ public class KhuyenMaiController {
         return "redirect:/bumblebee/khuyen-mai/list";
     }
 
+    @RequestMapping ("/bumblebee/khuyen-mai/search-khoang-ngay")
+    public String searchKhoangNgay(
+            Model model,
+            @RequestParam(name = "ngayBatDau") String ngayBatDau,
+            @RequestParam(name = "ngayKetThuc") String ngayKetThuc
+            ) throws ParseException {
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = dateFormat1.parse(ngayBatDau);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date2 = dateFormat2.parse(ngayKetThuc);
+        List<KhuyenMai> km = khuyenMaiService.searchKhoangNgay(date1, date2);
+        model.addAttribute("page", km);
+        model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+        return "admin/index";
+    }
+
+    @RequestMapping ("/bumblebee/chi-tiet-khuyen-mai/search-khoang-ngay")
+    public String searchKhoangNgayCTKM(
+            Model model,
+            @RequestParam(name = "ngayBatDau") String ngayBatDau,
+            @RequestParam(name = "ngayKetThuc") String ngayKetThuc
+    ) throws ParseException {
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = dateFormat1.parse(ngayBatDau);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date2 = dateFormat2.parse(ngayKetThuc);
+        List<ChiTietKhuyenMai> km = chiTietKhuyenMaiService.searchKhoangNgay(date1, date2);
+        model.addAttribute("page", km);
+        model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+        return "admin/index";
+    }
 
 }

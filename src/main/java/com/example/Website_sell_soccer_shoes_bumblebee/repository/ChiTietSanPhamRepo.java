@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -154,12 +155,19 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\tand kc.size = ?3", nativeQuery = true)
     String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
+    @Query(value = "SELECT ctsp.*, kc.Id AS KichCoId FROM ChiTietSanPham ctsp " +
+            "JOIN KichCo kc ON kc.Id = ctsp.IdKichCo " +
+            "WHERE ctsp.IdMauSac = :idMS AND ctsp.IdSP = :idSP AND kc.size = :size", nativeQuery = true)
+    ChiTietSanPham getCTSPByKichCo(
+            @Param("idMS") UUID idMS,
+            @Param("idSP") UUID idSP,
+            @Param("size") String size
+    );
 
     @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
             "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
             "GROUP BY c2.sanPham.id, c2.mauSac.id)")
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
-
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
             "and IdMauSac = ?2 \n" +

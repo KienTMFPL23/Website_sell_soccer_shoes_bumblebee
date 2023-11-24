@@ -8,84 +8,85 @@
 <br>
 
 <style>
-    .container-sm {
-        padding-bottom: 20px;
+    .formAdd {
+        width: 700px;
+        height: 500px;
         background-color: #37517E;
-        color: white;
+        border-radius: 20px;
+        color: #FFFFFF;
+        font-family: "Nunito";
+        margin: 0 auto;
     }
 
-    .form-label {
-        padding-right: 30px;
-        justify-content: space-between;
-    }
-
-    input {
-        margin-right: 10px;
-        width: 390px;
-        border-radius: 10px;
-        border: none;
-        height: 30px;
-
-    }
-
-    .input {
-        display: flex;
-        justify-content: space-between;
+    .row.mb-3 {
         margin-top: 30px;
     }
 
-    .input p {
-        margin-left: 10px;
-    }
-
-    h3 {
-        text-align: center;
-    }
-
-    #but {
+    .button {
+        background-color: #FFFFFF;
+        color: black;
+        font-weight: bold;
+        width: 120px;
+        height: 40px;
         border-radius: 10px;
+        border: 0px;
+        margin-top: 30px;
+        margin: auto;
+        display: block;
+    }
+
+    label {
+        font-size: 17px;
     }
 </style>
 
-<div class="container-sm" style="width: 700px">
-    <div class="row">
-
-        <div class="col-6 col-md-6 col-sm-6">
-            <%--            <a href="/kich-co/hien-thi" class="btn btn-primary"><i class="bi bi-house-fill"></i></a>--%>
-            <br>
-        </div>
-        <h3>Thêm Kích Cỡ</h3>
-    </div>
+<div class="formAdd">
+    <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA KÍCH CỠ</h1>
     <form:form action="${action}" modelAttribute="kichco">
-        <form:input path="id" class="form-control" type="hidden"/>
-        <div class="mb-3">
-            <label class="form-label">Mã Kích Cỡ: </label>
-
-            <form:input path="maKichCo" class="form-control"/>
-            <form:errors path="maKichCo" cssStyle="color: crimson"/>
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <form:input type="hidden" class="form-control" id="inputEmail3" path="id"/>
+            </div>
         </div>
-        <div class="mb-3 form-check-inline">
-            <label class="form-label">Giới Tính</label>
-            <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>
-            <form:errors path="gioiTinh" cssStyle="color: crimson"/>
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Mã kích cỡ:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:input type="text" class="form-control" path="maKichCo"/>
+                <form:errors path="maKichCo" cssStyle="color: crimson"></form:errors>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Size</label>
-            <form:input path="size" class="form-control"/>
-            <form:errors path="size" cssStyle="color: crimson"/>
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Size:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:input type="text" class="form-control" path="size" />
+                <form:errors path="size" cssStyle="color: crimson"></form:errors>
+            </div>
         </div>
-
-        <div class="mb-3 form-check-inline">
-            <label class="form-label">Trạng Thái</label>
-            <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"/>
-            <form:errors path="trangThai" cssStyle="color: crimson"/>
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Trạng thái:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton"/>
+                <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
+            </div>
         </div>
-        <div class="text-center">
-            <button type="submit" id="but" class="btn btn-secondary text-center"
+        <div class="buttonSubmit">
+            <button type="submit" id="but" class="button"
                     onclick="return confirm('Bạn có chắc muốn thực hiện ?');">
                 Submit
             </button>
         </div>
+
     </form:form>
 </div>
-    <div class="text-center" style="color: crimson">${mess}</div>
+<div class="text-center" style="color: crimson">${mess}</div>
+
+

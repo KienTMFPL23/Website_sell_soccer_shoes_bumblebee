@@ -1,11 +1,13 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.KhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietKhuyenMaiService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -30,4 +32,6 @@ public interface ChiTietKhuyenMaiRepository extends JpaRepository<ChiTietKhuyenM
     @Query(value = "update ChiTietKhuyenMai set TrangThai = 1 where NgayKetThuc < getdate()", nativeQuery = true)
     List<ChiTietKhuyenMai> updateTrangThaiByNgayKetThuc();
 
+    @Query(value = "select km from KhuyenMai km where km.ngayTao between :ngayBatDau and :ngayKetThuc")
+    List<ChiTietKhuyenMai> searchKhoangNgay(@Param("ngayBatDau") Date ngayBatDau, @Param("ngayKetThuc") Date ngayKetThuc);
 }

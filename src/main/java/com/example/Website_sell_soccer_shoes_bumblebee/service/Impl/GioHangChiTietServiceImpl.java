@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.GioHangChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangChiTietRepository;
@@ -34,8 +35,15 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     @Override
     public Double getTotalMoney(List<GioHangChiTiet> list) {
         Double sum = 0.0;
-        for (GioHangChiTiet ghct : list){
-            sum += ghct.getDonGia() * ghct.getSoLuong();
+        Double sumGoc = 0.0;
+        Double sumKhuyenMai = 0.0;
+        for (GioHangChiTiet hdct : list) {
+            if (hdct.getCtsp().getCtkm().isEmpty()) {
+                sumGoc += hdct.getDonGia() * hdct.getSoLuong();
+            } else {
+                sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+            }
+            sum = sumGoc + sumKhuyenMai;
         }
         return sum;
     }

@@ -1,3 +1,5 @@
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -91,11 +93,12 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3" style="color: #003eff">
                         Từ Ngày:
-                        <form:input class="form-control" type="date" placeholder="dd/MM/yyyy" path="fromDate"/>
+                        <form:input class="form-control" type="date" path="fromDate"/>
+
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3" style="color: #003eff">
                         Đến Ngày:
-                        <form:input class="form-control" type="date" placeholder="dd/MM/yyyy" path="toDate"/>
+                        <form:input class="form-control" type="date" path="toDate"/>
                     </div>
                     <div class="col-lg-1">
                         <button id="searchButton">Tìm</button>
@@ -104,7 +107,7 @@
             </form:form>
         </div>
         <div class="col-lg-3">
-            <input class="form-control" placeholder="Nhập mã hoặc loại tên sản phẩm" id="myInput"/>
+            <input class="form-control" placeholder="Nhập mã hoá đơn hoặc tên khách hàng" id="myInput"/>
 
         </div>
         <div class="col-lg-2">

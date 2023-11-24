@@ -32,22 +32,22 @@
     #menu ul {
         background: #FFFFFF;
         list-style-type: none;
-        text-align: center;
         height: 50px;
         width: 100%;
         border-bottom: 1px solid #D9D9D9;
         border-radius: 10px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
     }
 
     #menu li {
         color: #37517E;
         display: inline-block;
-        width: 120px;
         height: 50px;
         line-height: 50px;
-        margin-left: -5px;
         border--radius: 10px;
+        padding-right: 2rem;
     }
 
     #menu a {
@@ -178,7 +178,6 @@
                 <div class="menu-left">
                     <a href="/bumblebee/don-mua"><img class="img" src="../../../img/bill.png">Đơn mua</a>
                 </div>
-
             </div>
         </div>
         <div class="col-lg-9">
@@ -218,7 +217,6 @@
                                     <c:if test="${hd.phuongThucThanhToan == 1}"><p>Chưa thanh toán</p></c:if>
                                     <c:if test="${hd.phuongThucThanhToan == 2}"><p>Đã thanh toán</p></c:if>
                                 </div>
-
                                 <div class="table">
                                     <a href="/bumblebee/don-mua/${hd.id}">
                                         <table class="table ps-checkout__products">
@@ -229,7 +227,6 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-                                            <tbody>
                                             <c:forEach items="${hd.hoaDons}" var="hdct">
                                                 <tr>
                                                     <td>
@@ -248,7 +245,6 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-                                            </tbody>
                                         </table>
                                     </a>
                                 </div>

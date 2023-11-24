@@ -120,6 +120,12 @@ public class HomeController {
         return ResponseEntity.ok(sl);
     }
 
+    @RequestMapping("/bumblebee/select-giaban")
+    public ResponseEntity<ChiTietSanPham> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
+        ChiTietSanPham giaBan = chiTietSanPhamRepo.getCTSPByKichCo(idMS,idSP,size);
+        return ResponseEntity.ok(giaBan);
+    }
+
     @GetMapping("/bumblebee/select-size")
     public ResponseEntity<List<Integer>> getKichCoByItemId(@RequestParam UUID idSP, @RequestParam UUID idMS, Model model) {
         List<Integer> kichCoList = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
@@ -153,7 +159,7 @@ public class HomeController {
             List<GioHangChiTiet> listGHCT;
             listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             model.addAttribute("listGHCT", listGHCT);
-            model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+//            model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
             model.addAttribute("view", "../template_home/cart.jsp");
             return "template_home/index";
         }
@@ -209,16 +215,12 @@ public class HomeController {
         return "redirect:/bumblebee/cart";
     }
 
-    @RequestMapping("/bumblebee/detail")
-    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS, HttpSession session) {
-//        TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-//        KhachHang khachHang = taiKhoan.getKhachHangKH();
-//        GioHang gioHang = gioHangRepo.getGioHang(khachHang.getId());
-//        int slspgh = chiTietSanPhamRepo.getSLGioHangBySPAndGH(idCTSP,gioHang.getId());
+    @GetMapping("/bumblebee/detail")
+    public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+        System.out.println(chiTietSanPham.getSoLuong());
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-//        model.addAttribute("slSPGH",slspgh);
         model.addAttribute("idCTSP", idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         model.addAttribute("listKC", listKCBySP);
@@ -287,6 +289,19 @@ public class HomeController {
             GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setCtsp(ctsp);
             gioHangChiTiet.setGioHang(gioHang);
+            if (ctsp.getCtkm() != null) {
+                double donGiaKhiGiam = 0;
+                for (ChiTietKhuyenMai ctkm : ctsp.getCtkm()) {
+                    if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                        donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                    if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                        donGiaKhiGiam = ctsp.getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                }
+            }
             gioHangChiTiet.setDonGia(ctsp.getGiaBan());
             gioHangChiTiet.setSoLuong(sl);
             gioHangChiTietRepo.save(gioHangChiTiet);
@@ -419,6 +434,9 @@ public class HomeController {
             hdct.setHoaDon(hoaDon);
             hdct.setChiTietSanPham(ghct.getCtsp());
             hdct.setSoLuong(ghct.getSoLuong());
+            if (ghct.getCtsp().getCtkm() != null) {
+                hdct.setDonGiaKhiGiam(ghct.getDonGiaKhiGiam());
+            }
             hdct.setDonGia(ghct.getDonGia());
             hdct.setTrangThai(3);
             hoaDonChiTietService.save(hdct);
@@ -448,7 +466,7 @@ public class HomeController {
 
 
     @GetMapping("/VnPay")
-    public String home(Model model){
+    public String home(Model model) {
         Double price = gioHangChiTietService.getTotalMoney(listGHCT);
         Integer amount = price.intValue();
         model.addAttribute("amount", amount);
@@ -458,7 +476,7 @@ public class HomeController {
     @PostMapping("/submitOrder")
     public String submidOrder(@RequestParam("amount") Integer orderTotal,
                               @RequestParam("orderInfo") String orderInfo,
-                              HttpServletRequest request){
+                              HttpServletRequest request) {
 
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
@@ -466,7 +484,7 @@ public class HomeController {
     }
 
     @GetMapping("/vnpay-payment")
-    public String GetMapping(HttpServletRequest request, Model model){
+    public String GetMapping(HttpServletRequest request, Model model) {
         int paymentStatus = vnPayService.orderReturn(request);
         if (paymentStatus == 1) {
             hoaDon.setPhuongThucThanhToan(2);
@@ -496,7 +514,6 @@ public class HomeController {
 
         return paymentStatus == 1 ? "redirect:/bumblebee/don-mua/cho-xac-nhan" : "redirect:/bumblebee/thanh-toan";
     }
-
 
 
     @RequestMapping("/bumblebee/bill/{id}")
@@ -537,6 +554,10 @@ public class HomeController {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId()));
+        for (HoaDon hd : hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId())){
+            System.out.println(hd.getMaHoaDon());
+            System.out.println("a");
+        }
         model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
     }

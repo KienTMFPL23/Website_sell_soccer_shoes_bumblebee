@@ -59,7 +59,9 @@
                        href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
-                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick=" confirmDelete(event)"
+
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick="return confirm('Bạn có muốn xóa không ?')"
+
                        class="btndele"><img
                             src="/images_template/deleteHD.png"></a>
 
@@ -648,14 +650,35 @@
 </script>
 <script>
     function alertThanhToan() {
-
-        var confirmResult = confirm("Bạn có muốn thanh toán không?");
-        if (confirmResult == true) {
+        var result = confirm('Bạn có muốn thanh toán không ??');
+        if (result){
+            let timerInterval;
             Swal.fire({
+                title: "Thành công !!!",
                 position: "top-end",
-                title: "Thanh toán thành công",
-                icon: "success"
+                icon: "success",
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    // Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    // timerInterval = setInterval(() => {
+                    //   timer.textContent = `${Swal.getTimerLeft()}`;
+                    // }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                },
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
             });
+            return true;
+        }else {
+            event.preventDefault();
+            return false;
         }
 
     }
