@@ -102,6 +102,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
         return donGiaKhiGiam;
     }
 
+    @Override
+    public List<HoaDonChiTiet> listHDCTByMaHD(String maHoaDon) {
+        return hoaDonChiTietRepository.getListHDCTByMaHD(maHoaDon);
+    }
+
 
     @Override
     public HoaDonChiTiet save(HoaDonChiTiet hdct) {
