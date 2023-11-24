@@ -439,4 +439,9 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.searchLoaiHoaDonDaTra(loaiDon,pageable);
     }
 
+    @Override
+    public List<HoaDon> danhSachHDDuDK() {
+        return hoaDonRepository.danhSachHDDuDK();
+    }
+
 }

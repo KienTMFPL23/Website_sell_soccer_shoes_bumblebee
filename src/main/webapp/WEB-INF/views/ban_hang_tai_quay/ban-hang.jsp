@@ -59,7 +59,7 @@
                        href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
-                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick="confirmDelete(false)"
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick=" confirmDelete(event)"
                        class="btndele"><img
                             src="/images_template/deleteHD.png"></a>
 
@@ -558,8 +558,8 @@
     });
 </script>
 
-<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
-<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
@@ -610,11 +610,36 @@
     }
 </script>
 <script>
-    function confirmDelete() {
-        var result = confirm('ban co muon xoa');
-        if (result){
+    function confirmDelete(event) {
 
+        var result = confirm('Bạn có muốn thanh toán không ??');
+        if (result){
+            let timerInterval;
+            Swal.fire({
+                title: "Thành công !!!",
+                position: "top-end",
+                icon: "success",
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    // Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    // timerInterval = setInterval(() => {
+                    //   timer.textContent = `${Swal.getTimerLeft()}`;
+                    // }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                },
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
+            });
+            return true;
         }else {
+            event.preventDefault();
             return false;
         }
 

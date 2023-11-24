@@ -30,7 +30,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -179,6 +178,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
+        model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         model.addAttribute("listHDCT", hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id));
         model.addAttribute("idHoaDon", this.idHoaDon);
         model.addAttribute("listKhachHang", khachHangService.getAllKHOderBy());
@@ -186,7 +186,12 @@ public class BanHangTaiQuayController {
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         sumMoney = hoaDonChiTietService.getTotalMoney(list);
-        model.addAttribute("sumMoney", sumMoney);
+        if (sumMoney < 0) {
+            sumMoney = 0.0;
+            model.addAttribute("sumMoney", sumMoney);
+        } else {
+            model.addAttribute("sumMoney", sumMoney);
+        }
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
@@ -341,7 +346,6 @@ public class BanHangTaiQuayController {
         if (job.printDialog()) {
             job.print();
         }
-
 
 
     }

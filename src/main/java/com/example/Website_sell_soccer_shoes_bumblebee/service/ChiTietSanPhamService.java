@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import org.springframework.data.domain.Page;
@@ -86,4 +87,5 @@ public interface ChiTietSanPhamService {
     List<ChatLieu> search22CL(String keyword, Integer trangThai);
     List<KichCo> search22KC(Integer size, Integer trangThai);
 
+    List<ChiTietSanPhamCustom> listSPCungLoai (Double giaSP);
 }

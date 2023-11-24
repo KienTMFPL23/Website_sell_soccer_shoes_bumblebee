@@ -20,7 +20,7 @@
     }
 
     .ps-btn btnDatHang {
-        margin-left: 100px;
+        margin-left: 100px;củ
     }
 
     .ps-payment-method li img {
@@ -107,7 +107,7 @@
                                         <td style="text-align: center;padding-top: 25px;">${sp.soLuong}</td>
                                         <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
                                                 value="${sp.donGia * sp.soLuong}"
-                                                type="currency"/></td>
+                                                type="number"/></td>
                                     </tr>
                                 </c:forEach>
                                 <td style="padding-top: 20px;">Ghi chú</td>
@@ -131,7 +131,7 @@
                             <div class="col-lg-4" style="padding-bottom: 20px;">
                                 <span style="font-size: 18px; font-weight: 600;">Tổng tiền hàng: </span>
                                 <span style="font-size: 18px; "><fmt:formatNumber value="${totalPrice}"
-                                                                                  type="currency"/></span>
+                                                                                  type="number"/></span>
                             </div>
                         </div>
                     </div>

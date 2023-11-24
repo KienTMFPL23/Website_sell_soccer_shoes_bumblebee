@@ -355,8 +355,7 @@
         </div>
     </div>
 </div>
-<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"> </script>--%>
-<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
+
 <!-- Bootstrap core JavaScript-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -367,7 +366,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
+<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
+
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="../../../js/ban_hang_tai_quay/doi-hang.js"></script>
+<script src="../../../js/doi_hang/san-pham-doi.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
