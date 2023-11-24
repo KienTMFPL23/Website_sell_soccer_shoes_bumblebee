@@ -74,11 +74,13 @@
                                                                 type="number"/> đ</label>
                                                         <span><fmt:formatNumber value="${item.giaBan}"
                                                                                 type="number"/> đ</span>
+
                                                     </c:if>
                                                 </c:forEach>
                                             </c:if>
                                             <c:if test="${empty item.ctkm}">
                                                 <label>
+
                                                     <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
                                                 </label>
                                             </c:if>

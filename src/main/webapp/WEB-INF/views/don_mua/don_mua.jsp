@@ -239,6 +239,7 @@
                                                             - ${hdct.chiTietSanPham.kichCo.size}</p>
                                                         <h5>Số lượng: ${hdct.soLuong}</h5>
                                                     </td>
+
                                                     <td style="text-align: center;padding-top: 25px;" class="thanhTien">
                                                         <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
                                                             <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
@@ -248,6 +249,7 @@
                                                             <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
                                                                               type="number"/> đ
                                                         </c:if>
+
 
                                                     </td>
                                                 </tr>

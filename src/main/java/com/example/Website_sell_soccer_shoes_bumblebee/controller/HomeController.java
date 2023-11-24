@@ -159,6 +159,7 @@ public class HomeController {
             List<GioHangChiTiet> listGHCT;
             listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             model.addAttribute("listGHCT", listGHCT);
+
             model.addAttribute("view", "../template_home/cart.jsp");
             return "template_home/index";
         }

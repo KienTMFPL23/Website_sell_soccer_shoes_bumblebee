@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import org.springframework.data.domain.Page;
@@ -192,9 +193,20 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             " where IdChiTietSP = ?1 and IdGioHang = ?2",nativeQuery = true)
     Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
 
+
     @Query("SELECT c FROM ChiTietSanPham c " +
             "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
             "GROUP BY c2.mauSac.id, c2.sanPham.id HAVING c2.sanPham.id = ?1)")
     List<ChiTietSanPham> getCTSPByIdSP(UUID idSP);
+
+    @Query(value = "select sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
+            "from ChiTietSanPham ctsp join SanPham sp on ctsp.IdSP = sp.Id\n" +
+            "\t\t\t\t\t\t join MauSac ms on ctsp.IdMauSac = ms.Id\n" +
+            "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
+            "\t\t\t\t\t\t join ChatLieu cl on ctsp.IdChatLieu = cl.Id\n" +
+            "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
+            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 0",nativeQuery = true)
+    List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
+
 
 }

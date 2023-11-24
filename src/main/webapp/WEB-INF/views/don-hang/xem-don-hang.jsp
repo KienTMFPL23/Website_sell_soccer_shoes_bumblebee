@@ -252,12 +252,12 @@
                         <p><%= formattedDate %>
                         </p>
                     </div>
-                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">
-                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4> Đã giao cho DVVC</h4>
-                        <p><%= formattedDate %>
-                        </p>
-                    </div>
+                        <%--                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">--%>
+                        <%--                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
+                        <%--                        <h4> Đã giao cho DVVC</h4>--%>
+                        <%--                        <p><%= formattedDate %>--%>
+                        <%--                        </p>--%>
+                        <%--                    </div>--%>
                     <div class="col-lg-2 status-item" id="status" data-status-id="4"
                          data-status="Đơn hàng đang được giao">
                         <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
@@ -269,6 +269,13 @@
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
                         <h4>Hoàn thành</h4>
+                        <p><%= formattedDate %>
+                        </p>
+                    </div>
+                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
+                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;"
+                             class="trang-thai">
+                        <h4>Đã huỷ</h4>
                         <p><%= formattedDate %>
                         </p>
                     </div>

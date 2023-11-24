@@ -107,6 +107,7 @@
                                                     <p id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
                                                             value="${item.donGia*item.soLuong}"
                                                             type="number"/> đ</p>
+
                                                 </c:if>
                                                 <c:if test="${empty item.ctsp.ctkm}">
                                                     <label id="thanhTien_${item.id}" class="thanhTien"><fmt:formatNumber

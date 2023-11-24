@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
@@ -193,6 +194,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     public List<KichCo> search22KC(Integer size, Integer trangThai) {
         return repo.search22KC(size, trangThai);
 
+    }
+
+    @Override
+    public List<ChiTietSanPhamCustom> listSPCungLoai(Double giaSP) {
+        return repo.listSanPhamCungLoai(giaSP);
     }
 
     @Override

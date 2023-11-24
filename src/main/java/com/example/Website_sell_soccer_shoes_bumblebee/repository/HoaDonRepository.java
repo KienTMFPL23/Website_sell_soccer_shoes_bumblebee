@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
+import lombok.val;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -75,22 +76,22 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 1 order by hd.ngayTao DESC ")
     List<HoaDon> listHoaDonChoThanhToan(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 2 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 2 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDangChuanBi(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 3 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 4 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDangGiao(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 4 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 5 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonHoanThanh(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 5 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDaHuy(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonTraHang(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 1 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 8 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = ?1")
@@ -149,4 +150,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =7")
     Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+    @Query(value = "select * from HoaDon where TrangThai = 5 and (GETDATE() - NgayThanhToan) <=7",nativeQuery = true)
+    List<HoaDon> danhSachHDDuDK();
 }
