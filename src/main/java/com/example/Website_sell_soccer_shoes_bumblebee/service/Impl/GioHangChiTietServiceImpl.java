@@ -35,9 +35,17 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     @Override
     public Double getTotalMoney(List<GioHangChiTiet> list) {
         Double sum = 0.0;
-        for (GioHangChiTiet ghct : list){
-                sum += ghct.getDonGia() * ghct.getSoLuong();
+        Double sumGoc = 0.0;
+        Double sumKhuyenMai = 0.0;
+        for (GioHangChiTiet hdct : list) {
+            if (hdct.getCtsp().getCtkm().isEmpty()) {
+                sumGoc += hdct.getDonGia() * hdct.getSoLuong();
+            } else {
+                sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+            }
+            sum = sumGoc + sumKhuyenMai;
         }
+
         return sum;
     }
 

@@ -46,11 +46,13 @@
         crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<%@include file="header.jsp" %>
-<div>
-    <jsp:include page="${view}"/>
+<div id="main_container">
+    <%@include file="header.jsp" %>
+    <div>
+        <jsp:include page="${view}"/>
+    </div>
+    <%@include file="footer.jsp" %>
 </div>
-<%@include file="footer.jsp" %>
 
 <!-- JS Library-->
 <script type="text/javascript" src="../../../plugins/jquery/dist/jquery.min.js"></script>
@@ -77,6 +79,9 @@
 <!-- Custom scripts-->
 <script type="text/javascript" src="../../../js_template/main.js"></script>
 <script type="text/javascript" src="../../../js_template/custom.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <script>
     function setHeader()
     {

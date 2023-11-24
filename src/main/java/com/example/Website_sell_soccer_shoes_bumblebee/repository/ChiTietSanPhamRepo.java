@@ -163,9 +163,14 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             @Param("size") String size
     );
 
-    @Query("SELECT DISTINCT c FROM ChiTietSanPham c " +
-            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
-            "GROUP BY c2.sanPham.id, c2.mauSac.id)")
+    @Query(value = "SELECT DISTINCT c.*\n" +
+            "FROM ChiTietSanPham c\n" +
+            "INNER JOIN (\n" +
+            "    SELECT idSP, idMauSac, MIN(id) AS min_id\n" +
+            "    FROM ChiTietSanPham\n" +
+            "    GROUP BY idSP, idMauSac\n" +
+            ") c2 ON c.id = c2.min_id\n" +
+            "ORDER BY c.idSP, c.idMauSac;", nativeQuery = true)
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
@@ -186,5 +191,10 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select soluong from giohangchitiet" +
             " where IdChiTietSP = ?1 and IdGioHang = ?2",nativeQuery = true)
     Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
+
+    @Query("SELECT c FROM ChiTietSanPham c " +
+            "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
+            "GROUP BY c2.mauSac.id, c2.sanPham.id HAVING c2.sanPham.id = ?1)")
+    List<ChiTietSanPham> getCTSPByIdSP(UUID idSP);
 
 }

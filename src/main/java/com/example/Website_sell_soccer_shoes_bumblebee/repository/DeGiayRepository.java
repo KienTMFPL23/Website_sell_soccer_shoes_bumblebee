@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface DeGiayRepository extends JpaRepository<DeGiay, UUID> {
-    @Query("select dg from DeGiay  dg where dg.loaiDe =:loaide ")
-    DeGiay findByLoaiDe(@Param("loaide")String loaide);
+
     @Query(value = "select d.Id, d.Ma, d.LoaiDe, d.TrangThai from DeGiay d ", nativeQuery = true)
     Page<DeGiay> getPage(Pageable pageable);
 
