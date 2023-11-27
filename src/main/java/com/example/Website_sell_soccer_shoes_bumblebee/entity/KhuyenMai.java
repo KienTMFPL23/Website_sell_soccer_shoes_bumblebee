@@ -1,15 +1,15 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -49,6 +49,18 @@ public class KhuyenMai {
     @Column(name = "NgayTao")
     //@NotNull(message = "Ngày tạo không được để trống")
     private Date ngayTao;
+
+    @Column(name = "NgayBatDau")
+    @NotNull(message = "Ngày bắt đầu không được để trống")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime ngayBatDau;
+
+    @Column(name = "NgayKetThuc")
+    @NotNull(message = "Ngày kết thúc không được để trống")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime ngayKetThuc;
 
     @Column(name = "TrangThai")
     @NotNull(message = "Trạng thái không được để trống")

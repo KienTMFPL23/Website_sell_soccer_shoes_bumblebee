@@ -412,7 +412,7 @@ public class HomeController {
             return "redirect:/VnPay";
         } else {
             hoaDon.setPhuongThucThanhToan(1);
-            hoaDon.setTrangThai(1);
+            hoaDon.setTrangThai(2);
             hoaDonService.saveHoaDon(hoaDon);
         }
 

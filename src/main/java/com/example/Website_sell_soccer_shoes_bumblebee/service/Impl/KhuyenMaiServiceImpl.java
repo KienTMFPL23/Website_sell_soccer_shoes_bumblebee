@@ -6,8 +6,11 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.KhuyenMaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +47,16 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
     }
 
     @Override
-    public List<KhuyenMai> searchKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
-        return repo.searchKhoangNgay(ngayBatDau, ngayKetThuc);
+    public List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate) {
+        return repo.searchKMByNgayTaoAndDonVi(fromDate, toDate);
     }
+
+
+    @Override
+    public LocalDateTime convertDateToLocalDateTime(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
 }

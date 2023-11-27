@@ -19,7 +19,7 @@
 
     .formAdd {
         width: 700px;
-        height: 560px;
+        height: 750px;
         background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
@@ -112,12 +112,34 @@
                 <label>Giá trị:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="giaTri" name="giaTri"/>
+                <form:input type="text" class="form-control" path="giaTri"/>
                 <form:errors path="giaTri" cssStyle="color: crimson"></form:errors>
                 <span style="color: crimson">${errorGiaTri}</span>
             </div>
         </div>
 
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Ngày bắt đầu:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:input type="datetime-local" class="form-control" path="ngayBatDau" />
+                <form:errors path="ngayBatDau" cssStyle="color: crimson"></form:errors>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Ngày kết thúc:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:input type="datetime-local" class="form-control" path="ngayKetThuc" />
+                <form:errors path="ngayKetThuc" cssStyle="color: crimson"></form:errors>
+                <span style="color: crimson">${mess_Ngay}</span>
+            </div>
+        </div>
 
         <div class="row mb-3">
             <div class="col-lg-1"></div>
