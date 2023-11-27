@@ -861,6 +861,24 @@ ul {
     right: 32px;
     z-index: 10000;
 }
+#toast_warring_sp{
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 10000;
+}
+#toast_warring_kich_co{
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 10000;
+}
+#toast_succes_delete{
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 10000;
+}
 .toast {
     display: flex;
     align-items: center;

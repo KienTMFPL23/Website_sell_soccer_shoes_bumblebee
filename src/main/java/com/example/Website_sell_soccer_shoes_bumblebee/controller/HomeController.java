@@ -200,19 +200,17 @@ public class HomeController {
         } else {
             gioHangChiTiet.setSoLuong(soLuongMoi);
             gioHangChiTietRepo.save(gioHangChiTiet);
-            double thanhTienMoi = soLuongMoi * ctsp.getGiaBan();
             Map<String, Object> jsonResponse = new HashMap<>();
             jsonResponse.put("soLuong", soLuongMoi);
-            jsonResponse.put("thanhTien", thanhTienMoi);
             return jsonResponse;
         }
     }
 
 
-    @RequestMapping("/bumblebee/remove-ghct/{id}")
-    public String removeGHCT(@PathVariable UUID id) {
+    @DeleteMapping ("/bumblebee/remove-ghct/{id}")
+    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
         gioHangChiTietRepo.deleteById(id);
-        return "redirect:/bumblebee/cart";
+        return ResponseEntity.ok("Record deleted successfully");
     }
 
     @GetMapping("/bumblebee/detail")

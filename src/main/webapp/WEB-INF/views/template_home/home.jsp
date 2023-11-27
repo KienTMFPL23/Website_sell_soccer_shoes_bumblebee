@@ -148,7 +148,7 @@
                                                 <button class="btn"
                                                         id="btn-themgh_${item.sanPham.id}_${item.mauSac.id}"
                                                         style="font-size:15px;background-color: white; color: black;border: 1px solid black"
-                                                        href="/bumblebee/add-to-cart" onclick="return themVaoGioHang()">Thêm vào giỏ hàng
+                                                        onclick="return themVaoGioHang()">Thêm vào giỏ hàng
                                                 </button>
                                             </div>
                                         </div>
@@ -234,7 +234,7 @@
                                                                     href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
                                                             </h6>
                                                             <div class="product_price">
-                                                                <c:if test="${item.ctkm != null}">
+                                                                <c:if test="${not empty item.ctkm}">
                                                                     <c:forEach var="km" items="${item.ctkm}">
                                                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                                                             <label style="color: crimson;font-size: 15px"><fmt:formatNumber
