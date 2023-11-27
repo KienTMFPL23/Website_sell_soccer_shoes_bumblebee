@@ -19,12 +19,13 @@ public class LoaiGiay {
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
 
-    @NotBlank(message = "khong de trong ma")
+    @NotBlank(message = "không để trống mã")
     String ma;
 
-    @NotBlank(message = "khong de trong ten")
+    @NotBlank(message = "không để trống tên")
     String tentheloai;
 
+    @NotNull(message = "Chọn trạng thái")
     Integer trangthai;
 
 }

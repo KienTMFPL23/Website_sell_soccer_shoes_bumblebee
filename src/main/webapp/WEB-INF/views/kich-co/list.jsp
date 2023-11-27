@@ -99,7 +99,7 @@
         <tr>
             <th scope="col">Mã</th>
             <th scope="col">Size</th>
-            <th scope="col">Giới tính </th>
+<%--            <th scope="col">Giới tính </th>--%>
             <th scope="col">Trạng thái</th>
             <th scope="col">Action</th>
         </tr>

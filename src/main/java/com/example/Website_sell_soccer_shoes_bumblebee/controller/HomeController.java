@@ -122,7 +122,7 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/select-giaban")
     public ResponseEntity<ChiTietSanPham> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
-        ChiTietSanPham giaBan = chiTietSanPhamRepo.getCTSPByKichCo(idMS,idSP,size);
+        ChiTietSanPham giaBan = chiTietSanPhamRepo.getCTSPByKichCo(idMS, idSP, size);
         return ResponseEntity.ok(giaBan);
     }
 
@@ -159,7 +159,7 @@ public class HomeController {
             List<GioHangChiTiet> listGHCT;
             listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
             model.addAttribute("listGHCT", listGHCT);
-//            model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
+
             model.addAttribute("view", "../template_home/cart.jsp");
             return "template_home/index";
         }
@@ -218,9 +218,12 @@ public class HomeController {
     @GetMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-        System.out.println(chiTietSanPham.getSoLuong());
+//        ChiTietSanPham chiTietSanPham1 = chiTietSanPhamRepo.getCTSPByKichCo(idMS,idSP,kichCo);
+//        model.addAttribute("slctsp",chiTietSanPham1.getSoLuong());
+        List<ChiTietSanPham> listCTSPBySP = chiTietSanPhamRepo.getCTSPByIdSP(idSP);
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+        model.addAttribute("listCTSPBySP",listCTSPBySP);
         model.addAttribute("idCTSP", idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         model.addAttribute("listKC", listKCBySP);
@@ -239,79 +242,74 @@ public class HomeController {
                           @RequestParam UUID idCTSP,
                           HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-        if (taiKhoan == null) {
-            return "redirect:/bumblebee/login";
-        } else {
-            KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
-            ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
-            int soLuongCTSP = ctsp.getSoLuong();
-            GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
-            List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
-            for (GioHangChiTiet gioHangChiTiet : listGHCT) {
-                if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
-                    int soLuongHienTai = gioHangChiTiet.getSoLuong();
-                    int slThem = Integer.parseInt(soLuong);
-                    int slUpdate = soLuongHienTai + slThem;
-                    if (slUpdate > soLuongCTSP) {
-                        Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-                        model.addAttribute("slGioHang", slGioHang);
-                        model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
-                        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-                        List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
-                        HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-                        model.addAttribute("idCTSP", idCTSP);
-                        model.addAttribute("hinhAnh", hinhAnh);
-                        model.addAttribute("listKC", listKCBySP);
-                        model.addAttribute("ctsp", chiTietSanPham);
-                        model.addAttribute("view", "../template_home/product_detail.jsp");
-                        return "template_home/index";
-                    }
-                    gioHangChiTiet.setSoLuong(slUpdate);
-                    gioHangChiTietRepo.save(gioHangChiTiet);
-                    return "redirect:/bumblebee/cart";
+        KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
+        ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
+        int soLuongCTSP = ctsp.getSoLuong();
+        GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+        List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+        for (GioHangChiTiet gioHangChiTiet : listGHCT) {
+            if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
+                int soLuongHienTai = gioHangChiTiet.getSoLuong();
+                int slThem = Integer.parseInt(soLuong);
+                int slUpdate = soLuongHienTai + slThem;
+                if (slUpdate > soLuongCTSP) {
+                    Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+                    model.addAttribute("slGioHang", slGioHang);
+                    model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
+                    ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+                    List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+                    HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+                    model.addAttribute("idCTSP", idCTSP);
+                    model.addAttribute("hinhAnh", hinhAnh);
+                    model.addAttribute("listKC", listKCBySP);
+                    model.addAttribute("ctsp", chiTietSanPham);
+                    model.addAttribute("view", "../template_home/product_detail.jsp");
+                    return "template_home/index";
                 }
+                gioHangChiTiet.setSoLuong(slUpdate);
+                gioHangChiTietRepo.save(gioHangChiTiet);
+                return "redirect:/bumblebee/cart";
             }
-            int sl = Integer.parseInt(soLuong);
-            if (sl > soLuongCTSP) {
-                Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-                model.addAttribute("slGioHang", slGioHang);
-                model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
-                ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-                List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
-                HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-                model.addAttribute("idCTSP", idCTSP);
-                model.addAttribute("hinhAnh", hinhAnh);
-                model.addAttribute("listKC", listKCBySP);
-                model.addAttribute("ctsp", chiTietSanPham);
-                model.addAttribute("view", "../template_home/product_detail.jsp");
-                return "template_home/index";
-            }
-            GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-            gioHangChiTiet.setCtsp(ctsp);
-            gioHangChiTiet.setGioHang(gioHang);
-            if (ctsp.getCtkm() != null) {
-                double donGiaKhiGiam = 0;
-                for (ChiTietKhuyenMai ctkm : ctsp.getCtkm()) {
-                    if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
-                        donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
-                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
-                    }
-                    if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
-                        donGiaKhiGiam = ctsp.getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
-                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
-                    }
-                }
-            }
-            gioHangChiTiet.setDonGia(ctsp.getGiaBan());
-            gioHangChiTiet.setSoLuong(sl);
-            gioHangChiTietRepo.save(gioHangChiTiet);
-            List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
-            model.addAttribute("listGHCT", listGHCT);
-            model.addAttribute("listCTSP", listCTSP);
-            model.addAttribute("view", "../template_home/cart.jsp");
-            return "redirect:/bumblebee/cart";
-
         }
+        int sl = Integer.parseInt(soLuong);
+        if (sl > soLuongCTSP) {
+            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
+            model.addAttribute("slGioHang", slGioHang);
+            model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
+            List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
+            HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
+            model.addAttribute("idCTSP", idCTSP);
+            model.addAttribute("hinhAnh", hinhAnh);
+            model.addAttribute("listKC", listKCBySP);
+            model.addAttribute("ctsp", chiTietSanPham);
+            model.addAttribute("view", "../template_home/product_detail.jsp");
+            return "template_home/index";
+        }
+        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+        gioHangChiTiet.setCtsp(ctsp);
+        gioHangChiTiet.setGioHang(gioHang);
+        if (ctsp.getCtkm() != null) {
+            double donGiaKhiGiam = 0;
+            for (ChiTietKhuyenMai ctkm : ctsp.getCtkm()) {
+                if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                    donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                    gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                }
+                if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                    donGiaKhiGiam = ctsp.getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                    gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                }
+            }
+        }
+        gioHangChiTiet.setDonGia(ctsp.getGiaBan());
+        gioHangChiTiet.setSoLuong(sl);
+        gioHangChiTietRepo.save(gioHangChiTiet);
+        List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
+        model.addAttribute("listGHCT", listGHCT);
+        model.addAttribute("listCTSP", listCTSP);
+        model.addAttribute("view", "../template_home/cart.jsp");
+        return "redirect:/bumblebee/cart";
     }
 
     @RequestMapping("/bumblebee/mua-ngay")
@@ -350,29 +348,21 @@ public class HomeController {
             return "redirect:/bumblebee/login";
         } else {
             model.addAttribute("listKH", taiKhoan.getKhachHangKH());
-
-            if (idListCartDetail == null) {
-                return "redirect:/bumblebee/cart";
-            } else {
-
-                // Lấy list idctsp
-                idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
-                        .stream()
-                        .map(UUID::fromString)
-                        .collect(Collectors.toList());
-                listGHCT = new ArrayList<>();
-                for (UUID id : idCartUUIDList) {
-                    GioHangChiTiet ghct = gioHangChiTietService.findId(id, taiKhoan.getKhachHangKH().getId());
-                    listGHCT.add(ghct);
-                }
-                model.addAttribute("listKH", taiKhoan.getKhachHangKH());
-
-                //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
-                model.addAttribute("listGHCT", listGHCT);
-                model.addAttribute("totalPrice", gioHangChiTietService.getTotalMoney(listGHCT));
-                model.addAttribute("view", "../template_home/thanhtoan.jsp");
-                return "template_home/index";
+            // Lấy list idctsp
+            idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
+                    .stream()
+                    .map(UUID::fromString)
+                    .collect(Collectors.toList());
+            listGHCT = new ArrayList<>();
+            for (UUID id : idCartUUIDList) {
+                GioHangChiTiet ghct = gioHangChiTietService.findId(id, taiKhoan.getKhachHangKH().getId());
+                listGHCT.add(ghct);
             }
+            model.addAttribute("listKH", taiKhoan.getKhachHangKH());
+            //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
+            model.addAttribute("listGHCT", listGHCT);
+            model.addAttribute("view", "../template_home/thanhtoan.jsp");
+            return "template_home/index";
         }
     }
 
@@ -488,7 +478,7 @@ public class HomeController {
         int paymentStatus = vnPayService.orderReturn(request);
         if (paymentStatus == 1) {
             hoaDon.setPhuongThucThanhToan(2);
-            hoaDon.setTrangThai(1);
+            hoaDon.setTrangThai(2);
             hoaDonService.saveHoaDon(hoaDon);
             // Tạo hóa đơn chi tiết
             for (GioHangChiTiet ghct : listGHCT) {
@@ -554,10 +544,6 @@ public class HomeController {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         model.addAttribute("listHoaDonMua", hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId()));
-        for (HoaDon hd : hoaDonService.listHoaDonChoThanhToan(taiKhoan.getKhachHangKH().getId())){
-            System.out.println(hd.getMaHoaDon());
-            System.out.println("a");
-        }
         model.addAttribute("view", "../don_mua/don_mua.jsp");
         return "template_home/index";
     }
