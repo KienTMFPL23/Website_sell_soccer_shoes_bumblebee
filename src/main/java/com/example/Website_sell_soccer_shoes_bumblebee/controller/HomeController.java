@@ -424,7 +424,7 @@ public class HomeController {
             return "redirect:/VnPay";
         } else {
             hoaDon.setPhuongThucThanhToan(1);
-            hoaDon.setTrangThai(1);
+            hoaDon.setTrangThai(2);
             hoaDonService.saveHoaDon(hoaDon);
         }
 
@@ -488,7 +488,7 @@ public class HomeController {
         int paymentStatus = vnPayService.orderReturn(request);
         if (paymentStatus == 1) {
             hoaDon.setPhuongThucThanhToan(2);
-            hoaDon.setTrangThai(1);
+            hoaDon.setTrangThai(2);
             hoaDonService.saveHoaDon(hoaDon);
             // Tạo hóa đơn chi tiết
             for (GioHangChiTiet ghct : listGHCT) {

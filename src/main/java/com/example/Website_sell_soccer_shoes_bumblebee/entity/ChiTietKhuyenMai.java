@@ -23,16 +23,6 @@ public class ChiTietKhuyenMai {
     @Column(name = "Id")
     private UUID id;
 
-    @Column(name = "NgayBatDau")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngayBatDau;
-
-    @Column(name = "NgayKetThuc")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngayKetThuc;
-
     @Column(name = "NgayCapNhat")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
