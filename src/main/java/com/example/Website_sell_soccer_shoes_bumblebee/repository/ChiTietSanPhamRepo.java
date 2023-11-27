@@ -186,7 +186,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 
 
 
-    @Query(value = "select ctsp from ChiTietSanPham  ctsp where  ctsp.soLuong > 0 and ctsp.trangThai = 0")
+    @Query(value = "select ctsp from ChiTietSanPham  ctsp where  ctsp.soLuong > 0 and ctsp.trangThai = 1")
     List<ChiTietSanPham> getListCTSPSuDung();
 
     @Query(value = "select soluong from giohangchitiet" +

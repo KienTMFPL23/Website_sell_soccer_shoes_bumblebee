@@ -1,11 +1,8 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
-import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
-import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
-import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonChiTietService;
-import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.HoaDonServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
@@ -47,14 +44,59 @@ public class DonHangController {
         return dsLoaiDon;
     }
 
+    @Autowired
+    ChatLieuRepository chatLieuRepo;
+    @Autowired
+    KichCoService kichCoService;
+    @Autowired
+    LoaiGiayRepository loaiGiayRepo;
+
+    @Autowired
+    DeGiayRepository deGiayRepo;
+
+    @Autowired
+    MauSacReponsitory mauSacReponsitories;
+    @Autowired
+    ChiTietSanPhamService chiTietSanPhamService;
+
+    @ModelAttribute("listDeGiay")
+    List<DeGiay> listDeGiay() {
+        return deGiayRepo.findAll();
+    }
+
+    @ModelAttribute("listChatLieu")
+    List<ChatLieu> listChatLieu() {
+        return chatLieuRepo.findAll();
+    }
+
+    @ModelAttribute("listKichCo")
+    List<KichCo> listKichCo() {
+        return kichCoService.getList();
+    }
+
+    @ModelAttribute("listMau")
+    List<MauSac> listMauSac() {
+        return mauSacReponsitories.findAll();
+    }
+
+    @ModelAttribute("listLoaiGiay")
+    List<LoaiGiay> listLoaiGiay() {
+        return loaiGiayRepo.findAll();
+    }
+
+    @ModelAttribute("listSanPham")
+    List<ChiTietSanPham> listSP() {
+        return chiTietSanPhamService.listCTSPSuDung();
+    }
+
     @Data
     public static class SearchForm {
-        String keyword = "";
+        Integer keyword;
 
-        @DateTimeFormat( pattern="yyyy-MM-dd HH:mm:ss")
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         Date fromDate;
 
-        @DateTimeFormat( pattern="yyyy-MM-dd HH:mm:ss")
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         Date toDate;
     }
 
@@ -105,6 +147,13 @@ public class DonHangController {
 
     @Autowired
     HoaDonRepository hoaDonRepository;
+    private Double sumMoney = 0.0;
+
+    private UUID idHoaDon = null;
+    private UUID idHoaDonCT = null;
+    private UUID idCTSP = null;
+    @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
 
     @RequestMapping("/don-hang/search-loai-don")
     public String searchLoaiHoaDon(
@@ -113,50 +162,6 @@ public class DonHangController {
             @RequestParam(name = "donHang", required = false) String donHang,
             Model model
     ) {
-//        if (page < 0) {
-//            page = 0;
-//        }
-//        Page<HoaDon> hoaDonPage;
-//        Pageable pageable = PageRequest.of(page, 5);
-//
-//        if (searchLoaiHoaDon.key >= 0) {
-//            hoaDonPage = hoaDonService.searchLoaiHoaDon(searchLoaiHoaDon.key, pageable);
-//            model.addAttribute("page", hoaDonPage);
-//
-//            // Check if donHang is provided and use the corresponding repository method
-//            if ("cho-xac-nhan".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonChoXacNhan(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("chuan-bi".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonChuanBi(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("dang-giao".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonDangGiao(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("hoan-thanh".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonHoanThanh(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("don-da-doi".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonDaTra(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("don-doi".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonTraHang(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("huy".equals(donHang)) {
-//                hoaDonPage = hoaDonRepository.searchLoaiHoaDonDaHuy(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else if ("all".equals(donHang)) {
-//                hoaDonPage = hoaDonService.searchLoaiHoaDon(searchLoaiHoaDon.key, pageable);
-//                model.addAttribute("page", hoaDonPage);
-//            } else {
-//                model.addAttribute("messError", "Không thể tìm kiếm ! Vui lòng xem lại dữ liệu !");
-//            }
-//        }
-//
-//        model.addAttribute("searchForm", new SearchForm());
-////        model.addAttribute("page", hoaDonPage);
-//        model.addAttribute("view", "../don-hang/listdh.jsp");
-//        return "/admin/index";
 
         //1
         if (page < 0) {
@@ -164,78 +169,26 @@ public class DonHangController {
         }
         Page<HoaDon> hoaDonPage;
         Pageable pageable = PageRequest.of(page, 50);
-        model.addAttribute("donHang","search-loai-don");
+        model.addAttribute("donHang", "search-loai-don");
 
         if (searchLoaiHoaDon.key >= 0) {
             hoaDonPage = hoaDonService.searchLoaiHoaDon(searchLoaiHoaDon.key, pageable);
             model.addAttribute("page", hoaDonPage);
 
-            if (donHang != null && !donHang.isEmpty()) {
-                hoaDonPage = searchByDonHang(donHang, searchLoaiHoaDon.key, pageable);
-                model.addAttribute("page", hoaDonPage);
-            }
+//            if (donHang != null && !donHang.isEmpty()) {
+            hoaDonPage = searchByDonHang(donHang, searchLoaiHoaDon.key, pageable);
+            model.addAttribute("page", hoaDonPage);
+//            }
         }
 
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("view", "../don-hang/listdh.jsp");
         return "/admin/index";
 
-//        if (page < 0) {
-//            page = 0;
-//        }
-//
-//        Page<HoaDon> hoaDonPage;
-//        Pageable pageable = PageRequest.of(page, 5);
-//
-//        if (donHang != null && !donHang.isEmpty()) {
-//            switch (donHang) {
-//                case "cho-xac-nhan":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonChoXacNhan(searchLoaiHoaDon.key, pageable);
-//                    break;
-//                case "chuan-bi":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonChuanBi(searchLoaiHoaDon.key, pageable);
-//                    break;
-//                case "dang-giao":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonDangGiao(searchLoaiHoaDon.key, pageable);
-//                    break;
-//                case "hoan-thanh":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonHoanThanh(searchLoaiHoaDon.key, pageable);
-//                    break;
-//                case "don-da-doi":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonDaTra(searchLoaiHoaDon.key, pageable);
-//
-//                    break;
-//                case "don-doi":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonTraHang(searchLoaiHoaDon.key, pageable);
-//
-//                    break;
-//                case "huy":
-//                    hoaDonPage = hoaDonRepository.searchLoaiHoaDonDaHuy(searchLoaiHoaDon.key, pageable);
-//                    break;
-//                case "all":
-//                    hoaDonPage = hoaDonService.searchLoaiHoaDon(searchLoaiHoaDon.key, pageable);
-//
-//                    break;
-//                // Thêm các trường hợp khác tương ứng với loại hoá đơn của bạn
-//                default:
-//                    hoaDonPage = hoaDonService.searchLoaiHoaDon(-1, pageable); // Mặc định nếu không có loại hoá đơn
-//
-//                    break;
-//            }
-//        } else {
-//            hoaDonPage = hoaDonService.searchLoaiHoaDon(-1, pageable); // Mặc định nếu không có loại hoá đơn
-//            model.addAttribute("messError", "Không thể tìm kiếm ! Vui lòng xem lại dữ liệu !");
-//        }
-
-//        model.addAttribute("page", hoaDonPage);
-//        model.addAttribute("searchForm", new SearchForm());
-//        model.addAttribute("view", "../don-hang/listdh.jsp");
-//        return "/admin/index";
-
 
     }
 
-        private Page<HoaDon> searchByDonHang(String donHang, Integer loaiDonId, Pageable pageable) {
+    private Page<HoaDon> searchByDonHang(String donHang, Integer loaiDonId, Pageable pageable) {
         switch (donHang) {
             case "cho-xac-nhan":
                 return hoaDonRepository.searchLoaiHoaDonChoXacNhan(loaiDonId, pageable);
@@ -257,6 +210,7 @@ public class DonHangController {
                 return new PageImpl<>(Collections.emptyList());
         }
     }
+
     @GetMapping("/don-hang/exportExcel")
     public void exportToExcel(HttpServletResponse response) throws Exception {
         response.setContentType("application/octet-stream");
@@ -283,7 +237,7 @@ public class DonHangController {
         String donHang = "all";
         model.addAttribute("donHang", donHang);
 
-        Page<HoaDon> list = hoaDonRepository.findAll(pageable);
+        Page<HoaDon> list = hoaDonRepository.findAllDonHang(pageable);
         model.addAttribute("page", list);
 
         model.addAttribute("view", "../don-hang/listdh.jsp");
@@ -423,42 +377,52 @@ public class DonHangController {
     }
 
     // 16.11
-    @RequestMapping(value = "/don-hang/searchDate")
-    public String searchDate(Model model,
-                             @RequestParam(defaultValue = "0", name = "p") int page,
-                             @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
+
+    @RequestMapping(value = "/don-hang/search-don-hang")
+    public String searchDonHang(Model model,
+                                @RequestParam(defaultValue = "0", name = "p") int page,
+                                @RequestParam(name = "donHang", required = false) String donHang,
+                                @ModelAttribute("searchForm") DonHangController.SearchForm searchForm
     ) {
         Pageable pageable = PageRequest.of(page, 50);
+//        if (donHang == null) {
+//            donHang = ""; // or set it to a default value
+//        }
+
         if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.fromDate.equals(searchForm.toDate)) {
             LocalDate localEndDate = searchForm.toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             localEndDate = localEndDate.plusDays(1);
             searchForm.toDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
-        model.addAttribute("donHang","searchDate");
-        Page<HoaDon> listS = this.hoaDonService.searchALlBetweenDates(searchForm.fromDate, searchForm.toDate, pageable);
-        model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
-        model.addAttribute("searchForm", new HoaDonController.SearchForm());
+        Page<HoaDon> listS = null;
+        if (donHang.equals("cho-xac-nhan")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 1, searchForm.keyword, pageable);
+
+        } else if (donHang.equals("chuan-bi")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 2, searchForm.keyword, pageable);
+
+        } else if (donHang.equals("don-da-doi")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 7, searchForm.keyword, pageable);
+
+        } else if (donHang.equals("don-doi")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 6, searchForm.keyword, pageable);
+
+        } else if (donHang.equals("dang-giao")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 4, searchForm.keyword, pageable);
+
+        } else if (donHang.equals("huy")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 8, searchForm.keyword, pageable);
+
+        } else if (donHang.equals("hoan-thanh")) {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, 5, searchForm.keyword, pageable);
+
+        } else if (donHang.equals(" ")) {
+            model.addAttribute("mess", "VHiện không có đơn hàng. Vui lòng thử lại !");
+        } else {
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDon(searchForm.fromDate, searchForm.toDate, searchForm.keyword, pageable);
+        }
         model.addAttribute("page", listS);
-        Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
-        model.addAttribute("listChoXacNhan", donHangCho);
 
-        Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
-        model.addAttribute("listHuy", pageDonDaHuy);
-
-        Page<HoaDon> pageChuanBi = hoaDonRepository.donHangDangChuanBi(pageable);
-        model.addAttribute("listChuanBi", pageChuanBi);
-
-        Page<HoaDon> donDangGiao = hoaDonRepository.donHangDangGiao(pageable);
-        model.addAttribute("listDonGiao", donDangGiao);
-
-        Page<HoaDon> donHoanThanh = hoaDonRepository.donHangHoanThanh(pageable);
-        model.addAttribute("listHoanThanh", donHoanThanh);
-
-        Page<HoaDon> donTra = hoaDonRepository.donHangTra(pageable);
-        model.addAttribute("listDonTra", donTra);
-
-        Page<HoaDon> donDaTra = hoaDonRepository.donHangDaTra(pageable);
-        model.addAttribute("listDonDaTra", donDaTra);
 
         model.addAttribute("view", "../don-hang/listdh.jsp");
         return "/admin/index";
@@ -525,6 +489,7 @@ public class DonHangController {
     @RequestMapping("/don-hang/huy-don-hang/{id}")
     public String huyDonHang(Model model, @ModelAttribute("hoaDon") HoaDon hoaDon,
                              @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
+                             @RequestParam(value = "ghiChu", required = false) String ghiChu,
                              @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
         Pageable pageable = PageRequest.of(p, 5);
@@ -532,16 +497,24 @@ public class DonHangController {
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
         model.addAttribute("page", pageDonDaHuy);
-        HoaDon hoaDonDB = hoaDonService.getOne(id);
-        if (hoaDonDB != null) {
-            hoaDonService.updateHoaDon(id, 8, hoaDonDB);
-        }
-        System.out.println("Đơn hàng  cập nhật được trạng thái");
 
+        if (ghiChu != null && !ghiChu.trim().isEmpty()) {
+
+            HoaDon hoaDonDB = hoaDonService.getOne(id);
+            if (hoaDonDB != null) {
+                hoaDonService.updateHoaDon(id, 8, hoaDonDB);
+                hoaDonDB.setGhiChu(ghiChu);
+                hoaDonRepository.save(hoaDonDB);
+            }
+            return "redirect:/don-hang/list-huy";
+        } else {
+            model.addAttribute("errorGhiChu", "Vui lòng nhập ghi chú trước khi huỷ!");
+            return "/don-hang/list-huy";
+        }
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
 //        return "redirect:/don-hang/xem-don-hang/" + id;
-        return "redirect:/don-hang/list-huy";
+//        return "redirect:/don-hang/list-huy";
 
     }
 
@@ -590,21 +563,29 @@ public class DonHangController {
     @RequestMapping("/don-hang/xac-nhan-giao/{id}")
     public String giaoDVVC(Model model, @ModelAttribute("hoaDon") HoaDon hoaDon,
                            @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
+                           @RequestParam(value = "ghiChu", required = false) String ghiChu,
                            @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
         Pageable pageable = PageRequest.of(p, 5);
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
-        if (hoaDonDB != null) {
-            hoaDonService.updateHoaDon(id, 5, hoaDonDB);
+        if (ghiChu != null && !ghiChu.trim().isEmpty()) {
+            if (hoaDonDB != null) {
+                hoaDonService.updateHoaDon(id, 5, hoaDonDB);
+                hoaDonDB.setGhiChu(ghiChu);
+                hoaDonRepository.save(hoaDonDB);
+            }
+            return "redirect:/don-hang/list-hoan-thanh";
+
+        } else {
+            model.addAttribute("errorGhiChu", "Vui lòng nhập ghi chú trước khi xác nhận giao hàng!");
+            return "/don-hang/list-hoan-thanh";
+
         }
-        System.out.println("Đơn hàng không cập nhật được trạng thái");
 //        model.addAttribute("view", "../don-hang/listdh.jsp");
 //        return "/admin/index";
 //        return "redirect:/don-hang/xem-don-hang/" + id;
-        return "redirect:/don-hang/list-hoan-thanh";
-
     }
 
     @RequestMapping("/don-hang/da-doi-hang/{id}")
@@ -627,14 +608,83 @@ public class DonHangController {
 
     }
 
+
     //view chờ xác nhận . (xem đơn hàng)
     @GetMapping("/don-hang/xem-don-hang/{id}")
     public String donHangView(@PathVariable UUID id, Model model) {
         HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
         model.addAttribute("hoaDon", hoaDon);
+        idHoaDon = hoaDon.getId();
+        List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+        sumMoney = hoaDonChiTietService.getTotalMoney(list);
+        model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("view", "../don-hang/xem-don-hang.jsp");
         return "/admin/index";
     }
+//23
 
+
+    @RequestMapping("/don-hang/add-don-hang/{id}")
+    public String themSanPham(Model model, @PathVariable("id") UUID id) {
+        HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+        HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
+//        if (idHoaDon == null) {
+//            return "redirect:/bumblebee/ban-hang-tai-quay/sell";
+//        }
+        this.idCTSP = id;
+        model.addAttribute("sumMoney", sumMoney);
+        ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
+        HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
+
+        if (sanPhamInHDCT != null) {
+            Integer soLuong = sp.getSoLuong() - 1;
+            chiTietSanPhamService.updateSoLuongTon(id, soLuong);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
+        } else {
+            hoaDonChiTiet.setHoaDon(hoaDon);
+            hoaDonChiTiet.setChiTietSanPham(sp);
+            hoaDonChiTiet.setSoLuong(1);
+            hoaDonChiTiet.setDonGia(sp.getGiaBan());
+            hoaDonChiTiet.setTrangThai(2);
+            if (sp.getCtkm() != null) {
+                Double donGiaKhiGiam = hoaDonChiTietService.getDonGiaKhiGiam(sp.getCtkm());
+                hoaDonChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+            } else {
+                hoaDonChiTiet.setDonGiaKhiGiam(0.0);
+            }
+            Integer soLuong = sp.getSoLuong() - 1;
+            chiTietSanPhamService.updateSoLuongTon(id, soLuong);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+        }
+        return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
+    }
+
+    //update-cart
+    @RequestMapping("/don-hang/update-cart/{id}")
+    public String updateSLGioHang(@PathVariable("id") UUID id, int soLuong) {
+
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
+        Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
+        if (soLuong > soLuongTon) {
+            hoaDonChiTiet.setSoLuong(soLuongTon);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), 0);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
+        }
+        if (soLuong <= 0) {
+            hoaDonChiTiet.setSoLuong(1);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - 1);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
+        }
+        if (hoaDonChiTiet != null) {
+            hoaDonChiTiet.setSoLuong(soLuong);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - soLuong);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+        }
+        return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
+    }
 
 }

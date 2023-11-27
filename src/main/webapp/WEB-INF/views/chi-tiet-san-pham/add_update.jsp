@@ -20,7 +20,7 @@
 
     #but {
         background-color: #1492AE;
-        border-radius: 0;
+        border-radius: 30px;
         border: none;
         width: 100px;
     }
@@ -35,20 +35,10 @@
         float: left;
     }
 
-    .ite {
-        float: left;
-    }
-
-
     .inp input {
         border: none;
         width: 280px;
         border-radius: 15px;
-    }
-
-    .right {
-        width: 27%;
-        margin-right: 150px;
     }
 
     .form {
@@ -66,7 +56,7 @@
     }
 
 
-    .item-right select {
+    .col-lg-6 select {
         height: 30px;
         margin-top: 20px;
         width: 150px;
@@ -74,19 +64,23 @@
 
     }
 
+    .form-label {
+        padding-left: 30px;
+    }
 </style>
 <div class="container-sm">
 
     <h2 style="text-align: center;padding-top: 20px;margin-bottom: 20px">Thêm/Sửa Chi Tiết Sản Phẩm</h2>
     <form:form action="${action}" modelAttribute="sanpham" cssClass="text-center" enctype="multipart/form-data">
         <form:input path="id" class="form-control" type="hidden"/>
-        <div class="form">
-            <div class="left">
+        <div class="row">
+            <div class="col-lg-6 ">
                 <div class="item inp">
                     <label class="form-label">Tên sản phẩm: </label>
-                    <form:input path="sanPham" class="form-control" type="hidden"/>
+                    <form:input path="sanPham" class="form-control" cssStyle="margin-left: 12px" type="hidden"/>
 
-                    <form:input path="sanPham.tenSanPham" value="${tensp}" readonly="true"/>
+                    <form:input path="sanPham.tenSanPham" value="${tensp}" cssStyle="margin-left: 12px"
+                                readonly="true"/>
                 </div>
                 <div class="item inp">
                     <label class="form-label">Giá Bán: </label>
@@ -109,21 +103,21 @@
                 <div class="item form-check-inline">
                     <label class="form-label">Trạng Thái</label>
                     <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"
-                                       cssStyle="margin-right: 15px;margin-left: 20px;"/>
+                                       cssStyle="margin-right: 15px;margin-left: 35px;"/>
                     <form:errors path="trangThai" cssStyle="color: crimson"/>
                 </div>
             </div>
-            <div class="right ">
+            <div class="col-lg-6 ">
                 <div class="item-right">
-                    <label class="form-label">Loại giầy: </label>
+                    <label class="form-label" cssStyle="margin-right: 15px;margin-left: 35px;">Loại giầy: </label>
                     <form:select type="text" id="searchName10" path="loaiGiay">
                         <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
-                    <span> <form:errors path="loaiGiay" cssStyle="color: crimson"/></span>
+
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                             class="bi bi-plus-circle-fill"></i></a>
-
+                    <div><form:errors path="loaiGiay" cssStyle="color: crimson"/></div>
                 </div>
 
                 <div class="item-right">
@@ -132,9 +126,10 @@
                         <form:option value="">Chọn kích cỡ</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                     </form:select>
-                    <span> <form:errors path="kichCo" cssStyle="color: crimson"/></span>
+
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
                             class="bi bi-plus-circle-fill"></i></a>
+                    <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
                 </div>
                 <div class="item-right">
                     <label class="form-label">Màu sắc: </label>
@@ -142,9 +137,10 @@
                         <form:option value="">Chọn màu sắc</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                     </form:select>
-                    <span> <form:errors path="mauSac" cssStyle="color: crimson"/></span>
+
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
                             class="bi bi-plus-circle-fill"></i></a>
+                    <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
 
                 </div>
                 <div class="item-right">
@@ -153,9 +149,10 @@
                         <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
-                    <span> <form:errors path="chatLieu" cssStyle="color: crimson"/></span>
+
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal4"><i
                             class="bi bi-plus-circle-fill"></i></a>
+                    <div><form:errors path="chatLieu" cssStyle="color: crimson"/></div>
                 </div>
                 <div class="item-right">
                     <label class="form-label">Đế giầy: </label>
@@ -163,16 +160,20 @@
                         <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
-                    <span> <form:errors path="deGiay" cssStyle="color: crimson"/></span>
+
 
                     <a data-bs-toggle="modal" data-bs-target="#exampleModal5"><i
                             class="bi bi-plus-circle-fill"></i></a>
+                    <div><form:errors path="deGiay" cssStyle="color: crimson"/></div>
                 </div>
             </div>
         </div>
+
+        <%--    22                onclick="return confirm('Bạn có chắc muốn thực hiện ?');"--%>
+
         <div class="text-center" style="padding-bottom: 20px">
             <button type="submit" id="but" class="btn btn-success"
-                    onclick="return confirm('Bạn có chắc muốn thực hiện ?');">
+                    onclick="submitForm()">
                 Submit
             </button>
         </div>
@@ -193,29 +194,33 @@
                         <div class="input" style="">
                             <p>Mã:</p>
                             <form:input path="ma" class="form-control"/>
-                            <div style="color: red" id="errorMa"></div>
+                            <div id="ma-error4" style="color: crimson;"></div>
+                            <div id="duplicate4-error4-ma" style="color: crimson;"></div>
                         </div>
                         <form:errors path="ma"/>
-                        <div style="margin-left: 10px;color: red">${errorMa}</div>
                         <div class="input">
                             <p>Loại giày:</p>
                             <form:input path="tentheloai" class="form-control"/>
 
                         </div>
                         <form:errors path="tentheloai" id="tentheloai "/>
-                        <div style="margin-left: 10px;color: red">${errorTen}</div>
+                        <div id="tentheloai-error4" style="color: crimson;"></div>
+                        <div id="duplicate4-error4-tentheloai" style="color: crimson;"></div>
+                        <br>
+
                         <div class="mb-3 form-check-inline ">
-                            <label class="form-label">Trạng Thái</label>
+                            <label>Trạng Thái</label>
                             <form:radiobuttons items="${dsTrangThai}" path="trangthai"
                                                class="form-check-input"/>
                             <form:errors path="trangthai" id="trangthai" cssStyle="color: crimson"/>
+                            <div id="trangthai-error4" style="color: crimson;"></div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
-                        <button id="submitButton" type="button" class="btn btn-primary">
+                        <button onclick="submitFormLoaiGiay()" type="button" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
@@ -224,39 +229,7 @@
 
         </div>
     </div>
-    <%--    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
-    <%--        <div class="modal-dialog">--%>
-    <%--            <div class="modal-content">--%>
-    <%--                <form:form modelAttribute="lg" method="post" action="${action4}">--%>
-    <%--                    <div class="modal-header">--%>
-    <%--                        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Loại Giầy</h1>--%>
-    <%--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-    <%--                    </div>--%>
-    <%--                    <div class="modal-body">--%>
-    <%--                        <div class="input" style="">--%>
-    <%--                            <p>Mã:</p>--%>
-    <%--                            <form:input path="ma" class="form-control"/>--%>
-    <%--                            <div style="color: red" id="errorMa"></div>--%>
-    <%--                        </div>--%>
-    <%--                        <div class="input">--%>
-    <%--                            <p>Loại giày:</p>--%>
-    <%--                            <form:input path="tentheloai" class="form-control"/>--%>
-    <%--                            <div style="color: red" id="errorTen"></div>--%>
-    <%--                        </div>--%>
-    <%--                        <div class="mb-3 form-check-inline">--%>
-    <%--                            <label class="form-label">Trạng Thái</label>--%>
-    <%--                            <form:radiobuttons items="${dsTrangThai}" path="trangthai" class="form-check-input"/>--%>
-    <%--                            <div style="color: crimson" id="errorTrangThai"></div>--%>
-    <%--                        </div>--%>
-    <%--                    </div>--%>
-    <%--                    <div class="modal-footer">--%>
-    <%--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--%>
-    <%--                        <button type="submit" class="btn btn-primary">Submit</button>--%>
-    <%--                    </div>--%>
-    <%--                </form:form>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
+
     <%--    modal2--%>
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -271,33 +244,39 @@
                 <div class="modal-body">
                         <%--                    <form:input path="id" class="form-control" type="hidden"/>--%>
                     <div class="mb-3">
-                        <label class="form-label">Mã Kích Cỡ: </label>
+                        <label>Mã Kích Cỡ: </label>
 
                         <form:input path="maKichCo" class="form-control"/>
                         <span id="maKichCoError" class="text-danger"></span>
                         <form:errors path="maKichCo" cssStyle="color: crimson"/>
+                        <div id="maKichCo-error3" style="color: crimson;"></div>
+                        <div id="duplicate3-error3-maKichCo" style="color: crimson;"></div>
                     </div>
-                    <div class="mb-3 form-check-inline">
-                        <label class="form-label">Giới Tính</label>
-                        <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>
-                        <form:errors path="gioiTinh" cssStyle="color: crimson"/>
-                    </div>
+                        <%--                    <div class="mb-3 form-check-inline">--%>
+                        <%--                        <label class="form-label">Giới Tính</label>--%>
+                        <%--                        <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>--%>
+                        <%--                        <form:errors path="gioiTinh" cssStyle="color: crimson"/>--%>
+                        <%--                    </div>--%>
                     <div class="mb-3">
-                        <label class="form-label">Size</label>
+                        <label>Size</label>
                         <form:input path="size" class="form-control"/>
                         <form:errors path="size" cssStyle="color: crimson"/>
+                        <div id="size-error3" style="color: crimson;"></div>
+                        <div id="duplicate3-error3-size" style="color: crimson;"></div>
                     </div>
 
                     <div class="mb-3 form-check-inline">
-                        <label class="form-label">Trạng Thái</label>
+                        <label>Trạng Thái</label>
                         <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"/>
                         <form:errors path="trangThai" cssStyle="color: crimson"/>
+                        <div id="trangThai-error3" style="color: crimson;"></div>
+
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="button" onclick="submitFormKichCo();" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
@@ -323,17 +302,23 @@
                             <label> Mã</label>
                             <form:input class="form-control" path="ma"/>
                             <form:errors path="ma"/>
+                            <div id="ma-error2" style="color: crimson;"></div>
+                            <div id="duplicate2" style="color: crimson;"></div>
                         </div>
                         <br>
                         <div class="mb-3">
                             <label> Tên</label>
                             <form:input class="form-control" path="ten"/>
                             <form:errors path="ten"/>
+                            <div id="ten-error2" style="color: crimson;"></div>
+                            <div id="duplicate2-error2-ten" style="color: crimson;"></div>
                         </div>
                         <div class="mb-3 form-check-inline ">
-                            <label class="form-label">Trạng Thái</label>
+                            <label>Trạng Thái</label>
                             <form:radiobuttons items="${dsTrangThai}" path="tt" class="form-check-input"/>
                             <form:errors path="tt" cssStyle="color: crimson"/>
+                            <div id="tt-error2" style="color: crimson;"></div>
+
                         </div>
 
                     </div>
@@ -341,7 +326,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="button" onclick="submitFormMauSac()" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
@@ -365,23 +350,31 @@
                             <label>Mã</label>
                             <form:input path="ma" class="form-control"/> <br/>
                             <form:errors path="ma" cssStyle="color: red"/>
+                            <div id="ma-error1" style="color: crimson;"></div>
+                            <div id="duplicate1" style="color: crimson;"></div>
+
                         </div>
                         <div id="ten">
                             <label>Tên</label>
                             <form:input path="ten" class="form-control"/> <br/>
                             <form:errors path="ten" cssStyle="color: red"/>
+                            <div id="ten-error1" style="color: crimson;"></div>
+                            <div id="duplicate1-error-ten" style="color: crimson;"></div>
+
                         </div>
                         <div id="tt" class="form-check-inline">
                             <label>Trạng Thái</label>
                             <form:radiobutton class="form-check-input" path="trangThai" value="1"
                                               checked="true"/>HĐ
                             <form:radiobutton class="form-check-input" path="trangThai" value="0"/>Ngưng HĐ
+                            <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
+                            <div id="trangThai-error1" style="color: crimson;"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="button" onclick="submitFormChatLieu()" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
@@ -430,13 +423,8 @@
                     </div>
 
                     <div class="modal-footer">
-                            <%--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close--%>
-                            <%--                        </button>--%>
-                            <%--                        <button type="submit" class="btn btn-primary">--%>
-                            <%--                            Submit--%>
-                            <%--                        </button>--%>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="submitFormDeGiay()">Submit</button>
                     </div>
                     </form:form>
                 </div>
@@ -446,7 +434,46 @@
     </div>
 </div>
 <script>
-    function submitForm() {
+    function clearErrors() {
+        $("#error-message").empty();
+        $("div[id$='-error']").empty();
+        $("#duplicate-error").empty();
+        $("#ma-error").empty();
+        $("#trangThai-error").empty();
+        $("#loaiDe-error").empty();
+        $("#ten").empty();
+        $("#duplicate-error-loaiDe").empty();
+        $("#error-message").empty();
+        $("div[id$='-error1']").empty();
+        $("#duplicate1").empty();
+        $("#ma-error1").empty();
+        $("#ten-error1").empty();
+        $("#trangThai-error1").empty();
+        $("#duplicate1-error-ten").empty();
+        $("#error-message").empty();
+        $("div[id$='-error2']").empty();
+        $("#duplicate2").empty();
+        $("#ma-error2").empty();
+        $("#ten-error2").empty();
+        $("#tt-error2").empty();
+        $("#duplicate2-error-ten").empty();
+        $("#error-message").empty();
+        $("div[id$='-error3']").empty();
+        $("#duplicate3").empty();
+        $("#trangThai-error3").empty();
+        $("#maKichCo-error3").empty();
+        $("#size-error3").empty();
+        $("#duplicate3-error3-size").empty();
+        $("#duplicate3-error3-maKichCo").empty();
+        $("#error-message").empty();
+        $("div[id$='-error4']").empty();
+        $("#ma-error4").empty();
+        $("#tentheloai-error4").empty();
+        $("#duplicate4-error4-tentheloai").empty
+    }
+
+    //de giay
+    function submitFormDeGiay() {
         var formData = $("#deGiayForm").serialize();
         $.ajax({
             type: "POST",
@@ -459,7 +486,7 @@
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     $('#exampleModal5').on('hidden.bs.modal', function (e) {
-                        // Lấy đối tượng form trong modal và gọi phương thức reset()
+                        clearErrors();
                         $('#deGiayForm')[0].reset();
                     });
                     Swal.fire({
@@ -483,7 +510,11 @@
         // Xóa thông báo lỗi cũ
         $("#error-message").empty();
         $("div[id$='-error']").empty();
-        $("#duplicate-error-ma").empty();
+        $("#duplicate-error").empty();
+        $("#ma-error").empty();
+        $("#trangThai-error").empty();
+        $("#loaiDe-error").empty();
+        $("#ten").empty();
         $("#duplicate-error-loaiDe").empty();
 
         errors.forEach(function (error) {
@@ -497,63 +528,279 @@
             $("#" + fieldName + "-error").append('<div style="color: crimson;">' + errorMessage + '</div>');
         });
 
+
         if (response.status === "error" && response.field === "ma") {
-            $("#duplicate-error-ma").append('<div style="color: crimson;">' + response.message + '</div>');
+            $("#duplicate-error").append('<div style="color: crimson;">' + response.message + '</div>');
         }
         if (response.status === "error" && response.field === "loaiDe") {
             $("#duplicate-error-loaiDe").append('<div style="color: crimson;">' + response.message + '</div>');
         }
     }
-    <%--function submitForm() {--%>
-    <%--    var formData = $("#deGiayForm").serialize();--%>
 
-    <%--    $.ajax({--%>
-    <%--        type: "POST",--%>
-    <%--        url: "${action5}",--%>
-    <%--        data: formData,--%>
-    <%--        success: function (response) {--%>
-    <%--            if (response.status === "success") {--%>
-    <%--                // Tắt modal nếu submit thành công--%>
-    <%--                $("#exampleModal5").modal("hide");--%>
-    <%--                $('body').removeClass('modal-open');--%>
-    <%--                $('.modal-backdrop').remove();--%>
-    <%--            } else {--%>
-    <%--                displayErrors(response.errors, response.field);--%>
-    <%--            }--%>
-    <%--        },--%>
-    <%--        error: function () {--%>
-    <%--            console.error("Error submitting form");--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--}--%>
+    // chat lieu
+    function submitFormChatLieu() {
+        var formData = $("#vm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "${action6}",
+            data: formData,
+            success: function (response) {
+                if (response.status === "success") {
+                    // Tắt modal nếu submit thành công
+                    $("#exampleModal4").modal("hide");
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    $('#exampleModal4').on('hidden.bs.modal', function (e) {
+                        clearErrors();
+                        $('#vm')[0].reset();
 
-    <%--function displayErrors(errors, errorField) {--%>
-    <%--    // Xóa thông báo lỗi cũ--%>
-    <%--    $("#error-message").empty();--%>
-    <%--    $("div[id$='-error']").empty();--%>
-    <%--    $("#duplicate-error-ma").empty();--%>
-    <%--    $("#duplicate-error-loaiDe").empty();--%>
+                    });
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your data has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    displayErrorsChatLieu(response.errors);
+                }
+            },
+            error: function () {
+                console.error("Error submitting form");
+            }
+        });
+    }
 
-    <%--    // Hiển thị lỗi tổng quát--%>
-    <%--    errors.forEach(function (error) {--%>
-    <%--        $("#error-message").append('<div style="color: crimson;">' + error + '</div>');--%>
-    <%--    });--%>
+    function displayErrorsChatLieu(errors) {
+        // Xóa thông báo lỗi cũ
+        $("#error-message").empty();
+        $("div[id$='-error1']").empty();
+        $("#duplicate1").empty();
+        $("#ma-error1").empty();
+        $("#ten-error1").empty();
+        $("#trangThai-error1").empty();
+        $("#duplicate1-error-ten").empty();
 
-    <%--    // Hiển thị lỗi cho từng ô nhập liệu--%>
-    <%--    errors.forEach(function (error) {--%>
-    <%--        var fieldName = error.split(":")[0].trim();--%>
-    <%--        var errorMessage = error.split(":")[1].trim();--%>
-    <%--        $("#" + fieldName + "-error").append('<div style="color: crimson;">' + errorMessage + '</div>');--%>
-    <%--    });--%>
+        errors.forEach(function (error1) {
+            $("#error-message").append('<div style="color: crimson;">' + error1 + '</div>');
+        });
 
-    <%--    // Hiển thị thông báo trùng mã hoặc tên--%>
-    <%--    if (errorField === "ma") {--%>
-    <%--        $("#duplicate-error-ma").append('<div style="color: crimson;">' + errors[0] + '</div>');--%>
-    <%--    }--%>
-    <%--    if (errorField === "loaiDe") {--%>
-    <%--        $("#duplicate-error-loaiDe").append('<div style="color: crimson;">' + errors[0] + '</div>');--%>
-    <%--    }--%>
-    <%--}--%>
+        errors.forEach(function (error) {
+            var fieldName1 = error.split(":")[0].trim();
+            var errorMessage1 = error.split(":")[1].trim();
+            $("#" + fieldName1 + "-error1").append('<div style="color: crimson;">' + errorMessage1 + '</div>');
+        });
+
+        if (errors.length > 0) {
+            var response = errors[0]; // Lấy thông báo lỗi đầu tiên để kiểm tra trường và giá trị
+            if (response.status === "error1" && response.field === "ma") {
+                $("#duplicate1").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+            if (response.status === "error1" && response.field === "ten") {
+                $("#duplicate1-error-ten").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+        }
+    }
+
+    //mau sac
+    function submitFormMauSac() {
+        var formData = $("#ms").serialize();
+        $.ajax({
+            type: "POST",
+            url: "${action3}",
+            data: formData,
+            success: function (response) {
+                if (response.status === "success") {
+                    // Tắt modal nếu submit thành công
+                    $("#exampleModal3").modal("hide");
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    $('#exampleModal3').on('hidden.bs.modal', function (e) {
+                        clearErrors();
+                        $('#ms')[0].reset();
+
+                    });
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your data has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    displayErrorsMauSac(response.errors);
+                }
+            },
+            error: function () {
+                console.error("Error submitting form");
+            }
+        });
+    }
+
+    function displayErrorsMauSac(errors) {
+        // Xóa thông báo lỗi cũ
+        $("#error-message").empty();
+        $("div[id$='-error2']").empty();
+        $("#duplicate2").empty();
+        $("#ma-error2").empty();
+        $("#ten-error2").empty();
+        $("#tt-error2").empty();
+        $("#duplicate2-error-ten").empty();
+
+        errors.forEach(function (error2) {
+            $("#error-message").append('<div style="color: crimson;">' + error2 + '</div>');
+        });
+
+        errors.forEach(function (error) {
+            var fieldName2 = error.split(":")[0].trim();
+            var errorMessage2 = error.split(":")[1].trim();
+            $("#" + fieldName2 + "-error2").append('<div style="color: crimson;">' + errorMessage2 + '</div>');
+        });
+
+        if (errors.length > 0) {
+            var response = errors[0]; // Lấy thông báo lỗi đầu tiên để kiểm tra trường và giá trị
+            if (response.status === "error2" && response.field === "ma") {
+                $("#duplicate2-error-ma").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+            if (response.status === "error2" && response.field === "ten") {
+                $("#duplicate2-error-ten").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+        }
+    }
+
+    //kich co
+    function submitFormKichCo() {
+        var formData = $("#kichco").serialize();
+        $.ajax({
+            type: "POST",
+            url: "${action2}",
+            data: formData,
+            success: function (response) {
+                if (response.status === "success") {
+                    // Tắt modal nếu submit thành công
+                    $("#exampleModal2").modal("hide");
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    $('#exampleModal2').on('hidden.bs.modal', function (e) {
+                        clearErrors();
+                        $('#kichco')[0].reset();
+
+                    });
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your data has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    displayErrorsKichCo(response.errors);
+                }
+            },
+            error: function () {
+                console.error("Error submitting form");
+            }
+        });
+    }
+
+    function displayErrorsKichCo(errors) {
+        // Xóa thông báo lỗi cũ
+        $("#error-message").empty();
+        $("div[id$='-error3']").empty();
+        $("#duplicate3").empty();
+        $("#trangThai-error3").empty();
+        $("#maKichCo-error3").empty();
+        $("#size-error3").empty();
+        $("#duplicate3-error3-size").empty();
+        $("#duplicate3-error3-maKichCo").empty();
+
+        errors.forEach(function (error3) {
+            $("#error-message").append('<div style="color: crimson;">' + error3 + '</div>');
+        });
+
+        errors.forEach(function (error3) {
+            var fieldName3 = error3.split(":")[0].trim();
+            var errorMessage3 = error3.split(":")[1].trim();
+            $("#" + fieldName3 + "-error3").append('<div style="color: crimson;">' + errorMessage3 + '</div>');
+        });
+
+        if (errors.length > 0) {
+            var response = errors[0]; // Lấy thông báo lỗi đầu tiên để kiểm tra trường và giá trị
+            if (response.status === "error3" && response.field === "ma") {
+                $("#duplicate3-error3-makichCo").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+            if (response.status === "error3" && response.field === "size") {
+                $("#duplicate3-error3-size").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+        }
+    }
+
+    //loai giay
+    function submitFormLoaiGiay() {
+        var formData = $("#lg").serialize();
+        $.ajax({
+            type: "POST",
+            url: "${action4}",
+            data: formData,
+            success: function (response) {
+                if (response.status === "success") {
+                    // Tắt modal nếu submit thành công
+                    $("#exampleModal").modal("hide");
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    $('#exampleModal').on('hidden.bs.modal', function (e) {
+                        clearErrors();
+                        $('#lg')[0].reset();
+
+                    });
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your data has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    displayErrorsLoaiGiay(response.errors);
+                }
+            },
+            error: function () {
+                console.error("Error submitting form");
+            }
+        });
+    }
+
+    function displayErrorsLoaiGiay(errors) {
+        // Xóa thông báo lỗi cũ
+        $("#error-message").empty();
+        $("div[id$='-error4']").empty();
+        $("#ma-error4").empty();
+        $("#tentheloai-error4").empty();
+        $("#duplicate4-error4-tentheloai").empty();
+        $("#duplicate4-error4-ma").empty();
+
+        errors.forEach(function (error4) {
+            $("#error-message").append('<div style="color: crimson;">' + error4 + '</div>');
+        });
+
+        errors.forEach(function (error4) {
+            var fieldName4 = error4.split(":")[0].trim();
+            var errorMessage4 = error4.split(":")[1].trim();
+            $("#" + fieldName4 + "-error4").append('<div style="color: crimson;">' + errorMessage4 + '</div>');
+        });
+
+        if (errors.length > 0) {
+            var response = errors[0]; // Lấy thông báo lỗi đầu tiên để kiểm tra trường và giá trị
+            if (response.status === "error4" && response.field === "ma") {
+                $("#duplicate4-error4-ma").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+            if (response.status === "error4" && response.field === "tentheloai") {
+                $("#duplicate4-error4-tentheloai").append('<div style="color: crimson;">' + response.message + '</div>');
+            }
+        }
+    }
+
 </script>
 <div class="text-center" style="color: crimson">${mess}</div>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>

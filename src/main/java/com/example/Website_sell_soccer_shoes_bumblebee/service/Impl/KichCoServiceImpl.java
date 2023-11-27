@@ -27,6 +27,16 @@ public class KichCoServiceImpl implements KichCoService {
     }
 
     @Override
+    public KichCo findBySize(Integer size) {
+        return repo.findBySize(size);
+    }
+
+    @Override
+    public KichCo findByMaKichCo(String maKichCo) {
+        return repo.findByMaKichCo(maKichCo);
+    }
+
+    @Override
     public void addKC(KichCo kichCo) {
 
         repo.save(kichCo);
