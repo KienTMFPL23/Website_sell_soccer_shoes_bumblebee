@@ -23,18 +23,18 @@
             <td>${hd.soLuong}</td>
             <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
             <td>
-                <select class="form-control">
-                    <option>---</option>
-                    <option>Đổi sản phẩm</option>
-                    <option>Trả hàng</option>
-                </select>
+                <a id="btnTraHang" href="/bumblebee/don-hang/create-tra-hang/${hd.chiTietSanPham.id}"
+                   class="btn btn-danger"
+                   style="border-radius: 20px; margin-top: 5px;"
+                >Trả hàng
+                </a>
                 <a id="openModalSanPham"
                    onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
                    class="btn btn-primary"
                    type="submit"
                    data-bs-toggle="modal"
-                   data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px"
-                >Chọn sản phẩm
+                   data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px;"
+                >Đổi sản phẩm
                 </a>
                 <div class="modal fade" id="modalSanPham" tabindex="-1"
                      aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -71,7 +71,7 @@
     </tbody>
 </table>
 <hr>
-<strong>Sản phẩm đổi</strong>
+<strong>Sản phẩm đổi trả</strong>
 <table class="table table-bordered" style="margin-top: 10px">
     <thead>
     <tr>
@@ -80,23 +80,52 @@
         <th scope="col"> Kích cỡ</th>
         <th scope="col"> Số lượng</th>
         <th scope="col"> Đơn giá</th>
+        <th scope="col"> Hiện trạng sản phẩm</th>
+        <th scope="col"> Lý do đổi trả</th>
         <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="hd" items="${listSPDoi}">
+    <c:forEach var="dtct" items="${listDoiTraCT}">
         <tr>
-            <td>${hd.sanPham.tenSanPham}</td>
-            <td>${hd.mauSac.ten}</td>
-            <td>${hd.kichCo.size}</td>
-            <td>${hd.soLuong}</td>
-            <td><fmt:formatNumber value="${hd.giaBan}" type="number"/></td>
-            <td><a class="btn btn-success">Đổi sản phẩm</a></td>
+            <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
+            <td>${dtct.chiTietSanPham.mauSac.ten}</td>
+            <td>${dtct.chiTietSanPham.kichCo.size}</td>
+            <td>
+                <form:form method="post" modelAttribute="dtct" action="">
+                    <input type="number" class="form-control"
+                           min="1"
+                           name="soLuong"
+                           value="${dtct.soLuong}"
+                           onblur="this.form.submit()"
+                           style="width:100px;">
+                </form:form>
+
+            </td>
+            <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
+            <td>
+                <select class="form-control">
+                    <option>Sản phẩm đổi</option>
+                    <option>Sản phẩm trả</option>
+                </select>
+            </td>
+            <td>
+                <select class="form-control">
+                    <option>----</option>
+                    <option>Hàng lỗi</option>
+                    <option>Sai kích cỡ</option>
+                    <option>Sai màu sắc</option>
+                    <option>Other</option>
+                </select>
+            </td>
+            <td>
+                <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<a class="btn btn-primary">Đổi hàng</a>
+<a href="/bumblebee/don-hang/xac-nhan-doi" class="btn btn-primary">Đổi hàng</a>
 <a class="btn btn-primary" href="/bumblebee/doi-hang/list">Hủy</a>
 <script
         type="text/javascript"

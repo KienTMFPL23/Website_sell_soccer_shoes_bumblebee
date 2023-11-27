@@ -7,7 +7,7 @@ function showDataSP(id) {
             url: `/bumblebee/don-hang/list-sp/${id}`,
             method: 'GET',
             success: function(response) {
-                console.log('success')
+                console.log(response)
                 populateTable(response);
             },
             error: function() {
@@ -26,35 +26,25 @@ function showDataSP(id) {
                 '<td>' + item.size + '</td>' +
                 '<td>' + item.soLuong + '</td>' +
                 '<td>' + item.giaBan + '</td>' +
-                '<td>' + '<a href="" class="btn btn-primary">Chọn</a>' + '</td>' +
+                '<td>' + "<a href='/bumblebee/don-hang/create-doi-tra/" + item.id + "') class='btn btn-primary'>Chọn</a>" + '</td>' +
                 '</tr>';
             tableBody.append(row);
         });
     }
 }
-// $('#openModalSanPham').on('click', function () {
-//     // Gửi yêu cầu AJAX khi click mở modal
-//     $.ajax({
-//         type: 'GET',
-//         url: `/bumblebee/don-hang/list-sp/${id}`,
-//         success: function (data) {
-//             var tableBody = document.getElementById('tableSanPham');
-//             data.forEach(function (item) {
-//                 var row = tableBody.insertRow();
-//                 var cell1 = row.insertCell(0);
-//                 var cell2 = row.insertCell(1);
-//                 var cell3 = row.insertCell(2);
-//
-//                 cell1.textContent = item.sanPham.tenSanPham;
-//                 cell2.textContent = item.soLuong;
-//                 cell3.textContent = item.mauSac.ten;
-//             });
-//             console.log(data)
-//         },
-//         error: function () {
-//             // Xử lý lỗi nếu có
-//             $('#modalContent').html('Error loading data');
-//         }
-//     });
-// });
+function showButton() {
+    var select = document.getElementById('selectHinhThuc');
+    var btnTraHang = document.getElementById('btnTraHang');
+    var btnDoiSP = document.getElementById('openModalSanPham');
+    if (select.value === '3') {
+        btnDoiSP.style.display = 'none';
+        btnTraHang.style.display = 'none';
+    } if (select.value === '2') {
+        btnTraHang.style.display = 'block';
+        btnDoiSP.style.display = 'none';
+    }else {
+        btnDoiSP.style.display = 'block';
+        btnTraHang.style.display = 'none';
+    }
+}
 

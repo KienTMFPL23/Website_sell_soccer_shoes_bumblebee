@@ -262,6 +262,8 @@
                             <tr class="row1">
                                 <th scope="col" style="background-color: #37517E;color: white">STT</th>
                                 <th scope="col" style="background-color: #37517E;color: white">Tên sản phẩm</th>
+                                <th scope="col" style="background-color: #37517E;color: white">Màu</th>
+                                <th scope="col" style="background-color: #37517E;color: white">Size</th>
                                 <th scope="col" style="background-color: #37517E;color: white">Số lượng</th>
                                 <th scope="col" style="background-color: #37517E;color: white">Đơn giá</th>
                                 <th scope="col" style="background-color: #37517E;color: white">Thành tiền</th>
@@ -274,6 +276,8 @@
                                     <tr style="background-color: #fff">
                                         <td>${i.count}</td>
                                         <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
+                                        <td>${hdct.chiTietSanPham.mauSac.ten}</td>
+                                        <td>${hdct.chiTietSanPham.kichCo.size}</td>
                                         <td>
                                             <input type="number" class="form-control"
                                                    min="1"
@@ -560,8 +564,8 @@
     });
 </script>
 
-<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
+<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
+<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
