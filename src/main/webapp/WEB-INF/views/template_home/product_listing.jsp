@@ -60,7 +60,7 @@
                                             href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
                                     </h6>
                                     <div class="product_price">
-                                        <c:if test="${item.ctkm != null}">
+                                        <c:if test="${not empty item.ctkm}">
                                             <c:forEach var="km" items="${item.ctkm}">
                                                 <c:if test="${km.khuyenMai.donVi == '%'}">
                                                     <label style="color: crimson;font-size: 15px"><fmt:formatNumber

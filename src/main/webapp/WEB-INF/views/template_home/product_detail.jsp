@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <form method="post" id="yourFormId" onsubmit="return submitForm()" action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}">
+                <form method="post">
                     <div class="product_details">
                         <div class="product_details_title">
                             <h2>${ctsp.sanPham.tenSanPham}</h2>
@@ -83,19 +83,22 @@
                                     <c:forEach var="km" items="${ctsp.ctkm}">
                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                             <label>
-                                                <fmt:formatNumber  value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}" type="number"/> đ
+                                                <fmt:formatNumber
+                                                        value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
+                                                        type="number"/> đ
                                             </label>
                                         </c:if>
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                             <label>
-                                                <fmt:formatNumber  value="${ctsp.giaBan - km.khuyenMai.giaTri}" type="number"/> đ
+                                                <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
+                                                                  type="number"/> đ
                                             </label>
                                         </c:if>
-                                        <span><fmt:formatNumber  value="${ctsp.giaBan}" type="number"/> đ</span>
+                                        <span><fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ</span>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty ctsp.ctkm}">
-                                    <fmt:formatNumber  value="${ctsp.giaBan}" type="number"/> đ
+                                    <fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ
                                 </c:if>
                             </div>
                             <div id="spcosan" style="color: #fe4c50;font-weight: bold"></div>
@@ -134,13 +137,14 @@
                             </button>
                             <button class="btn-themgh"
                                     id="addToCartButton"
-                                    type="submit" onclick="return themVaoGioHang()">
+                                    type="submit"
+                                    onclick="return themVaoGioHang()"
+                                    formaction="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${ctsp.id}">
                                 add to cart
                             </button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -211,13 +215,15 @@
                                                         <a
                                                                 class="ps-shoe__overlay"
                                                                 href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
+                                                                src="../../../uploads/${item.hinhAnhs.tenanh}"
+                                                                alt=""></a>
                                                     </div>
                                                     <div class="favorite favorite_left"></div>
                                                     <c:forEach var="km" items="${item.ctkm}">
                                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                                             <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
-                                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span>
+                                                            </div>
                                                         </c:if>
                                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                             <div class="product_bubble product_bubble_left product_bubble_green ">
@@ -228,10 +234,11 @@
                                                     </c:forEach>
                                                     <div class="product_info">
                                                         <h6 class="product_name"><a
-                                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
+                                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}
+                                                            - ${item.mauSac.ten}</a>
                                                         </h6>
                                                         <div class="product_price">
-                                                            <c:if test="${item.ctkm != null}">
+                                                            <c:if test="${not empty item.ctkm}">
                                                                 <c:forEach var="km" items="${item.ctkm}">
                                                                     <c:if test="${km.khuyenMai.donVi == '%'}">
                                                                         <label style="color: crimson;font-size: 15px"><fmt:formatNumber
@@ -251,7 +258,8 @@
                                                             </c:if>
                                                             <c:if test="${empty item.ctkm}">
                                                                 <label>
-                                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                                    <fmt:formatNumber value="${item.giaBan}"
+                                                                                      type="number"/> đ
                                                                 </label>
                                                             </c:if>
                                                         </div>
@@ -299,7 +307,7 @@
             </div>
         </div>
     </div>
-    <div id="toast_warring" style="display:none;">
+    <div id="toast_warring_kich_co" style="display:none;">
         <div class="toast toast__warring">
             <div class="toast__icon">
                 <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
@@ -356,23 +364,6 @@
         </div>
     </div>
 </div>
-<div id="errorKCModal" class="modal" style="width: 400px;margin: 0 auto;top:50%;padding: 1.25rem">
-    <div class="modal-content">
-        <div bis_skin_checked="1" style="font-size: 16px;text-align: center">
-            Vui lòng chọn kích cỡ!
-        </div>
-        <div bis_skin_checked="1" style="display: flex;justify-content: center">
-            <button style="background: black;
-    margin-top: 20px;
-    font-size: 16px;
-    color: white;
-    border: none;
-    width: 120px;
-    height: 30px;;font-size: 16px" type="button" onclick="closeErrorModal()">Đóng
-            </button>
-        </div>
-    </div>
-</div>
 <script src="../../../js_template/single_custom.js"></script>
 <script>
     var error = "${errorSL}";
@@ -406,14 +397,8 @@
     var response2 = null;
 
     function selectSize(kichCo) {
-        var form = document.getElementById("yourFormId");
-        form.onsubmit = function(event) {
-            event.preventDefault(); // Ngăn chặn sự kiện mặc định của form
-        };
         document.getElementById("kichCoInput").value = kichCo;
         console.log(kichCo)
-        document.getElementById("addToCartButton").disabled = false;
-        document.getElementById("muaNgayButton").disabled = false;
         var idMS = "${ctsp.mauSac.id}";
         var idSP = "${ctsp.sanPham.id}";
         var idCTSP = "${ctsp.id}"
@@ -446,9 +431,6 @@
 
     }
 
-    function submitForm() {
-        return true;
-    }
 
     function themVaoGioHang() {
         <c:if test="${userLogged.username == null}">
@@ -460,10 +442,10 @@
         return false;
         </c:if>
         if (selectedOption === null) {
-            var toastElement = document.getElementById("toast_warring");
-            toastElement.style.display = "block";
+            var toastElement1 = document.getElementById("toast_warring_kich_co");
+            toastElement1.style.display = "block";
             setTimeout(function () {
-                toastElement.style.display = "none";
+                toastElement1.style.display = "none";
             }, 1500);
             return false;
         } else {
