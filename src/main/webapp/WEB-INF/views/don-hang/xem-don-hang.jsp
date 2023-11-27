@@ -2,12 +2,27 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link
+        href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+        rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -111,7 +126,6 @@
     }
 
     .col-lg-2 > a {
-        color: black;
         text-decoration: none;
         font-size: 15px;
         padding-left: 15px;
@@ -319,58 +333,60 @@
         <c:if test="${hoaDon.trangThai== 1}">
             <h1 style="color: #2c9faf">Chờ xác nhận <i class="bi bi-calendar-check"></i></h1>
             <hr class="border border-primary border-2 opacity-50">
-            <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"
-               class="btn btn-warning" onclick="return confirm('Chờ xác nhận ?');">Xác nhận</a>
+            <%--            22.11 --%>
+            <%--            <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--               class="btn btn-warning" onclick="return confirm('Chờ xác nhận ?');">Xác nhận</a>--%>
 
-            <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"
-               onclick="return confirm('Bạn có chắc muốn huỷ đơn hàng ?');" style="border-radius: 20px">Huỷ</a>
+            <%--            <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"--%>
+            <%--               onclick="return confirm('Bạn có chắc muốn huỷ đơn hàng ?');" style="border-radius: 20px">Huỷ</a>--%>
         </c:if>
         <%--        trạng thái đang chuẩn bị--%>
         <c:if test="${hoaDon.trangThai== 2 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red">Chuẩn bị <i class="bi bi-box-seam"></i></h1>
             <hr class="border border-primary border-2 opacity-50">
 
-            <a href="/don-hang/update-chuan-bi/${hoaDon.id}" style="border-radius: 20px"
-               class="btn btn-primary" onclick="return confirm('Bạn có chắc muốn giao hàng ?');">Giao hàng</a>
-            <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"
-               style="border-radius: 20px">Huỷ</a>
+            <%--            <a href="/don-hang/update-chuan-bi/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--               class="btn btn-primary" onclick="return confirm('Bạn có chắc muốn giao hàng ?');">Giao hàng</a>--%>
+            <%--            <a href="/don-hang/huy-don-hang/${hoaDon.id}" class="btn btn-danger"--%>
+            <%--               style="border-radius: 20px">Huỷ</a>--%>
         </c:if>
 
         <c:if test="${hoaDon.trangThai== 3 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red"><i class="bi bi-truck"></i> Đã giao cho DVVC</h1>
             <hr class="border border-primary border-2 opacity-50">
 
-            <a href="/don-hang/dang-giao/${hoaDon.id}" style="border-radius: 20px"
-               class="btn btn-success" onclick="return confirm('Xác nhận đã giao cho DVVC ?');">Xác nhận</a>
+            <%--            <a href="/don-hang/dang-giao/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--               class="btn btn-success" onclick="return confirm('Xác nhận đã giao cho DVVC ?');">Xác nhận</a>--%>
         </c:if>
         <c:if test="${hoaDon.trangThai== 4 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red">Đang giao</h1>
-            <a href="/don-hang/xac-nhan-giao/${hoaDon.id}" style="border-radius: 20px"
-               class="btn btn-warning" onclick="return confirm('Xác nhận đang giao?');">Xác nhận</a>
+            <%--            <a href="/don-hang/xac-nhan-giao/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--               class="btn btn-warning" onclick="return confirm('Xác nhận đang giao?');">Xác nhận</a>--%>
         </c:if>
         <c:if test="${hoaDon.trangThai== 5}">
             <h1 style="color: red">Hoàn thành</h1>
             <hr class="border border-primary border-2 opacity-50">
 
-            <a href="/don-hang/tra-hang/${hoaDon.id}" style="border-radius: 20px"
-               class="btn btn-warning" onclick="return confirm('Xác nhận trả hàng ?');">Trả hàng</a>
+            <%--            <a href="/don-hang/tra-hang/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--               class="btn btn-warning" onclick="return confirm('Xác nhận trả hàng ?');">Trả hàng</a>--%>
         </c:if>
         <c:if test="${hoaDon.trangThai== 6}">
             <h1 style="color: red"><img src="../../../img/istockphoto-1707893816-612x612.jpg"
                                         style="width: 60px; height: 60px;"> Trả hàng
             </h1>
             <hr class="border border-primary border-2 opacity-50">
-            <a href="/don-hang/da-tra-hang/${hoaDon.id}" style="border-radius: 20px"
-               class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn trả hàng ?');">Xác nhận</a>
+            <%--            <a href="/don-hang/da-tra-hang/${hoaDon.id}" style="border-radius: 20px"--%>
+            <%--               class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn trả hàng ?');">Xác nhận</a>--%>
         </c:if>
         <c:if test="${hoaDon.trangThai== 7}">
             <h1 style="color: red">Đã trả hàng</h1>
-
+            <hr class="border border-primary border-2 opacity-50">
         </c:if>
         <c:if test="${hoaDon.trangThai== 8}">
             <h1 style="color: red">Đơn hàng đã huỷ</h1>
+            <hr class="border border-primary border-2 opacity-50">
         </c:if>
-        <hr class="border border-secondary border-2 opacity-50">
+        <%--        <hr class="border border-secondary border-2 opacity-50">--%>
         <div class="row">
             <div class="col-10">
                 <h2>Thông tin đơn hàng</h2>
@@ -385,7 +401,7 @@
             </div>
         </div>
 
-        </hr>
+        <%--        </hr>--%>
         <div class="row">
             <div class="col-6">
                 <table>
@@ -527,8 +543,155 @@
     <form:form modelAttribute="hoaDon">
         <%--        <a href="/don-hang/update-xac-nhan/${hoaDon.id}" style="border-radius: 20px"--%>
         <%--           class="btn btn-warning">Cập nhật</a>--%>
+        <div class="row">
+            <div class="col-10">
+                <h2>Thông tin sản phẩm</h2>
+            </div>
+            <div class="col-lg-2">
+                <form>
+                    <!-- Button TIM KIEM -->
 
-        <h2>Thông tin sản phẩm</h2>
+                    <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<5 }">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                style="background-color: #37517E;border: none">
+                            <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+                        </button>
+                    </c:if>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách
+                                        sản
+                                        phẩm</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <table>
+                                        <thead>
+
+                                        </thead>
+                                    </table>
+
+                                    <table class="table" border="1px solid" id="tableModal">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" colspan="2"><input id="myInput"
+                                                                               placeholder="Tìm kiếm sản phẩm">
+                                            </th>
+                                            <th scope="col"></th>
+                                            <th scope="col"><%-- Màu sắc--%>
+                                                <select id="selectMS">
+                                                    <option value="all">Lọc màu sắc</option>
+                                                    <c:forEach items="${listMau}" var="ms">
+                                                        <option>${ms.ten}</option>
+                                                    </c:forEach>
+                                                </select></th>
+                                            <th scope="col"><%-- Chất liệu --%>
+                                                <select id="selectCL">
+                                                    <option value="all">Lọc chất liệu</option>
+                                                    <c:forEach items="${listChatLieu}" var="cl">
+                                                        <option>${cl.ten}</option>
+                                                    </c:forEach>
+                                                </select></th>
+                                            <th scope="col"> <%-- Đế giày--%>
+                                                <select id="selectDG">
+                                                    <option value="all">Lọc đế giày</option>
+                                                    <c:forEach items="${listDeGiay}" var="dg">
+                                                        <option>${dg.loaiDe}</option>
+                                                    </c:forEach>
+                                                </select></th>
+                                            <th scope="col"> <%-- Kích cỡ--%>
+                                                <select id="selectKC">
+                                                    <option value="all">Lọc kích cỡ</option>
+                                                    <c:forEach items="${listKichCo}" var="kc">
+                                                        <option>${kc.size}</option>
+                                                    </c:forEach>
+                                                </select></th>
+                                            <th scope="col"><%-- Loại giày--%>
+                                                <select id="selectLG">
+                                                    <option value="all">Lọc loại giày</option>
+                                                    <c:forEach items="${listLoaiGiay}" var="lg">
+                                                        <option>${lg.tentheloai}</option>
+                                                    </c:forEach>
+                                                </select></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">STT</th>
+                                            <th scope="col">Tên</th>
+                                            <th scope="col">Số lượng</th>
+                                            <th scope="col">Màu sắc</th>
+                                            <th scope="col">Chất liệu</th>
+                                            <th scope="col">Đế giày</th>
+                                            <th scope="col">Kích cỡ</th>
+                                            <th scope="col">Loại giày</th>
+                                            <th scope="col">Giá bán</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="myTable">
+                                        <c:forEach items="${listSanPham}" var="sp" varStatus="i">
+                                            <tr>
+                                                <td>${i.count}</td>
+                                                <td>${sp.sanPham.tenSanPham}</td>
+                                                <td>${sp.soLuong}</td>
+                                                <td>${sp.mauSac.ten}</td>
+                                                <td>${sp.chatLieu.ten}</td>
+                                                <td>${sp.deGiay.loaiDe}</td>
+                                                <td>${sp.kichCo.size}</td>
+                                                <td>${sp.loaiGiay.tentheloai}</td>
+                                                <td>
+
+                                                    <c:if test="${sp.ctkm != null}">
+                                                        <c:forEach items="${sp.ctkm}" var="ctkm">
+                                                            <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                                <fmt:formatNumber>
+                                                                    ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
+                                                                </fmt:formatNumber>
+                                                                <del style="color: crimson;">
+                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                                </del>
+                                                            </c:if>
+                                                            <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                                <fmt:formatNumber>
+                                                                    ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
+                                                                </fmt:formatNumber>
+                                                                <del style="color: crimson;">
+                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                                </del>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                    <c:if test="${empty sp.ctkm}">
+                                                        ${sp.giaBan}
+                                                    </c:if>
+                                                </td>
+                                                <td>
+                                                    <a href="/don-hang/add-don-hang/${sp.id}"
+                                                       class="btn btn-primary">Add</a></td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
         <br>
         <div class="row">
             <table class="table table-striped">
@@ -536,9 +699,9 @@
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Tên Sản Phẩm</th>
-                    <th scope="col">Đơn Giá</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Hình ảnh</th>
+                    <th scope="col">Đơn Giá</th>
                     <th scope="col">Thành Tiền</th>
                 </tr>
                 </thead>
@@ -547,19 +710,77 @@
                     <tr>
                         <th scope="row">${stt.index + 1}</th>
                         <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
+                            <%--                        <td>--%>
+                            <%--                            <fmt:formatNumber value="${hdct.donGia}"--%>
+                            <%--                                              type="number"/>--%>
+                            <%--                        </td>--%>
                         <td>
-                            <fmt:formatNumber value="${hdct.donGia}"
-                                              type="number"/>
+
+                            <c:if test="${hoaDon.loaiHoaDon==0}">
+                                <form:form action="/don-hang/update-cart/${hdct.id}" method="post">
+                                    <input type="number" class="form-control"
+                                                   min="1"
+                                                   name="soLuong"
+                                                   value="${hdct.soLuong}"
+                                                   onblur="this.form.submit()"
+                                                   style="width:100px;">
+                                </form:form>
+                            </c:if>
+
+                            <c:if test="${hoaDon.loaiHoaDon==1}">
+                                ${hdct.soLuong}
+                            </c:if>
                         </td>
-                        <td>${hdct.soLuong}</td>
                         <td>
                             <img src="../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
                                  height="100px"/>
 
                         </td>
                         <td>
-                            <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
-                                              type="number"/>
+                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
+                                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                        <del style="color: crimson; margin-right: 10px;">
+                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                        </del>
+                                        <fmt:formatNumber>
+                                            ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
+                                        </fmt:formatNumber>
+
+                                    </c:if>
+                                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                        <del style="color: crimson; margin-right: 10px;">
+                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                        </del>
+                                        <fmt:formatNumber>
+                                            ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
+                                        </fmt:formatNumber>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${empty hdct.chiTietSanPham.ctkm}">
+                                <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                            </c:if>
+                        </td>
+                        <td>
+                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
+                                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                        <fmt:formatNumber
+                                                value="${hdct.soLuong * (ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan))}"
+                                                type="number"/>
+                                    </c:if>
+                                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                        <fmt:formatNumber
+                                                value="${hdct.soLuong * (ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri)}"
+                                                type="number"/>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${empty hdct.chiTietSanPham.ctkm}">
+                                <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
+                            </c:if>
+
                         </td>
                     </tr>
                 </c:forEach>
@@ -568,7 +789,10 @@
         </div>
         <c:set var="hoaDonId" value="${hoaDon.id}"/>
     </form:form>
-
+    <div>
+        <b style="float: right;margin-right: 20px; font-size: 20px" class="name">Tổng tiền :
+            <fmt:formatNumber value="${sumMoney}" type="number"/> ₫</b>
+    </div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -604,3 +828,89 @@
         });
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script>
+
+    $("#myInput").keyup(function () {
+        var value = $(this).val().toLowerCase();
+        var table = document.getElementById("myTable");
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            table.style.display = "block"
+        });
+
+        $("#searchSPGioHang").keyup(function () {
+            var value = $(this).val().toLowerCase();
+            $("#sanPhamMua tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#selectMS").change(function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+
+            if ("all" == value) {
+                $("#myTable tr").show();
+            }
+        });
+
+        $("#selectCL").change(function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+
+            if ("all" == value) {
+                $("#myTable tr").show();
+            }
+        });
+
+        $("#selectDG").change(function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+
+            if ("all" == value) {
+                $("#myTable tr").show();
+            }
+        });
+
+        $("#selectLG").change(function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+
+            if ("all" == value) {
+                $("#myTable tr").show();
+            }
+        });
+
+        $("#selectKC").change(function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+
+            if ("all" == value) {
+                $("#myTable tr").show();
+            }
+        });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous">
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>

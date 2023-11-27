@@ -13,6 +13,8 @@ import java.util.UUID;
 public interface MauSacReponsitory  extends JpaRepository<MauSac, UUID> {
     @Query("select ms from MauSac  ms where ms .ten=:ten")
     MauSac findByTen(@Param("ten")String ten);
+    @Query("select ms from MauSac  ms where ms .ma=:ma")
+    MauSac findByMa(@Param("ma")String ma);
     @Query("SELECT ms FROM MauSac ms where ms.ten LIKE %?1% or ms.ma like %?1%")
     Page<MauSac> search(String key,Pageable pageable);
     Page<MauSac> findAll(Pageable pageable );

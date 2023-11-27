@@ -7,8 +7,8 @@
     <h1 style="text-align: center">Danh sách hóa đơn đổi hàng</h1>
     <div class="row">
         <div class="col-lg-6">
-            <a href="/bumblebee/doi-hang" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalHoaDon">Đổi
-                hàng</a>
+            <a href="/bumblebee/doi-hang" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalHoaDon">Tạo
+                mới</a>
             <div class="modal fade" id="modalHoaDon" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -34,7 +34,7 @@
                                         <td>${hd.sdt}</td>
                                         <td>${hd.trangThai}</td>
                                         <td>
-                                            <a class="btn btn-danger" href="/bumblebee/don-hang/${hd.maHoaDon}">
+                                            <a class="btn btn-danger" href="/bumblebee/don-hang/tao-doi-tra/${hd.maHoaDon}">
                                                 Chọn
                                             </a>
                                         </td>
@@ -85,25 +85,51 @@
     </div>
     <br>
     <div class="status">
-        <ul class="nav nav-pills nav-fill gap-2 p-1 small  rounded-5 shadow-sm" id="pillNav2" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="pills-choxacnhan-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-choxacnhan" type="button" role="tab" aria-controls="pills-choxacnhan"
-                        aria-selected="false">Chờ xác nhận đổi hàng
-                </button>
+        <ul class="nav justify-content-center bg-gradient-light nav-pills">
+            <li class="nav-item">
+                <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
+                   href="/bumblebee/doi-hang/list">Chờ xác nhận đổi trả
+                    <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="pills-chuanbi-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-chuanbi"
-                        type="button" role="tab" aria-controls="pills-chuanbi" aria-selected="false">Từ chối đổi hàng
-                </button>
+            <li class="nav-item">
+                <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
+                   href="/bumblebee/doi-hang/list-huy">Hủy đổi trả<span
+                        class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-5" id="pills-danggiao-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-danggiao"
-                        type="button" role="tab" aria-controls="pills-danggiao" aria-selected="false">Đổi thành công
-                </button>
+            <li class="nav-item">
+                <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
+                   href="/bumblebee/doi-hang/list-thanh-cong">Đổi trả thành công
+                    <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
         </ul>
+    </div>
+    <br>
+    <div class="content-listDoiTra">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Mã hóa đơn</th>
+                <th scope="col">Nhân viên</th>
+                <th scope="col">Khách hàng</th>
+                <th scope="col">Ngày đổi trả</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <c:forEach varStatus="i" items="${listDoiTra}" var="dt">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${dt.hoaDon.maHoaDon}</td>
+                        <td>${dt.nhanVien.ho} ${dt.nhanVien.tenDem} ${dt.nhanVien.ten}</td>
+                        <td>${dt.khachHang}</td>
+                        <td>${dt.ngayDoiTra}</td>
+                        <td>
+                            <a class="btn btn-success" href="#">Chi tiết</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </div>
 </div>

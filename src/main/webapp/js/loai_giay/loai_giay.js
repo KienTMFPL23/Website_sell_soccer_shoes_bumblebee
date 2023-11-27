@@ -14,7 +14,7 @@ $(document).ready(function () {
             {
                 "data": "trangThai",
                 "render": function (data) {
-                    if (data == 1) {
+                    if (data ==z) {
                         return '<td>Còn hàng</td>'
                     } else {
                         return '<td>Hết hàng</td>'

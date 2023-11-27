@@ -44,4 +44,6 @@ public interface HoaDonChiTietService {
 
     List<HoaDonChiTiet> listHDCTByMaHD(String maHoaDon);
 
+    HoaDonChiTiet getHDCTDoiTra(String maHD,UUID idSP);
+
 }
