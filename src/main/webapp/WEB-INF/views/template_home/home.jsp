@@ -21,27 +21,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>New Arrivals</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center">
-                <div class="col text-center">
-                    <div class="new_arrivals_sorting">
-                        <%--                        <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">--%>
-                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked"--%>
-                        <%--                                data-filter="*">all--%>
-                        <%--                            </li>--%>
-                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
-                        <%--                                data-filter=".women">women's--%>
-                        <%--                            </li>--%>
-                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
-                        <%--                                data-filter=".accessories">accessories--%>
-                        <%--                            </li>--%>
-                        <%--                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center"--%>
-                        <%--                                data-filter=".men">men's--%>
-                        <%--                            </li>--%>
-                        <%--                        </ul>--%>
+                        <h2>All Products</h2>
                     </div>
                 </div>
             </div>
@@ -70,13 +50,13 @@
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                             <div class="product_bubble product_bubble_left product_bubble_green ">
                                                 <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
-                                                                          type="currency"/></span>
+                                                                          type="number"/>đ</span>
                                             </div>
                                         </c:if>
                                     </c:forEach>
                                     <div class="product_info">
                                         <h6 class="product_name"><a
-                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
+                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
                                         </h6>
                                         <div class="product_price">
                                             <c:if test="${item.ctkm != null}">
@@ -84,28 +64,30 @@
                                                     <c:if test="${km.khuyenMai.donVi == '%'}">
                                                         <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                 value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
-                                                                type="number"/>đ</label>
+                                                                type="number"/> đ</label>
                                                         <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                type="number"/></span>
+                                                                                type="number"/> đ</span>
                                                     </c:if>
                                                     <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                         <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                 value="${item.giaBan - km.khuyenMai.giaTri}"
-                                                                type="number"/></label>
+                                                                type="number"/> đ</label>
                                                         <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                type="number"/></span>
+                                                                                type="number"/> đ</span>
+
                                                     </c:if>
                                                 </c:forEach>
                                             </c:if>
                                             <c:if test="${empty item.ctkm}">
                                                 <label>
-                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/>
+
+                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
                                                 </label>
                                             </c:if>
-
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="red_button add_to_cart_button butAddCart">
                                     <button class="addToCartBtn" data-toggle="modal"
                                             data-target="#kichCoModal_${loop.index}"
@@ -166,7 +148,7 @@
                                                 <button class="btn"
                                                         id="btn-themgh_${item.sanPham.id}_${item.mauSac.id}"
                                                         style="font-size:15px;background-color: white; color: black;border: 1px solid black"
-                                                        href="/bumblebee/add-to-cart">Thêm vào giỏ hàng
+                                                        onclick="return themVaoGioHang()">Thêm vào giỏ hàng
                                                 </button>
                                             </div>
                                         </div>
@@ -185,21 +167,21 @@
                 <div class="col-md-4">
                     <div class="banner_item align-items-center" style="background-image: url(../../../img/banner2.jpg)">
                         <div class="banner_category">
-                            <a href="categories.html">women's</a>
+                            <a href="#">women's</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="banner_item align-items-center" style="background-image: url(../../../img/banner3.jpg)">
                         <div class="banner_category">
-                            <a href="categories.html">accessories's</a>
+                            <a href="#">accessories's</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="banner_item align-items-center" style="background-image: url(../../../img/banner4.png)">
                         <div class="banner_category">
-                            <a href="categories.html">men's</a>
+                            <a href="#">men's</a>
                         </div>
                     </div>
                 </div>
@@ -226,22 +208,55 @@
                                         <div class="owl-item active" style="width: 222px;">
                                             <div class="owl-item product_slider_item">
                                                 <div class="product-item">
-                                                    <div class="product discount">
+                                                    <div class="product discount product_filter"
+                                                         style="border-right: 1px solid rgb(233, 233, 233);">
                                                         <div class="product_image">
                                                             <a
                                                                     class="ps-shoe__overlay"
-                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}&kichCo=${item.kichCo.size}"><img
-                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}"
-                                                                    alt=""></a>
+                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
+                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
                                                         </div>
                                                         <div class="favorite favorite_left"></div>
+                                                        <c:forEach var="km" items="${item.ctkm}">
+                                                            <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                                <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
+                                                                    <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                                            </c:if>
+                                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                                <div class="product_bubble product_bubble_left product_bubble_green ">
+                                                <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
+                                                                          type="number"/>đ</span>
+                                                                </div>
+                                                            </c:if>
+                                                        </c:forEach>
                                                         <div class="product_info">
                                                             <h6 class="product_name"><a
-                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
+                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
                                                             </h6>
-                                                            <div class="product_price"><fmt:formatNumber
-                                                                    value="${item.giaBan}"
-                                                                    type="currency"/><span>$590.00</span>
+                                                            <div class="product_price">
+                                                                <c:if test="${not empty item.ctkm}">
+                                                                    <c:forEach var="km" items="${item.ctkm}">
+                                                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                                            <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                                    value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
+                                                                                    type="number"/> đ</label>
+                                                                            <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                                    type="number"/> đ</span>
+                                                                        </c:if>
+                                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                                            <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                                    value="${item.giaBan - km.khuyenMai.giaTri}"
+                                                                                    type="number"/> đ</label>
+                                                                            <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                                    type="number"/> đ</span>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </c:if>
+                                                                <c:if test="${empty item.ctkm}">
+                                                                    <label>
+                                                                        <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                                    </label>
+                                                                </c:if>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -271,10 +286,38 @@
             </div>
         </div>
     </div>
+    <div id="toast_warring_login" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Bạn cần đăng nhập để tiếp tục</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+    function themVaoGioHang() {
+        <c:if test="${userLogged.username == null}">
+        var toastElement = document.getElementById("toast_warring_login");
+        toastElement.style.display = "block";
+        setTimeout(function () {
+            toastElement.style.display = "none";
+        }, 1500);
+        return false;
+        </c:if>
+        return true;
+    }
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");
@@ -301,7 +344,6 @@
     var response = null;
 
     function selectSize(idsp, idms) {
-        console.log("aa")
         var kichCo = document.getElementById("kichCoSelect_" + idsp + "_" + idms).value;
         var idMS = idms;
         var idSP = idsp;

@@ -17,6 +17,10 @@ public interface HoaDonService {
 
     Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable);
 
+    Page<HoaDon> searchHDByNgayTaoAndLoaiDon(Date fromDate, Date toDate,Integer keyword, Pageable pageable);
+
+    Page<HoaDon> searchHDByNgayTaoAndLoaiDonTT(Date fromDate, Date toDate, Integer key,Integer trangThai, Pageable pageable);
+
     List<HoaDon> findAll();
 
     List<HoaDon> listHoaDonCho();
@@ -90,4 +94,5 @@ public interface HoaDonService {
 
     Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
 
+    List<HoaDon> danhSachHDDuDK();
 }

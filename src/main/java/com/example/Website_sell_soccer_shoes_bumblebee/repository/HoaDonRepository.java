@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
+import lombok.val;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +26,13 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     //    @Query("select hd from HoaDon hd where (?1 IS NULL OR hd.ngayTao >= ?1) AND (?2 IS NULL OR hd.ngayTao < ?2)")
 //    Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable);
     @Query("SELECT hd FROM HoaDon hd WHERE hd.ngayTao >= ?1 AND hd.ngayTao < ?2")
-    Page<HoaDon> searchALlBetweenDates( Date startDate, Date endDate, Pageable pageable);
+    Page<HoaDon> searchALlBetweenDates(Date startDate, Date endDate, Pageable pageable);
+// 20.11
+    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) order by h.ngayTao desc ")
+    Page<HoaDon> searchHDByNgayTaoAndLoaiDon(Date fromDate, Date toDate, Integer key, Pageable pageable);
+
+    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and (?4 is null or h.trangThai=?4) order by h.ngayTao desc ")
+    Page<HoaDon> searchHDByNgayTaoAndLoaiDonTT(Date fromDate, Date toDate, Integer key,Integer trangThai, Pageable pageable);
 
     @Query("select hd from HoaDon hd where hd.id =?1")
     List<HoaDon> findId(UUID id);
@@ -46,25 +53,25 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     HoaDon listHoaDonByTrangThai();
 
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=8 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=8 order by hd.ngayTao DESC")
     Page<HoaDon> donHangDaHuy(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=2 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=2  order by hd.ngayTao DESC")
     Page<HoaDon> donHangDangChuanBi(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=6 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=6  order by hd.ngayTao DESC")
     Page<HoaDon> donHangTra(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=7 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=7 order by hd.ngayTao DESC")
     Page<HoaDon> donHangDaTra(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=1 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=1  order by hd.ngayTao DESC")
     Page<HoaDon> donHangChoXacNhan(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=4 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=4  order by hd.ngayTao DESC")
     Page<HoaDon> donHangDangGiao(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=5 ")
+    @Query("select hd from HoaDon hd where  hd.trangThai=5  order by hd.ngayTao DESC")
     Page<HoaDon> donHangHoanThanh(Pageable pageable);
 
 
@@ -149,4 +156,13 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon =: loaiDon AND hd.trangThai =7")
     Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
+
+
+    @Query(value = "select hd from HoaDon hd order by hd.ngayTao DESC")
+    Page<HoaDon> findAllDonHang(Pageable pageable);
+
+
+    @Query(value = "select * from HoaDon where TrangThai = 5 and (GETDATE() - NgayThanhToan) <=7",nativeQuery = true)
+    List<HoaDon> danhSachHDDuDK();
+
 }

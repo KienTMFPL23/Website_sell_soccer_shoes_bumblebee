@@ -20,19 +20,30 @@
             </div>
             <div class="ps-cart-listing">
                 ${thongBao}
-                <form method="post">
+                <form method="post" id="formGioHang">
                     <div class="row">
                         <div class="col-md-8">
-                            <c:if test="${empty listGHCT}">
-                                <tr>
-                                    <h2 style="text-align: center">Không có sản phẩm nào trong giỏ hàng</h2>
-                                </tr>
-                            </c:if>
 
-                            <c:if test="${not empty listGHCT}">
-                                <table class="tb" id="tableCart">
+
+                            <table class="tb" id="tableCart">
+                                <c:if test="${empty listGHCT}">
+                                    <tr>
+                                        <h2 style="text-align: center">Không có sản phẩm nào trong giỏ hàng</h2>
+                                    </tr>
+                                </c:if>
+                                <c:if test="${not empty listGHCT}">
+                                    <tr style="border-bottom: solid 1px #ebebeb;padding-bottom: 15px">
+                                        <th class="col-md-1"><input style="width: 10px;" id="checkedAll"
+                                                                    type="checkbox"></th>
+                                        <th class="col-md-2">Sản Phẩm</th>
+                                        <th class="col-md-3" style="margin-left: -15px;margin-right: -15px"></th>
+                                        <th class="col-md-3">Số Lượng</th>
+                                        <th class="col-md-3">Thành Tiền</th>
+                                    </tr>
+
                                     <c:forEach var="item" items="${listGHCT}">
-                                        <tr style="background-color: ${item.ctsp.soLuong == 0 ? '#e8e8e8':'white'}">
+                                        <tr style="background-color: ${item.ctsp.soLuong == 0 ? '#e8e8e8':'white'}"
+                                            id="gioHangChiTiet_${item.id}">
                                             <td class="col-md-1">
                                                 <c:if test="${item.ctsp.soLuong == 0}">
                                                     <p>Hết Hàng</p>
@@ -43,7 +54,8 @@
                                                 </c:if>
                                             </td>
                                             <td class="col-md-2">
-                                                <a class="ps-product__preview" href="/bumblebee/detail/${item.ctsp.id}">
+                                                <a class="ps-product__preview"
+                                                   href="/bumblebee/detail?idSP=${item.ctsp.sanPham.id}&idCTSP=${item.ctsp.id}&idMS=${item.ctsp.mauSac.id}">
                                                     <img class="mr-15"
                                                          src="../../../uploads/${item.ctsp.hinhAnhs.tenanh}"
                                                          width="100px"
@@ -91,37 +103,26 @@
                                                 </div>
                                             </td>
                                             <td class="tTien col-md-3">
-                                                <c:if test="${item.ctsp.ctkm != null}">
-                                                    <c:forEach var="km" items="${item.ctsp.ctkm}">
-                                                        <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                            <label id="thanhTien_${item.id}"
-                                                                   class="thanhTien"><fmt:formatNumber
-                                                                    value="${(item.ctsp.giaBan - (item.ctsp.giaBan * km.khuyenMai.giaTri/100)*item.soLuong)}"
-                                                                    type="number"/>đ</label>
-                                                            <span id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
-                                                                    value="${item.ctsp.giaBan*item.soLuong}"
-                                                                    type="number"/></span>
-                                                        </c:if>
-                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                            <label id="thanhTien_${item.id}"
-                                                                   class="thanhTien"><fmt:formatNumber
-                                                                    value="${(item.ctsp.giaBan - km.khuyenMai.giaTri)*item.soLuong}"
-                                                                    type="number"/></label>
-                                                            <span id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
-                                                                    value="${item.ctsp.giaBan*item.soLuong}"
-                                                                    type="number"/></span>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                <c:if test="${not empty item.ctsp.ctkm}">
+                                                    <label id="thanhTien_${item.id}"
+                                                           class="thanhTien"><fmt:formatNumber
+                                                            value="${(item.donGiaKhiGiam*item.soLuong)}"
+                                                            type="number"/> đ</label>
+                                                    <p id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
+                                                            value="${item.donGia*item.soLuong}"
+                                                            type="number"/> đ</p>
+
                                                 </c:if>
                                                 <c:if test="${empty item.ctsp.ctkm}">
                                                     <label id="thanhTien_${item.id}" class="thanhTien"><fmt:formatNumber
                                                             value="${item.donGia*item.soLuong}"
-                                                            type="number"/>
+                                                            type="number"/> đ
                                                     </label>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="/bumblebee/remove-ghct/${item.id}">
+                                                <button type="button" onclick="xoaGioHang('${item.id}')"
+                                                        style="background-color: transparent;border: none">
                                                     <div class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                              fill="currentColor" class="bi bi-trash"
@@ -130,12 +131,13 @@
                                                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
                                                         </svg>
                                                     </div>
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                </table>
-                            </c:if>
+                                </c:if>
+                            </table>
+
                         </div>
                         <div class="col-md-4">
                             <div class="cart__actions">
@@ -143,7 +145,7 @@
                                     <p style="font-size: 16px">Tổng tiền thanh toán: <span id="tongTien">
                                     </span></p>
                                     <button formaction="/bumblebee/thanh-toan" type="submit"
-                                            style="" class="btn-muahang">Mua Hàng<i
+                                            style="" class="btn-muahang" onclick="return muaHang()">Mua Hàng<i
                                     ></i></button>
                                     <button formaction="/bumblebee/home" type="submit"
                                             style="" class="btn-muatiep">Tiếp Tục Mua Hàng<i
@@ -158,22 +160,103 @@
             </div>
         </div>
     </div>
-    <div class="alert alert-success" id="alertCart" role="alert" style="display: none">
-        This is a success alert—check it out!
+    <div id="toast_succes_delete" style="display:none;">
+        <div class="toast toast__succes">
+            <div class="toast__icon">
+                <i class="fa-sharp fa-solid fa-circle-check" style="color: #47d864;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">title</h3>
+                <p class="toast__msg">Xóa sản phẩm thành công</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="toast_warring_sp" style="display: none">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Bạn cần chọn sản phẩm để tiếp tục</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
     </div>
 </main>
 <script>
+    function xoaGioHang(idGHCT) {
+        $.ajax({
+            type: "DELETE",
+            url: "/bumblebee/remove-ghct/" + idGHCT,
+            success: function (response) {
+                console.log("Success: " + response);
+                $("#gioHangChiTiet_" + idGHCT).remove();
+                var toastElement = document.getElementById("toast_succes_delete");
+                toastElement.style.display = "block";
+                setTimeout(function () {
+                    toastElement.style.display = "none";
+                }, 1900);
+            },
+            error: function (error) {
+                console.log("Error: " + error);
+            }
+        });
+        $("#formGioHang").submit(function (event) {
+            event.preventDefault();
+        });
+    }
 
-    function capNhatTongTien(){
+    var checkedAllCheckbox = document.getElementById('checkedAll');
+    var checkboxes = document.querySelectorAll('.checkCart');
+    checkedAllCheckbox.addEventListener('click', function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = checkedAllCheckbox.checked;
+        });
+    });
+
+    function muaHang() {
+        var numberOfCheckedCheckboxes = 0;
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                numberOfCheckedCheckboxes++;
+            }
+        });
+
+        if (numberOfCheckedCheckboxes === 0) {
+            var toastElement = document.getElementById("toast_warring_sp");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1900);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function capNhatTongTien() {
         var thanhTienList = document.getElementsByClassName("thanhTien");
         var total = 0;
         for (let i = 0; i < thanhTienList.length; i++) {
             var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
             total += donGia;
         }
-        var totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        var totalFormatted = total.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
         document.getElementById("tongTien").innerHTML = totalFormatted;
     }
+
     capNhatTongTien();
 
     function truSL(itemId) {
@@ -296,7 +379,6 @@
             document.getElementById("thanhTienChuaGiam_" + itemId).innerText = formatCurrency(thanhTienChuaGiam);
         }
         var thanhTien = currentQuantity * donGia;
-        console.log(currentQuantity, donGia, thanhTien)
         document.getElementById("thanhTien_" + itemId).innerText = formatCurrency(thanhTien);
         capNhatTongTien();
     }

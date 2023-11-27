@@ -15,9 +15,12 @@
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="account_selection">
-                                    <li><a href="/bumblebee/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a></li>
-                                    <li><a href="/bumblebee/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
-                                    <li><a href="/bumblebee/register"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng kí</a></li>
+                                    <li><a href="/bumblebee/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng
+                                        xuất</a></li>
+                                    <li><a href="/bumblebee/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng
+                                        nhập</a></li>
+                                    <li><a href="/bumblebee/register"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng
+                                        kí</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -44,20 +47,15 @@
 
                         </ul>
                         <ul class="navbar_user">
-                            <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                            <c:if test="${userLogged.username == null}">
-                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            </c:if>
-                            <c:if test="${userLogged.username != null}">
-                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            </c:if>
-
-                            <li class="checkout">
-                                <a href="/bumblebee/cart">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="checkout_items" class="checkout_items" style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>
-                                </a>
-                            </li>
+                                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                <li><a href="/bumblebee/don-mua" onclick="donMua()"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                <li class="checkout">
+                                    <a href="/bumblebee/cart">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="checkout_items" class="checkout_items"
+                                              style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>
+                                    </a>
+                                </li>
                         </ul>
                         <div class="hamburger_container">
                             <i class="fa fa-bars" aria-hidden="true"></i>
@@ -69,5 +67,6 @@
     </div>
 </div>
 <script src="../../../js_template/custom.js"></script>
+
 
 

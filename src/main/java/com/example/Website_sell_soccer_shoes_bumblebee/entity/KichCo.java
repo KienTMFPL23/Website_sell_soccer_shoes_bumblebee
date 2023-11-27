@@ -21,17 +21,17 @@ public class KichCo {
 
     @Column(name = "Makichco")
     @NotBlank(message = "Không để trống")
-    @Size(min = 5, max = 100, message = "Mã tối đa 150 kí tự, tối thiểu 5 kí tự")
+    @Size(min = 5, max = 100, message = "Mã không dưới 5 kí tự và không quá 100 kí tự ")
     private String maKichCo;
 
     @NotNull(message = "Không để trống")
-    @Min(value = 5, message = "Size phải lớn hơn hoặc bằng 5")
-    @Max(value = 100, message = "Size phải nhỏ hơn hoặc bằng 100")
+    @Min(value = 33, message = "Size phải lớn hơn hoặc bằng 33")
+    @Max(value = 49, message = "Size phải nhỏ hơn 50")
     @Column(name = "Size")
     private Integer size;
 
-    @NotNull(message = "Mời chọn giới tính")
-    @Column(name = "Gioitinh")
+//    @NotNull(message = "Mời chọn giới tính")
+//    @Column(name = "Gioitinh")
     private Boolean gioiTinh;
 
     @NotNull(message = "Chọn trạng thái")

@@ -11,16 +11,7 @@ $(document).ready(function () {
         columns: [
             {"data": "maKichCo"},
             {"data": "size"},
-            {
-                "data": "gioiTinh",
-                "render": function (data) {
-                    if (data == 1) {
-                        return '<td>Nam</td>'
-                    } else {
-                        return '<td>Nữ</td>'
-                    }
-                }
-            },
+
             {
                 "data": "trangThai",
                 "render": function (data) {

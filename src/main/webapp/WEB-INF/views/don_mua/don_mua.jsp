@@ -239,9 +239,18 @@
                                                             - ${hdct.chiTietSanPham.kichCo.size}</p>
                                                         <h5>Số lượng: ${hdct.soLuong}</h5>
                                                     </td>
-                                                    <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
-                                                            value="${hdct.donGia}"
-                                                            type="currency"/>
+
+                                                    <td style="text-align: center;padding-top: 25px;" class="thanhTien">
+                                                        <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
+                                                            <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
+                                                                              type="number"/> đ
+                                                        </c:if>
+                                                        <c:if test="${empty hdct.chiTietSanPham.ctkm}">
+                                                            <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
+                                                                              type="number"/> đ
+                                                        </c:if>
+
+
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -251,7 +260,7 @@
                                 <hr>
 
                                 <div class="tong-tien">
-                                    <h3>Thành tiền: ${sumMoney}</h3>
+                                    <h3 id="tongTien"></h3>
                                 </div>
 
                             </div>
@@ -269,3 +278,16 @@
     </div>
 </main>
 </body>
+<script>
+    function capNhatTongTien(){
+        var thanhTienList = document.getElementsByClassName("thanhTien");
+        var total = 0;
+        for (let i = 0; i < thanhTienList.length; i++) {
+            var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
+            total += donGia;
+        }
+        var totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        document.getElementById("tongTien").innerHTML ="Thành tiền: " +totalFormatted;
+    }
+    capNhatTongTien();
+</script>
