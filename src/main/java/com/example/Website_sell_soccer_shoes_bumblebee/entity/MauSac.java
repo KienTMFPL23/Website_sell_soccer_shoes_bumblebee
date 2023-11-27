@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,13 @@ public class MauSac {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "Id")
     private UUID id;
-    @NotBlank(message = "khong de trong ma")
+    @NotBlank(message = "không để trống mã")
     @Column(name = "Ma")
     private String ma;
-    @NotBlank(message = "khong de trong ten")
+    @NotBlank(message = "không để trống tên")
     @Column(name = "TenMau")
     private String ten;
+    @NotNull(message = "Vui lòng chọn !")
     @Column(name = "TrangThai")
     private Integer tt;
 }

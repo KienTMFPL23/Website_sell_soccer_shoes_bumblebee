@@ -43,10 +43,10 @@ public class HoaDonController {
     public static class SearchForm {
         String keyword = "";
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+//        @DateTimeFormat(pattern = "yyyy-MM-dd")
         Date fromDate;
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+//        @DateTimeFormat(pattern = "yyyy-MM-dd")
         Date toDate;
 
     }

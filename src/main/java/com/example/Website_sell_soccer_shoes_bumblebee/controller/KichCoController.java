@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.KichCo;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.LoaiGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KichCoService;
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -47,8 +48,9 @@ public class KichCoController {
 
 
     }
+
     @GetMapping("/kich-co/hien-thi")
-    public String hienThi(Model model){
+    public String hienThi(Model model) {
         model.addAttribute("view", "../kich-co/list.jsp");
         return "/admin/index";
     }
@@ -91,43 +93,57 @@ public class KichCoController {
         Pageable pageable = PageRequest.of(p, 5, sort);
         Page<KichCo> page = service.searchKH(searchForm.keyword, pageable);
         model.addAttribute("page", page);
-        model.addAttribute("view","../kich-co/list.jsp");
-        return  "/admin/index";
+        model.addAttribute("view", "../kich-co/list.jsp");
+        return "/admin/index";
     }
 
     @RequestMapping("/kich-co/view-add")
     public String viewAdd(@ModelAttribute("kichco") KichCo kichCo, Model model) {
         model.addAttribute("action", "/kich-co/add");
-        model.addAttribute("view","../kich-co/add_update.jsp");
-        return  "/admin/index";
+        model.addAttribute("view", "../kich-co/add_update.jsp");
+        return "/admin/index";
 //        return "/kich-co/add_update";
     }
 
     @RequestMapping("/kich-co/add")
     public String addKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, BindingResult result) {
+        boolean hasE = result.hasErrors();
         if (result.hasErrors()) {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
-            model.addAttribute("view","../kich-co/add_update.jsp");
-            return  "/admin/index";
+            model.addAttribute("view", "../kich-co/add_update.jsp");
+            return "/admin/index";
 //            return "/kich-co/add_update";
         }
-//        if (kichCo.getMaKichCo() == null) {
-//            model.addAttribute("messMa", "Lỗi! Vui lòng kiểm tra mã không được trùng !");
-//
-//            return "/kich-co/add_update";
-//        }
+        List<KichCo> list = service.getList();
+        for (KichCo kc : list) {
+            if (kc.getMaKichCo().equals(kichCo.getMaKichCo())) {
+                model.addAttribute("errorMa", "Trùng mã ! Vui lòng nhập lại !");
+                hasE = true;
+            }
+            if (kc.getSize().equals(kichCo.getSize())) {
+                model.addAttribute("errorSize", "Trùng size ! Vui Lòng nhập lại !");
+                hasE = true;
+            }
+
+        }
+        if (hasE) {
+            model.addAttribute("view", "../kich-co/add_update.jsp");
+            return "/admin/index";
+        }
+
         service.addKC(kichCo);
-        model.addAttribute("view","../kich-co/index.jsp");
+        model.addAttribute("view", "../kich-co/index.jsp");
         return "redirect:/kich-co/hien-thi";
 
     }
+
 
     @RequestMapping("/kich-co/update/{id}")
     public String updateKC(Model model, @Valid @ModelAttribute("kichco") KichCo kichCo, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
-            model.addAttribute("view","../kich-co/add_update.jsp");
-            return  "/admin/index";
+            model.addAttribute("view", "../kich-co/add_update.jsp");
+            return "/admin/index";
         }
 
         service.addKC(kichCo);
@@ -145,8 +161,8 @@ public class KichCoController {
         KichCo co = service.getOne(id);
         model.addAttribute("action", "/kich-co/update/" + co.getId());
         model.addAttribute("kichco", co);
-        model.addAttribute("view","../kich-co/add_update.jsp");
-        return  "/admin/index";
+        model.addAttribute("view", "../kich-co/add_update.jsp");
+        return "/admin/index";
     }
 
 }

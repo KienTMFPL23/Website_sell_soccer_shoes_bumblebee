@@ -143,8 +143,12 @@
 
                 <tr style="background: #37517E;color: white ">
                     <th>STT</th>
-                    <th>Mã sản phẩm</th>
+<%--                    <th>Mã sản phẩm</th>--%>
                     <th>Tên sản phẩm</th>
+                    <th>Loại giầy</th>
+                    <th>Màu sắc</th>
+                    <th>Đế giầy</th>
+                    <th>Kích cỡ</th>
                     <th>Giá Bán</th>
                     <th>Số lượng</th>
                     <th>Trạng Thái</th>
@@ -156,8 +160,12 @@
                 <c:forEach items="${page.content}" var="sp" varStatus="i">
                     <tr>
                         <td>${i.index+1}</td>
-                        <td>${sp.sanPham.maSanPham}</td>
+<%--                        <td>${sp.sanPham.maSanPham}</td>--%>
                         <td>${sp.sanPham.tenSanPham}</td>
+                        <td>${sp.loaiGiay.tentheloai}</td>
+                        <td>${sp.mauSac.ten}</td>
+                        <td>${sp.deGiay.loaiDe}</td>
+                        <td>${sp.kichCo.size}</td>
                         <td><fmt:formatNumber value="${sp.giaBan}" maxFractionDigits="20" type="number"/></td>
 
                         <td>${sp.soLuong}</td>

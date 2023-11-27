@@ -56,6 +56,7 @@
             <div class="col-lg-8">
                 <form:input type="text" class="form-control" path="maKichCo"/>
                 <form:errors path="maKichCo" cssStyle="color: crimson"></form:errors>
+                <div style="color: crimson">${errorMa}</div>
             </div>
         </div>
         <div class="row mb-3">
@@ -66,6 +67,7 @@
             <div class="col-lg-8">
                 <form:input type="text" class="form-control" path="size" />
                 <form:errors path="size" cssStyle="color: crimson"></form:errors>
+                <div style="color: crimson">${errorSize}</div>
             </div>
         </div>
         <div class="row mb-3">

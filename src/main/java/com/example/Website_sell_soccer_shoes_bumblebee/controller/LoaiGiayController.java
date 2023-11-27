@@ -166,7 +166,7 @@ public class LoaiGiayController {
         model.addAttribute("id", id);
         model.addAttribute("loaiGiay", repo.getOne(id));
         model.addAttribute("listLG", repository.findAll());
-        return "loai-giay/update";
+        return "/loai-giay/update";
 
     }
 

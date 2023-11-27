@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -31,6 +32,7 @@ public class ChatLieu {
     private String ten;
 
     @Column(name = "TrangThai")
+    @NotNull(message = "Trạng thái không được để trống")
     private Integer trangThai;
 
 }
