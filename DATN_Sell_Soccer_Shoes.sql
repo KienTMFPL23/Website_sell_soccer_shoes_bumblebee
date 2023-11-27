@@ -236,6 +236,7 @@ CREATE TABLE KhuyenMai
     TenKhuyenMai	NVARCHAR(100),
     GiaTri			Float,
     NgayTao			DateTime,
+    DonVi           Varchar ,
     TrangThai		INT
 )
 

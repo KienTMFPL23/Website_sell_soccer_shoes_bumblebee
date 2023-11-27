@@ -15,9 +15,12 @@
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="account_selection">
-                                    <li><a href="/bumblebee/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a></li>
-                                    <li><a href="/bumblebee/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
-                                    <li><a href="/bumblebee/register"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng kí</a></li>
+                                    <li><a href="/bumblebee/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng
+                                        xuất</a></li>
+                                    <li><a href="/bumblebee/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng
+                                        nhập</a></li>
+                                    <li><a href="/bumblebee/register"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng
+                                        kí</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -44,20 +47,15 @@
 
                         </ul>
                         <ul class="navbar_user">
-                            <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                            <c:if test="${userLogged.username == null}">
-                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            </c:if>
-                            <c:if test="${userLogged.username != null}">
-                                <li><a href="/bumblebee/don-mua"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            </c:if>
-
-                            <li class="checkout">
-                                <a href="/bumblebee/cart">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="checkout_items" class="checkout_items" style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>
-                                </a>
-                            </li>
+                                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                <li><a href="/bumblebee/don-mua" onclick="donMua()"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                <li class="checkout">
+                                    <a href="/bumblebee/cart">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="checkout_items" class="checkout_items"
+                                              style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>
+                                    </a>
+                                </li>
                         </ul>
                         <div class="hamburger_container">
                             <i class="fa fa-bars" aria-hidden="true"></i>
@@ -67,7 +65,25 @@
             </div>
         </div>
     </div>
+    <div id="toast_warring" style="display: none">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <label class="toast__msg">Bạn cần chọn sản phẩm để tiếp tục</label>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="../../../js_template/custom.js"></script>
+
 
 

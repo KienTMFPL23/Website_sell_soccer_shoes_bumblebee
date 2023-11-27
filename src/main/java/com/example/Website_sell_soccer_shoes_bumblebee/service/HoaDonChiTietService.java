@@ -42,4 +42,6 @@ public interface HoaDonChiTietService {
 
     Double getDonGiaKhiGiam(List<ChiTietKhuyenMai> listCTKM);
 
+    List<HoaDonChiTiet> listHDCTByMaHD(String maHoaDon);
+
 }

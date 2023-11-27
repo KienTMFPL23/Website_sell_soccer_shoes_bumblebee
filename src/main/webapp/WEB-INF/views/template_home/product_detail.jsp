@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/single_styles.css">
 <link rel="stylesheet" type="text/css" href="../../../css_update_template/single_responsive.css">
+
 <style>
     .bumblebee-alert-popup__message {
         margin-top: 2.5rem;
@@ -70,7 +71,7 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <form method="post" onsubmit="return submitForm()">
+                <form method="post" id="yourFormId" onsubmit="return submitForm()" action="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}">
                     <div class="product_details">
                         <div class="product_details_title">
                             <h2>${ctsp.sanPham.tenSanPham}</h2>
@@ -82,19 +83,19 @@
                                     <c:forEach var="km" items="${ctsp.ctkm}">
                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                             <label>
-                                                <fmt:formatNumber  value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}" type="number"/>
+                                                <fmt:formatNumber  value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}" type="number"/> đ
                                             </label>
                                         </c:if>
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                             <label>
-                                                <fmt:formatNumber  value="${ctsp.giaBan - km.khuyenMai.giaTri}" type="number"/>
+                                                <fmt:formatNumber  value="${ctsp.giaBan - km.khuyenMai.giaTri}" type="number"/> đ
                                             </label>
                                         </c:if>
-                                        <span><fmt:formatNumber  value="${ctsp.giaBan}" type="number"/></span>
+                                        <span><fmt:formatNumber  value="${ctsp.giaBan}" type="number"/> đ</span>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty ctsp.ctkm}">
-                                    <fmt:formatNumber  value="${ctsp.giaBan}" type="number"/>
+                                    <fmt:formatNumber  value="${ctsp.giaBan}" type="number"/> đ
                                 </c:if>
                             </div>
                             <div id="spcosan" style="color: #fe4c50;font-weight: bold"></div>
@@ -132,7 +133,6 @@
                                     type="submit" onclick="return themVaoGioHang()" id="muaNgayButton">Mua ngay
                             </button>
                             <button class="btn-themgh"
-                                    formaction="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}"
                                     id="addToCartButton"
                                     type="submit" onclick="return themVaoGioHang()">
                                 add to cart
@@ -186,7 +186,164 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col text-center">
+            <div class="section_title new_arrivals_title">
+                <h4>Sản Phẩm Liên Quan</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="col">
+                <div class="product_slider_container">
+                    <div class="owl-carousel owl-theme product_slider owl-loaded owl-drag">
+                        <div class="owl-stage-outer">
+                            <div class="owl-stage"
+                                 style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2220px;">
+                                <c:forEach var="item" items="${listCTSPBySP}">
+                                    <div class="owl-item active" style="width: 222px;">
+                                        <div class="owl-item product_slider_item">
+                                            <div class="product-item">
+                                                <div class="product discount product_filter"
+                                                     style="border-right: 1px solid rgb(233, 233, 233);">
+                                                    <div class="product_image">
+                                                        <a
+                                                                class="ps-shoe__overlay"
+                                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
+                                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
+                                                    </div>
+                                                    <div class="favorite favorite_left"></div>
+                                                    <c:forEach var="km" items="${item.ctkm}">
+                                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
+                                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                                        </c:if>
+                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                            <div class="product_bubble product_bubble_left product_bubble_green ">
+                                                <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
+                                                                          type="number"/>đ</span>
+                                                            </div>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <div class="product_info">
+                                                        <h6 class="product_name"><a
+                                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
+                                                        </h6>
+                                                        <div class="product_price">
+                                                            <c:if test="${item.ctkm != null}">
+                                                                <c:forEach var="km" items="${item.ctkm}">
+                                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                                value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
+                                                                                type="number"/> đ</label>
+                                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                                type="number"/> đ</span>
+                                                                    </c:if>
+                                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                                value="${item.giaBan - km.khuyenMai.giaTri}"
+                                                                                type="number"/> đ</label>
+                                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                                type="number"/> đ</span>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </c:if>
+                                                            <c:if test="${empty item.ctkm}">
+                                                                <label>
+                                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                                </label>
+                                                            </c:if>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <div class="owl-nav disabled">
+                            <div class="owl-prev">prev</div>
+                            <div class="owl-next">next</div>
+                        </div>
+                        <div class="owl-dots disabled"></div>
+                    </div>
+
+                    <!-- Slider Navigation -->
+
+                    <div class="product_slider_nav_left product_slider_nav d-flex align-items-center justify-content-center flex-column">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="product_slider_nav_right product_slider_nav d-flex align-items-center justify-content-center flex-column">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toast" style="display:none;">
+        <div class="toast toast__succes">
+            <div class="toast__icon">
+                <i class="fa-sharp fa-solid fa-circle-check" style="color: #47d864;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">title</h3>
+                <p class="toast__msg">Thêm vào giỏ hàng thành công</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="toast_warring" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Bạn cần chọn kích cỡ để tiếp tục</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="toast_warring_login" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Bạn cần đăng nhập để tiếp tục</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
 </main>
+<script>
+    function toast() {
+        var toastElement = document.getElementById("toast");
+        toastElement.style.display = "block";
+        setTimeout(function () {
+            toastElement.style.display = "none";
+        }, 1500);
+    }
+</script>
 <div id="errorModal" class="modal" style="width: 400px;margin: 0 auto;top:50%;padding: 1.25rem">
     <div class="modal-content">
         <div class="bumblebee-alert-popup__message" bis_skin_checked="1" style="font-size: 16px">
@@ -249,6 +406,10 @@
     var response2 = null;
 
     function selectSize(kichCo) {
+        var form = document.getElementById("yourFormId");
+        form.onsubmit = function(event) {
+            event.preventDefault(); // Ngăn chặn sự kiện mặc định của form
+        };
         document.getElementById("kichCoInput").value = kichCo;
         console.log(kichCo)
         document.getElementById("addToCartButton").disabled = false;
@@ -270,17 +431,18 @@
             }
         };
         xhr.send();
-        //
+
         // xhr2.open("GET", "/bumblebee/detail?idSP=" + idSP + "&idCTSP=" + idCTSP + "&idMS=" + idMS + "&kichCo=" + kichCo, true);
         // xhr2.onreadystatechange = function () {
         //     if (xhr2.readyState === 4 && xhr2.status === 200){
         //         response2 = xhr2.response;
+        //         var mainContainer = document.getElementById("main_container");
+        //         mainContainer.innerHTML = response2;
+        //     }else {
+        //         console.error("Request failed with status: " + xhr2.status);
         //     }
         // };
         // xhr2.send();
-        // xhr2.onerror = function() {
-        //     console.error("Request failed");
-        // };
 
     }
 
@@ -289,19 +451,25 @@
     }
 
     function themVaoGioHang() {
+        <c:if test="${userLogged.username == null}">
+        var toastElement = document.getElementById("toast_warring_login");
+        toastElement.style.display = "block";
+        setTimeout(function () {
+            toastElement.style.display = "none";
+        }, 1500);
+        return false;
+        </c:if>
         if (selectedOption === null) {
-            var main = document.getElementById("main");
-            var modal = document.getElementById("errorKCModal");
-            modal.style.display = "block";
-            modal.classList.add('show');
-            main.style.opacity = "0,5";
+            var toastElement = document.getElementById("toast_warring");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1500);
             return false;
         } else {
             return true;
         }
-
     }
-
 
 </script>
 
