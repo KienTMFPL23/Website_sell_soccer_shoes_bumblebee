@@ -194,6 +194,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
 
 
+
     @Query("SELECT c FROM ChiTietSanPham c " +
             "WHERE c.id IN (SELECT MIN(c2.id) FROM ChiTietSanPham c2 " +
             "GROUP BY c2.mauSac.id, c2.sanPham.id HAVING c2.sanPham.id = ?1)")
