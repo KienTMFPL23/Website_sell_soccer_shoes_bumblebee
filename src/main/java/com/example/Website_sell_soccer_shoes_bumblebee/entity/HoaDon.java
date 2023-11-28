@@ -69,5 +69,6 @@ public class HoaDon {
     @OneToMany(mappedBy = "hoaDon")
     private List<HoaDonChiTiet> hoaDons;
 
-
+    @OneToOne(mappedBy = "hoaDon")
+    DoiTra doiTra;
 }
