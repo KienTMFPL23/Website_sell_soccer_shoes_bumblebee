@@ -952,4 +952,16 @@ ul {
 .toast__warring .toast__icon{
     color: #ffc021;
 }
+.product-grid{
+    display: flex;
+}
+.product_image img{
+    width: 221px;
+    height: 221px;
+}
+
+.single_product_thumbnails ul li img{
+    width: 136.25px;
+    height: 136.25px;
+}
 

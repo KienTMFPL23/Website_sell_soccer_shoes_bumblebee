@@ -93,7 +93,7 @@ public class MauSacController {
         if (hasError) {
             // Báo lỗi
             model.addAttribute("view", "../chat_lieu/add_update.jsp");
-            return "/admin/index";
+
         }
 
         this.msr.save(cl);
@@ -107,7 +107,8 @@ public class MauSacController {
         List<MauSac> list = msr.findAll();
         for(int i = 0;i<list.size();i++){
             if (result.hasErrors()) {
-                return "mau_sac/update";
+                model.addAttribute("view", "../mau_sac/add.jsp");
+                return "/admin/index";
             }else if(ms.getMa().length()==0){
                 model.addAttribute("errorMa", "Ma màu khong duoc bo trong");
                 hasE = true;
@@ -120,8 +121,8 @@ public class MauSacController {
                 hasE = true;
             }
             if(hasE){
-                model.addAttribute("view", "../mau_sac/update.jsp");
-                return "redirect:/mau-sac/hien-thi";
+                model.addAttribute("view", "../mau_sac/add.jsp");
+                return "redirect:/mau-sac/hien-thi-add";
             } else{
                 this.msr.save(ms);
             }
