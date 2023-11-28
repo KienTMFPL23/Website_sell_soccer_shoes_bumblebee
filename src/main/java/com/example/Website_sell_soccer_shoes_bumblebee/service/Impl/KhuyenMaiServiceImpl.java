@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -57,6 +58,22 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
+    }
+
+    @Override
+    public List<KhuyenMai> findByNgayKetThucBeforeAndTrangThai(LocalDateTime ngayKetThuc) {
+        return repo.findByNgayKetThucBeforeAndTrangThai(ngayKetThuc);
+    }
+
+    @Scheduled(cron = "0 2 * * * *") // Chạy mỗi ngày lúc 1 AM
+    @Override
+    public void updateKhuyenMaiStatus() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<KhuyenMai> khuyenMaiHetHan = repo.findByNgayKetThucBeforeAndTrangThai(currentDateTime);
+        for (KhuyenMai khuyenMai : khuyenMaiHetHan) {
+            khuyenMai.setTrangThai(1);
+            repo.save(khuyenMai);
+        }
     }
 
 }

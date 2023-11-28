@@ -210,5 +210,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 0",nativeQuery = true)
     List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
 
+    @Query(value = "select ctsp from ChiTietSanPham ctsp where ctsp.trangThai = 1 and ctsp.soLuong > 1")
+    List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
+
 
 }

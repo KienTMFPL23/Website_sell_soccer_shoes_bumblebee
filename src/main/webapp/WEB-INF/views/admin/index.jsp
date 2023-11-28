@@ -75,7 +75,7 @@
 
         <!-- Nav Item - Thống kê -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/bumblebee/thong-ke">
                 <i class="bx bx-line-chart"></i>
                 <b>Thống kê</b>
             </a>

@@ -4,6 +4,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietKhuyenMaiRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
@@ -80,6 +81,9 @@ public class BanHangTaiQuayController {
 
     @Autowired
     HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    ChiTietKhuyenMaiRepository chiTietKhuyenMaiRepository;
 
 
     @Getter
@@ -202,7 +206,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
         model.addAttribute("listDeGiay", chiTietSanPhamRepo.listDeGiay());
         model.addAttribute("listChatLieu", chiTietSanPhamRepo.lítChatLieu());
-
+        model.addAttribute("listCTSPByTrangThaiAndSoLuong", chiTietSanPhamRepo.getListCTSPByTrangThaiAndSoLuong());
         idHoaDonCT = id;
         return "ban_hang_tai_quay/ban-hang";
     }

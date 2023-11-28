@@ -25,4 +25,8 @@ public interface KhuyenMaiService {
     List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate);
 
     LocalDateTime convertDateToLocalDateTime(Date date);
+
+    List<KhuyenMai> findByNgayKetThucBeforeAndTrangThai(LocalDateTime ngayKetThuc);
+
+    void updateKhuyenMaiStatus();
 }
