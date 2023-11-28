@@ -102,7 +102,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Thêm Sản phẩm vào giỏ hàng</h4>
+                                            <p style="font-size: 15px" class="modal-title">Thêm Sản phẩm vào giỏ hàng</p>
                                             <button type="button" class="close"
                                                     data-dismiss="modal">&times;
                                             </button>
