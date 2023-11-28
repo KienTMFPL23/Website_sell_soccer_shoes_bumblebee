@@ -26,4 +26,5 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
 
     @Query("select kh from KhachHang  kh  order by kh.ma")
     List<KhachHang> getListKhachHang();
+
 }
