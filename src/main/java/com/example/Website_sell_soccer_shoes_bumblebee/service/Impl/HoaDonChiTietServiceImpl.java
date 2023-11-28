@@ -108,8 +108,8 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     }
 
     @Override
-    public HoaDonChiTiet getHDCTDoiTra(String maHD, UUID idSP) {
-        return hoaDonChiTietRepository.getHDCTDoiTra(maHD,idSP);
+    public HoaDonChiTiet getHDCTDoiTra(UUID idHoaDon, UUID idSP) {
+        return hoaDonChiTietRepository.getHDCTDoiTra(idHoaDon,idSP);
     }
 
 

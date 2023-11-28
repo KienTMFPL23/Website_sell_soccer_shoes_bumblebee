@@ -377,7 +377,7 @@
                     <p><b>Tổng tiền : </b> <fmt:formatNumber value="${sumMoney}" type="number"/>
                         đ</p>
                         <%--                    <p><b>Giảm giá :</b> 0đ</p>--%>
-                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>
+<%--                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>--%>
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
                                                      onchange="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly/> đ</p>

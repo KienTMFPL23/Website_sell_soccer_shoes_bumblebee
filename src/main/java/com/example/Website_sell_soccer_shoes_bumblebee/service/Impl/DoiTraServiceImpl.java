@@ -49,4 +49,12 @@ public class DoiTraServiceImpl implements DoiTraService {
     public List<DoiTra> listHuyDoiTra() {
         return doiTraRepo.getListHuyDoiTra();
     }
+
+    @Override
+    public void huyDoiTra(UUID id) {
+        DoiTra doiTra = doiTraRepo.findById(id).orElse(null);
+        if (doiTra != null){
+            doiTraRepo.delete(doiTra);
+        }
+    }
 }
