@@ -122,7 +122,7 @@
                                             </td>
                                             <td>
                                                 <button type="button" onclick="xoaGioHang('${item.id}')"
-                                                        style="background-color: transparent;border: none;cursor: ">
+                                                        style="background-color: transparent;border: none">
                                                     <div class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                              fill="currentColor" class="bi bi-trash"
@@ -145,7 +145,7 @@
                                     <p style="font-size: 16px">Tổng tiền thanh toán: <span id="tongTien">
                                     </span></p>
                                     <button formaction="/bumblebee/thanh-toan" type="submit"
-                                            class="btn-muahang" onclick="return muaHang()">Mua Hàng<i
+                                            style="" class="btn-muahang" onclick="return muaHang()">Mua Hàng<i
                                     ></i></button>
                                     <button formaction="/bumblebee/home" type="submit"
                                             style="" class="btn-muatiep">Tiếp Tục Mua Hàng<i
@@ -208,7 +208,6 @@
                 setTimeout(function () {
                     toastElement.style.display = "none";
                 }, 1900);
-                capNhatTongTien()
             },
             error: function (error) {
                 console.log("Error: " + error);

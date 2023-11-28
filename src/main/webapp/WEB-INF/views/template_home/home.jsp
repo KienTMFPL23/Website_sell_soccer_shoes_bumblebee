@@ -29,7 +29,7 @@
                 <div class="col">
                     <div class="product-grid"
                          data-isotope="{ &quot;itemSelector&quot;: &quot;.product-item&quot;, &quot;layoutMode&quot;: &quot;fitRows&quot; }"
-                         style="position: relative;">
+                         style="position: relative; height: 760px;">
                         <!-- Product 1 -->
                         <c:forEach var="item" items="${pageSP.content}" varStatus="loop">
                             <div class="product-item">
@@ -56,8 +56,7 @@
                                     </c:forEach>
                                     <div class="product_info">
                                         <h6 class="product_name"><a
-                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}
-                                            - ${item.mauSac.ten}</a>
+                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
                                         </h6>
                                         <div class="product_price">
                                             <c:if test="${item.ctkm != null}">
@@ -105,8 +104,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <p style="font-size: 15px" class="modal-title">Thêm Sản phẩm vào giỏ
-                                                    hàng</p>
+                                                <h4 class="modal-title">Thêm Sản phẩm vào giỏ hàng</h4>
                                                 <button type="button" class="close"
                                                         data-dismiss="modal">&times;
                                                 </button>
@@ -216,15 +214,13 @@
                                                             <a
                                                                     class="ps-shoe__overlay"
                                                                     href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}"
-                                                                    alt=""></a>
+                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
                                                         </div>
                                                         <div class="favorite favorite_left"></div>
                                                         <c:forEach var="km" items="${item.ctkm}">
                                                             <c:if test="${km.khuyenMai.donVi == '%'}">
                                                                 <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
-                                                                    <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span>
-                                                                </div>
+                                                                    <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
                                                             </c:if>
                                                             <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                                 <div class="product_bubble product_bubble_left product_bubble_green ">
@@ -235,8 +231,7 @@
                                                         </c:forEach>
                                                         <div class="product_info">
                                                             <h6 class="product_name"><a
-                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}
-                                                                - ${item.mauSac.ten}</a>
+                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
                                                             </h6>
                                                             <div class="product_price">
                                                                 <c:if test="${not empty item.ctkm}">
@@ -245,24 +240,21 @@
                                                                             <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                                     value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
                                                                                     type="number"/> đ</label>
-                                                                            <span><fmt:formatNumber
-                                                                                    value="${item.giaBan}"
-                                                                                    type="number"/> đ</span>
+                                                                            <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                                    type="number"/> đ</span>
                                                                         </c:if>
                                                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                                             <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                                     value="${item.giaBan - km.khuyenMai.giaTri}"
                                                                                     type="number"/> đ</label>
-                                                                            <span><fmt:formatNumber
-                                                                                    value="${item.giaBan}"
-                                                                                    type="number"/> đ</span>
+                                                                            <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                                    type="number"/> đ</span>
                                                                         </c:if>
                                                                     </c:forEach>
                                                                 </c:if>
                                                                 <c:if test="${empty item.ctkm}">
                                                                     <label>
-                                                                        <fmt:formatNumber value="${item.giaBan}"
-                                                                                          type="number"/> đ
+                                                                        <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
                                                                     </label>
                                                                 </c:if>
                                                             </div>
@@ -326,7 +318,6 @@
         </c:if>
         return true;
     }
-
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");

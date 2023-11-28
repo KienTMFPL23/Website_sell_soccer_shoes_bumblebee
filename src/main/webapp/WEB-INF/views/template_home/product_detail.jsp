@@ -82,29 +82,23 @@
                                 <c:if test="${ctsp.ctkm != null}">
                                     <c:forEach var="km" items="${ctsp.ctkm}">
                                         <c:if test="${km.khuyenMai.donVi == '%'}">
-
-                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
-
+                                            <label>
                                                 <fmt:formatNumber
                                                         value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
                                                         type="number"/> đ
                                             </label>
                                         </c:if>
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-
-                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
-
+                                            <label>
                                                 <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
                                                                   type="number"/> đ
                                             </label>
                                         </c:if>
-                                        <span id="donGiaChuaGiam"><fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ</span>
+                                        <span><fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ</span>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty ctsp.ctkm}">
-                                    <label style="font-weight: 500" id="giaGoc"><fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ</label>
-                                    <label style="font-weight: 500" id="donGiaKhuyenMai"></label>
-                                    <span id="donGiaChuaGiam"></span>
+                                    <fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ
                                 </c:if>
                             </div>
                             <div id="spcosan" style="color: #fe4c50;font-weight: bold"></div>
@@ -399,12 +393,6 @@
         });
     });
 
-    function formatGiaSP(number) {
-        var formattedString = String(number).split('.')[0];
-        formattedString = formattedString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        return formattedString;
-    }
-
     var response = null;
     var response2 = null;
 
@@ -414,7 +402,6 @@
         var idMS = "${ctsp.mauSac.id}";
         var idSP = "${ctsp.sanPham.id}";
         var idCTSP = "${ctsp.id}"
-        var giaSP = "${ctsp.giaBan}"
         var xhr = new XMLHttpRequest();
         var xhr2 = new XMLHttpRequest();
         xhr.open("GET", "/bumblebee/select-slsp?idMS=" + idMS + "&idSP=" + idSP + "&size=" + kichCo, true);
@@ -429,24 +416,18 @@
             }
         };
         xhr.send();
-        xhr2.open("GET", "/bumblebee/select-giaban?idSP=" + idSP + "&idMS=" + idMS + "&size=" + kichCo, true);
-        xhr2.onreadystatechange = function () {
-            if (xhr2.readyState === 4 && xhr2.status === 200){
-                response2 = xhr2.response;
-                if (Number(response2) !== Number(giaSP)){
-                    document.getElementById("donGiaKhuyenMai").innerHTML = formatGiaSP(response2) + " đ";
-                    document.getElementById("donGiaChuaGiam").innerHTML = formatGiaSP(giaSP)+ " đ";
-                    document.getElementById("giaGoc").innerHTML = "";
-                }else{
-                    document.getElementById("donGiaKhuyenMai").innerHTML = "";
-                    document.getElementById("donGiaChuaGiam").innerHTML = "";
-                    document.getElementById("giaGoc").innerHTML = formatGiaSP(giaSP) + " đ";
-                }
-            }else {
-                console.error("Request failed with status: " + xhr2.status);
-            }
-        };
-        xhr2.send();
+
+        // xhr2.open("GET", "/bumblebee/detail?idSP=" + idSP + "&idCTSP=" + idCTSP + "&idMS=" + idMS + "&kichCo=" + kichCo, true);
+        // xhr2.onreadystatechange = function () {
+        //     if (xhr2.readyState === 4 && xhr2.status === 200){
+        //         response2 = xhr2.response;
+        //         var mainContainer = document.getElementById("main_container");
+        //         mainContainer.innerHTML = response2;
+        //     }else {
+        //         console.error("Request failed with status: " + xhr2.status);
+        //     }
+        // };
+        // xhr2.send();
 
     }
 
