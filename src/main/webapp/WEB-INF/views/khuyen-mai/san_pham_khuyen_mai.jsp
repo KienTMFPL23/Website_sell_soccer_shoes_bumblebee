@@ -254,8 +254,8 @@
 
                     </td>
                     <td>
-                        <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
-                        <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
+                        <c:if test="${ctkm.khuyenMai.trangThai == 0}">Hoạt động</c:if>
+                        <c:if test="${ctkm.khuyenMai.trangThai == 1}">Không hoạt động</c:if>
                     </td>
 <%--                    <td>--%>
 <%--                        <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>

@@ -236,6 +236,8 @@ CREATE TABLE KhuyenMai
     TenKhuyenMai	NVARCHAR(100),
     GiaTri			Float,
     NgayTao			DateTime,
+    NgayKetThuc				DateTime,
+    NgayCapNhat			DateTime,
     DonVi           Varchar ,
     TrangThai		INT
 )
@@ -246,8 +248,7 @@ CREATE TABLE ChiTietKhuyenMai
     IdChiTietSanPham		UNIQUEIDENTIFIER ,
     IdKhuyenMai				UNIQUEIDENTIFIER ,
     NgayBatDau				DateTime,
-    NgayKetThuc				DateTime,
-    NgayCapNhat			DateTime,
+
     TrangThai		INT
 )
 

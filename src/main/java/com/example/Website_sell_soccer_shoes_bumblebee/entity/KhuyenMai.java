@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -48,7 +47,9 @@ public class KhuyenMai {
 
     @Column(name = "NgayTao")
     //@NotNull(message = "Ngày tạo không được để trống")
-    private Date ngayTao;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime ngayTao;
 
     @Column(name = "NgayBatDau")
     @NotNull(message = "Ngày bắt đầu không được để trống")

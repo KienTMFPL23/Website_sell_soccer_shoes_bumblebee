@@ -216,7 +216,7 @@
     <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">
         <div class="row">
             <div class="col-lg-2">
-                <select id="filterDonVi" onchange="filterTable()">
+                <select id="filterDonVi">
                     <option value="all">-- Lọc đơn vị --</option>
                     <option>VNĐ</option>
                     <option>%</option>
@@ -280,86 +280,95 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
-                                style="border-radius: 20px;">Chọn
-                        </button>
-                        <!-- Modal -->
-                        <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post"
-                              id="themSanPhamKhuyenMai">
-                            <div class="modal fade" id="${km.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách sản phẩm</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
+                        <c:if test="${km.trangThai == 0}">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
+                                    style="border-radius: 20px;">Chọn
+                            </button>
+                            <!-- Modal -->
+                            <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post"
+                                  id="themSanPhamKhuyenMai">
+                                <div class="modal fade" id="${km.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách sản
+                                                    phẩm</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
+                                                    </div>
+                                                </div>
+
+                                                    <%-- Ngày tạo--%>
+                                                    <%--                                    <div class="row">--%>
+                                                    <%--                                        <div class="col-lg-4" style="padding-bottom: 15px;">--%>
+                                                    <%--                                            <span>Ngày bắt đầu:</span>--%>
+                                                    <%--                                            <input class="date" type="datetime-local" id="ngayBatDau_${km.id}" name="ngayBatDau" >--%>
+                                                    <%--                                        </div>--%>
+                                                    <%--                                        <div class="col-lg-4">--%>
+                                                    <%--                                            <span>Ngày kết thúc:</span>--%>
+                                                    <%--                                            <input class="date" type="datetime-local" id="ngayKetThuc_${km.id}" name="ngayKetThuc" >--%>
+                                                    <%--                                        </div>--%>
+                                                    <%--                                    </div>--%>
+
+                                                <span id="spnError" class="error" style="display: none"
+                                                >Please select at-least one Fruit.</span
+                                                >
+                                                <div class="container">
+                                                    <table id="tableCTSP">
+                                                        <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th scope="col">Tên sản phẩm</th>
+                                                            <th scope="col">Số lượng</th>
+                                                            <th scope="col">Giá bán</th>
+                                                            <th scope="col">Màu sắc</th>
+                                                            <th scope="col">Kích cỡ</th>
+                                                            <th scope="col">Ngày tạo</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody id="myTable3">
+                                                        <c:forEach items="${listCTSP}" var="sp" varStatus="i">
+                                                            <tr>
+                                                                <td><input class="checkCart" type="checkbox"
+                                                                           name="idListCartDetail"
+                                                                           id="idCTSP"
+                                                                           value="${sp.id}"></td>
+                                                                <td>${sp.sanPham.tenSanPham}</td>
+                                                                <td>${sp.soLuong}</td>
+                                                                <td>
+                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
+                                                                <td>${sp.mauSac.ten}</td>
+                                                                <td>${sp.kichCo.size}</td>
+                                                                <td><fmt:formatDate value="${sp.ngayTao}"
+                                                                                    pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
-
-                                                <%-- Ngày tạo--%>
-                                                <%--                                    <div class="row">--%>
-                                                <%--                                        <div class="col-lg-4" style="padding-bottom: 15px;">--%>
-                                                <%--                                            <span>Ngày bắt đầu:</span>--%>
-                                                <%--                                            <input class="date" type="datetime-local" id="ngayBatDau_${km.id}" name="ngayBatDau" >--%>
-                                                <%--                                        </div>--%>
-                                                <%--                                        <div class="col-lg-4">--%>
-                                                <%--                                            <span>Ngày kết thúc:</span>--%>
-                                                <%--                                            <input class="date" type="datetime-local" id="ngayKetThuc_${km.id}" name="ngayKetThuc" >--%>
-                                                <%--                                        </div>--%>
-                                                <%--                                    </div>--%>
-
-                                            <span id="spnError" class="error" style="display: none"
-                                            >Please select at-least one Fruit.</span
-                                            >
-                                            <div class="container">
-                                                <table id="tableCTSP">
-                                                    <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th scope="col">Tên sản phẩm</th>
-                                                        <th scope="col">Số lượng</th>
-                                                        <th scope="col">Giá bán</th>
-                                                        <th scope="col">Màu sắc</th>
-                                                        <th scope="col">Kích cỡ</th>
-                                                        <th scope="col">Ngày tạo</th>
-                                                    </tr>
-                                                    </thead>
-
-                                                    <tbody id="myTable3">
-                                                    <c:forEach items="${listCTSP}" var="sp" varStatus="i">
-                                                        <tr>
-                                                            <td><input class="checkCart" type="checkbox"
-                                                                       name="idListCartDetail"
-                                                                       id="idCTSP"
-                                                                       value="${sp.id}"></td>
-                                                            <td>${sp.sanPham.tenSanPham}</td>
-                                                            <td>${sp.soLuong}</td>
-                                                            <td><fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
-                                                            <td>${sp.mauSac.ten}</td>
-                                                            <td>${sp.kichCo.size}</td>
-                                                            <td><fmt:formatDate value="${sp.ngayTao}"
-                                                                                pattern="dd/MM/yyyy HH:mm:ss"/></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary"
+                                                >Thêm
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary"
-                                            >Thêm
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </c:if>
+                        <c:if test="${km.trangThai == 1}">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
+                                    style="border-radius: 20px;" disabled>Chọn
+                            </button>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
