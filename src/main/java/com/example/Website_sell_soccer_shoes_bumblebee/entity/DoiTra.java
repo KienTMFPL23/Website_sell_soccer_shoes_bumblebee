@@ -1,9 +1,13 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -38,4 +42,8 @@ public class DoiTra {
     @OneToOne
     @JoinColumn(name = "IdKhachHang")
     KhachHang khachHang;
+
+    @OneToMany(mappedBy = "doiTra")
+    private List<DoiTraChiTiet> doiTraChiTiets;
+
 }

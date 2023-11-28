@@ -201,7 +201,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "GROUP BY c2.mauSac.id, c2.sanPham.id HAVING c2.sanPham.id = ?1)")
     List<ChiTietSanPham> getCTSPByIdSP(UUID idSP);
 
-    @Query(value = "select sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
+    @Query(value = "select ctsp.id, sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
             "from ChiTietSanPham ctsp join SanPham sp on ctsp.IdSP = sp.Id\n" +
             "\t\t\t\t\t\t join MauSac ms on ctsp.IdMauSac = ms.Id\n" +
             "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +

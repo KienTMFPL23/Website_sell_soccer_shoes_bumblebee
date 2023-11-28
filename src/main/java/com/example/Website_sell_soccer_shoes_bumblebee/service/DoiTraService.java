@@ -20,4 +20,6 @@ public interface DoiTraService {
     List<DoiTra> listDoiTraThanhCong();
 
     List<DoiTra> listHuyDoiTra();
+
+    void huyDoiTra(UUID id);
 }

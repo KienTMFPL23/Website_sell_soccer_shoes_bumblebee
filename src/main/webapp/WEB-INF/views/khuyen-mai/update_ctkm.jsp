@@ -129,25 +129,25 @@
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
-                <label>Ngày bắt đầu:</label>
-            </div>
-            <div class="col-lg-8">
-                <input type="datetime-local" class="form-control" value="${ctkm.ngayBatDau}" name="ngayBatDau"/>
-            </div>
-        </div>
+<%--        <div class="row mb-3">--%>
+<%--            <div class="col-lg-1"></div>--%>
+<%--            <div class="col-lg-2">--%>
+<%--                <label>Ngày bắt đầu:</label>--%>
+<%--            </div>--%>
+<%--            <div class="col-lg-8">--%>
+<%--                <input type="datetime-local" class="form-control" value="${ctkm.ngayBatDau}" name="ngayBatDau"/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="row mb-3">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
-                <label>Ngày kết thúc:</label>
-            </div>
-            <div class="col-lg-8">
-                <input type="datetime-local" class="form-control" value="${ctkm.ngayKetThuc}" name="ngayKetThuc"/>
-            </div>
-        </div>
+<%--        <div class="row mb-3">--%>
+<%--            <div class="col-lg-1"></div>--%>
+<%--            <div class="col-lg-2">--%>
+<%--                <label>Ngày kết thúc:</label>--%>
+<%--            </div>--%>
+<%--            <div class="col-lg-8">--%>
+<%--                <input type="datetime-local" class="form-control" value="${ctkm.ngayKetThuc}" name="ngayKetThuc"/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
 
         <div class="row mb-3">

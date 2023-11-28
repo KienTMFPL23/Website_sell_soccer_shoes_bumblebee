@@ -82,14 +82,18 @@
                                 <c:if test="${ctsp.ctkm != null}">
                                     <c:forEach var="km" items="${ctsp.ctkm}">
                                         <c:if test="${km.khuyenMai.donVi == '%'}">
+
                                             <label style="font-weight: 500" id="donGiaKhuyenMai">
+
                                                 <fmt:formatNumber
                                                         value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
                                                         type="number"/> đ
                                             </label>
                                         </c:if>
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+
                                             <label style="font-weight: 500" id="donGiaKhuyenMai">
+
                                                 <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
                                                                   type="number"/> đ
                                             </label>
