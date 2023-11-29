@@ -206,7 +206,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
             "\t\t\t\t\t\t join ChatLieu cl on ctsp.IdChatLieu = cl.Id\n" +
             "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
-            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 0",nativeQuery = true)
+            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 1",nativeQuery = true)
     List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
 
 

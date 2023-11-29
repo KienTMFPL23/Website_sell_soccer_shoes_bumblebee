@@ -86,18 +86,13 @@
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
             <li class="nav-item">
                 <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
-                   href="/bumblebee/doi-hang/list">Chờ xác nhận đổi trả
+                   href="/bumblebee/doi-hang/list-thanh-cong">Đổi trả thành công
                     <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
                    href="/bumblebee/doi-hang/list-huy">Hủy đổi trả<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
-                   href="/bumblebee/doi-hang/list-thanh-cong">Đổi trả thành công
-                    <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
         </ul>
     </div>
@@ -119,16 +114,23 @@
                         <td>${i.count}</td>
                         <td>${dt.hoaDon.maHoaDon}</td>
                         <td>${dt.nhanVien.ho} ${dt.nhanVien.tenDem} ${dt.nhanVien.ten}</td>
-                        <td>${dt.khachHang}</td>
+                        <td>${dt.hoaDon.tenNguoiNhan}</td>
                         <td>
-                            <a id="detailDoiTra" type="submit" class="btn btn-success" data-bs-toggle="modal"
-                               data-bs-target="#${dt.id}">Chi tiết </a>
-                            <div class="modal fade" id="${dt.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                            <a id="openDoiTra"
+                               href="${dt.hoaDon.id}"
+                               onclick="showDoiTraCT(`${dt.hoaDon.id}`)"
+                               class="btn btn-primary"
+                               type="submit"
+                               data-bs-toggle="modal"
+                               data-bs-target="#modalDoiTraCT" style="border-radius: 20px; margin-top: 5px;"
+                            >Chi Tiết
+                            </a>
+                            <div class="modal fade" id="modalDoiTraCT" tabindex="-1"
                                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">${dt.hoaDon.maHoaDon}</h5>
+                                            <h4 class="modal-title fs-5" id="exampleModalLabel">Hóa đơn mua</h4>
                                         </div>
                                         <div class="modal-body">
                                             <table class="table">
@@ -142,17 +144,7 @@
                                                     <th scope="col">Trạng thái</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
-                                                <c:forEach var="hdct" items="${dt.hoaDon.hoaDons}" varStatus="i">
-                                                    <tr>
-                                                        <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
-                                                        <td>${hdct.soLuong}</td>
-                                                        <td>${hdct.donGia}</td>
-                                                        <td>${hdct.chiTietSanPham.mauSac.ten}</td>
-                                                        <td>${hdct.chiTietSanPham.kichCo.size}</td>
-                                                        <td>${hdct.trangThai == '1' ? 'Đã mua' : 'Trả hàng'}</td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <tbody id="tableHoaDonCT">
                                                 </tbody>
                                             </table>
                                             <hr>
@@ -165,20 +157,11 @@
                                                     <th scope="col">Đơn giá</th>
                                                     <th scope="col">Màu sắc</th>
                                                     <th scope="col">Kích cỡ</th>
+                                                    <th scope="col">Lý do</th>
                                                     <th scope="col">Trạng thái</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
-                                                <c:forEach var="dtct" items="${dt.doiTraChiTiets}" varStatus="i">
-                                                    <tr>
-                                                        <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
-                                                        <td>${dtct.soLuong}</td>
-                                                        <td>${dtct.donGia}</td>
-                                                        <td>${dtct.chiTietSanPham.mauSac.ten}</td>
-                                                        <td>${dtct.chiTietSanPham.kichCo.size}</td>
-                                                        <td><button type="button" class="btn btn-danger">${dtct.trangThai == '1' ? 'Sản phẩm đổi' : 'Trả hàng'}</button></td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <tbody id="tableDoiTra">
                                                 </tbody>
                                             </table>
                                         </div>

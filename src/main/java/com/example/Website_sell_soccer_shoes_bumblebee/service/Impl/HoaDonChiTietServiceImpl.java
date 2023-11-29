@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.HoaDonChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
@@ -110,6 +111,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public HoaDonChiTiet getHDCTDoiTra(UUID idHoaDon, UUID idSP) {
         return hoaDonChiTietRepository.getHDCTDoiTra(idHoaDon,idSP);
+    }
+
+    @Override
+    public List<HoaDonChiTietCustom> listHoaDonCTCustom(UUID idHoaDon) {
+        return hoaDonChiTietRepository.listHoaDonCTCustom(idHoaDon);
     }
 
 

@@ -131,10 +131,11 @@
 </table>
 <a href="/bumblebee/don-hang/xac-nhan-doi" class="btn btn-primary">Đổi hàng</a>
 <button data-bs-toggle="modal" type="button"
-        data-bs-target="#staticBackdrop" class="btn btn-danger">Trả hàng
+        data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
 </button>
+<a class="btn btn-success" href="/bumblebee/don-hang/huy-doi-tra">Hủy</a>
 <form method="post"  action="/bumblebee/don-hang/create-tra-hang">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -146,6 +147,7 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Màu sắc</th>
                             <th scope="col">Kích cỡ</th>
@@ -157,6 +159,7 @@
                         <c:forEach var="hd" items="${listHDCT}">
                             <tr>
                                 <td><input class="checkCart" type="checkbox"
+                                           id="checkBoxSP"
                                            name="idListCartDetail"
                                            value="${hd.chiTietSanPham.id}"></td>
                                 <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -177,24 +180,17 @@
                         </c:forEach>
                         </tbody>
                     </table>
-
+                    <strong><p style="color: red" id="logError"></p></strong>
                     <p>Lý do trả hàng</p>
-                    <textarea type="text" name="lyDoDoiTra"></textarea>
+                    <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>
+                    <strong><p style="color: red" id="erorText"></p></strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    <button type="submit" onclick="return taoDoiTra()"  id="xacNhanTra" class="btn btn-primary">Xác nhận</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-
-<a class="btn btn-success" href="/bumblebee/don-hang/huy-doi-tra">Hủy</a>
-<script
-        type="text/javascript"
-        src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"
-></script>
-
 

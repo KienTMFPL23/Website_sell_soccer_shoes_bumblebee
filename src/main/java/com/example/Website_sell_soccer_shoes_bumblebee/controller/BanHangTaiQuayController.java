@@ -295,6 +295,7 @@ public class BanHangTaiQuayController {
             hoaDonThanhToan.setSdt(soDienThoai);
             KhachHang khachHang = khachHangRepository.findKHBySDT(soDienThoai);
 
+            hoaDonThanhToan.setKhachHang(khachHang);
             hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
             hoaDonThanhToan.setPhuongThucThanhToan(1);
 
