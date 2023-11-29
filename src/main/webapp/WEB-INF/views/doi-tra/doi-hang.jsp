@@ -126,10 +126,69 @@
     </tbody>
 </table>
 <a href="/bumblebee/don-hang/xac-nhan-doi" class="btn btn-primary">Đổi hàng</a>
-<a class="btn btn-primary" href="/bumblebee/doi-hang/list">Hủy</a>
-<script
-        type="text/javascript"
-        src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"
-></script>
+
+<button data-bs-toggle="modal" type="button"
+        data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
+</button>
+<a class="btn btn-success" href="/bumblebee/don-hang/huy-doi-tra">Hủy</a>
+<form method="post"  action="/bumblebee/don-hang/create-tra-hang">
+    <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hoàn trả</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Màu sắc</th>
+                            <th scope="col">Kích cỡ</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Đơn giá</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="hd" items="${listHDCT}">
+                            <tr>
+                                <td><input class="checkCart" type="checkbox"
+                                           id="checkBoxSP"
+                                           name="idListCartDetail"
+                                           value="${hd.chiTietSanPham.id}"></td>
+                                <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
+                                <td>${hd.chiTietSanPham.mauSac.ten}</td>
+                                <td>${hd.chiTietSanPham.kichCo.size}</td>
+                                <td>
+                                    <div>
+                                        <input type="number" id="soLuongTra"
+                                               min="0"
+                                               max="${hd.soLuong}"
+                                               name="soLuong"
+                                               value=""
+                                               style="width:50px;"> /${hd.soLuong}
+                                    </div>
+                                </td>
+                                <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <strong><p style="color: red" id="logError"></p></strong>
+                    <p>Lý do trả hàng</p>
+                    <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>
+                    <strong><p style="color: red" id="erorText"></p></strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" onclick="return taoDoiTra()"  id="xacNhanTra" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 

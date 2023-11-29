@@ -2,6 +2,8 @@ package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.HoaDonChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import jakarta.servlet.http.HttpSession;
@@ -56,7 +58,6 @@ public class DoiTraController {
     public String danhSachCho(Model model){
         model.addAttribute("view","../doi-tra/danh-sach-doi-tra.jsp");
         model.addAttribute("listDuDK",hoaDonService.danhSachHDDuDK());
-        model.addAttribute("listDoiTra",doiTraService.listChoXacNhan());
         getTaiKhoan(model);
         return "/admin/index";
     }
@@ -101,6 +102,18 @@ public class DoiTraController {
         ChiTietSanPham ctsp = chiTietSanPhamService.getOne(id);
         List<ChiTietSanPhamCustom> lstSanPham = chiTietSanPhamService.listSPCungLoai(ctsp.getGiaBan());
         return ResponseEntity.ok(lstSanPham);
+    }
+
+    @GetMapping("/bumblebee/don-hang/list-hoa-don-ct/{id}")
+    public ResponseEntity<?> listHoaDonCTCustom(Model model, @PathVariable("id") UUID id){
+        List<HoaDonChiTietCustom> lstHoaDonCT = hoaDonChiTietService.listHoaDonCTCustom(id);
+        return ResponseEntity.ok(lstHoaDonCT);
+    }
+
+    @GetMapping("/bumblebee/don-hang/list-doi-tra-ct/{id}")
+    public ResponseEntity<?> listDoiTraCTCustom(Model model, @PathVariable("id") UUID id){
+        List<DoiTraChiTietCustom> lstDoiTraCT = doiTraChiTietService.listDoiTraCTCustom(id);
+        return ResponseEntity.ok(lstDoiTraCT);
     }
 
     @RequestMapping("/bumblebee/don-hang/tao-doi-tra/{maHD}")
@@ -191,6 +204,7 @@ public class DoiTraController {
             for (ChiTietSanPham ctsp : listCTSP){
                 HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon,ctsp.getId());
                 hoaDonChiTiet.setTrangThai(0);
+                hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
             }
         }else {
             DoiTra doiTra = new DoiTra();
@@ -203,9 +217,10 @@ public class DoiTraController {
             for (ChiTietSanPham ctsp : listCTSP){
                 HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon,ctsp.getId());
                 hoaDonChiTiet.setTrangThai(0);
+                hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
             }
         }
-        return "redirect:/bumblebee/doi-hang/list";
+        return "redirect:/bumblebee/doi-hang/list-thanh-cong";
     }
     private void getTaiKhoan(Model model) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
