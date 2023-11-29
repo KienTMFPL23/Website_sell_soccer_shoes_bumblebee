@@ -21,6 +21,7 @@
                                     <th scope="col">Mã hóa đơn</th>
                                     <th scope="col">Tên khách hàng</th>
                                     <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Trạng thái</th>
                                     <th scope="col"></th>
                                 </tr>
                                 </thead>
@@ -31,6 +32,7 @@
                                         <td>${hd.maHoaDon}</td>
                                         <td>${hd.tenNguoiNhan}</td>
                                         <td>${hd.sdt}</td>
+                                        <td>${hd.trangThai}</td>
                                         <td>
                                             <a class="btn btn-danger" href="/bumblebee/don-hang/tao-doi-tra/${hd.maHoaDon}">
                                                 Chọn
@@ -105,6 +107,7 @@
                 <th scope="col">Mã hóa đơn</th>
                 <th scope="col">Nhân viên</th>
                 <th scope="col">Khách hàng</th>
+                <th scope="col">Ngày đổi trả</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -114,6 +117,7 @@
                         <td>${i.count}</td>
                         <td>${dt.hoaDon.maHoaDon}</td>
                         <td>${dt.nhanVien.ho} ${dt.nhanVien.tenDem} ${dt.nhanVien.ten}</td>
+
                         <td>${dt.hoaDon.tenNguoiNhan}</td>
                         <td>
                             <a id="openDoiTra"
@@ -171,6 +175,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </td>
                     </tr>
                 </c:forEach>

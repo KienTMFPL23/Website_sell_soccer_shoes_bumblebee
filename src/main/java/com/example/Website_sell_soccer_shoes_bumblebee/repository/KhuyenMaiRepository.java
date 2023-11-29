@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +25,13 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
     @Query(value = "select km from KhuyenMai km where km.maKhuyenMai = ?1")
     KhuyenMai findMa(String ma);
 
-    @Query(value = "select km from KhuyenMai km where km.ngayTao between :ngayBatDau and :ngayKetThuc")
-    List<KhuyenMai> searchKhoangNgay(@Param("ngayBatDau") Date ngayBatDau, @Param("ngayKetThuc") Date ngayKetThuc);
+//    @Query(value = "select km from KhuyenMai km where km.ngayTao between :ngayBatDau and :ngayKetThuc")
+//    List<KhuyenMai> searchKhoangNgay(@Param("ngayBatDau") Date ngayBatDau, @Param("ngayKetThuc") Date ngayKetThuc);
+
+    @Query("select km from KhuyenMai km where (?1 is null or km.ngayTao>=?1) and (?2 is null or km.ngayTao<=?2) order by km.ngayTao desc ")
+    List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate);
+
+    @Query(value = "select km from KhuyenMai km where km.ngayKetThuc = ?1 and km.trangThai = 0")
+    List<KhuyenMai> findByNgayKetThucBeforeAndTrangThai(LocalDateTime ngayKetThuc);
+
 }
