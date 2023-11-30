@@ -164,14 +164,15 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             @Param("size") String size
     );
 
-    @Query(value = "SELECT DISTINCT c.*\n" +
-            "FROM ChiTietSanPham c\n" +
-            "INNER JOIN (\n" +
-            "    SELECT idSP, idMauSac, MIN(id) AS min_id\n" +
-            "    FROM ChiTietSanPham\n" +
-            "    GROUP BY idSP, idMauSac\n" +
-            ") c2 ON c.id = c2.min_id\n" +
-            "ORDER BY c.idSP, c.idMauSac;", nativeQuery = true)
+    @Query(value = "SELECT *\n" +
+            "FROM ChiTietSanPham c1\n" +
+            "WHERE NOT EXISTS (\n" +
+            "    SELECT 1\n" +
+            "    FROM ChiTietSanPham c2\n" +
+            "    WHERE c1.idSP = c2.idSP\n" +
+            "        AND c1.idMauSac = c2.idMauSac\n" +
+            "        AND c1.id > c2.id\n" +
+            ")", nativeQuery = true)
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +

@@ -44,52 +44,52 @@
 <div class="container">
     <div class="status text-center">
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
-            <li class="nav-item">
+            <li class="nav-item" onclick="changeState('all')">
                 <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
                    href="/don-hang/list-all">Tất cả
                     <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" onclick="changeState('cho-xac-nhan')">
                 <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
                    href="/don-hang/list-cho-xac-nhan">Chờ xác nhận <span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" onclick="changeState('chuan-bi')">
                 <a class="nav-link  ${donHang == 'chuan-bi' ? 'active' : ''}"
                    href="/don-hang/list-chuan-bi">Đang chuẩn bị<span
                         class="badge text-bg-secondary">${countHDXacNhan}</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" onclick="changeState('dang-giao')">
                 <a class="nav-link  ${donHang == 'dang-giao' ? 'active' : ''}"
                    href="/don-hang/list-dang-giao">Đang giao<span
                         class="badge text-bg-secondary">${countHDDangGiao}</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" onclick="changeState('hoan-thanh')">
                 <a class="nav-link  ${donHang == 'hoan-thanh' ? 'active' : ''}"
                    href="/don-hang/list-hoan-thanh">Hoàn thành<span
                         class="badge text-bg-secondary">${countHDHT}</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" onclick="changeState('huy')">
                 <a class="nav-link  ${donHang == 'huy' ? 'active' : ''}" href="/don-hang/list-huy">Đã
                     huỷ<span
                             class="badge text-bg-secondary">${countHDHuy}</span></a>
             </li>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link  ${donHang == 'don-doi' ? 'active' : ''}"--%>
-<%--                   href="/don-hang/list-don-doi">Đổi hàng<span--%>
-<%--                        class="badge text-bg-secondary">${countHDDoiHang}</span></a>--%>
-<%--            </li>--%>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link  ${donHang == 'don-da-doi' ? 'active' : ''}"--%>
-<%--                   href="/don-hang/list-don-da-doi">Đã đổi hàng<span--%>
-<%--                        class="badge text-bg-secondary">${countHDDaDoi}</span></a>--%>
-<%--            </li>--%>
+            <li class="nav-item"  onclick="changeState('don-doi')">
+                <a class="nav-link  ${donHang == 'don-doi' ? 'active' : ''}"
+                   href="/don-hang/list-don-doi">Đổi trả hàng<span
+                        class="badge text-bg-secondary">${countHDDoiHang}</span></a>
+            </li>
+            <li class="nav-item"  onclick="changeState('don-da-doi')">
+                <a class="nav-link  ${donHang == 'don-da-doi' ? 'active' : ''}"
+                   href="/don-hang/list-don-da-doi">Đã đổi trả hàng<span
+                        class="badge text-bg-secondary">${countHDDaDoi}</span></a>
+            </li>
         </ul>
     </div>
     <br>
     <div class="row">
         <div class="col-lg-7">
-            <form:form action="/don-hang/search-don-hang" modelAttribute="searchForm">
+            <form:form action="/don-hang/search-don-hang" modelAttribute="searchForm" id="searchForm">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3" style="color: #003eff">
                         Từ Ngày:
@@ -100,12 +100,15 @@
                         Đến Ngày:
                         <form:input class="form-control" type="datetime-local" path="toDate"/>
                     </div>
-                    <input type="hidden" name="donHang" value="${donHang}"/>
+                        <%--                    <input type="hidden" name="donHang" value="${donHang}"/>--%>
+                    <input type="hidden" id="donHang" name="donHang" value="${donHang}"/>
 
                     <div class="col-lg-3" style="color: #003eff">
                         Loại hoá đơn:
                         <form:select class="form-control" path="keyword">
                             <option value="">--Loại hoá đơn--</option>
+                            <%--                            <form:option value="0">Bán Online</form:option>--%>
+                            <%--                            <form:option value="1">Bán Tại Quầy</form:option>--%>
                             <c:forEach var="loaiDon" items="${dsLoaiDon}">
                                 <form:option value="${loaiDon.key}">${loaiDon.value}</form:option>
                             </c:forEach>
@@ -186,12 +189,12 @@
 
                             <td>
                                 <c:if test="${hd.trangThai== 1  }">Chờ xác nhận</c:if>
-                                <c:if test="${hd.trangThai== 2 }">Đang chuẩn bị(xác nhận thanh toán)</c:if>
+                                <c:if test="${hd.trangThai== 2 }">Đang chuẩn bị</c:if>
                                 <c:if test="${hd.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hd.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hd.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hd.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hd.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đổi trả hàng</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đã đổi trả</c:if>
                                 <c:if test="${hd.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -246,8 +249,9 @@
                                     <%--        trạng thái chờ xác nhận--%>
                                 <c:if test="${hd.trangThai== 1}">
                                     <c:if test="${hd.loaiHoaDon==0}">
-                                        <a href="/don-hang/update-xac-nhan/${hd.id}" style="border-radius: 20px"
-                                           class="btn btn-warning" onclick="return confirm('Chờ xác nhận ?');">Xác
+                                        <%--                                        href="/don-hang/update-xac-nhan/${hd.id}"--%>
+                                        <a style="border-radius: 20px" class="btn btn-warning"
+                                           onclick="confirmAndUpdateXacNhan('${hd.id}')">Xác
                                             nhận</a></c:if>
                                     <c:if test="${hd.loaiHoaDon==1}">
                                         <a style="border-radius: 20px"
@@ -261,9 +265,10 @@
                                 </c:if>
                                     <%--        trạng thái đang chuẩn bị--%>
                                 <c:if test="${hd.trangThai== 2 && hd.loaiHoaDon==0}">
-                                    <a href="/don-hang/update-chuan-bi/${hd.id}" style="border-radius: 20px"
+                                    <%--                                    href="/don-hang/update-chuan-bi/${hd.id}"--%>
+                                    <a style="border-radius: 20px"
                                        class="btn btn-success"
-                                       onclick="return confirm('Bạn có chắc muốn giao hàng ?');">Giao hàng</a>
+                                       onclick="confirmAndChuanBiGiaoHang('${hd.id}')">Giao hàng</a>
                                     <a class="btn btn-danger" onclick="confirmAndHuy('${hd.id}')"
                                        style="border-radius: 20px">Huỷ</a>
                                 </c:if>
@@ -274,24 +279,24 @@
                                         nhận</a>
                                 </c:if>
                                 <c:if test="${hd.trangThai== 4 && hd.loaiHoaDon==0}">
-                                    <a  style="border-radius: 20px"
+                                    <a style="border-radius: 20px"
                                        class="btn btn-warning" onclick="confirmAndXacNhanGiao('${hd.id}')">Xác
                                         nhận</a>
                                     <%--                                    href="/don-hang/huy-don-hang/${hd.id}"--%>
                                     <a onclick="confirmAndHuy('${hd.id}')" class="btn btn-danger"
                                        style="border-radius: 20px">Huỷ</a>
                                 </c:if>
-<%--                                <c:if test="${hd.trangThai== 5}">--%>
-<%--                                    <a href="/don-hang/doi-hang/${hd.id}" style="border-radius: 20px"--%>
-<%--                                       class="btn btn-warning" onclick="return confirm('Xác nhận đổi hàng ?');">Đổi--%>
-<%--                                        hàng</a>--%>
-<%--                                </c:if>--%>
-<%--                                <c:if test="${hd.trangThai== 6}">--%>
+                                    <%--                                <c:if test="${hd.trangThai== 5}">--%>
+                                    <%--                                    <a href="/don-hang/doi-hang/${hd.id}" style="border-radius: 20px"--%>
+                                    <%--                                       class="btn btn-warning" onclick="return confirm('Xác nhận đổi hàng ?');">Đổi--%>
+                                    <%--                                        hàng</a>--%>
+                                    <%--                                </c:if>--%>
+                                    <%--                                <c:if test="${hd.trangThai== 6}">--%>
 
-<%--                                    <a href="/don-hang/da-doi-hang/${hd.id}" style="border-radius: 20px"--%>
-<%--                                       class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn đổi hàng ?');">Xác--%>
-<%--                                        nhận</a>--%>
-<%--                                </c:if>--%>
+                                    <%--                                    <a href="/don-hang/da-doi-hang/${hd.id}" style="border-radius: 20px"--%>
+                                    <%--                                       class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn đổi hàng ?');">Xác--%>
+                                    <%--                                        nhận</a>--%>
+                                    <%--                                </c:if>--%>
                                 <div class="modal fade" id="${hd.id}" data-bs-backdrop="static"
                                      data-bs-keyboard="false"
                                      tabindex="-1"
@@ -420,7 +425,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <c:choose>
-                                                                        <c:when test="${not empty hd.diaChiShip }">
+                                                                        <c:when test="${not empty hd.diaChiShip}">
                                                                             ${hd.diaChiShip}
                                                                         </c:when>
                                                                         <c:when test="${not empty hd.khachHang.diaChi}">
@@ -453,6 +458,7 @@
                 </td>
                 <td colspan="8" class="text-center">${messError}</td>
             </c:if>
+            <div>${mess}</div>
             <div class="text-center">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
@@ -478,6 +484,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+
+<script>
+    function changeState(state) {
+        document.getElementById('donHang').value = state; // Set the hidden field value
+        document.getElementById('searchForm').submit(); // Submit the form
+    }
+</script>
 <script type="text/javascript">
     $("#myInput").keyup(function () {
         var value = $(this).val().toLowerCase();
@@ -545,6 +558,19 @@
     }
 </script>
 <script>
+    function confirmAndUpdateXacNhan(id) {
+        var ghiChu = prompt('Nhập ghi chú xác nhận:', '');
+        var confirmResult1 = false;
+        confirmResult1 = confirm('Bạn có chắc muốn xác nhận?');
+        if (confirmResult1) {
+
+            window.location.href = '/don-hang/update-xac-nhan/' + id + '?ghiChu=' + encodeURIComponent(ghiChu);
+        } else {
+
+        }
+    }
+</script>
+<script>
     function confirmAndGiaoHang(id) {
         var ghiChu = prompt('Nhập ghi chú huỷ đơn hàng:', '');
 
@@ -559,6 +585,17 @@
             }
         } else {
             alert('Ghi chú không được để trống. Huỷ đơn hàng không thực hiện.');
+        }
+    }
+</script>
+<script>
+    function confirmAndChuanBiGiaoHang(id) {
+        var ghiChu = prompt('Nhập ghi chú giao đơn hàng:', '');
+        var confirmResult = false;
+        confirmResult = confirm('Bạn có chắc muốn giao đơn hàng?');
+        if (confirmResult) {
+
+            window.location.href = '/don-hang/update-chuan-bi/' + id + '?ghiChu=' + encodeURIComponent(ghiChu);
         }
     }
 </script>
