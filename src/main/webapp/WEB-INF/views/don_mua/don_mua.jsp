@@ -54,7 +54,7 @@
         text-decoration: none;
         color: #37517E;
         display: block;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     #menu a:hover {
@@ -133,13 +133,13 @@
     .menu-left > a {
         color: #0b0b0b;
         text-decoration: none;
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .menu-left > a:hover {
         color: #37517E;
         text-decoration: none;
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .table > a {
@@ -206,9 +206,9 @@
                                 <div class="trang-thai-don-hang">
                                     <c:if test="${hd.trangThai == 1}"><p>CHỜ XÁC NHẬN</p></c:if>
                                     <c:if test="${hd.trangThai == 2}"><p>ĐANG CHUẨN BỊ</p></c:if>
-                                    <c:if test="${hd.trangThai == 4}"><p>ĐANG GIAO</p></c:if>
-                                    <c:if test="${hd.trangThai == 5}"><p>HOÀN THÀNH</p></c:if>
-                                    <c:if test="${hd.trangThai == 8}"><p>ĐÃ HỦY</p></c:if>
+                                    <c:if test="${hd.trangThai == 3}"><p>ĐANG GIAO</p></c:if>
+                                    <c:if test="${hd.trangThai == 4}"><p>HOÀN THÀNH</p></c:if>
+                                    <c:if test="${hd.trangThai == 5}"><p>ĐÃ HỦY</p></c:if>
                                     <c:if test="${hd.trangThai == 6}"><p>TRẢ HÀNG</p></c:if>
                                     <c:if test="${hd.trangThai == 7}"><p>ĐÃ TRẢ HÀNG</p></c:if>
                                 </div>
@@ -249,8 +249,6 @@
                                                             <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
                                                                               type="number"/> đ
                                                         </c:if>
-
-
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -258,11 +256,6 @@
                                     </a>
                                 </div>
                                 <hr>
-
-                                <div class="tong-tien">
-                                    <h3 id="tongTien"></h3>
-                                </div>
-
                             </div>
                         </div>
                     </c:forEach>
@@ -279,15 +272,5 @@
 </main>
 </body>
 <script>
-    function capNhatTongTien(){
-        var thanhTienList = document.getElementsByClassName("thanhTien");
-        var total = 0;
-        for (let i = 0; i < thanhTienList.length; i++) {
-            var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
-            total += donGia;
-        }
-        var totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-        document.getElementById("tongTien").innerHTML ="Thành tiền: " +totalFormatted;
-    }
-    capNhatTongTien();
+
 </script>
