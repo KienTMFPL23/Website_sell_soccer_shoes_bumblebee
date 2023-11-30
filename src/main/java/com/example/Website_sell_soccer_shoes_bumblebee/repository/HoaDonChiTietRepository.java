@@ -54,4 +54,7 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
             "            join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
             "            where hdtc.IdHoaDon = ?1",nativeQuery = true)
     List<HoaDonChiTietCustom> listHoaDonCTCustom(UUID idHoaDon);
+
+    @Query("delete from HoaDonChiTiet hdct where hdct.hoaDon.id = ?1")
+    void deletHoaDonCTById(UUID idHoaDon);
 }

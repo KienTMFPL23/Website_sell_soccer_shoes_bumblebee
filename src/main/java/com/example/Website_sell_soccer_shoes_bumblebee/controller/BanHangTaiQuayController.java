@@ -164,8 +164,10 @@ public class BanHangTaiQuayController {
     public String deleteHoaDon(@PathVariable("id") UUID id) {
         List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         if (listHoaDonCT.size() != 0) {
-            hoaDonChiTietService.removeHDCT(id);
-            hoaDonChiTietService.deleteByHoaDon(id);
+            for(HoaDonChiTiet hdct : listHoaDonCT){
+                hoaDonChiTietService.deleteHoaDonCT(hdct.getId());
+                chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(),hdct.getSoLuong());
+            }
         }
         hoaDonService.deleteHoaDon(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
@@ -266,9 +268,9 @@ public class BanHangTaiQuayController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
         Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
-        if (soLuong > soLuongTon) {
-            hoaDonChiTiet.setSoLuong(soLuongTon);
-            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), 0);
+        if (soLuong > 5) {
+            hoaDonChiTiet.setSoLuong(5);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - 5);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
             return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
         }

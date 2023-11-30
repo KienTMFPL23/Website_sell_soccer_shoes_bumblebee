@@ -46,7 +46,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public HoaDonChiTiet deleteHoaDonCT(UUID id) {
         HoaDonChiTiet hdct = hoaDonChiTietRepository.findById(id).orElse(null);
-        hoaDonChiTietRepository.delete(hdct);
+        if (hdct != null) {
+            hoaDonChiTietRepository.delete(hdct);
+        }
         return hdct;
     }
 
@@ -116,6 +118,11 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public List<HoaDonChiTietCustom> listHoaDonCTCustom(UUID idHoaDon) {
         return hoaDonChiTietRepository.listHoaDonCTCustom(idHoaDon);
+    }
+
+    @Override
+    public void deleteHoaDonCTById(UUID idHoaDon) {
+        hoaDonChiTietRepository.deletHoaDonCTById(idHoaDon);
     }
 
 

@@ -40,12 +40,7 @@ function showDoiTraCT(id) {
                 '<td>' + item.donGia + '</td>' +
                 '<td>' + item.tenMau + '</td>' +
                 '<td>' + item.size + '</td>' +
-                '<td>' +'<c:if test="${item.trangThai == 0}">\n' +
-                '            <button class="btn btn-danger">Trả hàng</button>\n' +
-                '       </c:if>' +
-                        +'<c:if test="${item.trangThai == 1}">\n' +
-                '            <button class="btn btn-danger">Đã Mua</button>\n' +
-                '       </c:if>' +
+                '<td>' + '<c:if test="${item.trangThai == 1}"><button class="btn btn-success">Đã mua</button></c:if>' + '</td>' +
                 '</td>' +
                 '</tr>';
             bodyHoaDon.append(row);
@@ -63,7 +58,7 @@ function showDoiTraCT(id) {
                 '<td>' + item.tenMau + '</td>' +
                 '<td>' + item.size + '</td>' +
                 '<td>' + item.lyDoDoiTra + '</td>' +
-                '<td>' + item.trangThai + '</td>' +
+                '<td>' + '<c:if test="${item.trangThai == 2}"><button class="btn btn-danger">Hàng trả</button></c:if>' + '</td>' +
                 '</tr>';
             bodyDoiTra.append(row);
         });

@@ -71,67 +71,53 @@
     </tbody>
 </table>
 <hr>
-<strong>Sản phẩm đổi trả</strong>
-<table class="table table-bordered" style="margin-top: 10px">
-    <thead>
-    <tr>
-        <th scope="col"> Tên sản phẩm</th>
-        <th scope="col"> Màu sắc</th>
-        <th scope="col"> Kích cỡ</th>
-        <th scope="col"> Số lượng</th>
-        <th scope="col"> Đơn giá</th>
-        <th scope="col"> Hiện trạng sản phẩm</th>
-        <th scope="col"> Lý do đổi trả</th>
-        <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="dtct" items="${listDoiTraCT}">
+<strong>Sản phẩm đổi</strong>
+<form method="post" action="/bumblebee/don-hang/xac-nhan-doi">
+    <table class="table table-bordered" style="margin-top: 10px">
+        <thead>
         <tr>
-            <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
-            <td>${dtct.chiTietSanPham.mauSac.ten}</td>
-            <td>${dtct.chiTietSanPham.kichCo.size}</td>
-            <td>
-                <form:form method="post" modelAttribute="dtct" action="">
+            <th scope="col"> Tên sản phẩm</th>
+            <th scope="col"> Màu sắc</th>
+            <th scope="col"> Kích cỡ</th>
+            <th scope="col"> Số lượng</th>
+            <th scope="col"> Đơn giá</th>
+            <th scope="col"> Lý do đổi trả</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="dtct" items="${listDoiTraCT}">
+            <tr>
+                <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
+                <td>${dtct.chiTietSanPham.mauSac.ten}</td>
+                <td>${dtct.chiTietSanPham.kichCo.size}</td>
+                <td>
                     <input type="number" class="form-control"
                            min="1"
                            name="soLuong"
                            value="${dtct.soLuong}"
                            onblur="this.form.submit()"
                            style="width:100px;">
-                </form:form>
-
-            </td>
-            <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
-            <td>
-                <select class="form-control">
-                    <option>Sản phẩm đổi</option>
-                    <option>Sản phẩm trả</option>
-                </select>
-            </td>
-            <td>
-                <select class="form-control">
-                    <option>----</option>
-                    <option>Hàng lỗi</option>
-                    <option>Sai kích cỡ</option>
-                    <option>Sai màu sắc</option>
-                    <option>Other</option>
-                </select>
-            </td>
-            <td>
-                <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
-            </td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<a href="/bumblebee/don-hang/xac-nhan-doi" class="btn btn-primary">Đổi hàng</a>
+                </td>
+                <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
+                <td>
+                    <textarea type="text" name="lyDoDoiTra"></textarea>
+                </td>
+                <td>
+                    <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Đổi hàng</button>
+</form>
 
 <button data-bs-toggle="modal" type="button"
         data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
 </button>
 <a class="btn btn-success" href="/bumblebee/don-hang/huy-doi-tra">Hủy</a>
-<form method="post"  action="/bumblebee/don-hang/create-tra-hang">
+<form method="post" action="/bumblebee/don-hang/create-tra-hang">
     <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -165,11 +151,15 @@
                                 <td>
                                     <div>
                                         <input type="number" id="soLuongTra"
-                                               min="0"
+                                               min="1"
                                                max="${hd.soLuong}"
                                                name="soLuong"
+                                               oninput="validateSoLuong(${hd.soLuong})"
                                                value=""
                                                style="width:50px;"> /${hd.soLuong}
+                                        <p id="errorMsg" style="color: red; display: none">
+                                            Không hợp lệ
+                                        </p>
                                     </div>
                                 </td>
                                 <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
@@ -178,13 +168,22 @@
                         </tbody>
                     </table>
                     <strong><p style="color: red" id="logError"></p></strong>
-                    <p>Lý do trả hàng</p>
-                    <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>
-                    <strong><p style="color: red" id="erorText"></p></strong>
+                    <div>
+                        <strong>Lý do trả hàng</strong>
+                        <select id="lyDoTra" class="form-control" style="width: 200px" name="lyDoDoiTra">
+                            <option value="">-----</option>
+                            <option value="Mẫu sai">Mẫu sai</option>
+                            <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
+                        </select>
+                        <%--                        <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>--%>
+                        <strong><p style="color: red" id="erorText"></p></strong>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" onclick="return taoDoiTra()"  id="xacNhanTra" class="btn btn-primary">Xác nhận</button>
+                    <button type="submit" onclick="return taoDoiTra()" id="xacNhanTra" class="btn btn-primary">Xác
+                        nhận
+                    </button>
                 </div>
             </div>
         </div>

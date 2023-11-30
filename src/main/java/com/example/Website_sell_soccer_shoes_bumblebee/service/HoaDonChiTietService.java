@@ -49,4 +49,6 @@ public interface HoaDonChiTietService {
 
     List<HoaDonChiTietCustom> listHoaDonCTCustom(UUID idHoaDon);
 
+    void deleteHoaDonCTById(UUID idHoaDon);
+
 }
