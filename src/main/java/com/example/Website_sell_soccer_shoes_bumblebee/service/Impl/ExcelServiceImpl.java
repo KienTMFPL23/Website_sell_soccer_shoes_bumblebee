@@ -139,12 +139,15 @@ public class ExcelServiceImpl {
             Double giaBan =row.getCell(6).getNumericCellValue();
             int SoLuong =(int) row.getCell(7).getNumericCellValue();
             String mota = row.getCell(8).getStringCellValue();
-            int tt = (int) row.getCell(9).getNumericCellValue();
+            Date ngayTao = row.getCell(9).getDateCellValue();
+            int tt = (int) row.getCell(10).getNumericCellValue();
             if(mota.trim().isEmpty()){
                 throw new IOException("Mô tả chưa được nhập ");
             }
+
             ctsp.setGiaBan(giaBan);
             ctsp.setSoLuong(SoLuong);
+            ctsp.setNgayTao(ngayTao);
             ctsp.setMoTaCT(mota);
             ctsp.setTrangThai(tt);
             ctspr.save(ctsp);

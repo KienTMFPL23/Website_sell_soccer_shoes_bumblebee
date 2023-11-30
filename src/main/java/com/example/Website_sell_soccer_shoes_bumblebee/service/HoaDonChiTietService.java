@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.HoaDonChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietKhuyenMai;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.ChiTietSanPham;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDon;
@@ -44,6 +45,8 @@ public interface HoaDonChiTietService {
 
     List<HoaDonChiTiet> listHDCTByMaHD(String maHoaDon);
 
-    HoaDonChiTiet getHDCTDoiTra(String maHD,UUID idSP);
+    HoaDonChiTiet getHDCTDoiTra(UUID idHD,UUID idSP);
+
+    List<HoaDonChiTietCustom> listHoaDonCTCustom(UUID idHoaDon);
 
 }

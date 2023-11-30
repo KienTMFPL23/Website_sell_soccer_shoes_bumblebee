@@ -75,7 +75,7 @@
                 <label>Mã:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="maKhuyenMai" name="maKhuyenMai"/>
+                <form:input type="text" class="form-control" path="maKhuyenMai" name="maKhuyenMai" />
                 <form:errors path="maKhuyenMai" cssStyle="color: crimson"></form:errors>
                 <span style="color: crimson">${mess_Ma}</span>
             </div>
@@ -118,13 +118,24 @@
             </div>
         </div>
 
+<%--        <div class="row mb-3">--%>
+<%--            <div class="col-lg-1"></div>--%>
+<%--            <div class="col-lg-2">--%>
+<%--                <label>Ngày tạo:</label>--%>
+<%--            </div>--%>
+<%--            <div class="col-lg-8">--%>
+<%--                <form:input type="datetime-local" class="form-control" path="ngayTao" value="${km.ngayTao}"/>--%>
+<%--                <form:errors path="ngayTao" cssStyle="color: crimson"></form:errors>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label>Ngày bắt đầu:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="datetime-local" class="form-control" path="ngayBatDau" />
+                <form:input type="datetime-local" class="form-control" path="ngayBatDau" value="${km.ngayBatDau}"/>
                 <form:errors path="ngayBatDau" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
@@ -135,7 +146,7 @@
                 <label>Ngày kết thúc:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="datetime-local" class="form-control" path="ngayKetThuc" />
+                <form:input type="datetime-local" class="form-control" path="ngayKetThuc" value="${km.ngayKetThuc}"/>
                 <form:errors path="ngayKetThuc" cssStyle="color: crimson"></form:errors>
                 <span style="color: crimson">${mess_Ngay}</span>
             </div>
@@ -152,9 +163,15 @@
             </div>
         </div>
         <div class="buttonSubmit">
-            <button class="button" type="submit">SUBMIT</button>
+            <button class="button" type="submit" onclick="thanhCong()">SUBMIT</button>
         </div>
 
     </form:form>
 </div>
 </body>
+
+<script>
+    function thanhCong(){
+        alert("Thêm mới thành công")
+    }
+</script>

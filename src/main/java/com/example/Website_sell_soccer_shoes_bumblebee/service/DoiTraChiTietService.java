@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface DoiTraChiTietService {
     List<DoiTraChiTiet> listDoiTraCTById(UUID idDoiTra);
 
     void removeDoiTraCT(UUID id);
+
+    List<DoiTraChiTietCustom> listDoiTraCTCustom(UUID idHoaDon);
 }

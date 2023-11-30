@@ -236,6 +236,8 @@ CREATE TABLE KhuyenMai
     TenKhuyenMai	NVARCHAR(100),
     GiaTri			Float,
     NgayTao			DateTime,
+    NgayKetThuc				DateTime,
+    NgayCapNhat			DateTime,
     DonVi           Varchar ,
     TrangThai		INT
 )
@@ -246,8 +248,7 @@ CREATE TABLE ChiTietKhuyenMai
     IdChiTietSanPham		UNIQUEIDENTIFIER ,
     IdKhuyenMai				UNIQUEIDENTIFIER ,
     NgayBatDau				DateTime,
-    NgayKetThuc				DateTime,
-    NgayCapNhat			DateTime,
+
     TrangThai		INT
 )
 
@@ -257,6 +258,7 @@ CREATE TABLE DoiTra
 	IdHoaDon    UNIQUEIDENTIFIER REFERENCES HoaDon (Id),
 	IdNhanVien  UNIQUEIDENTIFIER REFERENCES NhanVien (Id),
 	IdKhachHang  UNIQUEIDENTIFIER REFERENCES KhachHang (Id),
+    MaDoiTra         VARCHAR(255),
 	NgayDoiTra   DateTime,
 	TrangThai   int
 )
@@ -267,6 +269,7 @@ CREATE TABLE DoiTraChiTiet
 	IdChiTietSP      UNIQUEIDENTIFIER REFERENCES ChiTietSanPham (Id),
 	IdDoiTra         UNIQUEIDENTIFIER REFERENCES DoiTra (Id),
 	IdHDCT			 UNIQUEIDENTIFIER REFERENCES HoaDonChiTiet (Id),
+
 	SoLuong			 int,
 	DonGia			 money,
 	LyDoDoiTra		 NVARCHAR(max),

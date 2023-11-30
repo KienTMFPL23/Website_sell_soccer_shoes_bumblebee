@@ -23,6 +23,9 @@ public interface ChiTietKhuyenMaiRepository extends JpaRepository<ChiTietKhuyenM
     @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.ctsp.id = ?1")
     ChiTietKhuyenMai findIdCTSP(UUID idCTSP);
 
+    @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.khuyenMai.id = ?1")
+    List<ChiTietKhuyenMai> findIdKhuyenMai(UUID idKM);
+
     @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.id = ?1")
     ChiTietKhuyenMai findId(UUID id);
 

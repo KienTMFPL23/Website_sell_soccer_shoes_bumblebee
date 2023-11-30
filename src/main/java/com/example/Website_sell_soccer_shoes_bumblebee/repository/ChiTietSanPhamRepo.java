@@ -172,7 +172,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "    WHERE c1.idSP = c2.idSP\n" +
             "        AND c1.idMauSac = c2.idMauSac\n" +
             "        AND c1.id > c2.id\n" +
-            ")", nativeQuery = true)
+            ");", nativeQuery = true)
+  
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
@@ -201,14 +202,17 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "GROUP BY c2.mauSac.id, c2.sanPham.id HAVING c2.sanPham.id = ?1)")
     List<ChiTietSanPham> getCTSPByIdSP(UUID idSP);
 
-    @Query(value = "select sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
+    @Query(value = "select ctsp.id, sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
             "from ChiTietSanPham ctsp join SanPham sp on ctsp.IdSP = sp.Id\n" +
             "\t\t\t\t\t\t join MauSac ms on ctsp.IdMauSac = ms.Id\n" +
             "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
             "\t\t\t\t\t\t join ChatLieu cl on ctsp.IdChatLieu = cl.Id\n" +
             "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
-            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 0",nativeQuery = true)
+            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 1",nativeQuery = true)
     List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
+
+    @Query(value = "select ctsp from ChiTietSanPham ctsp where ctsp.trangThai = 1 and ctsp.soLuong > 1")
+    List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
 
 
 }
