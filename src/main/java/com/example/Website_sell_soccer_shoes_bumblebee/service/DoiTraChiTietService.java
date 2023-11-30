@@ -15,4 +15,6 @@ public interface DoiTraChiTietService {
     void removeDoiTraCT(UUID id);
 
     List<DoiTraChiTietCustom> listDoiTraCTCustom(UUID idHoaDon);
+
+    DoiTraChiTiet getDoiTraCT(UUID idDoiTra,UUID idCTSP);
 }

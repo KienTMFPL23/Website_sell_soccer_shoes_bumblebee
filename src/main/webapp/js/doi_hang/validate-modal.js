@@ -16,38 +16,30 @@ function taoDoiTra() {
         var logEror = document.getElementById('logError');
         logEror.innerText = 'Vui lòng chọn sản phẩm cần trả';
         return false;
-    }if( textLydo.empty()){
+    }if( textLydo === ''){
         var erorText = document.getElementById('erorText');
         erorText.innerText = 'Vui lòng nhập lý do đổi trả';
         return false;
     }
     else {
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your data has been saved",
+            showConfirmButton: false,
+            timer: 1500
+        });
         return true;
     }
 }
-
-// submitButton.addEventListener('click', function (event) {
-//     var numberOfCheckedCheckboxes = 0;
-//     checkboxes.forEach(function (checkbox) {
-//         if (checkbox.checked) {
-//             numberOfCheckedCheckboxes++;
-//         }
-//     });
-//     if (numberOfCheckedCheckboxes === 0) {
-
-//         return false;
-//     } else {
-//         return true;
-//     }
-
-//         event.preventDefault();
-//         return;
-//     }
-//     Swal.fire({
-//         position: "center",
-//         icon: "success",
-//         title: "Your data has been saved",
-//         showConfirmButton: false,
-//         timer: 1500
-//     });
-// });
+function validateSoLuong(max) {
+    var soLuong = document.getElementById('soLuongTra');
+    var errorMsg = document.getElementById("errorMsg");
+    if (soLuong.value > max){
+       soLuong.value = max;
+    }else  if(soLuong.value <= 0){
+        soLuong.value = 1;
+    }else {
+        errorMsg.style.display = "none";
+    }
+}

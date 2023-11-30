@@ -60,7 +60,8 @@
                        style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
                     </a>
 
-                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}" onclick="return confirm('Bạn có muốn xóa không ?')"
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
+                       onclick="return confirm('Bạn có muốn xóa không ?')"
 
                        class="btndele"><img
                             src="/images_template/deleteHD.png"></a>
@@ -194,7 +195,7 @@
                                                             <th scope="col"></th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody id="myTable" >
+                                                        <tbody id="myTable">
                                                         <c:forEach items="${listSanPham}" var="sp" varStatus="i">
                                                             <tr>
                                                                 <td>${i.count}</td>
@@ -244,14 +245,38 @@
                                 </form>
                             </div>
                             <div class="col-lg-6">
-                                <div class="ban-hang vid">
-                                    <video
-                                            style="border: 1px solid"
-                                            id="video"
-                                            autoplay="true"
-                                            width="200px"
-                                            height="120px"
-                                    ></video>
+                                <button type="button" id="startButton" onclick="startScan()" class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop">
+                                    Quét QR
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                     data-bs-keyboard="false" tabindex="-1"
+                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="ban-hang vid">
+                                                    <video
+                                                            style="border: 1px solid"
+                                                            id="video"
+                                                            autoplay="true"
+                                                            width="270px"
+                                                            height="150px"
+                                                    ></video>
+                                                </div>
+                                                <div id="output"></div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="stopButton" onclick="stopScan()"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -376,7 +401,7 @@
                     <p><b>Tổng tiền : </b> <fmt:formatNumber value="${sumMoney}" type="number"/>
                         đ</p>
                         <%--                    <p><b>Giảm giá :</b> 0đ</p>--%>
-<%--                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>--%>
+                        <%--                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>--%>
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
                                                      onchange="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly/> đ</p>
@@ -563,8 +588,8 @@
     });
 </script>
 
-<%--<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
-<%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
+<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
@@ -618,7 +643,7 @@
     function confirmDelete(event) {
 
         var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result){
+        if (result) {
             let timerInterval;
             Swal.fire({
                 title: "Thành công !!!",
@@ -643,7 +668,7 @@
                 }
             });
             return true;
-        }else {
+        } else {
             event.preventDefault();
             return false;
         }
@@ -654,7 +679,7 @@
 <script>
     function alertThanhToan() {
         var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result){
+        if (result) {
             let timerInterval;
             Swal.fire({
                 title: "Thành công !!!",
@@ -679,7 +704,7 @@
                 }
             });
             return true;
-        }else {
+        } else {
             event.preventDefault();
             return false;
         }

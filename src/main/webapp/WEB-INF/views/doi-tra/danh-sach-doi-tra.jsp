@@ -49,36 +49,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button type="button" id="startButton" onclick="startScan()" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop">
-                Quet QR
-            </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="ban-hang vid">
-                                <video
-                                        style="border: 1px solid"
-                                        id="scanHoaDon"
-                                        autoplay="true"
-                                        width="270px"
-                                        height="150px"
-                                ></video>
-                            </div>
-                            <div id="output"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="stopButton" onclick="stopScan()" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <br>
@@ -86,12 +57,12 @@
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
             <li class="nav-item">
                 <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
-                   href="/bumblebee/doi-hang/list-thanh-cong">Đổi trả thành công
+                   href="/bumblebee/doi-hang/list-tra-hang">Danh sách trả hàng
                     <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
-                   href="/bumblebee/doi-hang/list-huy">Hủy đổi trả<span
+                   href="/bumblebee/doi-hang/list-doi-hang">Danh sách đổi hàng<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
         </ul>
@@ -117,7 +88,6 @@
                         <td>${dt.hoaDon.tenNguoiNhan}</td>
                         <td>
                             <a id="openDoiTra"
-                               href="${dt.hoaDon.id}"
                                onclick="showDoiTraCT(`${dt.hoaDon.id}`)"
                                class="btn btn-primary"
                                type="submit"
@@ -130,8 +100,11 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title fs-5" id="exampleModalLabel">Hóa đơn mua</h4>
+                                            <h2 class="modal-title fs-5" id="exampleModalLabel">Đơn đổi trả sản phẩm</h2>
                                         </div>
+                                        <strong style="margin-left: 15px">Nhân viên xác nhận: ${dt.hoaDon.nhanVien.ten}</strong>
+                                        <strong style="margin-left: 15px">Khách hàng: ${dt.hoaDon.tenNguoiNhan}</strong>
+                                        <strong style="margin-left: 15px">Số điện thoại: ${dt.hoaDon.sdt}</strong>
                                         <div class="modal-body">
                                             <table class="table">
                                                 <thead>

@@ -32,19 +32,4 @@ function showDataSP(id) {
         });
     }
 }
-function showButton() {
-    var select = document.getElementById('selectHinhThuc');
-    var btnTraHang = document.getElementById('btnTraHang');
-    var btnDoiSP = document.getElementById('openModalSanPham');
-    if (select.value === '3') {
-        btnDoiSP.style.display = 'none';
-        btnTraHang.style.display = 'none';
-    } if (select.value === '2') {
-        btnTraHang.style.display = 'block';
-        btnDoiSP.style.display = 'none';
-    }else {
-        btnDoiSP.style.display = 'block';
-        btnTraHang.style.display = 'none';
-    }
-}
 
