@@ -121,8 +121,20 @@ public class HomeController {
     }
 
     @RequestMapping("/bumblebee/select-giaban")
-    public ResponseEntity<ChiTietSanPham> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
-        ChiTietSanPham giaBan = chiTietSanPhamRepo.getCTSPByKichCo(idMS, idSP, size);
+    public ResponseEntity<Double> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
+        ChiTietSanPham ctsp = chiTietSanPhamRepo.getCTSPByKichCo(idMS, idSP, size);
+        Double giaBan = 0.0;
+        if (ctsp.getCtkm().size() > 0){
+            for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()){
+                if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
+                    giaBan= ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri()/100;
+                }else{
+                    giaBan = ctsp.getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
+                }
+            }
+        }else{
+            giaBan = ctsp.getGiaBan();
+        }
         return ResponseEntity.ok(giaBan);
     }
 
@@ -327,6 +339,19 @@ public class HomeController {
             ghct.setCtsp(chiTietSanPham);
             ghct.setSoLuong(soLuong);
             ghct.setDonGia(chiTietSanPham.getGiaBan());
+            if (ghct.getCtsp().getCtkm() != null) {
+                double donGiaKhiGiam = 0;
+                for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()) {
+                    if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                        donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                        ghct.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                    if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                        donGiaKhiGiam = ghct.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                        ghct.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                }
+            }
             listGHCT.add(ghct);
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("totalPrice", chiTietSanPham.getGiaBan() * soLuong);
@@ -412,7 +437,7 @@ public class HomeController {
             return "redirect:/VnPay";
         } else {
             hoaDon.setPhuongThucThanhToan(1);
-            hoaDon.setTrangThai(1);
+            hoaDon.setTrangThai(2);
             hoaDonService.saveHoaDon(hoaDon);
         }
 

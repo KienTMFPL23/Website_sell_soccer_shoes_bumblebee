@@ -20,18 +20,14 @@
             <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
             <td>${hd.chiTietSanPham.mauSac.ten}</td>
             <td>${hd.chiTietSanPham.kichCo.size}</td>
-            <td>
-                <div>
-                    <input type="number" id="soLuongTra"
-                           min="1"
-                           name="soLuong"
-                           value=""
-                           onblur="this.form.submit()"
-                           style="width:50px;"> /${hd.soLuong}
-                </div>
-            </td>
+            <td>${hd.soLuong}</td>
             <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
             <td>
+                <a id="btnTraHang" href="/bumblebee/don-hang/create-tra-hang/${hd.chiTietSanPham.id}"
+                   class="btn btn-danger"
+                   style="border-radius: 20px; margin-top: 5px;"
+                >Trả hàng
+                </a>
                 <a id="openModalSanPham"
                    onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
                    class="btn btn-primary"
@@ -116,6 +112,7 @@
     </table>
     <button type="submit" class="btn btn-primary">Đổi hàng</button>
 </form>
+
 <button data-bs-toggle="modal" type="button"
         data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
 </button>
@@ -192,4 +189,5 @@
         </div>
     </div>
 </form>
+
 

@@ -54,7 +54,7 @@
         text-decoration: none;
         color: #37517E;
         display: block;
-        font-size: 16px;
+        font-size: 13px;
     }
 
     #menu a:hover {
@@ -133,13 +133,13 @@
     .menu-left > a {
         color: #0b0b0b;
         text-decoration: none;
-        font-size: 15px;
+        font-size: 13px;
     }
 
     .menu-left > a:hover {
         color: #37517E;
         text-decoration: none;
-        font-size: 15px;
+        font-size: 13px;
     }
 
     .table > a {
@@ -206,9 +206,9 @@
                                 <div class="trang-thai-don-hang">
                                     <c:if test="${hd.trangThai == 1}"><p>CHỜ XÁC NHẬN</p></c:if>
                                     <c:if test="${hd.trangThai == 2}"><p>ĐANG CHUẨN BỊ</p></c:if>
-                                    <c:if test="${hd.trangThai == 3}"><p>ĐANG GIAO</p></c:if>
-                                    <c:if test="${hd.trangThai == 4}"><p>HOÀN THÀNH</p></c:if>
-                                    <c:if test="${hd.trangThai == 5}"><p>ĐÃ HỦY</p></c:if>
+                                    <c:if test="${hd.trangThai == 4}"><p>ĐANG GIAO</p></c:if>
+                                    <c:if test="${hd.trangThai == 5}"><p>HOÀN THÀNH</p></c:if>
+                                    <c:if test="${hd.trangThai == 8}"><p>ĐÃ HỦY</p></c:if>
                                     <c:if test="${hd.trangThai == 6}"><p>TRẢ HÀNG</p></c:if>
                                     <c:if test="${hd.trangThai == 7}"><p>ĐÃ TRẢ HÀNG</p></c:if>
                                 </div>

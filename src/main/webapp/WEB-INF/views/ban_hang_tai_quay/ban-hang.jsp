@@ -196,7 +196,9 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody id="myTable">
-                                                        <c:forEach items="${listSanPham}" var="sp" varStatus="i">
+
+                                                        <c:forEach items="${listCTSPByTrangThaiAndSoLuong}" var="sp"
+                                                                   varStatus="i">
                                                             <tr>
                                                                 <td>${i.count}</td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
@@ -209,26 +211,31 @@
                                                                 <td>
                                                                     <c:if test="${sp.ctkm != null}">
                                                                         <c:forEach items="${sp.ctkm}" var="ctkm">
-                                                                            <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                                                <fmt:formatNumber>
-                                                                                    ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
-                                                                                </fmt:formatNumber>
-                                                                                <del style="color: crimson;">
-                                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                                                </del>
+                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                                                <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                                                    <fmt:formatNumber>
+                                                                                        ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
+                                                                                    </fmt:formatNumber>
+                                                                                    <del style="color: crimson;">
+                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                                                    </del>
+                                                                                </c:if>
+                                                                                <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                                                    <fmt:formatNumber>
+                                                                                        ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
+                                                                                    </fmt:formatNumber>
+                                                                                    <del style="color: crimson;">
+                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                                                    </del>
+                                                                                </c:if>
                                                                             </c:if>
-                                                                            <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                                                <fmt:formatNumber>
-                                                                                    ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
-                                                                                </fmt:formatNumber>
-                                                                                <del style="color: crimson;">
-                                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                                                </del>
+                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 1}">
+                                                                                <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
                                                                             </c:if>
                                                                         </c:forEach>
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
-                                                                        ${sp.giaBan}
+                                                                        <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
                                                                     </c:if>
                                                                 </td>
                                                                 <td>
@@ -313,22 +320,27 @@
                                         <td>
                                             <c:if test="${hdct.chiTietSanPham.ctkm != null}">
                                                 <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                        <del style="color: crimson; margin-right: 10px;">
-                                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                        </del>
-                                                        <fmt:formatNumber>
-                                                            ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
-                                                        </fmt:formatNumber>
+                                                    <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                            <del style="color: crimson; margin-right: 10px;">
+                                                                <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                            </del>
+                                                            <fmt:formatNumber>
+                                                                ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
+                                                            </fmt:formatNumber>
 
+                                                        </c:if>
+                                                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                            <del style="color: crimson; margin-right: 10px;">
+                                                                <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
+                                                            </del>
+                                                            <fmt:formatNumber>
+                                                                ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
+                                                            </fmt:formatNumber>
+                                                        </c:if>
                                                     </c:if>
-                                                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                        <del style="color: crimson; margin-right: 10px;">
-                                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                        </del>
-                                                        <fmt:formatNumber>
-                                                            ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
-                                                        </fmt:formatNumber>
+                                                    <c:if test="${ctkm.khuyenMai.trangThai == 1}">
+                                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
                                                     </c:if>
                                                 </c:forEach>
                                             </c:if>
@@ -339,15 +351,20 @@
                                         <td>
                                             <c:if test="${hdct.chiTietSanPham.ctkm != null}">
                                                 <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                        <fmt:formatNumber
-                                                                value="${hdct.soLuong * (ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan))}"
-                                                                type="number"/>
+                                                    <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
+                                                            <fmt:formatNumber
+                                                                    value="${hdct.soLuong * (ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan))}"
+                                                                    type="number"/>
+                                                        </c:if>
+                                                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                                            <fmt:formatNumber
+                                                                    value="${hdct.soLuong * (ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri)}"
+                                                                    type="number"/>
+                                                        </c:if>
                                                     </c:if>
-                                                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                        <fmt:formatNumber
-                                                                value="${hdct.soLuong * (ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri)}"
-                                                                type="number"/>
+                                                    <c:if test="${ctkm.khuyenMai.trangThai == 1}">
+                                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
                                                     </c:if>
                                                 </c:forEach>
                                             </c:if>
@@ -401,7 +418,9 @@
                     <p><b>Tổng tiền : </b> <fmt:formatNumber value="${sumMoney}" type="number"/>
                         đ</p>
                         <%--                    <p><b>Giảm giá :</b> 0đ</p>--%>
+
                         <%--                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>--%>
+
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
                                                      onchange="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly/> đ</p>

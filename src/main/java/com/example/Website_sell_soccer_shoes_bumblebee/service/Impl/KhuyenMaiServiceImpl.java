@@ -6,8 +6,12 @@ import com.example.Website_sell_soccer_shoes_bumblebee.service.KhuyenMaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +48,32 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
     }
 
     @Override
-    public List<KhuyenMai> searchKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
-        return repo.searchKhoangNgay(ngayBatDau, ngayKetThuc);
+    public List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate) {
+        return repo.searchKMByNgayTaoAndDonVi(fromDate, toDate);
     }
+
+
+    @Override
+    public LocalDateTime convertDateToLocalDateTime(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    @Override
+    public List<KhuyenMai> findByNgayKetThucBeforeAndTrangThai(LocalDateTime ngayKetThuc) {
+        return repo.findByNgayKetThucBeforeAndTrangThai(ngayKetThuc);
+    }
+
+    @Scheduled(cron = "0 2 * * * *") // Chạy mỗi ngày lúc 1 AM
+    @Override
+    public void updateKhuyenMaiStatus() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<KhuyenMai> khuyenMaiHetHan = repo.findByNgayKetThucBeforeAndTrangThai(currentDateTime);
+        for (KhuyenMai khuyenMai : khuyenMaiHetHan) {
+            khuyenMai.setTrangThai(1);
+            repo.save(khuyenMai);
+        }
+    }
+
 }

@@ -142,18 +142,65 @@
         border: 0px;
     }
 
-    .error{
+    .error {
         font-size: 15px;
         color: crimson;
+    }
+
+    .bg-gradient-light {
+        background-image: linear-gradient(180deg, #D9D9D9 10%, #D9D9D9 100%);
+        background-size: cover;
+        border-radius: 5px;
+        width: 25%;
+    }
+
+    .nav {
+        --bs-nav-link-padding-x: 1rem;
+        --bs-nav-link-padding-y: 0.5rem;
+        --bs-nav-link-color: #767676;
+        --bs-nav-link-hover-color: black;
+        --bs-nav-link-disabled-color: rgba(33, 37, 41, 0.75);
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .nav-pills {
+        --bs-nav-pills-link-active-bg: #A3A3A3;
+    }
+
+    .menu-nav {
+        background-color: #D9D9D9;
     }
 </style>
 <body>
 
-<div class="tab">
-    <button class="tablinks active" onclick="openCity(event, 'London')">Quản lý khuyến mại</button>
-    <button class="tablinks" onclick="openCity(event, 'Paris')">Sản phẩm khuyến mại</button>
+<div class="menu-nav">
+    <div class="status text-center">
+        <ul class="nav justify-content-center bg-gradient-light nav-pills">
+            <li class="nav-item">
+                <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
+                   href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
+                    <span class="badge text-bg-secondary">${countHD}</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
+                   href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
+                        class="badge text-bg-secondary">${countHDCho}</span></a>
+            </li>
+        </ul>
+    </div>
 </div>
-<div id="London" class="tabcontent" style="display: block;">
+
+<%--<div class="tab">--%>
+<%--    <button class="tablinks active" onclick="openCity(event, 'London')">Quản lý khuyến mại</button>--%>
+<%--    <button class="tablinks" onclick="openCity(event, 'Paris')">Sản phẩm khuyến mại</button>--%>
+<%--</div>--%>
+
+<%--<div id="London" class="tabcontent" style="display: block;">--%>
+<div>
     ${error}
     <div>
         <h1 style="text-align: center; font-family: Nunito;">Quản lý khuyến mại</h1>
@@ -169,7 +216,7 @@
     <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">
         <div class="row">
             <div class="col-lg-2">
-                <select id="filterDonVi" onchange="filterTable()">
+                <select id="filterDonVi">
                     <option value="all">-- Lọc đơn vị --</option>
                     <option>VNĐ</option>
                     <option>%</option>
@@ -187,213 +234,253 @@
 
         </div>
     </form>
-    <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
-        <thead>
-        <tr>
-            <th>STT</th>
-            <th>Mã khuyến mãi</th>
-            <th>Tên khuyến mãi</th>
-            <th>Giá trị</th>
-            <th>Đơn vị</th>
-            <th>Ngày tạo</th>
-            <th>Trạng thái</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-
-        <tbody id="myTable1">
-        <c:forEach items="${page}" var="km" varStatus="i">
+    <div class="container">
+        <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
+            <thead>
             <tr>
-                <td>${i.index + 1}</td>
-                <td>${km.maKhuyenMai}</td>
-                <td>${km.tenKhuyenMai}</td>
-                <td>
-                    <c:if test="${km.donVi == 'VNĐ'}">
-                        <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
-                    </c:if>
-                    <c:if test="${km.donVi == '%'}">
-                        <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
-                    </c:if>
-                </td>
-                <td>${km.donVi}</td>
-                <td>${km.ngayTao}</td>
-                <td>
-                    <c:if test="${km.trangThai == 0}">Hoạt động</c:if>
-                    <c:if test="${km.trangThai == 1}">Không hoạt động</c:if>
-                </td>
-                <td>
-                    <a href="/bumblebee/khuyen-mai/view-update/${km.id}">
-                        <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>
-                    </a>
-                </td>
-                <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
-                            style="border-radius: 20px;">Chọn
-                    </button>
-                    <!-- Modal -->
-                    <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post" id="themSanPhamKhuyenMai">
-                    <div class="modal fade" id="${km.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách sản phẩm</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
-                                        </div>
-                                    </div>
-
-                                        <%-- Ngày tạo--%>
-                                    <div class="row">
-                                        <div class="col-lg-4" style="padding-bottom: 15px;">
-                                            <span>Ngày bắt đầu:</span>
-                                            <input class="date" type="datetime-local" id="ngayBatDau_${km.id}" name="ngayBatDau" >
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <span>Ngày kết thúc:</span>
-                                            <input class="date" type="datetime-local" id="ngayKetThuc_${km.id}" name="ngayKetThuc" >
-                                        </div>
-                                    </div>
-
-                                    <div class="container">
-                                        <table>
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th scope="col">Tên sản phẩm</th>
-                                                <th scope="col">Số lượng</th>
-                                                <th scope="col">Giá bán</th>
-                                                <th scope="col">Màu sắc</th>
-                                                <th scope="col">Kích cỡ</th>
-                                                <th scope="col">Ngày tạo</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody id="myTable3">
-                                            <c:forEach items="${listCTSP}" var="sp" varStatus="i">
-                                                <tr>
-                                                    <td><input class="checkCart" type="checkbox"
-                                                               name="idListCartDetail"
-                                                               value="${sp.id}"></td>
-                                                    <td>${sp.sanPham.tenSanPham}</td>
-                                                    <td>${sp.soLuong}</td>
-                                                    <td><fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
-                                                    <td>${sp.mauSac.ten}</td>
-                                                    <td>${sp.kichCo.size}</td>
-                                                    <td><fmt:formatDate value="${sp.ngayTao}"
-                                                                        pattern="dd/MM/yyyy HH:mm:ss"/></td>
-                                                </tr>
-                                            </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary"
-
-                                            id="submit"
-                                    >Thêm
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                </td>
+                <th>STT</th>
+                <th>Mã khuyến mãi</th>
+                <th>Tên khuyến mãi</th>
+                <th>Giá trị</th>
+                <th>Đơn vị</th>
+                <th>Ngày tạo</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Trạng thái</th>
+                <th></th>
+                <th></th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
 
-</div>
+            <tbody id="myTable1">
+            <c:forEach items="${page}" var="km" varStatus="i">
+                <tr>
+                    <td>${i.index + 1}</td>
+                    <td>${km.maKhuyenMai}</td>
+                    <td>${km.tenKhuyenMai}</td>
+                    <td>
+                        <c:if test="${km.donVi == 'VNĐ'}">
+                            <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
+                        </c:if>
+                        <c:if test="${km.donVi == '%'}">
+                            <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
+                        </c:if>
+                    </td>
+                    <td>${km.donVi}</td>
+                    <td>${km.ngayTao}</td>
+                    <td>${km.ngayBatDau}</td>
+                    <td>${km.ngayKetThuc}</td>
+                    <td>
+                        <c:if test="${km.trangThai == 0}">Hoạt động</c:if>
+                        <c:if test="${km.trangThai == 1}">Không hoạt động</c:if>
+                    </td>
+                    <td>
+                        <a href="/bumblebee/khuyen-mai/view-update/${km.id}">
+                            <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>
+                        </a>
+                    </td>
+                    <td>
+                        <c:if test="${km.trangThai == 0}">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
+                                    style="border-radius: 20px;">Chọn
+                            </button>
+                            <!-- Modal -->
+                            <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post"
+                                  id="themSanPhamKhuyenMai">
+                                <div class="modal fade" id="${km.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách sản
+                                                    phẩm</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
+                                                    </div>
+                                                </div>
 
-<div id="Paris" class="tabcontent">
-    <div>
-        <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>
+                                                    <%-- Ngày tạo--%>
+                                                    <%--                                    <div class="row">--%>
+                                                    <%--                                        <div class="col-lg-4" style="padding-bottom: 15px;">--%>
+                                                    <%--                                            <span>Ngày bắt đầu:</span>--%>
+                                                    <%--                                            <input class="date" type="datetime-local" id="ngayBatDau_${km.id}" name="ngayBatDau" >--%>
+                                                    <%--                                        </div>--%>
+                                                    <%--                                        <div class="col-lg-4">--%>
+                                                    <%--                                            <span>Ngày kết thúc:</span>--%>
+                                                    <%--                                            <input class="date" type="datetime-local" id="ngayKetThuc_${km.id}" name="ngayKetThuc" >--%>
+                                                    <%--                                        </div>--%>
+                                                    <%--                                    </div>--%>
+
+                                                <span id="spnError" class="error" style="display: none"
+                                                >Please select at-least one Fruit.</span
+                                                >
+                                                <div class="container">
+                                                    <table id="tableCTSP">
+                                                        <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th scope="col">Tên sản phẩm</th>
+                                                            <th scope="col">Số lượng</th>
+                                                            <th scope="col">Giá bán</th>
+                                                            <th scope="col">Màu sắc</th>
+                                                            <th scope="col">Kích cỡ</th>
+                                                            <th scope="col">Ngày tạo</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody id="myTable3">
+                                                        <c:forEach items="${listCTSP}" var="sp" varStatus="i">
+                                                            <tr style="background-color: ${not empty sp.ctkm ? '#e8e8e8':'white'}">
+                                                                <td>
+                                                                    <c:if test="${not empty sp.ctkm}">
+                                                                        <input disabled checked type="checkbox">
+                                                                    </c:if>
+                                                                    <c:if test="${empty sp.ctkm}">
+                                                                        <input
+                                                                                class="checkCart" type="checkbox"
+                                                                                name="idListCartDetail"
+                                                                                value="${sp.id}">
+                                                                    </c:if>
+
+                                                                </td>
+                                                                <td>${sp.sanPham.tenSanPham}</td>
+                                                                <td>${sp.soLuong}</td>
+                                                                <td><fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
+                                                                <td>${sp.mauSac.ten}</td>
+                                                                <td>${sp.kichCo.size}</td>
+                                                                <td><fmt:formatDate value="${sp.ngayTao}"
+                                                                                    pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary"
+                                                        onclick="return themKhuyenMai()"
+                                                >Thêm
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </c:if>
+                        <c:if test="${km.trangThai == 1}">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
+                                    style="border-radius: 20px;" disabled>Chọn
+                            </button>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
-
-    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">
-        <div class="row">
-            <div class="col-lg-2">
-                Từ ngày: <input type="date" class="filterDate" name="ngayBatDau">
-            </div>
-            <div class="col-lg-2">
-                Đến ngày: <input type="date" class="filterDate" name="ngayKetThuc">
-            </div>
-            <div class="col-lg-1">
-                <button class="btnSearch" onclick="filterTable()">Tìm</button>
-            </div>
-
-        </div>
-    </form>
-
-    <table id="tableChiTietKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
-        <thead>
-        <tr>
-            <th>STT</th>
-            <th>Tên sản phẩm</th>
-            <th>Mã khuyến mại</th>
-            <th>Giá trị khuyến mại</th>
-            <th>Giá bán</th>
-            <th>Giá khuyến mại</th>
-            <th>Ngày bắt đầu</th>
-            <th>Ngày kết thúc</th>
-            <th>Trạng thái</th>
-            <th></th>
-        </tr>
-        </thead>
-
-        <tbody id="myTable2">
-        <c:forEach items="${listCTKM}" var="ctkm" varStatus="i">
-            <tr>
-                <td>${i.index + 1}</td>
-                <td>${ctkm.ctsp.sanPham.tenSanPham}</td>
-                <td>${ctkm.khuyenMai.maKhuyenMai}</td>
-                <td>
-                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                        <fmt:formatNumber>${ctkm.khuyenMai.giaTri}</fmt:formatNumber>
-                    </c:if>
-                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                        ${ctkm.khuyenMai.giaTri}%
-                    </c:if>
-                </td>
-                <td><fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></td>
-                <td>
-                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                        <fmt:formatNumber> ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}</fmt:formatNumber>
-                    </c:if>
-                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                        <fmt:formatNumber> ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>
-                    </c:if>
-
-                </td>
-                <td>${ctkm.ngayBatDau}</td>
-                <td>${ctkm.ngayKetThuc}</td>
-                <td>
-                    <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
-                    <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
-                </td>
-                <td>
-                    <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">
-                        <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>
-                    </a>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-
-
 </div>
+
+<%--<div id="Paris" class="tabcontent">--%>
+<%--<div>--%>
+<%--    <div>--%>
+<%--        <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>--%>
+<%--    </div>--%>
+
+<%--    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">--%>
+<%--        <div class="row">--%>
+<%--            <div class="col-lg-2">--%>
+<%--                Từ ngày: <input type="date" class="filterDate" name="ngayBatDau">--%>
+<%--            </div>--%>
+<%--            <div class="col-lg-2">--%>
+<%--                Đến ngày: <input type="date" class="filterDate" name="ngayKetThuc">--%>
+<%--            </div>--%>
+<%--            <div class="col-lg-1">--%>
+<%--                <button class="btnSearch" onclick="filterTable()">Tìm</button>--%>
+<%--            </div>--%>
+
+<%--        </div>--%>
+<%--    </form>--%>
+
+<%--    <table id="tableChiTietKhuyenMai" class="ui celled table" width="100%" cellspacing="0">--%>
+<%--        <thead>--%>
+<%--        <tr>--%>
+<%--            <th>STT</th>--%>
+<%--            <th>Tên sản phẩm</th>--%>
+<%--            <th>Mã khuyến mại</th>--%>
+<%--            <th>Giá trị khuyến mại</th>--%>
+<%--            <th>Giá bán</th>--%>
+<%--            <th>Giá khuyến mại</th>--%>
+<%--            <th>Trạng thái</th>--%>
+<%--            <th></th>--%>
+<%--        </tr>--%>
+<%--        </thead>--%>
+
+<%--        <tbody id="myTable2">--%>
+<%--        <c:forEach items="${listCTKM}" var="ctkm" varStatus="i">--%>
+<%--            <tr>--%>
+<%--                <td>${i.index + 1}</td>--%>
+<%--                <td>${ctkm.ctsp.sanPham.tenSanPham}</td>--%>
+<%--                <td>${ctkm.khuyenMai.maKhuyenMai}</td>--%>
+<%--                <td>--%>
+<%--                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
+<%--                        <fmt:formatNumber>${ctkm.khuyenMai.giaTri}</fmt:formatNumber>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">--%>
+<%--                        ${ctkm.khuyenMai.giaTri}%--%>
+<%--                    </c:if>--%>
+<%--                </td>--%>
+<%--                <td><fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></td>--%>
+<%--                <td>--%>
+<%--                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
+<%--                        <fmt:formatNumber> ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}</fmt:formatNumber>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">--%>
+<%--                        <fmt:formatNumber> ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>--%>
+<%--                    </c:if>--%>
+
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>--%>
+<%--                    <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
+<%--                        <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
+<%--                    </a>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--        </c:forEach>--%>
+<%--        </tbody>--%>
+<%--    </table>--%>
+
+
+<%--</div>--%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
 <script>
+
+    var checkboxes = document.querySelectorAll('.checkCart');
+
+    function themKhuyenMai() {
+        var numberOfCheckedCheckboxes = 0;
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                numberOfCheckedCheckboxes++;
+            }
+        });
+        if (numberOfCheckedCheckboxes === 0) {
+            alert("chọn sản phẩm để thêm khuyến mại");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     $(document).ready(function () {
         $('#tableKhuyenMai').DataTable({
             info: false,
@@ -413,15 +500,6 @@
         });
     });
 
-    $(document).ready(function () {
-        $('#tableChiTietKhuyenMai').DataTable({
-            info: false,
-            language: {
-                search: "",
-                searchPlaceholder: "Tìm kiếm ......",
-            }
-        });
-    });
 
     function openCity(evt, cityName) {
         var i, tabcontent, tablinks;
@@ -474,62 +552,6 @@
             }
         }
     }
-
-    $(document).ready(function ($) {
-
-        $("#themSanPhamKhuyenMai").validate({
-            rules: {
-                ngayBatDau: "required",
-                ngayKetThuc: "required",
-            },
-            messages: {
-                ngayBatDau: "Ngày bắt đầu không được trống",
-                ngayKetThuc: "Ngày kết thúc không được trống"
-            }
-        });
-
-        $("#submit").click(function () {
-            //Reference the Group of CheckBoxes and verify whether at-least one CheckBox is checked.
-            var checked = $("#myTable3 input[type=checkbox]:checked").length;
-
-            //Set the Valid Flag to True if at-least one CheckBox is checked.
-            var isValid = checked > 0;
-
-            //Display error message if no CheckBox is checked.
-            $("#spnError")[0].style.display = isValid ? "none" : "block";
-        });
-    });
-
-    // $(document).ready(function ($) {
-    //     $('#themSanPhamKhuyenMai').submit(function () {
-    //         var $fields = $(this).find('input[name="idListCartDetail"]:checked');
-    //         if (!$fields.length) {
-    //             alert('You must check at least one box!');
-    //             return false; // The form will *not* submit
-    //         }
-    //     });
-    // });
-
-    // $("#submit").click(function(){
-    //     if ($('.checkCart').filter(':checked').length < 1){
-    //         $(".note").show();
-    //         return false;
-    //     }else{
-    //         $(".note").hide();
-    //     }
-    // });
-    //
-    // function handleData() {
-    //     var form_data = new FormData(document.getElementById("themSanPhamKhuyenMai"));
-    //     if (!document.getElementById("themSanPhamKhuyenMai").has("idListCartDetail")) {
-    //         document.getElementById("chk_option_error").style.visibility = "visible";
-    //         return false;
-    //     } else {
-    //         document.getElementById("chk_option_error").style.visibility = "hidden";
-    //         return true;
-    //     }
-    // }
-
 
 </script>
 </body>
