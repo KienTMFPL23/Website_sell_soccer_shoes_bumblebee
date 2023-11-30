@@ -124,15 +124,15 @@ public class HomeController {
     public ResponseEntity<Double> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
         ChiTietSanPham ctsp = chiTietSanPhamRepo.getCTSPByKichCo(idMS, idSP, size);
         Double giaBan = 0.0;
-        if (ctsp.getCtkm().size() > 0){
-            for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()){
-                if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
-                    giaBan= ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri()/100;
-                }else{
+        if (ctsp.getCtkm().size() > 0) {
+            for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()) {
+                if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
+                    giaBan = ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100;
+                } else {
                     giaBan = ctsp.getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
                 }
             }
-        }else{
+        } else {
             giaBan = ctsp.getGiaBan();
         }
         return ResponseEntity.ok(giaBan);
@@ -219,12 +219,6 @@ public class HomeController {
     }
 
 
-    @DeleteMapping ("/bumblebee/remove-ghct/{id}")
-    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
-        gioHangChiTietRepo.deleteById(id);
-        return ResponseEntity.ok("Record deleted successfully");
-    }
-
     @GetMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
@@ -233,7 +227,7 @@ public class HomeController {
         List<ChiTietSanPham> listCTSPBySP = chiTietSanPhamRepo.getCTSPByIdSP(idSP);
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-        model.addAttribute("listCTSPBySP",listCTSPBySP);
+        model.addAttribute("listCTSPBySP", listCTSPBySP);
         model.addAttribute("idCTSP", idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         model.addAttribute("listKC", listKCBySP);
@@ -242,15 +236,19 @@ public class HomeController {
         return "template_home/index";
     }
 
+    @DeleteMapping("/bumblebee/remove-ghct/{id}")
+    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
+        gioHangChiTietRepo.deleteById(id);
+        return ResponseEntity.ok("Record deleted successfully");
+    }
 
-    @RequestMapping("/bumblebee/add-to-cart")
-    public String addCart(Model model,
-                          @RequestParam int kichCo,
-                          @RequestParam UUID idMS,
-                          @RequestParam UUID idSP,
-                          @RequestParam String soLuong,
-                          @RequestParam UUID idCTSP,
-                          HttpSession session) {
+    @PostMapping("/bumblebee/add-to-cart")
+    public ResponseEntity<String> addCart(Model model,
+                                          @RequestParam int kichCo,
+                                          @RequestParam String soLuong,
+                                          @RequestParam UUID idMS,
+                                          @RequestParam UUID idSP,
+                                          HttpSession session) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         KichCo size = chiTietSanPhamRepo.getKichCoBySize(kichCo);
         ChiTietSanPham ctsp = chiTietSanPhamService.findCTSPAddCart(idSP, idMS, size.getId());
@@ -262,40 +260,19 @@ public class HomeController {
                 int soLuongHienTai = gioHangChiTiet.getSoLuong();
                 int slThem = Integer.parseInt(soLuong);
                 int slUpdate = soLuongHienTai + slThem;
-                if (slUpdate > soLuongCTSP) {
-                    Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-                    model.addAttribute("slGioHang", slGioHang);
-                    model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
-                    ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-                    List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
-                    HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-                    model.addAttribute("idCTSP", idCTSP);
-                    model.addAttribute("hinhAnh", hinhAnh);
-                    model.addAttribute("listKC", listKCBySP);
-                    model.addAttribute("ctsp", chiTietSanPham);
-                    model.addAttribute("view", "../template_home/product_detail.jsp");
-                    return "template_home/index";
-                }
+//                if (slUpdate > soLuongCTSP) {
+//                    model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
+//                    return ResponseEntity.ok().build();
+//                }
                 gioHangChiTiet.setSoLuong(slUpdate);
                 gioHangChiTietRepo.save(gioHangChiTiet);
-                return "redirect:/bumblebee/cart";
+                return ResponseEntity.ok().build();
             }
         }
         int sl = Integer.parseInt(soLuong);
-        if (sl > soLuongCTSP) {
-            Integer slGioHang = chiTietSanPhamService.getSLGioHang(taiKhoan.getKhachHangKH().getId());
-            model.addAttribute("slGioHang", slGioHang);
-            model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
-            ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-            List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
-            HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-            model.addAttribute("idCTSP", idCTSP);
-            model.addAttribute("hinhAnh", hinhAnh);
-            model.addAttribute("listKC", listKCBySP);
-            model.addAttribute("ctsp", chiTietSanPham);
-            model.addAttribute("view", "../template_home/product_detail.jsp");
-            return "template_home/index";
-        }
+//        if (sl > soLuongCTSP) {
+//            model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
+//        }
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         gioHangChiTiet.setCtsp(ctsp);
         gioHangChiTiet.setGioHang(gioHang);
@@ -319,7 +296,7 @@ public class HomeController {
         model.addAttribute("listGHCT", listGHCT);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("view", "../template_home/cart.jsp");
-        return "redirect:/bumblebee/cart";
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping("/bumblebee/mua-ngay")

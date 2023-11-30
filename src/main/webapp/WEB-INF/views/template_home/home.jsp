@@ -39,7 +39,7 @@
                                         <a
                                                 class="ps-shoe__overlay"
                                                 href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
+                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt="" width="221px" height="221px"></a>
                                     </div>
                                     <div class="favorite favorite_left"></div>
                                     <c:forEach var="km" items="${item.ctkm}">
@@ -56,7 +56,8 @@
                                     </c:forEach>
                                     <div class="product_info">
                                         <h6 class="product_name"><a
-                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
+                                                href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}
+                                            - ${item.mauSac.ten}</a>
                                         </h6>
                                         <div class="product_price">
                                             <c:if test="${item.ctkm != null}">
@@ -74,13 +75,11 @@
                                                                 type="number"/> đ</label>
                                                         <span><fmt:formatNumber value="${item.giaBan}"
                                                                                 type="number"/> đ</span>
-
                                                     </c:if>
                                                 </c:forEach>
                                             </c:if>
                                             <c:if test="${empty item.ctkm}">
                                                 <label>
-
                                                     <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
                                                 </label>
                                             </c:if>
@@ -129,7 +128,7 @@
                                                         <p>Chọn số lượng</p>
                                                         <input type="number"
                                                                style="width: 100px;font-size: 15px;padding-left: 10px;height: 27px;border: 1px solid #b1b1b8"
-                                                               name="soLuong" value="1" id="slchon"
+                                                               name="soLuong" value="1" id="slchon_${item.sanPham.id}_${item.mauSac.id}"
                                                                onchange="thayDoiSoLuong('${item.sanPham.id}','${item.mauSac.id}')"
                                                                oninput="chonSoLuong('${item.sanPham.id}','${item.mauSac.id}',event)">
                                                     </div>
@@ -148,7 +147,8 @@
                                                 <button class="btn"
                                                         id="btn-themgh_${item.sanPham.id}_${item.mauSac.id}"
                                                         style="font-size:15px;background-color: white; color: black;border: 1px solid black"
-                                                        onclick="return themVaoGioHang()">Thêm vào giỏ hàng
+                                                        type="button"
+                                                        onclick="return themVaoGioHang('${item.sanPham.id}','${item.mauSac.id}')">Thêm vào giỏ hàng
                                                 </button>
                                             </div>
                                         </div>
@@ -214,13 +214,15 @@
                                                             <a
                                                                     class="ps-shoe__overlay"
                                                                     href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}" alt=""></a>
+                                                                    src="../../../uploads/${item.hinhAnhs.tenanh}"
+                                                                    alt=""></a>
                                                         </div>
                                                         <div class="favorite favorite_left"></div>
                                                         <c:forEach var="km" items="${item.ctkm}">
                                                             <c:if test="${km.khuyenMai.donVi == '%'}">
                                                                 <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
-                                                                    <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                                                    <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span>
+                                                                </div>
                                                             </c:if>
                                                             <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                                 <div class="product_bubble product_bubble_left product_bubble_green ">
@@ -231,7 +233,8 @@
                                                         </c:forEach>
                                                         <div class="product_info">
                                                             <h6 class="product_name"><a
-                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
+                                                                    href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}
+                                                                - ${item.mauSac.ten}</a>
                                                             </h6>
                                                             <div class="product_price">
                                                                 <c:if test="${not empty item.ctkm}">
@@ -240,21 +243,24 @@
                                                                             <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                                     value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
                                                                                     type="number"/> đ</label>
-                                                                            <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                                    type="number"/> đ</span>
+                                                                            <span><fmt:formatNumber
+                                                                                    value="${item.giaBan}"
+                                                                                    type="number"/> đ</span>
                                                                         </c:if>
                                                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                                             <label style="color: crimson;font-size: 15px"><fmt:formatNumber
                                                                                     value="${item.giaBan - km.khuyenMai.giaTri}"
                                                                                     type="number"/> đ</label>
-                                                                            <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                                    type="number"/> đ</span>
+                                                                            <span><fmt:formatNumber
+                                                                                    value="${item.giaBan}"
+                                                                                    type="number"/> đ</span>
                                                                         </c:if>
                                                                     </c:forEach>
                                                                 </c:if>
                                                                 <c:if test="${empty item.ctkm}">
                                                                     <label>
-                                                                        <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                                        <fmt:formatNumber value="${item.giaBan}"
+                                                                                          type="number"/> đ
                                                                     </label>
                                                                 </c:if>
                                                             </div>
@@ -286,6 +292,23 @@
             </div>
         </div>
     </div>
+    <div id="toast" style="display:none;">
+        <div class="toast toast__succes">
+            <div class="toast__icon">
+                <i class="fa-sharp fa-solid fa-circle-check" style="color: #47d864;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Success</h3>
+                <p class="toast__msg">Thêm vào giỏ hàng thành công</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
     <div id="toast_warring_login" style="display:none;">
         <div class="toast toast__warring">
             <div class="toast__icon">
@@ -307,7 +330,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function themVaoGioHang() {
+    function themVaoGioHang(idsp,idms) {
         <c:if test="${userLogged.username == null}">
         var toastElement = document.getElementById("toast_warring_login");
         toastElement.style.display = "block";
@@ -316,8 +339,32 @@
         }, 1500);
         return false;
         </c:if>
-        return true;
+        var kichCo = document.getElementById("kichCoSelect_" + idsp + "_" + idms).value;
+        var soLuong = document.getElementById("slchon_" + idsp + "_" + idms).value;
+        var formData = new FormData();
+        formData.append("kichCo", kichCo);
+        formData.append("soLuong", soLuong);
+        $.ajax({
+            type: "POST",
+            url: "/bumblebee/add-to-cart?idMS=" + idms + "&idSP=" + idsp,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success: " + response);
+                var toastElement = document.getElementById("toast");
+                toastElement.style.display = "block";
+                setTimeout(function () {
+                    toastElement.style.display = "none";
+                }, 1500);
+            },
+            error: function (error) {
+                console.log("Error1: " + JSON.stringify(error));
+            }
+        });
+        return false;
     }
+
     $(document).ready(function () {
         $(".addToCartBtn").click(function () {
             var itemId = $(this).data("item-id");
