@@ -2,38 +2,24 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link
-        href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
-        rel="stylesheet"
-/>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
-<%
+<%--<%--%>
 
-    Date currentDate = new Date();
+<%--    Date currentDate = new Date();--%>
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    String formattedDate = dateFormat.format(currentDate);
-%>
+<%--    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");--%>
+<%--    String formattedDate = dateFormat.format(currentDate);--%>
+<%--%>--%>
 
 <style>
     .img {
@@ -186,7 +172,7 @@
 
     .stepper__line-background, .stepper__line-foreground {
         position: absolute;
-        width: calc(100% - 300px);
+        width: calc(100% - 500px);
         margin: 0 70px;
         height: 100%;
         -moz-box-sizing: border-box;
@@ -255,16 +241,16 @@
                     <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
                         <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Chờ xác nhận</h4>
-                        <p><%= formattedDate %>
-                        </p>
+<%--                        <p><%= formattedDate %>--%>
+<%--                        </p>--%>
                     </div>
                     <div class="col-lg-2 status-item" id="status" data-status-id="2"
                          data-status="Đã xác nhận thanh toán">
                         <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Xác nhận thanh toán</h4>
                             <%--                        <p>14:27 20/10/2023</p>--%>
-                        <p><%= formattedDate %>
-                        </p>
+<%--                        <p><%= formattedDate %>--%>
+<%--                        </p>--%>
                     </div>
                         <%--                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">--%>
                         <%--                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
@@ -276,23 +262,23 @@
                          data-status="Đơn hàng đang được giao">
                         <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Đơn hàng đang được giao</h4>
-                        <p><%= formattedDate %>
-                        </p>
+<%--                        <p><%= formattedDate %>--%>
+<%--                        </p>--%>
                     </div>
                     <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
                         <h4>Hoàn thành</h4>
-                        <p><%= formattedDate %>
-                        </p>
+<%--                        <p><%= formattedDate %>--%>
+<%--                        </p>--%>
                     </div>
-                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
-                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;"
-                             class="trang-thai">
-                        <h4>Đã huỷ</h4>
-                        <p><%= formattedDate %>
-                        </p>
-                    </div>
+<%--                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">--%>
+<%--                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;"--%>
+<%--                             class="trang-thai">--%>
+<%--                        <h4>Đã huỷ</h4>--%>
+<%--&lt;%&ndash;                        <p><%= formattedDate %>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        </p>&ndash;%&gt;--%>
+<%--                    </div>--%>
                     <div class="inline"></div>
                     <div class="stepper__line">
                         <div class="stepper__line-background"></div>
@@ -308,16 +294,16 @@
                     <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
                         <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Chờ xác nhận</h4>
-                        <p><%= formattedDate %>
-                        </p>
+<%--                        <p><%= formattedDate %>--%>
+<%--                        </p>--%>
                     </div>
 
                     <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
                         <h4>Hoàn thành</h4>
-                        <p><%= formattedDate %>
-                        </p>
+<%--                        <p><%= formattedDate %>--%>
+<%--                        </p>--%>
                     </div>
 
                     <div class="inline"></div>
@@ -360,6 +346,7 @@
         </c:if>
         <c:if test="${hoaDon.trangThai== 4 && hoaDon.loaiHoaDon==0}">
             <h1 style="color: red">Đang giao</h1>
+            <hr class="border border-primary border-2 opacity-50">
             <%--            <a href="/don-hang/xac-nhan-giao/${hoaDon.id}" style="border-radius: 20px"--%>
             <%--               class="btn btn-warning" onclick="return confirm('Xác nhận đang giao?');">Xác nhận</a>--%>
         </c:if>
@@ -551,7 +538,7 @@
                 <form>
                     <!-- Button TIM KIEM -->
 
-                    <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<5 }">
+                    <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"
                                 style="background-color: #37517E;border: none">
@@ -693,7 +680,7 @@
 
 
         <br>
-        <div class="row">
+        <div class="row text-center">
             <table class="table table-striped">
                 <thead class="hoa-don-chi-tiet-thead">
                 <tr>
@@ -703,6 +690,9 @@
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Đơn Giá</th>
                     <th scope="col">Thành Tiền</th>
+                    <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
+                        <th></th>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -719,11 +709,11 @@
                             <c:if test="${hoaDon.loaiHoaDon==0}">
                                 <form:form action="/don-hang/update-cart/${hdct.id}" method="post">
                                     <input type="number" class="form-control"
-                                                   min="1"
-                                                   name="soLuong"
-                                                   value="${hdct.soLuong}"
-                                                   onblur="this.form.submit()"
-                                                   style="width:100px;">
+                                           min="1"
+                                           name="soLuong"
+                                           value="${hdct.soLuong}"
+                                           onblur="this.form.submit()"
+                                           style="width:100px;">
                                 </form:form>
                             </c:if>
 
@@ -782,18 +772,66 @@
                             </c:if>
 
                         </td>
+                        <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
+                            <td>
+                                <a href="/don-hang/delete-hdct/${hdct.id}"
+                                   onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">
+                                    <img src="../../../img/delete.png">
+                                </a>
+
+                            </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
         <c:set var="hoaDonId" value="${hoaDon.id}"/>
+        <div class="text-right">
+            <td>
+                <c:set var="total" value="0"/>
+
+                <c:forEach items="${hoaDon.hoaDons}" var="hdct">
+                    <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                        <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
+                            <c:choose>
+                                <c:when test="${ctkm.khuyenMai.donVi == '%'}">
+                                    <!-- Percentage discount calculation -->
+                                    <c:set var="discountAmount"
+                                           value="${(ctkm.ctsp.giaBan * ctkm.khuyenMai.giaTri / 100)}"/>
+                                </c:when>
+                                <c:when test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                                    <!-- Fixed amount discount calculation -->
+                                    <c:set var="discountAmount" value="${ctkm.khuyenMai.giaTri}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- Handle other types of discounts if needed -->
+                                    <c:set var="discountAmount" value="0"/>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <!-- Calculate the total with the discount applied -->
+                            <c:set var="total"
+                                   value="${total + (hdct.soLuong * (ctkm.ctsp.giaBan - discountAmount))}"/>
+                        </c:forEach>
+                    </c:if>
+
+                    <c:if test="${empty hdct.chiTietSanPham.ctkm}">
+                        <!-- If no promotion, add the original price to the total -->
+                        <c:set var="total" value="${total + (hdct.soLuong * hdct.donGia)}"/>
+                    </c:if>
+                </c:forEach>
+
+                <h3><b>Tổng hoá đơn: <fmt:formatNumber value="${total}" type="number"/> ₫</b></h3>
+
+            </td>
+        </div>
     </form:form>
-    <div>
-        <b style="float: right;margin-right: 20px; font-size: 20px" class="name">Tổng tiền :
-            <fmt:formatNumber value="${sumMoney}" type="number"/> ₫</b>
-    </div>
+
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const statusItems = document.querySelectorAll(".status-item");
@@ -828,9 +866,7 @@
         });
     });
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
 <script>
 
     $("#myInput").keyup(function () {
@@ -838,79 +874,62 @@
         var table = document.getElementById("myTable");
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            table.style.display = "block"
+
+        });
+    });
+
+    $("#selectMS").change(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
 
-        $("#searchSPGioHang").keyup(function () {
-            var value = $(this).val().toLowerCase();
-            $("#sanPhamMua tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
+    });
+
+    $("#selectCL").change(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
 
-        $("#selectMS").change(function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
+    });
 
-            if ("all" == value) {
-                $("#myTable tr").show();
-            }
+    $("#selectDG").change(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
 
-        $("#selectCL").change(function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
+    });
 
-            if ("all" == value) {
-                $("#myTable tr").show();
-            }
+    $("#selectLG").change(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
 
-        $("#selectDG").change(function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
+    });
 
-            if ("all" == value) {
-                $("#myTable tr").show();
-            }
+    $("#selectKC").change(function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
 
-        $("#selectLG").change(function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-
-            if ("all" == value) {
-                $("#myTable tr").show();
-            }
-        });
-
-        $("#selectKC").change(function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-
-            if ("all" == value) {
-                $("#myTable tr").show();
-            }
-        });
+        if ("all" == value) {
+            $("#myTable tr").show();
+        }
+    });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous">
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>

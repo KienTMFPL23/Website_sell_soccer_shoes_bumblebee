@@ -173,6 +173,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "        AND c1.idMauSac = c2.idMauSac\n" +
             "        AND c1.id > c2.id\n" +
             ");", nativeQuery = true)
+  
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
