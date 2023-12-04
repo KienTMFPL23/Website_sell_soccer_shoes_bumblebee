@@ -4,7 +4,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 
 <div class="content">
-    <h1 style="text-align: center">Danh sách hóa đơn đổi hàng</h1>
+    <h1 style="text-align: center">Danh sách hóa đơn đổi trả</h1>
     <div class="row">
         <div class="col-lg-6">
             <a href="/bumblebee/doi-hang" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalHoaDon">Tạo
@@ -65,6 +65,11 @@
             <li class="nav-item">
                 <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
                    href="/bumblebee/doi-hang/list-doi-hang">Danh sách đổi hàng<span
+                        class="badge text-bg-secondary">${countHDCho}</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
+                   href="/bumblebee/doi-hang/list-doi-hang">Danh sách sản phẩm lỗi<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
         </ul>

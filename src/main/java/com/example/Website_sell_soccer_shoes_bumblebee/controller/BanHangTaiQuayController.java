@@ -19,6 +19,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepos
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -186,6 +188,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("khachHang", new KhachHang());
         idHoaDon = id;
+        model.addAttribute("idHDCT",id);
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
@@ -289,13 +292,27 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
-
     public String thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
-                            @RequestParam("soDienThoai") String soDienThoai,
-                            @RequestParam("ghiChu") String ghiChu) throws ParseException, DocumentException, IOException {
+                            @Valid @ModelAttribute("hoaDon")HoaDon hoaDon,
+                            BindingResult result) throws ParseException, DocumentException, IOException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+        KhachHang khachHang = null;
+        String sdt = hoaDon.getSdt();
+        if (sdt != ""){
+            khachHang = khachHangRepository.findKHBySDT(hoaDon.getSdt());
+        }
 
-
+        if (result.hasErrors()) {
+           return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        }
+//        if (! hoaDon.getSdt().startsWith("0")){
+//            model.addAttribute("errorSDT","Số điện thoại bắt đầu bằng 0");
+//            return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//        }
+//        if (Integer.parseInt(hoaDon.getSdt()) <= 0){
+//            model.addAttribute("errorSDT","Số điện thoại lớn hơn 0");
+//            return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//        }
         if (hoaDonThanhToan != null) {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -303,14 +320,16 @@ public class BanHangTaiQuayController {
             hoaDonThanhToan.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
             hoaDonThanhToan.setNhanVien(nhanVien);
             hoaDonThanhToan.setTrangThai(5);
-            hoaDonThanhToan.setSdt(soDienThoai);
-            KhachHang khachHang = khachHangRepository.findKHBySDT(soDienThoai);
+            hoaDonThanhToan.setSdt(hoaDon.getSdt());
 
-            hoaDonThanhToan.setKhachHang(khachHang);
-            hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
+            if (khachHang != null) {
+                hoaDonThanhToan.setKhachHang(khachHang);
+                hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
+            }else {
+                hoaDonThanhToan.setTenNguoiNhan("Khách vãng lai");
+            }
             hoaDonThanhToan.setPhuongThucThanhToan(1);
-
-            hoaDonThanhToan.setGhiChu(ghiChu);
+            hoaDonThanhToan.setGhiChu(hoaDon.getGhiChu());
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
@@ -445,17 +464,8 @@ public class BanHangTaiQuayController {
     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
         KhachHang addKhachHang = new KhachHang();
 
-        String formatKH = "KH" + String.format("%07d", maKhachHang);
-        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
-        if (checkMa != null) {
-            String maKHMax = khachHangService.searchMaxKH();
-            maKhachHang = Integer.valueOf(maKHMax.substring(2));
-            maKhachHang++;
-            String formatSoMa = "KH" + String.format("%07d", maKhachHang);
-            addKhachHang.setMa(formatSoMa);
-        } else {
-            addKhachHang.setMa(formatKH);
-        }
+        Random  random = new Random();
+        addKhachHang.setMa("KH" + random.nextInt(999999999));
         addKhachHang.setTen(khachHang.getTen());
         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
         addKhachHang.setTrangThai(5);
