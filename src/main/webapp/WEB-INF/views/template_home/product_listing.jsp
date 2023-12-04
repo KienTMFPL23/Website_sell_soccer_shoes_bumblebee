@@ -7,17 +7,17 @@
         <div class="ps-products-wrap pt-80 pb-80">
             <div class="ps-products" data-mh="product-listing">
                 <div class="ps-product-action">
-                    <form method="GET" action="/bumblebee/product_list/sort">
-                        <form:form modelAttribute="sortForm">
-                            <form:select id="mySelect" cssClass="selectSort" path="key"
-                                         onchange="this.form.submit()">
-                                <form:option value="no" label="Sắp xếp theo"/>
-                                <form:option value="moiNhat" label="Mới nhất"/>
-                                <form:option value="giaBanTangDan" label="Giá từ thấp đến cao"/>
-                                <form:option value="giaBanGiamDan" label="Giá từ cao đến thấp"/>
-                            </form:select>
-                        </form:form>
-                    </form>
+<%--                    <form method="GET" action="/bumblebee/product_list/sort">--%>
+<%--                        <form:form modelAttribute="sortForm">--%>
+<%--                            <form:select id="mySelect" cssClass="selectSort" path="key"--%>
+<%--                                         onchange="this.form.submit()">--%>
+<%--                                <form:option value="no" label="Sắp xếp theo"/>--%>
+<%--                                <form:option value="moiNhat" label="Mới nhất"/>--%>
+<%--                                <form:option value="giaBanTangDan" label="Giá từ thấp đến cao"/>--%>
+<%--                                <form:option value="giaBanGiamDan" label="Giá từ cao đến thấp"/>--%>
+<%--                            </form:select>--%>
+<%--                        </form:form>--%>
+<%--                    </form>--%>
                     <div class="pages d-flex flex-row align-items-center">
                         <div class="page_current">
                             <span>1</span>
@@ -57,7 +57,7 @@
                                 </c:forEach>
                                 <div class="product_info">
                                     <h6 class="product_name"><a
-                                            href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham}</a>
+                                            href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}">${item.sanPham.tenSanPham} - ${item.mauSac.ten}</a>
                                     </h6>
                                     <div class="product_price">
                                         <c:if test="${not empty item.ctkm}">

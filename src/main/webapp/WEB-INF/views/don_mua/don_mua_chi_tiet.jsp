@@ -595,7 +595,7 @@
 
                     </div>
                     <div class="col-lg-3">
-                        <span>Tổng tiền: <fmt:formatNumber value="${sumMoney}" type="currency"/></span>
+                        <span>Tổng tiền: <fmt:formatNumber value="${sumMoney}" type="number"/> đ</span>
                     </div>
                 </div>
             </div>
