@@ -50,7 +50,9 @@ function showDoiTraCT(id) {
     function tableDoiTraCT(data) {
         var bodyDoiTra = $('#tableDoiTra');
         bodyDoiTra.empty();
+        var sumMoney = 0.0;
         $.each(data, function(index, item) {
+            sumMoney = item.soLuong * item.donGia;
             var row = '<tr>' +
                 '<td>' + item.tenSanPham + '</td>' +
                 '<td>' + item.soLuong + '</td>' +
@@ -61,6 +63,8 @@ function showDoiTraCT(id) {
                 '<td>' + '<c:if test="${item.trangThai == 2}"><button class="btn btn-danger">Hàng trả</button></c:if>' + '</td>' +
                 '</tr>';
             bodyDoiTra.append(row);
+            var row1 = '<tr>'+ sumMoney +'</tr>';
+            bodyDoiTra.append(row1);
         });
 
     }

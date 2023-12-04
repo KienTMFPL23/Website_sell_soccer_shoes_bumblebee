@@ -153,8 +153,7 @@
                                         <input type="number" id="soLuongTra"
                                                min="1"
                                                max="${hd.soLuong}"
-                                               name="soLuong"
-                                               oninput="validateSoLuong(${hd.soLuong})"
+                                               name="soLuongTra"
                                                value=""
                                                style="width:50px;"> /${hd.soLuong}
                                         <p id="errorMsg" style="color: red; display: none">
@@ -172,8 +171,9 @@
                         <strong>Lý do trả hàng</strong>
                         <select id="lyDoTra" class="form-control" style="width: 200px" name="lyDoDoiTra">
                             <option value="">-----</option>
-                            <option value="Mẫu sai">Mẫu sai</option>
+                            <option value="Mẫu giao sai">Mẫu giao sai</option>
                             <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
+                            <option value="Giao thiếu hàng">Giao thiếu hàng</option>
                         </select>
                         <%--                        <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>--%>
                         <strong><p style="color: red" id="erorText"></p></strong>

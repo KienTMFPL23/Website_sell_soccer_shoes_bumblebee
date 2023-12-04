@@ -18,7 +18,6 @@ function showDataSP(id) {
     function populateTable(data) {
         var tableBody = $('#tableSanPham');
         tableBody.empty();
-
         $.each(data, function(index, item) {
             var row = '<tr>' +
                 '<td>' + item.tenSanPham + '</td>' +
