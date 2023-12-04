@@ -953,3 +953,7 @@ ul {
     color: #ffc021;
 }
 
+.single_product_thumbnails ul li img{
+    width: 136.25px;
+    height: 136.25px;
+}

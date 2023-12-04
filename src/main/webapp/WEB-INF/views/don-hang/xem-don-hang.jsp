@@ -247,7 +247,7 @@
                     <div class="col-lg-2 status-item" id="status" data-status-id="2"
                          data-status="Đã xác nhận thanh toán">
                         <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
-                        <h4>Xác nhận thanh toán</h4>
+                        <h4>Đang chuẩn bị</h4>
                             <%--                        <p>14:27 20/10/2023</p>--%>
 <%--                        <p><%= formattedDate %>--%>
 <%--                        </p>--%>
@@ -705,8 +705,8 @@
                             <%--                                              type="number"/>--%>
                             <%--                        </td>--%>
                         <td>
-
-                            <c:if test="${hoaDon.loaiHoaDon==0}">
+                            <c:choose>
+                            <c:when test="${hoaDon.loaiHoaDon==0 &&  hoaDon.phuongThucThanhToan ==1  && hoaDon.trangThai<4 }">
                                 <form:form action="/don-hang/update-cart/${hdct.id}" method="post">
                                     <input type="number" class="form-control"
                                            min="1"
@@ -715,11 +715,12 @@
                                            onblur="this.form.submit()"
                                            style="width:100px;">
                                 </form:form>
-                            </c:if>
+                            </c:when>
 
-                            <c:if test="${hoaDon.loaiHoaDon==1}">
+                            <c:otherwise>
                                 ${hdct.soLuong}
-                            </c:if>
+                            </c:otherwise>
+                            </c:choose>
                         </td>
                         <td>
                             <img src="../../uploads/${hdct.chiTietSanPham.hinhAnhs.tenanh}" width="100px"

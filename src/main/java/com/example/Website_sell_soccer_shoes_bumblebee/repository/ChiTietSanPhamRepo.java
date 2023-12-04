@@ -96,7 +96,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<KichCo> search2KC(@Param("keyword") Integer size);
 
     @Query(value = "select k from KichCo k where (:keyword is null or k.size = :keyword) and k.trangThai=:trangThai")
-    List<KichCo> search22KC(@Param("keyword") Integer size,@Param("trangThai") Integer trangThai);
+    List<KichCo> search22KC(@Param("keyword") Integer size, @Param("trangThai") Integer trangThai);
 
     @Query("select ctsp from ChiTietSanPham  ctsp where ctsp.giaBan between ?1 and ?2")
     Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable);
@@ -133,7 +133,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 
 
     // list ctsp theo id
-    @Query(value = "select ct from ChiTietSanPham ct where ct.sanPham.id=?1")
+    @Query(value = "select ct from ChiTietSanPham ct where ct.sanPham.id=?1 order by ct.ngayTao desc ")
     Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable);
 
     @Query(value = "select kc.size from kichCo kc join ChiTietSanPham ctsp on kc.Id = ctsp.IdKichCo " +
@@ -173,7 +173,6 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "        AND c1.idMauSac = c2.idMauSac\n" +
             "        AND c1.id > c2.id\n" +
             ");", nativeQuery = true)
-  
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
@@ -187,14 +186,12 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     Integer getSLGioHang(UUID idKH);
 
 
-
     @Query(value = "select ctsp from ChiTietSanPham  ctsp where  ctsp.soLuong > 0 and ctsp.trangThai = 1")
     List<ChiTietSanPham> getListCTSPSuDung();
 
     @Query(value = "select soluong from giohangchitiet" +
-            " where IdChiTietSP = ?1 and IdGioHang = ?2",nativeQuery = true)
+            " where IdChiTietSP = ?1 and IdGioHang = ?2", nativeQuery = true)
     Integer getSLGioHangBySPAndGH(UUID idCTSP, UUID idGH);
-
 
 
     @Query("SELECT c FROM ChiTietSanPham c " +
@@ -208,11 +205,14 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
             "\t\t\t\t\t\t join ChatLieu cl on ctsp.IdChatLieu = cl.Id\n" +
             "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
-            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 1",nativeQuery = true)
+            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 1", nativeQuery = true)
     List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
 
     @Query(value = "select ctsp from ChiTietSanPham ctsp where ctsp.trangThai = 1 and ctsp.soLuong > 1")
     List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
+
+    @Query(value = "select ctsp from ChiTietSanPham ctsp order by ctsp.ngayTao desc ")
+    Page<ChiTietSanPham>  getListSP(Pageable pageable);
 
 
 }

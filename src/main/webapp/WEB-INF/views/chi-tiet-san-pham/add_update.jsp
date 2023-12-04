@@ -71,7 +71,8 @@
 <div class="container-sm">
 
     <h2 style="text-align: center;padding-top: 20px;margin-bottom: 20px">Thêm/Sửa Chi Tiết Sản Phẩm</h2>
-    <form:form action="${action}" modelAttribute="sanpham" cssClass="text-center" enctype="multipart/form-data">
+    <form:form action="${action}" modelAttribute="sanpham" cssClass="text-center" enctype="multipart/form-data"
+               id="sanPhamForm">
         <form:input path="id" class="form-control" type="hidden"/>
         <div class="row">
             <div class="col-lg-6 ">
@@ -84,27 +85,28 @@
                 </div>
                 <div class="item inp">
                     <label class="form-label">Giá Bán: </label>
-                    <form:input path="giaBan" cssStyle="margin-left: 50px"/>
-                    <form:errors path="giaBan" cssStyle="color: crimson"/>
+                    <form:input path="giaBan" type="number" min="1" cssStyle="margin-left: 50px"/>
+                    <p><form:errors path="giaBan" cssStyle="color: crimson"/></p>
                 </div>
 
                 <div class="item inp">
                     <label class="form-label">Số lượng: </label>
-                    <form:input path="soLuong" cssStyle="margin-left: 44px"/>
-                    <form:errors path="soLuong" cssStyle="color: crimson"/>
+                    <form:input path="soLuong" type="number" min="1" cssStyle="margin-left: 44px"/>
+                    <p><form:errors path="soLuong" cssStyle="color: crimson"/></p>
                 </div>
                 <div class="item">
                     <label class="form-label">Mô tả: </label>
                     <form:textarea cols="50" rows="5" path="moTaCT"
                                    cssStyle="border: none; width: 280px;height: 100px;border-radius: 15px;margin-left: 65px;margin-top: 20px"/>
-                    <form:errors path="moTaCT" cssStyle="color: crimson"/>
+                    <p><form:errors path="moTaCT" cssStyle="color: crimson"/></p>
                 </div>
-
+                <br>
                 <div class="item form-check-inline">
+                    <br>
                     <label class="form-label">Trạng Thái</label>
                     <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"
                                        cssStyle="margin-right: 15px;margin-left: 35px;"/>
-                    <form:errors path="trangThai" cssStyle="color: crimson"/>
+                    <p><form:errors path="trangThai" cssStyle="color: crimson"/></p>
                 </div>
             </div>
             <div class="col-lg-6 ">
@@ -170,10 +172,10 @@
         </div>
 
         <%--    22                onclick="return confirm('Bạn có chắc muốn thực hiện ?');"--%>
-
         <div class="text-center" style="padding-bottom: 20px">
             <button type="submit" id="but" class="btn btn-success"
-                    onclick="submitForm()">
+                    onclick="submitForm()"
+            >
                 Submit
             </button>
         </div>
@@ -433,6 +435,15 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css"/>
+
+<%--<script>--%>
+
+<%--    function submitForm() {--%>
+<%--        alert("Thêm thành công !")--%>
+<%--    }--%>
+<%--</script>--%>
 <script>
     function clearErrors() {
         $("#error-message").empty();
@@ -802,6 +813,7 @@
     }
 
 </script>
+
 <div class="text-center" style="color: crimson">${mess}</div>
 <script src="../../../js/chi_tiet_san_pham/chi_tiet_san_pham.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -812,4 +824,46 @@
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
 
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<!-- Include SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script>
+    <%--$(document).ready(function () {--%>
+    <%--    $('#but').click(function () {--%>
+    <%--        // Serialize the form data--%>
+    <%--        var formData = $('#sanPhamForm').serialize();--%>
+
+    <%--        // Send an AJAX request--%>
+    <%--        $.ajax({--%>
+    <%--            type: 'POST',--%>
+    <%--            ucrl: '${pageContext.request.contextPath}/chi-tiet-san-pham/ajax/add/${id}',--%>
+    <%--            data: formData,--%>
+    <%--            success: function (data) {--%>
+    <%--                if (data === 'Product added successfully') {--%>
+    <%--                    // Show SweetAlert2 success notification--%>
+    <%--                    Swal.fire({--%>
+    <%--                        position: 'top-center',--%>
+    <%--                        icon: 'success',--%>
+    <%--                        title: 'Your work has been saved',--%>
+    <%--                        showConfirmButton: false,--%>
+    <%--                        timer: 3500--%>
+    <%--                    });--%>
+
+    <%--                    // Optionally, you can redirect after showing the success notification--%>
+    <%--                    window.location.href = '${pageContext.request.contextPath}/chi-tiet-san-pham/list-san-pham/${id}';--%>
+    <%--                } else {--%>
+    <%--                    // Handle other responses or errors--%>
+    <%--                    console.log(data);--%>
+    <%--                }--%>
+    <%--            },--%>
+    <%--            error: function (xhr, status, error) {--%>
+    <%--                // Handle AJAX errors if needed--%>
+    <%--                console.error(xhr.responseText);--%>
+    <%--            }--%>
+    <%--        });--%>
+    <%--    });--%>
+    <%--});--%>
+
+</script>

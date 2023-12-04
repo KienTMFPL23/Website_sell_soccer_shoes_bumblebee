@@ -22,23 +22,23 @@
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-8">
-            <div class="col-4 col-md-4 col-sm-4">
-                <a href="/chi-tiet-san-pham/view-add/${idsp}" class="btn"
-                   style="background: #0d6efd; color: whitesmoke">
-                    <i class="bi bi-plus-circle-fill"></i><span>Thêm CT Sản Phẩm</span></a>
-            </div>
-            <br>
-            <div class="col-4 col-md-4 col-sm-4">
-                <a href="/chi-tiet-san-pham/hien-thi" class="btn"
-                   style="background: #0d6efd; color: whitesmoke"><i class="bi bi-eye-fill"></i>Danh sách
-                    chi tiết</a>
-                <br>
-            </div>
-        </div>
-        <div class="col-4">
 
-            <input class="form-control" placeholder="Nhập mã hoặc loại tên sản phẩm" id="myInput"/>
+        <div class="col-2 col-sm-2 col-md-2">
+            <a href="/chi-tiet-san-pham/view-add/${idsp}" class="btn"
+               style="background: #0d6efd; color: whitesmoke">
+                <i class="bi bi-plus-circle-fill"></i><span>Thêm CT Sản Phẩm</span></a>
+        </div>
+
+        <div class="col-2 col-sm-2 col-md-2">
+            <a href="/chi-tiet-san-pham/hien-thi" class="btn"
+               style="background: #0d6efd; color: whitesmoke"><i class="bi bi-eye-fill"></i>Danh sách
+                chi tiết</a>
+            <br>
+        </div>
+
+        <div class="col-8 text-right">
+
+            <input class="form-control" placeholder="Tìm kiếm..." id="myInput"/>
 
         </div>
     </div>
@@ -104,7 +104,7 @@
     <table class="table table-bordered">
         <tr style="background: #37517E;color: white ">
             <th>STT</th>
-<%--            <th>Mã sản phẩm</th>--%>
+            <%--            <th>Mã sản phẩm</th>--%>
             <th>Tên sản phẩm</th>
             <th>Loại giầy</th>
             <th>Màu sắc</th>
@@ -121,7 +121,7 @@
             <c:forEach items="${page.content}" var="sp" varStatus="i">
                 <tr>
                     <td>${i.index+1}</td>
-<%--                    <td>${sp.sanPham.maSanPham}</td>--%>
+                        <%--                    <td>${sp.sanPham.maSanPham}</td>--%>
                     <td>${sp.sanPham.tenSanPham}</td>
                     <td>${sp.loaiGiay.tentheloai}</td>
                     <td>${sp.mauSac.ten}</td>
