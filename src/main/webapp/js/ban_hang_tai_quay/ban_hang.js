@@ -26,6 +26,13 @@ function startScan() {
         // event.preventDefault();
         // Chuyển người dùng đến trang controller khi quét thành công
         window.location.href =  `/bumblebee/ban-hang-tai-quay/add-gio-hang/${qrCode}`;
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Thêm thành công",
+            showConfirmButton: false,
+            timer: 1500
+        });
     });
 }
 function stopScan() {

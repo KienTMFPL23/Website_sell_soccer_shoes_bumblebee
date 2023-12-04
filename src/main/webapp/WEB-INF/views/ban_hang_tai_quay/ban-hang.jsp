@@ -8,6 +8,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ban Hang</title>
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+            rel="stylesheet"
+    />
+    <link href="../../../lib/toastr.css" rel="stylesheet"/>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link
             href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
@@ -15,8 +25,6 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -54,19 +62,19 @@
         <nav class="navbar navHoaDon navbar-expand-lg">
             <%-- list hóa đơn chờ--%>
             <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
-                <div class="hoaDonCho">
-                    <a id="content" class="theHoaDon"
-                       href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
-                       style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
-                    </a>
+                    <div class="hoaDonCho" id="hoaDonStatus_${hd.id}" style="background-color: yellow">
+                        <a id="content" class="theHoaDon"
+                           href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
+                           style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
+                        </a>
 
-                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
-                       onclick="return confirm('Bạn có muốn xóa không ?')"
+                        <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
+                           onclick="return confirm('Bạn có muốn xóa không ?')"
 
-                       class="btndele"><img
-                            src="/images_template/deleteHD.png"></a>
+                           class="btndele"><img
+                                src="/images_template/deleteHD.png"></a>
 
-                </div>
+                    </div>
             </c:forEach>
             <div style="margin-left: 20px">
                 <a id="themHoaDon" onclick="showAlertHoaDon(event)"
@@ -203,11 +211,11 @@
                                                                 <td>${i.count}</td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
-                                                                <td>${sp.mauSac.ten}</td>
-                                                                <td>${sp.chatLieu.ten}</td>
-                                                                <td>${sp.deGiay.loaiDe}</td>
-                                                                <td>${sp.kichCo.size}</td>
-                                                                <td>${sp.loaiGiay.tentheloai}</td>
+                                                                <td id="mauSac">${sp.mauSac.ten}</td>
+                                                                <td id="chatLieu">${sp.chatLieu.ten}</td>
+                                                                <td id="loaiDe">${sp.deGiay.loaiDe}</td>
+                                                                <td id="kichCo">${sp.kichCo.size}</td>
+                                                                <td id="loaiGiay">${sp.loaiGiay.tentheloai}</td>
                                                                 <td>
                                                                     <c:if test="${sp.ctkm != null}">
                                                                         <c:forEach items="${sp.ctkm}" var="ctkm">
@@ -252,11 +260,13 @@
                                 </form>
                             </div>
                             <div class="col-lg-6">
-                                <button type="button" id="startButton" onclick="startScan()" class="btn btn-primary"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop">
-                                    Quét QR
-                                </button>
+                                <c:if test="${idHoaDon != null}">
+                                    <button type="button" id="startButton" onclick="startScan()" class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                        Quét QR
+                                    </button>
+                                </c:if>
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
@@ -312,6 +322,7 @@
                                         <td>
                                             <input type="number" class="form-control"
                                                    min="1"
+                                                   max="5"
                                                    name="soLuong"
                                                    value="${hdct.soLuong}"
                                                    onblur="this.form.submit()"
@@ -399,9 +410,24 @@
                     <b>Khách hàng:</b>
                     <div class="row">
                         <div class="col-sm-10">
-                            <input id="phoneNumber" name="soDienThoai" type="number"
-                                   onchange="getTenKhachHang(this.value)" placeholder="Nhập số điện thoại"
-                                   class="form-control"/>
+                                <%-- <form:input  class="form-control" path="sdt" id="phoneNumber" name="soDienThoai" type="number"--%>
+                                <%--  onchange="getTenKhachHang(this.value)" placeholder="Nhập số điện thoại" />--%>
+                            <div class="input-group">
+                                <form:input path="sdt" min="0" type="number" class="form-control"
+                                            placeholder="Nhập số điện thoại..."
+                                            onchange="getTenKhachHang(this.value)" id="phoneNumber"/>
+                                <div class="input-group-append">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <form:errors path="sdt" cssStyle="color: red"></form:errors>
+                            <p style="color: red">${errorSDT}</p>
+                            <p id="checkNull" style="color: red"></p>
+                            <p style="color: red" id="check0"></p>
                         </div>
                         <div class="col-sm-2">
 
@@ -431,7 +457,7 @@
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
 
-                                onclick="alertThanhToan()"
+                                onclick="return alertThanhToan(event)"
 
                                 style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
                             Thanh toán
@@ -538,6 +564,7 @@
         $("#phoneNumber").select2();
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
@@ -563,11 +590,11 @@
         var comboBox = document.getElementById("phoneNumber");
         var sdt = comboBox.value;
         if (sdt === "") {
-            textName.innerText = "Không tìm thấy khách hàng nào";
+            textName.innerText = "Khách vãng lai";
         } else if (data[sdt] !== undefined) {
             textName.innerText = data[sdt];
         } else {
-            textName.innerText = "Không tìm thấy khách hàng nào";
+            textName.innerText = "Khách vãng lai";
         }
     }
 
@@ -669,11 +696,12 @@
 
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
+<script src="../../../js/ban_hang_tai_quay/filter.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
 </script>
-
+<script src="../../../lib/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
@@ -757,38 +785,29 @@
 
 </script>
 <script>
-    function alertThanhToan() {
+    function alertThanhToan(event) {
         var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result) {
-            let timerInterval;
+        if (result.valueOf()) {
             Swal.fire({
-                title: "Thành công !!!",
-                position: "top-end",
+                position: "center",
                 icon: "success",
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: () => {
-                    // Swal.showLoading();
-                    const timer = Swal.getPopup().querySelector("b");
-                    // timerInterval = setInterval(() => {
-                    //   timer.textContent = `${Swal.getTimerLeft()}`;
-                    // }, 100);
-                },
-                willClose: () => {
-                    clearInterval(timerInterval);
-                },
-            }).then((result) => {
-                /* Read more about handling dismissals below */
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log("I was closed by the timer");
-                }
+                title: "Thanh toán thành công",
+                showConfirmButton: false,
+                timer: 1500
             });
+            window.location.href = `/bumblebee/ban-hang-tai-quay/sell`;
             return true;
         } else {
-            event.preventDefault();
             return false;
         }
-
+    }
+</script>
+<script>
+    function changeColor(id) {
+        if (id === ${idHDCT}) {
+            var hd = document.getElementById("hoaDonStatus_" + id);
+            hd.style.backgroundColor = "yellow";
+        }
     }
 </script>
 
