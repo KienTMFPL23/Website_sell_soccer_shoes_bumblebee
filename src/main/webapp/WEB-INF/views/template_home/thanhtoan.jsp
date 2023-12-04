@@ -20,7 +20,8 @@
     }
 
     .ps-btn btnDatHang {
-        margin-left: 100px;củ
+        margin-left: 100px;
+        củ
     }
 
     .ps-payment-method li img {
@@ -106,16 +107,29 @@
                                         <td style="text-align: center;padding-top: 25px;">${sp.ctsp.mauSac.ten}</td>
                                         <td style="text-align: center;padding-top: 25px;">${sp.soLuong}</td>
 
-                                        <td style="text-align: center;padding-top: 25px;" class="thanhTien">
+                                        <td style="text-align: center;padding-top: 25px;">
                                             <c:if test="${not empty sp.ctsp.ctkm}">
-                                                <fmt:formatNumber
-                                                        value="${sp.donGiaKhiGiam * sp.soLuong}"
-                                                        type="number"/> đ
+                                                <c:forEach var="km" items="${sp.ctsp.ctkm}">
+                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                        <label id="thanhTien_${sp.id}"
+                                                               class="thanhTien"><fmt:formatNumber
+                                                                value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
+                                                                type="number"/> đ</label>
+                                                    </c:if>
+                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <label id="thanhTien_${sp.id}"
+                                                               class="thanhTien"><fmt:formatNumber
+                                                                value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"
+                                                                type="number"/> đ</label>
+                                                    </c:if>
+                                                </c:forEach>
                                             </c:if>
                                             <c:if test="${empty sp.ctsp.ctkm}">
-                                                <fmt:formatNumber
-                                                        value="${sp.donGia * sp.soLuong}"
-                                                        type="number"/> đ
+                                                <label class="thanhTien">
+                                                    <fmt:formatNumber
+                                                            value="${sp.donGia * sp.soLuong}"
+                                                            type="number"/> đ
+                                                </label>
                                             </c:if>
 
                                         </td>
@@ -142,7 +156,6 @@
                             <div class="col-lg-8"></div>
                             <div class="col-lg-4" style="padding-bottom: 20px;">
                                 <span style="font-size: 18px; font-weight: 600;">Tổng tiền hàng: </span>
-
                                 <span style="font-size: 18px; " id="tongTien"></span>
 
                             </div>
@@ -202,15 +215,17 @@
     function conFirm() {
         alert("Đơn hàng của bạn được đặt thành công")
     }
-    function capNhatTongTien(){
+
+    function capNhatTongTien() {
         var thanhTienList = document.getElementsByClassName("thanhTien");
         var total = 0;
         for (let i = 0; i < thanhTienList.length; i++) {
             var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
             total += donGia;
         }
-        var totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        var totalFormatted = total.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
         document.getElementById("tongTien").innerHTML = totalFormatted;
     }
-capNhatTongTien()
+
+    capNhatTongTien()
 </script>
