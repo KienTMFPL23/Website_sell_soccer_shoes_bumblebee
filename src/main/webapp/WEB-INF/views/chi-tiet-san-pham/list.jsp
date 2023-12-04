@@ -29,7 +29,7 @@
             <h3> <a class="btn btn-primary" href="/san-pham/hien-thi">Danh sách sản phẩm</a></h3>
         </div>
         <div class="col-6 col-md-6 col-sm-6">
-            <input class="form-control" placeholder="Nhập mã hoặc loại tên sản phẩm" id="myInput"/>
+            <input class="form-control" placeholder="Tìm kiếm...." id="myInput"/>
             <%--            <form:form action="/chi-tiet-san-pham/search" modelAttribute="searchForm">--%>
             <%--                <div class="row">--%>
             <%--                    <div class="col-2 col-md-2 col-sm-3">--%>

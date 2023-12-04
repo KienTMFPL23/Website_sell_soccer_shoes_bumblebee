@@ -5,12 +5,12 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.DeGiay;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.KichCo;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.SanPham;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -56,20 +56,28 @@ public class QLSanPham {
     DeGiay deGiay;
 
     @Column(name = "Giaban")
-    @NotNull(message = "không để trống")
+    @DecimalMin(value = "0.00", inclusive = false, message = "Giá bán không hợp lệ")
+    @DecimalMax(value = "9999999999.99", inclusive = false, message = "Giá bán không hợp lệ")
+    @NotNull(message = "không để trống giá bán !")
     Double giaBan;
 
     @Column(name = "Soluong")
-    @NotNull(message = "không để trống")
+    @NotNull(message = "không để trống số lượng !")
+    @Min(value = 0, message = "Số lượng không hợp lệ")
+    @Max(value = 999999, message = "Số lượng không hợp lệ")
     Integer soLuong;
 
 
     @Column(name = "MoTaCT")
-    @NotBlank(message = "không để trống")
+    @NotBlank(message = "không để trống mô tả !")
     String moTaCT;
 
+    @Column(name = "NgayTao")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    Date ngayTao;
+
     @Column(name = "Trangthai")
-    @NotNull(message = "không để trống")
+    @NotNull(message = "Mời chọn trạng thái !")
     Integer trangThai;
     @OneToOne(mappedBy = "ctsp")
     HinhAnh hinhAnhs;
@@ -88,6 +96,7 @@ public class QLSanPham {
         this.setSanPham(domain.getSanPham());
         this.setTrangThai(domain.getTrangThai());
         this.setMoTaCT(domain.getMoTaCT());
+        this.setNgayTao(domain.getNgayTao());
         this.setSoLuong(domain.getSoLuong());
         this.setLoaiGiay(domain.getLoaiGiay());
         this.setMauSac(domain.getMauSac());

@@ -479,7 +479,7 @@ public class DonHangController {
                 return 0; // Set a default value or handle as needed
         }
     }
-    //hinh thức thanh toán: 0: tại quầy; 1: khi nhận hàng ; 2: paypal
+    //hinh thức thanh toán: 0: tại quầy; 1: cod; 2: vn pay
     //trạng thái: theo phần hình thức thanh toán; bán on chờ xác nhận; bán off-> hoàn thành
     // 1: chờ xác nhận
     // 2: xác nhận-> đng chuẩn bị

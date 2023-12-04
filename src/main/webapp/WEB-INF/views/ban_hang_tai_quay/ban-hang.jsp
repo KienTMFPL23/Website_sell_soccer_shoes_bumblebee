@@ -483,13 +483,18 @@
                             <div class="mb-3">
                                 <label class="form-label">Tên khách hàng</label>
                                 <form:input path="ten" id="customer" class="form-control"/>
+                                <form:errors path="ten" cssStyle="color: crimson"></form:errors>
+                                <div id="ten-error" style="color: crimson;"></div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Số điện thoại</label>
                                 <form:input path="soDienThoai" id="getSDT" class="form-control"/>
+                                <form:errors path="soDienThoai" cssStyle="color: crimson"></form:errors>
+                                <div id="soDienThoai-error" style="color: crimson;"></div>
+                                <div id="duplicate" style="color: crimson;"></div>
                             </div>
                             <div class="modal-footer">
-                                <button data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitFormKhachHang()">Submit</button>
                             </div>
                         </form:form>
                     </div>
@@ -499,6 +504,61 @@
         </div>
     </div>
 </div>
+<script>
+    function submitFormKhachHang() {
+        var formData = $("#sendKhachHang").serialize();
+
+        $.ajax({
+            type: "POST",
+            url: '/bumblebee/ban-hang-tai-quay/them-khach-hang',
+            data: formData,
+            success: function (response) {
+                if (response.status === "success") {
+                    $("#modalKhachHang").modal("hide");
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    $('#modalKhachHang').on('hidden.bs.modal', function (e) {
+                        $("#error-message").empty();
+                        $("div[id$='-error']").empty();
+                        $("#soDienThoai-error").empty();
+                        $("#ten-error").empty();
+                        $("#duplicate").empty();
+                        $('#sendKhachHang')[0].reset();
+                    });
+
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your data has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    displayErrors(response.errors);
+                }
+            },
+            error: function () {
+                console.error("Error submitting form");
+            }
+        });
+    }
+
+    function displayErrors(errors) {
+        $("#soDienThoai-error").empty();
+        $("#ten-error").empty();
+        $("#duplicate").empty();
+
+        errors.forEach(function (error) {
+            var fieldName = error.split(":")[0].trim();
+            var errorMessage = error.split(":")[1].trim();
+            $("#" + fieldName + "-error").text(errorMessage);
+        });
+
+        if (errors.some(error => error.field === "soDienThoai")) {
+            $("#duplicate").text("Lỗi! Số điện thoại đã tồn tại!");
+        }
+    }
+</script>
 <script>
     $(document).ready(function () {
         $("#phoneNumber").select2();
@@ -646,6 +706,7 @@
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 <script src="../../../js/ban_hang_tai_quay/them-khach-hang.js"></script>
@@ -749,5 +810,9 @@
         }
     }
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </body>
 </html>

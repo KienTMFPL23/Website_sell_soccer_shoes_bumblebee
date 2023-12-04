@@ -502,10 +502,12 @@ public class ChiTietSanPhamController {
         model.addAttribute("tensp", sp2.getTenSanPham());
 
         ChiTietSanPham ctsp = service.getOne(qlSanPham.getId());
+        qlSanPham.setNgayTao(ctsp.getNgayTao());
         ctsp.loadFromViewModel(qlSanPham);
 
         service.addKC(ctsp);
         //generate code qr
+
         String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
         String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
         new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
@@ -513,6 +515,7 @@ public class ChiTietSanPhamController {
         // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
 
+        //
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/hien-thi";
     }
@@ -565,6 +568,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("searchForm", new SearchFormSP());
 
         ChiTietSanPham ctsp = service.getOne(qlSanPham.getId());
+        qlSanPham.setNgayTao(ctsp.getNgayTao());
         ctsp.loadFromViewModel(qlSanPham);
 
         service.addKC(ctsp);
@@ -575,7 +579,6 @@ public class ChiTietSanPhamController {
 
         // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
-
         model.addAttribute("view", "../chi-tiet-san-pham/list-spct.jsp");
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + idSP;
     }

@@ -19,4 +19,6 @@ public interface KhachHangService {
     void createMaKH(KhachHang khachHang);
 
     List<KhachHang>  getAllKHOderBy();
+
+    String generateMaKhachHang();
 }

@@ -74,16 +74,16 @@
                     huỷ<span
                             class="badge text-bg-secondary">${countHDHuy}</span></a>
             </li>
-            <li class="nav-item"  onclick="changeState('don-doi')">
-                <a class="nav-link  ${donHang == 'don-doi' ? 'active' : ''}"
-                   href="/don-hang/list-don-doi">Đổi trả hàng<span
-                        class="badge text-bg-secondary">${countHDDoiHang}</span></a>
-            </li>
-            <li class="nav-item"  onclick="changeState('don-da-doi')">
-                <a class="nav-link  ${donHang == 'don-da-doi' ? 'active' : ''}"
-                   href="/don-hang/list-don-da-doi">Đã đổi trả hàng<span
-                        class="badge text-bg-secondary">${countHDDaDoi}</span></a>
-            </li>
+<%--            <li class="nav-item"  onclick="changeState('don-doi')">--%>
+<%--                <a class="nav-link  ${donHang == 'don-doi' ? 'active' : ''}"--%>
+<%--                   href="/don-hang/list-don-doi">Đổi trả hàng<span--%>
+<%--                        class="badge text-bg-secondary">${countHDDoiHang}</span></a>--%>
+<%--            </li>--%>
+<%--            <li class="nav-item"  onclick="changeState('don-da-doi')">--%>
+<%--                <a class="nav-link  ${donHang == 'don-da-doi' ? 'active' : ''}"--%>
+<%--                   href="/don-hang/list-don-da-doi">Đã đổi trả hàng<span--%>
+<%--                        class="badge text-bg-secondary">${countHDDaDoi}</span></a>--%>
+<%--            </li>--%>
         </ul>
     </div>
     <br>
@@ -246,18 +246,20 @@
                                 <a id="content7" type="submit" class="btn btn-secondary" data-bs-toggle="modal"
                                    data-bs-target="#${hd.id}" style="border-radius: 20px">Xem
                                 </a>
+
                                     <%--        trạng thái chờ xác nhận--%>
-                                <c:if test="${hd.trangThai== 1}">
+                                <c:if test="${hd.trangThai== 1 }">
                                     <c:if test="${hd.loaiHoaDon==0}">
                                         <%--                                        href="/don-hang/update-xac-nhan/${hd.id}"--%>
                                         <a style="border-radius: 20px" class="btn btn-warning"
                                            onclick="confirmAndUpdateXacNhan('${hd.id}')">Xác
-                                            nhận</a></c:if>
-                                    <c:if test="${hd.loaiHoaDon==1}">
-                                        <a style="border-radius: 20px"
-                                           class="btn btn-warning" onclick="confirmAndXacNhanGiao('${hd.id}')">Xác
                                             nhận</a>
                                     </c:if>
+<%--                                    <c:if test="${hd.loaiHoaDon==1}">--%>
+<%--                                        <a style="border-radius: 20px"--%>
+<%--                                           class="btn btn-warning" onclick="confirmAndXacNhanGiao('${hd.id}')">Xác--%>
+<%--                                            nhận</a>--%>
+<%--                                    </c:if>--%>
                                     <c:if test="${ hd.loaiHoaDon==0}">
                                         <a class="btn btn-danger"
                                            onclick="confirmAndHuy('${hd.id}')"
@@ -297,6 +299,7 @@
                                     <%--                                       class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn đổi hàng ?');">Xác--%>
                                     <%--                                        nhận</a>--%>
                                     <%--                                </c:if>--%>
+
                                 <div class="modal fade" id="${hd.id}" data-bs-backdrop="static"
                                      data-bs-keyboard="false"
                                      tabindex="-1"
@@ -553,7 +556,7 @@
 
             }
         } else {
-            alert('Ghi chú không được để trống. Hành động không được thực hiện.');
+            alert('Ghi chú không được để trống.');
         }
     }
 </script>

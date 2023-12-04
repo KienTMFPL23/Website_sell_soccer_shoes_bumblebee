@@ -33,6 +33,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -47,10 +50,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/bumblebee/ban-hang-tai-quay")
@@ -166,9 +167,9 @@ public class BanHangTaiQuayController {
     public String deleteHoaDon(@PathVariable("id") UUID id) {
         List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         if (listHoaDonCT.size() != 0) {
-            for(HoaDonChiTiet hdct : listHoaDonCT){
+            for (HoaDonChiTiet hdct : listHoaDonCT) {
                 hoaDonChiTietService.deleteHoaDonCT(hdct.getId());
-                chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(),hdct.getSoLuong());
+                chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
             }
         }
         hoaDonService.deleteHoaDon(id);
@@ -342,6 +343,7 @@ public class BanHangTaiQuayController {
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
+
     @RequestMapping("/download-pdf/{idHoaDon}")
     public ResponseEntity<byte[]> downloadPdf(@PathVariable("idHoaDon") UUID idHoaDon) throws IOException, DocumentException {
 
@@ -385,7 +387,7 @@ public class BanHangTaiQuayController {
 
         Paragraph tennhanvien = new Paragraph("Nhan vien    :    " + nameNhanVien);
         document.add(tennhanvien);
-        Paragraph tenKhac = new Paragraph("Khach hang    :    " +hoaDonThanhToan.getTenNguoiNhan());
+        Paragraph tenKhac = new Paragraph("Khach hang    :    " + hoaDonThanhToan.getTenNguoiNhan());
         document.add(tenKhac);
 
 //            table.addCell(MaHoaDon);
@@ -455,22 +457,88 @@ public class BanHangTaiQuayController {
         headers.setContentDispositionFormData("attachment", "hoadon_" + idHoaDon + ".pdf");
 
 
-
         return new ResponseEntity<>(baos.toByteArray(), HttpStatus.OK);
 
     }
 
+    //    @RequestMapping("/them-khach-hang")
+//    public String themKhachHang(Model model, @Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
+//        KhachHang addKhachHang = new KhachHang();
+//
+//        String formatKH = "KH" + String.format("%07d", maKhachHang);
+//        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
+//        if (checkMa != null) {
+//            String maKHMax = khachHangService.searchMaxKH();
+//            maKhachHang = Integer.valueOf(maKHMax.substring(2));
+//            maKhachHang++;
+//            String formatSoMa = "KH" + String.format("%07d", maKhachHang);
+//            addKhachHang.setMa(formatSoMa);
+//        } else {
+//            addKhachHang.setMa(formatKH);
+//        }
+//        addKhachHang.setTen(khachHang.getTen());
+//        addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
+//        addKhachHang.setTrangThai(5);
+//        khachHangService.saveKhachHang(addKhachHang);
+//        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//    }
+    private List<String> getErrors(BindingResult result) {
+        List<String> errors = new ArrayList<>();
+        result.getFieldErrors().forEach(error -> errors.add(error.getField() + ": " + error.getDefaultMessage()));
+        return errors;
+    }
     @RequestMapping("/them-khach-hang")
-    public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
-        KhachHang addKhachHang = new KhachHang();
+    @ResponseBody
+    public Map<String, Object> themKhachHang(@Validated @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
+        Map<String, Object> response = new HashMap<>();
 
-        Random  random = new Random();
-        addKhachHang.setMa("KH" + random.nextInt(999999999));
-        addKhachHang.setTen(khachHang.getTen());
-        addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
-        addKhachHang.setTrangThai(5);
-        khachHangService.saveKhachHang(addKhachHang);
-        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        // Kiểm tra lỗi validation
+        if (result.hasErrors()) {
+            response.put("status", "error");
+            response.put("errors", getErrors(result));
+            return response;
+        }
+//        String formatKH = "KH" + String.format("%07d", maKhachHang);
+//        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
+//        // Xử lý logic thêm khách hàng
+//        if (checkMa != null) {
+//            String maKHMax = khachHangService.searchMaxKH();
+//            maKhachHang = Integer.valueOf(maKHMax.substring(2));
+//            maKhachHang++;
+//            String formatSoMa = "KH" + String.format("%07d", maKhachHang);
+//            khachHang.setMa(formatSoMa);
+//        } else {
+//            khachHang.setMa(formatKH);
+//        }
+        String maKhachHang = khachHangService.generateMaKhachHang();
+        khachHang.setMa(maKhachHang);
+        // Kiểm tra trùng số điện thoại
+        if (khachHangRepository.findKHBySDT(khachHang.getSoDienThoai()) != null) {
+            result.rejectValue("soDienThoai", "duplicate", "Lỗi! Số điện thoại đã tồn tại!");
+            response.put("status", "error");
+            response.put("errors", getErrors(result));
+            response.put("field", "soDienThoai");
+            return response;
+        }
+
+        // Lưu thông tin khách hàng
+        khachHang.setTrangThai(5);
+        khachHangService.saveKhachHang(khachHang);
+
+        response.put("status", "success");
+        return response;
+
+//     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
+//         KhachHang addKhachHang = new KhachHang();
+
+//         Random  random = new Random();
+//         addKhachHang.setMa("KH" + random.nextInt(999999999));
+//         addKhachHang.setTen(khachHang.getTen());
+//         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
+//         addKhachHang.setTrangThai(5);
+//         khachHangService.saveKhachHang(addKhachHang);
+//         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+
     }
 
     @RequestMapping("/print/{id}")

@@ -82,7 +82,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public Page<ChiTietSanPham> getListSP(Pageable pageable) {
-        return repo.findAll(pageable);
+        return repo.getListSP(pageable);
     }
 
     @Override
