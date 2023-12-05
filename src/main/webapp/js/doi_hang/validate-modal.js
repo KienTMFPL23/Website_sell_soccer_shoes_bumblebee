@@ -4,16 +4,23 @@ const submitButton = document.getElementById('xacNhanTra');
 const lyDo = document.getElementById('lyDoTra');
 var checkboxes = document.querySelectorAll('.checkCart');
 
-function taoDoiTra() {
+var checkedAllCheckbox = document.getElementById('checkAll');
+
+checkedAllCheckbox.addEventListener('click', function () {
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = checkedAllCheckbox.checked;
+    });
+});
+function taoDoiTra(idSP) {
     var numberOfCheckedCheckboxes = 0;
     var textLydo = lyDo.value;
-    var soLuong = document.getElementById('soLuongTra');
-    var errorMsg = document.getElementById("errorMsg");
+    var soLuong = document.getElementById('soLuongTra_'+idSP);
     checkboxes.forEach(function (checkbox) {
         if (checkbox.checked) {
             numberOfCheckedCheckboxes++;
         }
     });
+
     if (numberOfCheckedCheckboxes === 0) {
         var logEror = document.getElementById('logError');
         logEror.innerText = 'Vui lòng chọn sản phẩm cần trả';
@@ -24,21 +31,24 @@ function taoDoiTra() {
         erorText.innerText = 'Vui lòng nhập lý do đổi trả';
         return false;
     }
-    if (soLuong.value > max) {
-        soLuong.value = max;
-    } else if (soLuong.value <= 0) {
-        soLuong.value = 1;
-    } else if (soLuong.value === '') {
-        errorMsg.style.display = "block";
-        return false;
-    } else {
+    else {
         Swal.fire({
             position: "center",
             icon: "success",
-            title: "Your data has been saved",
+            title: "Thanh toán thành công",
             showConfirmButton: false,
             timer: 1500
         });
-        return true;
+        setTimeout(function () {
+            return true;
+        },1500);
+    }
+}
+function changeSoLuong(soLuongMax,id) {
+    var slTra = document.getElementById('soLuongTra_'+ id);
+    if (slTra.value === 0 || slTra.value < 0 || slTra.value === ''){
+        slTra.value = 1;
+    }else if(slTra.value > soLuongMax ){
+        slTra.value = soLuongMax;
     }
 }

@@ -33,7 +33,7 @@ public class KhachHang {
     private String tenDem;
 
     @NotBlank(message = "Không để trống tên !")
-    @Size(max = 6, message = "Tên không được quá 6 ký tự")
+    @Size(max = 50, message = "Tên không được quá 50 ký tự")
     @Column(name = "Ten")
     private String ten;
 
