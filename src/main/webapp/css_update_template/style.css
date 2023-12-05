@@ -37,6 +37,7 @@
 }
 
 .butAddCart button {
+    width: 100%;
     text-align: center;
     font-size: 15px;
     border: none;
@@ -818,7 +819,7 @@ ul {
 
 .ps-product-action {
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
 }
 
 .pages {
@@ -845,7 +846,7 @@ ul {
 
 #toast{
     position: fixed;
-    top: 120px;
+    top: 32px;
     right: 32px;
     z-index: 10000;
 }
@@ -953,3 +954,7 @@ ul {
     color: #ffc021;
 }
 
+.single_product_thumbnails ul li img{
+    width: 136.25px;
+    height: 136.25px;
+}

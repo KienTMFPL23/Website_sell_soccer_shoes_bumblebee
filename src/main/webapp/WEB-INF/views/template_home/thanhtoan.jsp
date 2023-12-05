@@ -131,16 +131,29 @@
                                         <td style="text-align: center;padding-top: 25px;">${sp.ctsp.mauSac.ten}</td>
                                         <td style="text-align: center;padding-top: 25px;">${sp.soLuong}</td>
 
-                                        <td style="text-align: center;padding-top: 25px;" class="thanhTien">
+                                        <td style="text-align: center;padding-top: 25px;">
                                             <c:if test="${not empty sp.ctsp.ctkm}">
-                                                <fmt:formatNumber
-                                                        value="${sp.donGiaKhiGiam * sp.soLuong}"
-                                                        type="number"/> đ
+                                                <c:forEach var="km" items="${sp.ctsp.ctkm}">
+                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                        <label id="thanhTien_${sp.id}"
+                                                               class="thanhTien"><fmt:formatNumber
+                                                                value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
+                                                                type="number"/> đ</label>
+                                                    </c:if>
+                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <label id="thanhTien_${sp.id}"
+                                                               class="thanhTien"><fmt:formatNumber
+                                                                value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"
+                                                                type="number"/> đ</label>
+                                                    </c:if>
+                                                </c:forEach>
                                             </c:if>
                                             <c:if test="${empty sp.ctsp.ctkm}">
-                                                <fmt:formatNumber
-                                                        value="${sp.donGia * sp.soLuong}"
-                                                        type="number"/> đ
+                                                <label class="thanhTien">
+                                                    <fmt:formatNumber
+                                                            value="${sp.donGia * sp.soLuong}"
+                                                            type="number"/> đ
+                                                </label>
                                             </c:if>
 
                                         </td>
@@ -167,7 +180,6 @@
                             <div class="col-lg-8"></div>
                             <div class="col-lg-4" style="padding-bottom: 20px;">
                                 <span style="font-size: 18px; font-weight: 600;">Tổng tiền hàng: </span>
-
                                 <span style="font-size: 18px; " id="tongTien"></span>
 
                             </div>
@@ -327,6 +339,7 @@
     }
 
     capNhatTongTien()
+
 </script>
 
 <script>
@@ -382,5 +395,8 @@
         // Hiển thị giá trị đã chọn lên trang HTML
         document.getElementById("diaChiShip").value = selectedValues.join("- ");
     }
+</script>
+
+
 </script>
 

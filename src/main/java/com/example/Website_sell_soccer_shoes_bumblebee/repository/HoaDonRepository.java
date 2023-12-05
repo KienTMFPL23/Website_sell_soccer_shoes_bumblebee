@@ -91,13 +91,13 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 5 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonHoanThanh(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 8 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDaHuy(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonTraHang(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 8 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayTao DESC")
     List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = ?1")
@@ -164,6 +164,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     @Query(value = "select * from HoaDon where TrangThai = 5 and (GETDATE() - NgayThanhToan) <=7",nativeQuery = true)
     List<HoaDon> danhSachHDDuDK();
+
 
 
     // Thống kê
@@ -265,4 +266,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
             "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
             "AND MONTH(NgayThanhToan) = 12", nativeQuery = true)
     int tinhTongHoaDonDaBanThang12();
+
+    @Query("delete from HoaDon hd where hd.id = ?1")
+    void deletHoaDonById(UUID idHoaDon);
+
 }

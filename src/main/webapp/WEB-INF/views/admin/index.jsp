@@ -188,31 +188,31 @@
             </li>
 
 
-            <!-- Nav Item - Quản lý khuyến mãi -->
-            <li class="nav-item">
-                <a class="nav-link" href="/bumblebee/khuyen-mai/list">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <b>Quản lý khuyến mại</b></a
-                >
-            </li>
+        <!-- Nav Item - Quản lý khuyến mãi -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/khuyen-mai/list">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <b>Quản lý khuyến mại</b></a
+            >
+        </li>
 
-            <%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
-            <%--        <li class="nav-item">--%>
-            <%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
-            <%--                <i class="fas fa-fw fa-chart-area"></i>--%>
-            <%--                <b>Quản lý hóa đơn</b></a--%>
-            <%--            >--%>
-            <%--        </li>--%>
+<%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
+<%--        <li class="nav-item">--%>
+<%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
+<%--                <i class="fas fa-fw fa-chart-area"></i>--%>
+<%--                <b>Quản lý hóa đơn</b></a--%>
+<%--            >--%>
+<%--        </li>--%>
 
 
-            <!-- Nav Item - Quản lý đổi trả -->
-            <li class="nav-item">
-                <a class="nav-link" href="/bumblebee/doi-hang/list">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <b>Quản lý đổi trả</b></a
-                >
-            </li>
-        </c:if>
+        <!-- Nav Item - Quản lý đổi trả -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/doi-hang/list-tra-hang">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <b>Quản lý đổi trả</b></a
+            >
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block"/>
 
@@ -403,6 +403,8 @@
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script src="../../../js/ban_hang_tai_quay/doi-hang.js"></script>
 <script src="../../../js/doi_hang/san-pham-doi.js"></script>
+<script src="../../../js/doi_hang/validate-modal.js"></script>
+<script src="../../../js/doi_hang/list-doi-tra-ct.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"

@@ -1,6 +1,9 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.sql.Date;
@@ -29,6 +32,8 @@ public class KhachHang {
     @Column(name = "TenDem")
     private String tenDem;
 
+    @NotBlank(message = "Không để trống tên !")
+    @Size(max = 50, message = "Tên không được quá 50 ký tự")
     @Column(name = "Ten")
     private String ten;
 
@@ -41,6 +46,8 @@ public class KhachHang {
     @Column(name = "DiaChi")
     private String diaChi;
 
+    @NotBlank(message = "không để trống số điện thoại !")
+    @Pattern(regexp = "^0\\d{9}$", message = "Số điện thoại phải bắt đầu từ 0 và có đúng 10 chữ số")
     @Column(name = "SoDienThoai")
     private String soDienThoai;
 
@@ -59,6 +66,6 @@ public class KhachHang {
 
     @Override
     public String toString() {
-        return ho  + tenDem + ten ;
+        return ho + tenDem + ten;
     }
 }

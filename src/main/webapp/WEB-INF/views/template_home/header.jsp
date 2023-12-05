@@ -52,8 +52,8 @@
                                 <li class="checkout">
                                     <a href="/bumblebee/cart">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        <span id="checkout_items" class="checkout_items"
-                                              style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>
+<%--                                        <span id="checkout_items" class="checkout_items"--%>
+<%--                                              style="display: ${slGioHang == null ?"none":"flex"}">${slGioHang}</span>--%>
                                     </a>
                                 </li>
                         </ul>

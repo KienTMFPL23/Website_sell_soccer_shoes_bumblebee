@@ -62,6 +62,19 @@ public class KhachHangServiceImpl implements KhachHangService {
             khachHang.setMa(formatKH);
         }
     }
+    @Override
+    public String generateMaKhachHang() {
+        String maKHMax = searchMaxKH();
+
+        // Nếu có mã khách hàng theo đúng định dạng, cắt chuỗi và cộng thêm 1
+        if (maKHMax != null && maKHMax.matches("KH\\d+")) {
+            int suffix = Integer.parseInt(maKHMax.substring(2)) + 1;
+            return "KH" + String.format("%07d", suffix);
+        } else {
+            // Nếu không tìm thấy định dạng, bắt đầu từ số 1
+            return "KH0000001";
+        }
+    }
 
     @Override
     public List<KhachHang> getAllKHOderBy() {

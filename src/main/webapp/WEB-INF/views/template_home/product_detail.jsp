@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <form method="post">
+                <form method="post" id="formDetail">
                     <div class="product_details">
                         <div class="product_details_title">
                             <h2>${ctsp.sanPham.tenSanPham}</h2>
@@ -82,25 +82,32 @@
                                 <c:if test="${ctsp.ctkm != null}">
                                     <c:forEach var="km" items="${ctsp.ctkm}">
                                         <c:if test="${km.khuyenMai.donVi == '%'}">
-                                            <label>
+                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
                                                 <fmt:formatNumber
                                                         value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
                                                         type="number"/> đ
                                             </label>
                                         </c:if>
                                         <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                            <label>
+                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
                                                 <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
                                                                   type="number"/> đ
                                             </label>
                                         </c:if>
-                                        <span><fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ</span>
+                                        <label style="font-weight: 500" id="giaSP"></label>
+                                        <span id="donGiaChuaGiam"><fmt:formatNumber value="${ctsp.giaBan}"
+                                                                                    type="number"/> đ</span>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty ctsp.ctkm}">
-                                    <fmt:formatNumber value="${ctsp.giaBan}" type="number"/> đ
+                                    <label style="font-weight: 500" id="giaSP"><fmt:formatNumber value="${ctsp.giaBan}"
+                                                                                                 type="number"/>
+                                        đ</label>
+                                    <label style="font-weight: 500" id="donGiaKhuyenMai"></label>
+                                    <span id="donGiaChuaGiam"></span>
                                 </c:if>
                             </div>
+
                             <div id="spcosan" style="color: #fe4c50;font-weight: bold"></div>
                         </div>
                         <div class="product_size">
@@ -133,11 +140,11 @@
                             <button
                                     formaction="/bumblebee/mua-ngay?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${idCTSP}"
                                     class="btn-mua"
-                                    type="submit" onclick="return themVaoGioHang()" id="muaNgayButton">Mua ngay
+                                    type="submit" onclick="return muaNgay()" id="muaNgayButton">Mua ngay
                             </button>
                             <button class="btn-themgh"
                                     id="addToCartButton"
-                                    type="submit"
+                                    type="button"
                                     onclick="return themVaoGioHang()"
                                     formaction="/bumblebee/add-to-cart?idMS=${ctsp.mauSac.id}&idSP=${ctsp.sanPham.id}&idCTSP=${ctsp.id}">
                                 add to cart
@@ -257,10 +264,9 @@
                                                                 </c:forEach>
                                                             </c:if>
                                                             <c:if test="${empty item.ctkm}">
-                                                                <label>
-                                                                    <fmt:formatNumber value="${item.giaBan}"
-                                                                                      type="number"/> đ
-                                                                </label>
+
+                                                                <label><fmt:formatNumber value="${item.giaBan}"
+                                                                                         type="number"/> đ</label>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -296,7 +302,7 @@
                 <i class="fa-sharp fa-solid fa-circle-check" style="color: #47d864;"></i>
             </div>
             <div class="toast__body">
-                <h3 class="toast__title">title</h3>
+                <h3 class="toast__title">Success</h3>
                 <p class="toast__msg">Thêm vào giỏ hàng thành công</p>
             </div>
             <div class="toast__close">
@@ -366,6 +372,7 @@
 </div>
 <script src="../../../js_template/single_custom.js"></script>
 <script>
+
     var error = "${errorSL}";
     if (error) {
         var main = document.getElementById("main");
@@ -393,6 +400,12 @@
         });
     });
 
+    function formatGiaSP(number) {
+        var formattedString = String(number).split('.')[0];
+        formattedString = formattedString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return formattedString;
+    }
+
     var response = null;
     var response2 = null;
 
@@ -402,6 +415,7 @@
         var idMS = "${ctsp.mauSac.id}";
         var idSP = "${ctsp.sanPham.id}";
         var idCTSP = "${ctsp.id}"
+        var giaSP = "${ctsp.giaBan}"
         var xhr = new XMLHttpRequest();
         var xhr2 = new XMLHttpRequest();
         xhr.open("GET", "/bumblebee/select-slsp?idMS=" + idMS + "&idSP=" + idSP + "&size=" + kichCo, true);
@@ -416,19 +430,49 @@
             }
         };
         xhr.send();
+        xhr2.open("GET", "/bumblebee/select-giaban?idSP=" + idSP + "&idMS=" + idMS + "&size=" + kichCo, true);
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState === 4 && xhr2.status === 200) {
+                response2 = xhr2.response;
+                console.log(response2);
+                console.log(giaSP);
+                if (Number(response2) !== Number(giaSP)) {
+                    document.getElementById("donGiaKhuyenMai").innerHTML = formatGiaSP(response2) + " đ";
+                    document.getElementById("donGiaChuaGiam").innerHTML = formatGiaSP(giaSP) + " đ";
+                    document.getElementById("giaSP").innerHTML = "";
+                } else {
+                    document.getElementById("giaSP").innerText = formatGiaSP(giaSP) + " đ";
+                    document.getElementById("donGiaKhuyenMai").innerHTML = "";
+                    document.getElementById("donGiaChuaGiam").innerHTML = "";
+                }
+            } else {
+                console.error("Request failed with status: " + xhr2.status);
+            }
+        };
+        xhr2.send();
 
-        // xhr2.open("GET", "/bumblebee/detail?idSP=" + idSP + "&idCTSP=" + idCTSP + "&idMS=" + idMS + "&kichCo=" + kichCo, true);
-        // xhr2.onreadystatechange = function () {
-        //     if (xhr2.readyState === 4 && xhr2.status === 200){
-        //         response2 = xhr2.response;
-        //         var mainContainer = document.getElementById("main_container");
-        //         mainContainer.innerHTML = response2;
-        //     }else {
-        //         console.error("Request failed with status: " + xhr2.status);
-        //     }
-        // };
-        // xhr2.send();
 
+    }
+
+    function muaNgay() {
+        <c:if test="${userLogged.username == null}">
+        var toastElement = document.getElementById("toast_warring_login");
+        toastElement.style.display = "block";
+        setTimeout(function () {
+            toastElement.style.display = "none";
+        }, 1500);
+        return false;
+        </c:if>
+        if (selectedOption === null) {
+            var toastElement1 = document.getElementById("toast_warring_kich_co");
+            toastElement1.style.display = "block";
+            setTimeout(function () {
+                toastElement1.style.display = "none";
+            }, 1500);
+            return false;
+        }else{
+            return true;
+        }
     }
 
 
@@ -449,7 +493,32 @@
             }, 1500);
             return false;
         } else {
-            return true;
+            var idMS = "${ctsp.mauSac.id}";
+            var idSP = "${ctsp.sanPham.id}";
+            var kichCo = document.getElementById("kichCoInput").value;
+            var soLuong = document.getElementById("sl").value;
+            var formData = new FormData();
+            formData.append("kichCo", kichCo);
+            formData.append("soLuong", soLuong);
+            $.ajax({
+                type: "POST",
+                url: "/bumblebee/add-to-cart?idMS=" + idMS + "&idSP=" + idSP,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log("Success: " + response);
+                    var toastElement = document.getElementById("toast");
+                    toastElement.style.display = "block";
+                    setTimeout(function () {
+                        toastElement.style.display = "none";
+                    }, 1500);
+                },
+                error: function (error) {
+                    console.log("Error1: " + JSON.stringify(error));
+                }
+            });
+            return false;
         }
     }
 

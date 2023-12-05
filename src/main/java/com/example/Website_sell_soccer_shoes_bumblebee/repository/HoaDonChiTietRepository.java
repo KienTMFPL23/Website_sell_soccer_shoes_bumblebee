@@ -1,5 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamCustom;
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.HoaDonChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.HoaDonChiTiet;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -170,4 +172,15 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
             "    AND hd.NgayThanhToan BETWEEN :fromDate AND :toDate;", nativeQuery = true)
     int tinhSoSanPhamDaBanTheoKhoangNgay(LocalDateTime fromDate, LocalDateTime toDate);
 
+    @Query(value = "select  sp.TenSanPham,hdtc.SoLuong,hdtc.DonGia, ms.TenMau, kc.Size,hdtc.TrangThai\n" +
+            "            from HoaDonChiTiet hdtc join HoaDon hd on hdtc.IdHoaDon = hd.Id\n" +
+            "            join ChiTietSanPham ctsp on hdtc.IdChiTietSP = ctsp.Id\n" +
+            "            join SanPham sp on ctsp.IdSP = sp.Id\n" +
+            "            join MauSac ms on ctsp.IdMauSac = ms.Id\n" +
+            "            join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
+            "            where hdtc.IdHoaDon = ?1",nativeQuery = true)
+    List<HoaDonChiTietCustom> listHoaDonCTCustom(UUID idHoaDon);
+
+    @Query("delete from HoaDonChiTiet hdct where hdct.hoaDon.id = ?1")
+    void deletHoaDonCTById(UUID idHoaDon);
 }

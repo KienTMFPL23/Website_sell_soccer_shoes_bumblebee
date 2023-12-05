@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -215,6 +216,7 @@ public class SanPhamController {
         }
         SanPham sanPham1 = sanPhamService.getOne(id);
         sp.setSanPham(sanPham1);
+        sp.setNgayTao(Calendar.getInstance().getTime());
         ChiTietSanPham ctsp = new ChiTietSanPham();
         ctsp.loadFromViewModel(sp);
 
@@ -222,6 +224,7 @@ public class SanPhamController {
         service.addKC(ctsp);
 
         //generate code qr
+
         String documentsPath = System.getProperty("user.home") + File.separator + "Documents";
         String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
         new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
@@ -231,11 +234,23 @@ public class SanPhamController {
 
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }
-
+    // New method to handle AJAX requests
+//    @PostMapping("/chi-tiet-san-pham/ajax/add/{id}")
+//    @ResponseBody
+//    public ResponseEntity<String> addSanPhamAjax(Model model,@PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return ResponseEntity.badRequest().body("Validation failed");
+//        }
+//        SanPham sanPham1 = sanPhamService.getOne(id);
+//        model.addAttribute("idsp", id);
+//        // Process the data and generate QR code if needed
+//
+//        return ResponseEntity.ok("Product added successfully");
+//    }
     //add modal loai giay
     @RequestMapping("/san-pham/loai-giay/add/{id}")
     @ResponseBody
-    public Map<String, Object> save(Model model, @PathVariable("id") UUID id,@Valid @ModelAttribute("lg") LoaiGiay loaiGiay, BindingResult result) {
+    public Map<String, Object> save(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("lg") LoaiGiay loaiGiay, BindingResult result) {
         Boolean hasE = result.hasErrors();
         List<LoaiGiay> list = loaiGiayRepo.findAll();
         Map<String, Object> response = new HashMap<>();

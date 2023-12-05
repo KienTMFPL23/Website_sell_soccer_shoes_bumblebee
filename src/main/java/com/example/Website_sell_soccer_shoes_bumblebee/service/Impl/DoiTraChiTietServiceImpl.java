@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.DoiTraChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.DoiTraChiTietService;
@@ -31,5 +32,15 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
         if (dtct != null){
              doiTraCTRepo.delete(dtct);
         }
+    }
+
+    @Override
+    public List<DoiTraChiTietCustom> listDoiTraCTCustom(UUID idHoaDon) {
+        return doiTraCTRepo.listDoiTraCTCustom(idHoaDon);
+    }
+
+    @Override
+    public DoiTraChiTiet getDoiTraCT(UUID idDoiTra, UUID idCTSP) {
+        return doiTraCTRepo.getDoiTraCT(idDoiTra,idCTSP);
     }
 }

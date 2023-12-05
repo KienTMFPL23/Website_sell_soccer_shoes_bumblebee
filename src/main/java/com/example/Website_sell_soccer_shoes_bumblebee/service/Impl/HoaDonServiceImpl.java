@@ -496,4 +496,9 @@ public class HoaDonServiceImpl implements HoaDonService {
         return hoaDonRepository.danhSachHDDuDK();
     }
 
+    @Override
+    public void deleteHoaDonById(UUID idHoaDon) {
+        hoaDonRepository.deletHoaDonById(idHoaDon);
+    }
+
 }

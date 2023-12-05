@@ -19,6 +19,7 @@ import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhachHangRepos
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+
+import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -45,10 +50,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/bumblebee/ban-hang-tai-quay")
@@ -164,8 +167,10 @@ public class BanHangTaiQuayController {
     public String deleteHoaDon(@PathVariable("id") UUID id) {
         List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         if (listHoaDonCT.size() != 0) {
-            hoaDonChiTietService.removeHDCT(id);
-            hoaDonChiTietService.deleteByHoaDon(id);
+            for (HoaDonChiTiet hdct : listHoaDonCT) {
+                hoaDonChiTietService.deleteHoaDonCT(hdct.getId());
+                chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
+            }
         }
         hoaDonService.deleteHoaDon(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
@@ -184,6 +189,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("khachHang", new KhachHang());
         idHoaDon = id;
+        model.addAttribute("idHDCT",id);
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
@@ -220,6 +226,10 @@ public class BanHangTaiQuayController {
 //        }
         this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
+        if (sp == null){
+            model.addAttribute("erorSP","Không có sản phẩm nào!!!");
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
+        }
         HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
         if (sanPhamInHDCT != null) {
             Integer soLuong = sp.getSoLuong() - 1;
@@ -266,9 +276,9 @@ public class BanHangTaiQuayController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
         Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
-        if (soLuong > soLuongTon) {
-            hoaDonChiTiet.setSoLuong(soLuongTon);
-            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), 0);
+        if (soLuong > 5) {
+            hoaDonChiTiet.setSoLuong(5);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - 5);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
             return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
         }
@@ -287,13 +297,27 @@ public class BanHangTaiQuayController {
     }
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
-
     public String thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
-                            @RequestParam("soDienThoai") String soDienThoai,
-                            @RequestParam("ghiChu") String ghiChu) throws ParseException, DocumentException, IOException {
+                            @Valid @ModelAttribute("hoaDon")HoaDon hoaDon,
+                            BindingResult result) throws ParseException, DocumentException, IOException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
+        KhachHang khachHang = null;
+        String sdt = hoaDon.getSdt();
+        if (sdt != ""){
+            khachHang = khachHangRepository.findKHBySDT(hoaDon.getSdt());
+        }
 
-
+        if (result.hasErrors()) {
+           return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+        }
+//        if (! hoaDon.getSdt().startsWith("0")){
+//            model.addAttribute("errorSDT","Số điện thoại bắt đầu bằng 0");
+//            return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//        }
+//        if (Integer.parseInt(hoaDon.getSdt()) <= 0){
+//            model.addAttribute("errorSDT","Số điện thoại lớn hơn 0");
+//            return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//        }
         if (hoaDonThanhToan != null) {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -301,13 +325,16 @@ public class BanHangTaiQuayController {
             hoaDonThanhToan.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
             hoaDonThanhToan.setNhanVien(nhanVien);
             hoaDonThanhToan.setTrangThai(5);
-            hoaDonThanhToan.setSdt(soDienThoai);
-            KhachHang khachHang = khachHangRepository.findKHBySDT(soDienThoai);
+            hoaDonThanhToan.setSdt(hoaDon.getSdt());
 
-            hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
+            if (khachHang != null) {
+                hoaDonThanhToan.setKhachHang(khachHang);
+                hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
+            }else {
+                hoaDonThanhToan.setTenNguoiNhan("Khách vãng lai");
+            }
             hoaDonThanhToan.setPhuongThucThanhToan(1);
-
-            hoaDonThanhToan.setGhiChu(ghiChu);
+            hoaDonThanhToan.setGhiChu(hoaDon.getGhiChu());
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
             this.idHoaDon = null;
@@ -320,6 +347,7 @@ public class BanHangTaiQuayController {
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
+
     @RequestMapping("/download-pdf/{idHoaDon}")
     public ResponseEntity<byte[]> downloadPdf(@PathVariable("idHoaDon") UUID idHoaDon) throws IOException, DocumentException {
 
@@ -363,7 +391,7 @@ public class BanHangTaiQuayController {
 
         Paragraph tennhanvien = new Paragraph("Nhan vien    :    " + nameNhanVien);
         document.add(tennhanvien);
-        Paragraph tenKhac = new Paragraph("Khach hang    :    " +hoaDonThanhToan.getTenNguoiNhan());
+        Paragraph tenKhac = new Paragraph("Khach hang    :    " + hoaDonThanhToan.getTenNguoiNhan());
         document.add(tenKhac);
 
 //            table.addCell(MaHoaDon);
@@ -433,31 +461,88 @@ public class BanHangTaiQuayController {
         headers.setContentDispositionFormData("attachment", "hoadon_" + idHoaDon + ".pdf");
 
 
-
         return new ResponseEntity<>(baos.toByteArray(), HttpStatus.OK);
 
     }
 
+    //    @RequestMapping("/them-khach-hang")
+//    public String themKhachHang(Model model, @Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
+//        KhachHang addKhachHang = new KhachHang();
+//
+//        String formatKH = "KH" + String.format("%07d", maKhachHang);
+//        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
+//        if (checkMa != null) {
+//            String maKHMax = khachHangService.searchMaxKH();
+//            maKhachHang = Integer.valueOf(maKHMax.substring(2));
+//            maKhachHang++;
+//            String formatSoMa = "KH" + String.format("%07d", maKhachHang);
+//            addKhachHang.setMa(formatSoMa);
+//        } else {
+//            addKhachHang.setMa(formatKH);
+//        }
+//        addKhachHang.setTen(khachHang.getTen());
+//        addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
+//        addKhachHang.setTrangThai(5);
+//        khachHangService.saveKhachHang(addKhachHang);
+//        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//    }
+    private List<String> getErrors(BindingResult result) {
+        List<String> errors = new ArrayList<>();
+        result.getFieldErrors().forEach(error -> errors.add(error.getField() + ": " + error.getDefaultMessage()));
+        return errors;
+    }
     @RequestMapping("/them-khach-hang")
-    public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
-        KhachHang addKhachHang = new KhachHang();
+    @ResponseBody
+    public Map<String, Object> themKhachHang(Model model,@Validated @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
+        Map<String, Object> response = new HashMap<>();
 
-        String formatKH = "KH" + String.format("%07d", maKhachHang);
-        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
-        if (checkMa != null) {
-            String maKHMax = khachHangService.searchMaxKH();
-            maKhachHang = Integer.valueOf(maKHMax.substring(2));
-            maKhachHang++;
-            String formatSoMa = "KH" + String.format("%07d", maKhachHang);
-            addKhachHang.setMa(formatSoMa);
-        } else {
-            addKhachHang.setMa(formatKH);
+        // Kiểm tra lỗi validation
+        if (result.hasErrors()) {
+            response.put("status", "error");
+            response.put("errors", getErrors(result));
+            return response;
         }
-        addKhachHang.setTen(khachHang.getTen());
-        addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
-        addKhachHang.setTrangThai(5);
-        khachHangService.saveKhachHang(addKhachHang);
-        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//        String formatKH = "KH" + String.format("%07d", maKhachHang);
+//        KhachHang checkMa = khachHangService.searchKhachHang(formatKH);
+//        // Xử lý logic thêm khách hàng
+//        if (checkMa != null) {
+//            String maKHMax = khachHangService.searchMaxKH();
+//            maKhachHang = Integer.valueOf(maKHMax.substring(2));
+//            maKhachHang++;
+//            String formatSoMa = "KH" + String.format("%07d", maKhachHang);
+//            khachHang.setMa(formatSoMa);
+//        } else {
+//            khachHang.setMa(formatKH);
+//        }
+        String maKhachHang = khachHangService.generateMaKhachHang();
+        khachHang.setMa(maKhachHang);
+        // Kiểm tra trùng số điện thoại
+        if (khachHangRepository.findKHBySDT(khachHang.getSoDienThoai()) != null) {
+            result.rejectValue("soDienThoai", "duplicate", "Lỗi! Số điện thoại đã tồn tại!");
+            response.put("status", "error");
+            response.put("errors", getErrors(result));
+            response.put("field", "soDienThoai");
+            return response;
+        }
+
+        // Lưu thông tin khách hàng
+        khachHang.setTrangThai(5);
+        khachHangService.saveKhachHang(khachHang);
+        model.addAttribute("idHoaDon",this.idHoaDon);
+        response.put("status", "success");
+        return response;
+
+//     public String themKhachHang(Model model, @ModelAttribute("khachHang") KhachHang khachHang) {
+//         KhachHang addKhachHang = new KhachHang();
+
+//         Random  random = new Random();
+//         addKhachHang.setMa("KH" + random.nextInt(999999999));
+//         addKhachHang.setTen(khachHang.getTen());
+//         addKhachHang.setSoDienThoai(khachHang.getSoDienThoai());
+//         addKhachHang.setTrangThai(5);
+//         khachHangService.saveKhachHang(addKhachHang);
+//         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+
     }
 
     @RequestMapping("/print/{id}")

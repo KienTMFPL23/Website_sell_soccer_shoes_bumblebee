@@ -251,8 +251,6 @@
                                                             <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
                                                                               type="number"/> đ
                                                         </c:if>
-
-
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -260,11 +258,6 @@
                                     </a>
                                 </div>
                                 <hr>
-
-                                <div class="tong-tien">
-                                    <h3 id="tongTien"></h3>
-                                </div>
-
                             </div>
                         </div>
                     </c:forEach>
@@ -281,15 +274,5 @@
 </main>
 </body>
 <script>
-    function capNhatTongTien(){
-        var thanhTienList = document.getElementsByClassName("thanhTien");
-        var total = 0;
-        for (let i = 0; i < thanhTienList.length; i++) {
-            var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
-            total += donGia;
-        }
-        var totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-        document.getElementById("tongTien").innerHTML ="Thành tiền: " +totalFormatted;
-    }
-    capNhatTongTien();
+
 </script>

@@ -95,4 +95,6 @@ public interface HoaDonService {
     Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
 
     List<HoaDon> danhSachHDDuDK();
+
+    void deleteHoaDonById(UUID idHoaDon);
 }
