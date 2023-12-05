@@ -39,7 +39,6 @@
             crossorigin="anonymous"></script>
     <link rel="icon" href="../../../images_template/logo_bumblebee.png">
     <link href="/css/ban-hang/ban-hang.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="sweetalert2.min.css">
 
 </head>
 <style>
@@ -62,7 +61,7 @@
         <nav class="navbar navHoaDon navbar-expand-lg">
             <%-- list hóa đơn chờ--%>
             <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
-                    <div class="hoaDonCho" id="hoaDonStatus_${hd.id}" style="background-color: yellow">
+                    <div class="hoaDonCho" id="hoaDonStatus_${hd.id}">
                         <a id="content" class="theHoaDon"
                            href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
                            style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
@@ -533,6 +532,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    location.reload();
                 } else {
                     displayErrors(response.errors);
                 }
@@ -620,7 +620,7 @@
         var table = document.getElementById("myTable");
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            table.style.display = "block"
+            // table.style.display = "block"
         });
 
         // var table = document.getElementById("myTable");
@@ -696,7 +696,7 @@
 
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
-<script src="../../../js/ban_hang_tai_quay/filter.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
@@ -793,10 +793,11 @@
                 icon: "success",
                 title: "Thanh toán thành công",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             });
-            window.location.href = `/bumblebee/ban-hang-tai-quay/sell`;
-            return true;
+            setTimeout(function () {
+                return true;
+            },2000);
         } else {
             return false;
         }

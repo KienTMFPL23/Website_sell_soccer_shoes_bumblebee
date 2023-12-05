@@ -23,10 +23,10 @@
             <td>${hd.soLuong}</td>
             <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
             <td>
-                <a id="btnTraHang" href="/bumblebee/don-hang/create-tra-hang/${hd.chiTietSanPham.id}"
-                   class="btn btn-danger"
-                   style="border-radius: 20px; margin-top: 5px;"
-                >Trả hàng
+<%--                <a id="btnTraHang" href="/bumblebee/don-hang/create-tra-hang/${hd.chiTietSanPham.id}"--%>
+<%--                   class="btn btn-danger"--%>
+<%--                   style="border-radius: 20px; margin-top: 5px;"--%>
+<%--                >Trả hàng--%>
                 </a>
                 <a id="openModalSanPham"
                    onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
@@ -110,13 +110,12 @@
         </c:forEach>
         </tbody>
     </table>
-    <button type="submit" class="btn btn-primary">Đổi hàng</button>
 </form>
+<button type="submit" class="btn btn-primary">Đổi hàng</button>
 
 <button data-bs-toggle="modal" type="button"
         data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
 </button>
-<a class="btn btn-success" href="/bumblebee/don-hang/huy-doi-tra">Hủy</a>
 <form method="post" action="/bumblebee/don-hang/create-tra-hang">
     <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -130,7 +129,9 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col"><input class="checkCart" type="checkbox"
+                                                   id="checkAll">
+                            </th>
                             <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Màu sắc</th>
                             <th scope="col">Kích cỡ</th>
@@ -150,15 +151,14 @@
                                 <td>${hd.chiTietSanPham.kichCo.size}</td>
                                 <td>
                                     <div>
-                                        <input type="number" id="soLuongTra"
+                                        <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}"
                                                min="1"
                                                max="${hd.soLuong}"
-                                               name="soLuongTra"
+                                               name="soLuong"
                                                value=""
+                                               onchange="changeSoLuong('${hd.soLuong}','${hd.chiTietSanPham.id}')"
                                                style="width:50px;"> /${hd.soLuong}
-                                        <p id="errorMsg" style="color: red; display: none">
-                                            Không hợp lệ
-                                        </p>
+                                        <strong><p style="color: red" id="erorSluong"></p></strong>
                                     </div>
                                 </td>
                                 <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" onclick="return taoDoiTra()" id="xacNhanTra" class="btn btn-primary">Xác
+                    <button type="submit" onclick="return taoDoiTra('${hd.chiTietSanPham.id}')" id="xacNhanTra" class="btn btn-primary">Xác
                         nhận
                     </button>
                 </div>
@@ -189,5 +189,6 @@
         </div>
     </div>
 </form>
+
 
 

@@ -78,10 +78,10 @@ public class DoiTraController {
         return "/admin/index";
     }
 
-    @GetMapping("/bumblebee/don-hang/{idDoiTra}")
-    public String chiTietDonHang(Model model, @PathVariable("idDoiTra") UUID idDoiTra) {
+    @GetMapping("/bumblebee/don-hang/{maHD}")
+    public String chiTietDonHang(Model model, @PathVariable("maHD") String maHoaDon) {
         model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-        List<HoaDonChiTiet> listSPMuonDoi = hoaDonChiTietService.listHDCTByMaHD(this.maHoaDon);
+        List<HoaDonChiTiet> listSPMuonDoi = hoaDonChiTietService.listHDCTByMaHD(maHoaDon);
         model.addAttribute("listHDCT", listSPMuonDoi);
         List<DoiTraChiTiet> listDoiTraCT = doiTraChiTietService.listDoiTraCTById(idDoiTra);
         model.addAttribute("listDoiTraCT", listDoiTraCT);
@@ -119,12 +119,8 @@ public class DoiTraController {
     @RequestMapping("/bumblebee/don-hang/tao-doi-tra/{maHD}")
     public String taoDoiTra(Model model, @PathVariable("maHD") String maHD) throws ParseException {
         model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-        DoiTra doiTra = new DoiTra();
-        HoaDon hoaDon = hoaDonService.searchHoaDon(maHD);
-        createMaDoiTraAuto(doiTra, hoaDon);
         this.maHoaDon = maHD;
-        this.idDoiTra = doiTra.getId();
-        return "redirect:/bumblebee/don-hang/" + this.idDoiTra;
+        return "redirect:/bumblebee/don-hang/" + maHD;
     }
 
     private void createDoiTraCT(DoiTra doiTra, String lydo, Integer soLuong) {
@@ -200,8 +196,12 @@ public class DoiTraController {
     public String createTraHang(Model model,
                                 @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
                                 @RequestParam(name = "lyDoDoiTra") String lyDoDoiTra,
-                                @RequestParam(name = "soLuong") Integer soLuong) {
+                                @RequestParam(name = "soLuong") Integer soLuong) throws ParseException {
         model.addAttribute("view", "../doi-tra/doi-hang.jsp");
+        DoiTra doiTra = new DoiTra();
+        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
+        createMaDoiTraAuto(doiTra, hoaDon);
+        this.idDoiTra = doiTra.getId();
         List<UUID> idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
                 .stream()
                 .map(UUID::fromString)
@@ -216,7 +216,7 @@ public class DoiTraController {
         checkDoiTra.setTrangThai(2);
         doiTraService.saveDoiTra(checkDoiTra);
         createDoiTraCT(checkDoiTra, lyDoDoiTra, soLuong);
-        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
+//        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
         hoaDon.setTrangThai(7);
         hoaDonService.saveHoaDon(hoaDon);
         for (ChiTietSanPham ctsp : listCTSP) {
@@ -282,7 +282,7 @@ public class DoiTraController {
         return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
     }
 
-    @RequestMapping("/bumblebee/don-hang/huy-doi-tra")
+    @RequestMapping("/bumblebee/doi-hang/list-tra-hang")
     public String huyDoiTra() {
         doiTraService.huyDoiTra(this.idDoiTra);
         return "redirect:/bumblebee/doi-hang/list";
