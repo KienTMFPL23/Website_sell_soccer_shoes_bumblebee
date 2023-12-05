@@ -65,7 +65,7 @@
                                             <td style="margin-left: -15px;margin-right: -15px" class="col-md-3">
                                                 <div>${item.ctsp.sanPham.tenSanPham}</div>
                                                 <div>${item.ctsp.mauSac.ten} - ${item.ctsp.kichCo.size}</div>
-                                                <c:if test="${not empty item.ctsp.ctkm}">
+                                                <c:if test="${item.ctsp.ctkm != null}">
                                                     <c:forEach var="km" items="${item.ctsp.ctkm}">
                                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                                             <input id="donGia_${item.id}" type="hidden"
@@ -94,7 +94,8 @@
                                                     <input class="" id="soLuongCTSP_${item.id}" type="text"
                                                            value="${item.soLuong}"
                                                            style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''}
-                                                           onchange="thayDoiSoLuong('${item.id}')">
+                                                           onchange="thayDoiSoLuong('${item.id}')"
+                                                           oninput="chonSoLuong('${item.id}',event)">
                                                     <a style="background-color: black;border: none;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
                                                        onclick="themSL('${item.id}')"
                                                        class="plus"><span style="color: white">+</span></a>
@@ -104,20 +105,10 @@
                                             </td>
                                             <td class="tTien col-md-3">
                                                 <c:if test="${not empty item.ctsp.ctkm}">
-                                                    <c:forEach var="km" items="${item.ctsp.ctkm}">
-                                                        <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                            <label id="thanhTien_${item.id}"
-                                                                   class="thanhTien"><fmt:formatNumber
-                                                                    value="${(item.ctsp.giaBan - (item.ctsp.giaBan * km.khuyenMai.giaTri/100))*item.soLuong}"
-                                                                    type="number"/> đ</label>
-                                                        </c:if>
-                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                            <label id="thanhTien_${item.id}"
-                                                                   class="thanhTien"><fmt:formatNumber
-                                                                    value="${(item.ctsp.giaBan - km.khuyenMai.giaTri) * item.soLuong}"
-                                                                    type="number"/> đ</label>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                    <label id="thanhTien_${item.id}"
+                                                           class="thanhTien"><fmt:formatNumber
+                                                            value="${(item.donGiaKhiGiam*item.soLuong)}"
+                                                            type="number"/> đ</label>
                                                     <p id="thanhTienChuaGiam_${item.id}"><fmt:formatNumber
                                                             value="${item.donGia*item.soLuong}"
                                                             type="number"/> đ</p>
@@ -131,7 +122,7 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <button type="button" onclick="xoaGioHang('${item.id}')"
+                                                <button type="button" onclick="return xoaGioHang('${item.id}')"
                                                         style="background-color: transparent;border: none">
                                                     <div class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
@@ -206,26 +197,47 @@
     </div>
 </main>
 <script>
+    function chonSoLuong(itemId) {
+        const newValue = event.target.value;
+        var slCTSP = parseInt(document.getElementById("slCTSP_" + itemId).value);
+        if (newValue > 5){
+            document.getElementById("soLuongCTSP_" + itemId).value = 5;
+            alert("Tối đa 5 sản phẩm");
+            capNhatTongTien()
+        }
+        if(newValue < 0){
+            document.getElementById("soLuongCTSP_" + itemId).value = 1;
+            alert("Số lượng sản phẩm phải lớn hơn 0");
+            capNhatTongTien()
+        }
+        if(newValue === ""){
+            document.getElementById("soLuongCTSP_" + itemId).value = 1;
+        }
+    }
     function xoaGioHang(idGHCT) {
-        $.ajax({
-            type: "DELETE",
-            url: "/bumblebee/remove-ghct/" + idGHCT,
-            success: function (response) {
-                console.log("Success: " + response);
-                $("#gioHangChiTiet_" + idGHCT).remove();
-                var toastElement = document.getElementById("toast_succes_delete");
-                toastElement.style.display = "block";
-                setTimeout(function () {
-                    toastElement.style.display = "none";
-                }, 1900);
-            },
-            error: function (error) {
-                console.log("Error: " + error);
-            }
-        });
-        $("#formGioHang").submit(function (event) {
-            event.preventDefault();
-        });
+        if (confirm("xác nhận xóa?")){
+            $.ajax({
+                type: "DELETE",
+                url: "/bumblebee/remove-ghct/" + idGHCT,
+                success: function (response) {
+                    console.log("Success: " + response);
+                    $("#gioHangChiTiet_" + idGHCT).remove();
+                    var toastElement = document.getElementById("toast_succes_delete");
+                    toastElement.style.display = "block";
+                    setTimeout(function () {
+                        toastElement.style.display = "none";
+                    }, 1900);
+                    capNhatTongTien();
+                },
+                error: function (error) {
+                    console.log("Error: " + error);
+                }
+            });
+            $("#formGioHang").submit(function (event) {
+                event.preventDefault();
+            });
+        }else{
+        }
     }
 
     var checkedAllCheckbox = document.getElementById('checkedAll');
@@ -272,6 +284,7 @@
     function truSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
         if (soLuongHienTai - 1 < 1) {
+            alert("số lượng phải lớn hơn 1")
             return;
         }
         var soLuongMoi = soLuongHienTai - 1;
@@ -294,6 +307,10 @@
 
     function themSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
+        if (soLuongHienTai > 4){
+            alert("Tối đa 5 sản phẩm");
+            return;
+        }
         var soLuongMoi = soLuongHienTai + 1;
         var inputElement = document.getElementById("soLuongCTSP_" + itemId);
         inputElement.value = soLuongMoi;
