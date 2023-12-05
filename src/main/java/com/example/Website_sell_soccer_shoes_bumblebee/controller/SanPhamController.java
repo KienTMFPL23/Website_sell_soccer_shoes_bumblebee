@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -201,7 +202,7 @@ public class SanPhamController {
 
     // add ctsp
     @PostMapping("/chi-tiet-san-pham/add/{id}")
-    public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp, BindingResult result) throws WriterException, IOException {
+    public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp, BindingResult result, RedirectAttributes redirectAttributes) throws WriterException, IOException {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("vm", new ChatLieu());
@@ -209,6 +210,7 @@ public class SanPhamController {
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
         if (result.hasErrors()) {
+            model.addAttribute("submitStatus", "error");
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/admin/index";
@@ -231,6 +233,8 @@ public class SanPhamController {
 
 //        // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
+        //
+//        redirectAttributes.addFlashAttribute("redirectUrl","/chi-tiet-san-pham/list-san-pham/" + id);
 
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }
