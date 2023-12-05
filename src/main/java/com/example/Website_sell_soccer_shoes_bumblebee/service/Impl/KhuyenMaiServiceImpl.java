@@ -48,8 +48,8 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
     }
 
     @Override
-    public List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate) {
-        return repo.searchKMByNgayTaoAndDonVi(fromDate, toDate);
+    public List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate, String donVi) {
+        return repo.searchKMByNgayTaoAndDonVi(fromDate, toDate, donVi);
     }
 
 

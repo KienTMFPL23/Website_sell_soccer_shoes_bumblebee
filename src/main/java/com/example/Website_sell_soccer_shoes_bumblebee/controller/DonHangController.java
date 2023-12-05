@@ -440,7 +440,6 @@ public class DonHangController {
     // xác nhận -> đang chuẩn bị
     // loại đơn: 0:on/ 1:tại quầy
 
-
     @RequestMapping("/don-hang/update-xac-nhan/{id}")
     public String trangThaiDangChuanBi(Model model, @ModelAttribute("hoaDon") HoaDon hoaDon,
                                        @RequestParam(defaultValue = "0", name = "p") int page, @PathVariable UUID id,
@@ -483,7 +482,6 @@ public class DonHangController {
 //        return "/admin/index";
 //        return "redirect:/don-hang/xem-don-hang/" + id;
         return "redirect:/don-hang/list-dang-giao";
-
     }
 
     @RequestMapping("/don-hang/huy-don-hang/{id}")

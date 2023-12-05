@@ -124,15 +124,15 @@ public class HomeController {
     public ResponseEntity<Double> getGiabanBySize(@RequestParam UUID idSP, @RequestParam UUID idMS, @RequestParam String size) {
         ChiTietSanPham ctsp = chiTietSanPhamRepo.getCTSPByKichCo(idMS, idSP, size);
         Double giaBan = 0.0;
-        if (ctsp.getCtkm().size() > 0){
-            for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()){
-                if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
-                    giaBan= ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri()/100;
-                }else{
+        if (ctsp.getCtkm().size() > 0) {
+            for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()) {
+                if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
+                    giaBan = ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100;
+                } else {
                     giaBan = ctsp.getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
                 }
             }
-        }else{
+        } else {
             giaBan = ctsp.getGiaBan();
         }
         return ResponseEntity.ok(giaBan);
@@ -219,7 +219,7 @@ public class HomeController {
     }
 
 
-    @DeleteMapping ("/bumblebee/remove-ghct/{id}")
+    @DeleteMapping("/bumblebee/remove-ghct/{id}")
     public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
         gioHangChiTietRepo.deleteById(id);
         return ResponseEntity.ok("Record deleted successfully");
@@ -233,7 +233,7 @@ public class HomeController {
         List<ChiTietSanPham> listCTSPBySP = chiTietSanPhamRepo.getCTSPByIdSP(idSP);
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
-        model.addAttribute("listCTSPBySP",listCTSPBySP);
+        model.addAttribute("listCTSPBySP", listCTSPBySP);
         model.addAttribute("idCTSP", idCTSP);
         model.addAttribute("hinhAnh", hinhAnh);
         model.addAttribute("listKC", listKCBySP);
@@ -402,6 +402,9 @@ public class HomeController {
             @RequestParam(name = "tenNguoiNhan") String tenNguoiNhan,
             @RequestParam(name = "sdt") String sdt,
             @RequestParam(name = "diaChiShip") String diaChiShip,
+            @RequestParam(name = "thanhPho") String thanhPho,
+            @RequestParam(name = "huyen") String huyen,
+            @RequestParam(name = "xa") String xa,
             @RequestParam(name = "ghiChu") String ghiChu,
             @RequestParam(name = "payment") Integer payment
     ) throws ParseException {
@@ -430,14 +433,18 @@ public class HomeController {
         hoaDon.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
         hoaDon.setTenNguoiNhan(tenNguoiNhan);
         hoaDon.setSdt(sdt);
-        hoaDon.setDiaChiShip(diaChiShip);
+        if (diaChiShip.equals(kh.getDiaChi())){
+            hoaDon.setDiaChiShip(kh.getDiaChi());
+        } else{
+            hoaDon.setDiaChiShip(xa + " - " + huyen + " - " + thanhPho);
+        }
         hoaDon.setGhiChu(ghiChu);
         hoaDon.setLoaiHoaDon(0);
         if (payment.intValue() == 2) {
             return "redirect:/VnPay";
         } else {
             hoaDon.setPhuongThucThanhToan(1);
-            hoaDon.setTrangThai(2);
+            hoaDon.setTrangThai(1);
             hoaDonService.saveHoaDon(hoaDon);
         }
 
@@ -462,16 +469,7 @@ public class HomeController {
         }
 
         return "redirect:/bumblebee/don-mua/cho-xac-nhan";
-//        return "redirect:/pay";
     }
-
-//    @GetMapping("/pay")
-//    public String home(Model model) {
-//        Double price = gioHangChiTietService.getTotalMoney(listGHCT);
-//        model.addAttribute("price", price);
-//        return "/paypal/paypal";
-//    }
-
 
     // THANH TOÁN VNPAY
     @Autowired
@@ -497,7 +495,7 @@ public class HomeController {
     }
 
     @GetMapping("/vnpay-payment")
-    public String GetMapping(HttpServletRequest request, Model model) {
+    public String GetMapping(HttpServletRequest request, Model model) throws ParseException {
         int paymentStatus = vnPayService.orderReturn(request);
         if (paymentStatus == 1) {
             hoaDon.setPhuongThucThanhToan(2);
@@ -517,15 +515,17 @@ public class HomeController {
         }
         String orderInfo = request.getParameter("vnp_OrderInfo");
         String paymentTime = request.getParameter("vnp_PayDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = sdf.parse(paymentTime);
         String transactionId = request.getParameter("vnp_TransactionNo");
         String totalPrice = request.getParameter("vnp_Amount");
 
         model.addAttribute("orderId", orderInfo);
         model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("paymentTime", paymentTime);
+        model.addAttribute("paymentTime", date);
         model.addAttribute("transactionId", transactionId);
 
-        return paymentStatus == 1 ? "redirect:/bumblebee/don-mua/cho-xac-nhan" : "redirect:/bumblebee/thanh-toan";
+        return paymentStatus == 1 ? "/VnPay/success" : "redirect:/bumblebee/thanh-toan";
     }
 
 
@@ -645,18 +645,24 @@ public class HomeController {
     }
 
     @PostMapping("/bumblebee/thong-tin-ca-nhan")
-    public String thongTinCaNhan(Model model, HttpSession session, @ModelAttribute("kh") KhachHang kh) {
+    public String thongTinCaNhan(
+            Model model, HttpSession session, @ModelAttribute("kh") KhachHang kh,
+            @RequestParam(name = "thanhPho") String thanhPho,
+            @RequestParam(name = "huyen") String huyen,
+            @RequestParam(name = "xa") String xa
+    ) {
 
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
-
         KhachHang khachHang = khachHangService.findId(taiKhoan.getKhachHangKH().getId());
+        khachHang.setTaiKhoanKH(taiKhoan);
         khachHang.setHo(kh.getHo());
         khachHang.setTenDem(kh.getTenDem());
         khachHang.setTen(kh.getTen());
         khachHang.setGioiTinh(kh.getGioiTinh());
         khachHang.setSoDienThoai(kh.getSoDienThoai());
         khachHang.setNgaySinh(kh.getNgaySinh());
-        khachHang.setDiaChi(kh.getDiaChi());
+        kh.setDiaChi(xa + " - " + huyen + " - " + thanhPho);
+        khachHang.setTrangThai(0);
         khachHangService.saveKhachHang(kh);
 
         return "redirect:/bumblebee/thong-tin-ca-nhan";

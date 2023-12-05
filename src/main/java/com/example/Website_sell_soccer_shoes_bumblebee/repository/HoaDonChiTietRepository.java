@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,18 +18,20 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     List<HoaDonChiTiet> getListByHoaDon(UUID id);
 
     @Query("select hdct from HoaDonChiTiet hdct where hdct.hoaDon.id = ?1 and hdct.chiTietSanPham.id = ?2")
-    HoaDonChiTiet getSanPhamInHDCT(UUID idHoaDon,UUID idSP);
+    HoaDonChiTiet getSanPhamInHDCT(UUID idHoaDon, UUID idSP);
 
-    @Query(value = "delete from HoaDonChiTiet  where HoaDonChiTiet.IdHoaDon = ?1 delete from HoaDon  where Id = ?1",nativeQuery = true)
+    @Query(value = "delete from HoaDonChiTiet  where HoaDonChiTiet.IdHoaDon = ?1 delete from HoaDon  where Id = ?1", nativeQuery = true)
     void deleteHDCTbyHoaDon(UUID id);
+
     @Query("select  hdct from HoaDonChiTiet  hdct where hdct.hoaDon.id=?1")
     List<HoaDonChiTiet> getHoaDonTheoHoaDonChiTiet(UUID idHoaDonChiTiet);
 
     @Query(value = "ALTER TABLE HoaDonChiTiet NOCHECK CONSTRAINT FK_HoaDonChiTiet_HoaDon DELETE FROM HoaDonChiTiet where IdHoaDon = ?1"
-            ,nativeQuery = true)
+            , nativeQuery = true)
     void removeHDCT(UUID idHoaDon);
-    @Query(value = "DELETE FROM HoaDon where Id = ?1"+
-                   "ALTER TABLE HoaDonChiTiet WITH CHECK CHECK CONSTRAINT FK_HoaDonChiTiet_HoaDon", nativeQuery = true)
+
+    @Query(value = "DELETE FROM HoaDon where Id = ?1" +
+            "ALTER TABLE HoaDonChiTiet WITH CHECK CHECK CONSTRAINT FK_HoaDonChiTiet_HoaDon", nativeQuery = true)
     void removeHD(UUID idHoaDon);
 
 
@@ -42,6 +45,129 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     List<HoaDonChiTiet> getListHDCTByMaHD(String maHoaDon);
 
     @Query("select hdct from HoaDonChiTiet  hdct where hdct.hoaDon.id = ?1 and hdct.chiTietSanPham.id = ?2")
-    HoaDonChiTiet getHDCTDoiTra(UUID maHoaDon,UUID idSP);
+    HoaDonChiTiet getHDCTDoiTra(UUID maHoaDon, UUID idSP);
+
+    // Thống kê
+    @Query("SELECT SUM(hdct.soLuong) FROM HoaDonChiTiet hdct")
+    int tinhSoLuongSanPhamDaban();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 1",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang1();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 2",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang2();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 3",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang3();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 4",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang4();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 5",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang5();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 6",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang6();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 7",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang7();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 8",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang8();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 9",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang9();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 10",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang10();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 11",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang11();
+
+    @Query(value =
+            "\tSELECT ISNULL(SUM(HDCT.SoLuong), 0) AS SoLuongSanPhamDaBan\n" +
+                    "FROM HoaDon HD\n" +
+                    "JOIN HoaDonChiTiet HDCT ON HD.Id = HDCT.IdHoaDon\n" +
+                    "WHERE YEAR(HD.NgayThanhToan) = YEAR(GETDATE()) \n" +
+                    "    AND MONTH(HD.NgayThanhToan) = 12",
+            nativeQuery = true)
+    int tinhSoLuongSanPhamDaBanThang12();
+
+    @Query(value = "\tSELECT\n" +
+            "    COUNT(*) AS SoLuongSanPhamDaBan\n" +
+            "FROM\n" +
+            "    HoaDon hd\n" +
+            "JOIN\n" +
+            "    HoaDonChiTiet hdct ON hd.Id = hdct.IdHoaDon\n" +
+            "WHERE\n" +
+            "    hd.TrangThai = 1\n" +
+            "    AND hd.NgayThanhToan BETWEEN :fromDate AND :toDate;", nativeQuery = true)
+    int tinhSoSanPhamDaBanTheoKhoangNgay(LocalDateTime fromDate, LocalDateTime toDate);
 
 }

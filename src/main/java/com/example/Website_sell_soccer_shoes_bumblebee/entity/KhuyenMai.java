@@ -47,19 +47,19 @@ public class KhuyenMai {
 
     @Column(name = "NgayTao")
     //@NotNull(message = "Ngày tạo không được để trống")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime ngayTao;
+    private Date ngayTao;
 
     @Column(name = "NgayBatDau")
     @NotNull(message = "Ngày bắt đầu không được để trống")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime ngayBatDau;
 
     @Column(name = "NgayKetThuc")
     @NotNull(message = "Ngày kết thúc không được để trống")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime ngayKetThuc;
 

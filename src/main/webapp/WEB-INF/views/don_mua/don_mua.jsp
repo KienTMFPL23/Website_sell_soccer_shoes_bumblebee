@@ -7,7 +7,6 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <br>
 
@@ -114,14 +113,20 @@
     }
 
     .infor-img > img {
-        float: left;
+
         width: 50px;
         height: 50px;
         border-radius: 50%;
     }
 
+    .infor-img {
+        float: left;
+        width: 20%;
+        height: 50px;
+    }
+
     .infor-name > h2 {
-        padding: 15px;
+        padding: 0px 0px 15px 0px;
         color: #0b0b0b;
         font-weight: 600;
     }
@@ -158,9 +163,6 @@
         <div class="col-lg-3">
             <div class="infor">
                 <div class="row">
-                    <div class="infor-img">
-                        <img src="../../../uploads/aaaf46616a81b3e60a1302bb80200c30.jpg">
-                    </div>
                     <div class="infor-name">
                         <h2>${userLogged.khachHangKH.ho} ${userLogged.khachHangKH.tenDem} ${userLogged.khachHangKH.ten}</h2>
                     </div>
@@ -172,9 +174,9 @@
                     <a href="/bumblebee/thong-tin-ca-nhan"><img class="img" src="../../../img/1315638.png">Thông tin cá
                         nhân</a>
                 </div>
-                <div class="menu-left">
-                    <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>
-                </div>
+<%--                <div class="menu-left">--%>
+<%--                    <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>--%>
+<%--                </div>--%>
                 <div class="menu-left">
                     <a href="/bumblebee/don-mua"><img class="img" src="../../../img/bill.png">Đơn mua</a>
                 </div>

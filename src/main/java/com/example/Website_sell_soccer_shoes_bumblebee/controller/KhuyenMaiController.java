@@ -3,10 +3,12 @@ package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietKhuyenMaiRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.KhuyenMaiRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietKhuyenMaiService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.KhuyenMaiService;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -46,6 +49,8 @@ public class KhuyenMaiController {
     @Autowired
     private ChiTietKhuyenMaiRepository chiTietKhuyenMaiRepository;
 
+    @Autowired
+    private KhuyenMaiRepository khuyenMaiRepository;
 
     private UUID idKhuyenMai = null;
 
@@ -57,13 +62,24 @@ public class KhuyenMaiController {
         return dsTrangThai;
     }
 
+    @Data
+    public static class SearchForm {
+        String donVi;
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+        Date fromDate;
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+        Date toDate;
+    }
+
 
     @GetMapping("/bumblebee/khuyen-mai/list")
     public String hienThi(Model model) {
         // Quản lý khuyến mại
 
         model.addAttribute("page", khuyenMaiService.findAll());
-
+        model.addAttribute("searchForm", new SearchForm());
 
         // Check trạng thái khuyến mại
 //        List<ChiTietKhuyenMai> listChiTietKhuyenMai = chiTietKhuyenMaiRepository.updateTrangThaiByNgayKetThuc();
@@ -251,15 +267,18 @@ public class KhuyenMaiController {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        km.setNgayTao(now);
+        km.setNgayTao(Calendar.getInstance().getTime());
         System.out.println(km.getMaKhuyenMai());
         khuyenMaiService.save(km);
         return "redirect:/bumblebee/khuyen-mai/list";
     }
 
+    private Date ngayTao = null;
     @GetMapping("/bumblebee/khuyen-mai/view-update/{id}")
     public String viewUpdate(Model model, @PathVariable(name = "id") UUID id, @ModelAttribute("km") KhuyenMai km) {
+
         KhuyenMai khuyenMai = khuyenMaiService.findId(id);
+        ngayTao = khuyenMai.getNgayTao();
         model.addAttribute("km", khuyenMai);
         model.addAttribute("action", "/bumblebee/khuyen-mai/update/" + khuyenMai.getId());
 
@@ -274,6 +293,41 @@ public class KhuyenMaiController {
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
             return "admin/index";
         }
+
+        if (km.getDonVi().equals("%")) {
+            if (km.getGiaTri() > 70 && 5 > km.getGiaTri()) {
+                model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 5% và tối đa 70 %");
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
+            }
+            if (km.getGiaTri() <= 0) {
+                model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
+            }
+        }
+
+        if (km.getDonVi().equals("VNĐ")) {
+            if (km.getGiaTri() > 500000 && km.getGiaTri() < 10000) {
+                model.addAttribute("errorGiaTri", "Giá trị tối đa 500.000");
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
+            }
+
+            if (km.getGiaTri() <= 0) {
+                model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
+            }
+        }
+
+        if (km.getNgayBatDau().isAfter(km.getNgayKetThuc())) {
+            model.addAttribute("mess_Ngay", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+            model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+            System.out.println("date");
+            return "admin/index";
+        }
+
         if (km.getNgayKetThuc().isAfter(LocalDateTime.now())) {
             km.setTrangThai(0);
 //            List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
@@ -294,6 +348,7 @@ public class KhuyenMaiController {
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 //        String format = sdf.format(date);
 //        km.setNgayTao(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(format));
+        km.setNgayTao(ngayTao);
         khuyenMaiService.save(km);
 
         return "redirect:/bumblebee/khuyen-mai/list";
@@ -338,15 +393,38 @@ public class KhuyenMaiController {
     @RequestMapping("/bumblebee/khuyen-mai/search-khoang-ngay")
     public String searchKhoangNgay(
             Model model,
-            @RequestParam(name = "ngayBatDau") String ngayBatDau,
-            @RequestParam(name = "ngayKetThuc") String ngayKetThuc
-    ) throws ParseException {
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = dateFormat1.parse(ngayBatDau);
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date date2 = dateFormat2.parse(ngayKetThuc);
-        List<KhuyenMai> km = khuyenMaiService.searchKMByNgayTaoAndDonVi(date1, date2);
-        model.addAttribute("page", km);
+            @ModelAttribute("searchForm") KhuyenMaiController.SearchForm searchForm
+    ) {
+//        if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.fromDate.equals(searchForm.toDate)) {
+//            // Increment the toDate by one day
+//            LocalDate localEndDate = searchForm.toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//            localEndDate = localEndDate.plusDays(1);
+//            searchForm.toDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//        }
+
+        if (searchForm.fromDate == null && searchForm.toDate == null && searchForm.donVi != null){
+            List<KhuyenMai> km = khuyenMaiRepository.searchKMByDonVi(searchForm.donVi);
+            model.addAttribute("page", km);
+        }
+
+        if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.donVi == null){
+            List<KhuyenMai> km = khuyenMaiRepository.searchKMByNgayTao(searchForm.fromDate, searchForm.toDate);
+            model.addAttribute("page", km);
+        }
+
+        if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.donVi != null){
+            List<KhuyenMai> km = khuyenMaiService.searchKMByNgayTaoAndDonVi(searchForm.fromDate, searchForm.toDate, searchForm.donVi);
+            model.addAttribute("page", km);
+        }
+
+//        if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.fromDate.isAfter(searchForm.toDate)) {
+//            LocalDateTime temp = searchForm.fromDate;
+//            searchForm.fromDate = searchForm.toDate;
+//            searchForm.toDate = temp;
+//        }
+
+
+//        return "redirect:/bumblebee/khuyen-mai/list";
         model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
         return "admin/index";
     }

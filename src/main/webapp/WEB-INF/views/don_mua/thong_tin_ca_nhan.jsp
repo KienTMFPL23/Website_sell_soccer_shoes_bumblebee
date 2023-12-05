@@ -6,6 +6,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet"
 />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <style>
     body {
 
@@ -31,7 +32,7 @@
     }
 
     .infor-name > h2 {
-        padding: 15px;
+        padding: 0px 0px 15px 0px;
         color: #0b0b0b;
         font-weight: 600;
     }
@@ -102,9 +103,6 @@
         margin-top: 30px;
     }
 
-    .img-user {
-
-    }
 
     .img-user > img {
         width: 150px;
@@ -130,9 +128,10 @@
         text-align: center;
     }
 
-    .radio {
+    .radioButton{
         width: 15px;
     }
+
 </style>
 <body>
 <main class="ps-main">
@@ -140,9 +139,6 @@
         <div class="col-lg-3">
             <div class="infor">
                 <div class="row">
-                    <div class="infor-img">
-                        <img src="../../../uploads/aaaf46616a81b3e60a1302bb80200c30.jpg">
-                    </div>
                     <div class="infor-name">
                         <h2>${userLogged.khachHangKH.ho} ${userLogged.khachHangKH.tenDem} ${userLogged.khachHangKH.ten}</h2>
                     </div>
@@ -154,9 +150,9 @@
                     <a href="/bumblebee/thong-tin-ca-nhan"><img class="img" src="../../../img/1315638.png">Thông tin cá
                         nhân</a>
                 </div>
-                <div class="menu-left">
-                    <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>
-                </div>
+                <%--                <div class="menu-left">--%>
+                <%--                    <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>--%>
+                <%--                </div>--%>
                 <div class="menu-left">
                     <a href="/bumblebee/don-mua"><img class="img" src="../../../img/bill.png">Đơn mua</a>
                 </div>
@@ -175,7 +171,7 @@
                     <div class="col-lg-6">
 
                         <div>
-                            <form:input type="hidden" path="id" />
+                            <form:input type="hidden" path="id"/>
                         </div>
 
                         <div>
@@ -193,9 +189,13 @@
                             <form:input type="text" path="ten"/>
                         </div>
 
-                        <div>
-                            <label>Giới tính: </label>
-                            <form:radiobuttons items="${dsGioiTinh}" class="radio" path="gioiTinh"/>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label style="margin-top: 15px;">Giới tính: </label>
+                            </div>
+                            <div class="col-lg-9">
+                                <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="radioButton" name="gioiTinh"/>
+                            </div>
                         </div>
 
                         <div>
@@ -230,8 +230,6 @@
                 </div>
             </form:form>
         </div>
-
-
     </div>
 </main>
 </body>

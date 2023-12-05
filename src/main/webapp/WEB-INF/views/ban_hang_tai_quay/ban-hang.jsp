@@ -303,7 +303,6 @@
                                                             <fmt:formatNumber>
                                                                 ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
                                                             </fmt:formatNumber>
-
                                                         </c:if>
                                                         <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
                                                             <del style="color: crimson; margin-right: 10px;">
@@ -506,7 +505,7 @@
         var table = document.getElementById("myTable");
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            table.style.display = "block"
+            // table.style.display = "block"
         });
 
         // var table = document.getElementById("myTable");

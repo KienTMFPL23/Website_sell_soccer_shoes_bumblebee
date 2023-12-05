@@ -214,4 +214,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
 
 
+    // Thống kê
+    @Query("SELECT SUM(c.soLuong) FROM ChiTietSanPham c")
+    int tinhTongSoLuongSanPham();
+
 }

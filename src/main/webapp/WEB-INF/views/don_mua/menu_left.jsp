@@ -19,9 +19,9 @@
         <div class="menu-left">
             <a href="#"><img class="img" src="../../../img/1315638.png">Thông tin cá nhân</a>
         </div>
-        <div class="menu-left">
-            <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>
-        </div>
+<%--        <div class="menu-left">--%>
+<%--            <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>--%>
+<%--        </div>--%>
         <div class="menu-left">
             <a href="/bumblebee/don-mua"><img class="img" src="../../../img/bill.png">Đơn mua</a>
         </div>

@@ -128,10 +128,10 @@
         border: 1px solid #37517E;
     }
 
-    .filterDate {
-        border-radius: 5px;
-        border: 1px solid #37517E;
-    }
+    /*.filterDate {*/
+    /*    border-radius: 5px;*/
+    /*    border: 1px solid #37517E;*/
+    /*}*/
 
     .btnSearch {
         background-color: #37517E;
@@ -176,65 +176,64 @@
     }
 </style>
 <body>
-
-<div class="menu-nav">
-    <div class="status text-center">
-        <ul class="nav justify-content-center bg-gradient-light nav-pills">
-            <li class="nav-item">
-                <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
-                   href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
-                    <span class="badge text-bg-secondary">${countHD}</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
-                   href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
-                        class="badge text-bg-secondary">${countHDCho}</span></a>
-            </li>
-        </ul>
+<div class="container">
+    <div class="menu-nav">
+        <div class="status text-center">
+            <ul class="nav justify-content-center bg-gradient-light nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
+                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
+                        <span class="badge text-bg-secondary">${countHD}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
+                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
+                            class="badge text-bg-secondary">${countHDCho}</span></a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
-<%--<div class="tab">--%>
-<%--    <button class="tablinks active" onclick="openCity(event, 'London')">Quản lý khuyến mại</button>--%>
-<%--    <button class="tablinks" onclick="openCity(event, 'Paris')">Sản phẩm khuyến mại</button>--%>
-<%--</div>--%>
+    <%--<div class="tab">--%>
+    <%--    <button class="tablinks active" onclick="openCity(event, 'London')">Quản lý khuyến mại</button>--%>
+    <%--    <button class="tablinks" onclick="openCity(event, 'Paris')">Sản phẩm khuyến mại</button>--%>
+    <%--</div>--%>
 
-<%--<div id="London" class="tabcontent" style="display: block;">--%>
-<div>
-    ${error}
+    <%--<div id="London" class="tabcontent" style="display: block;">--%>
     <div>
-        <h1 style="text-align: center; font-family: Nunito;">Quản lý khuyến mại</h1>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <a href="/bumblebee/khuyen-mai/view-add" class="btnAdd">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
-                <p>Thêm mới</p>
-            </a>
+        ${error}
+        <div>
+            <h1 style="text-align: center; font-family: Nunito;">Quản lý khuyến mại</h1>
         </div>
-    </div>
-    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">
         <div class="row">
-            <div class="col-lg-2">
-                <select id="filterDonVi">
-                    <option value="all">-- Lọc đơn vị --</option>
-                    <option>VNĐ</option>
-                    <option>%</option>
-                </select>
+            <div class="col-lg-6">
+                <a href="/bumblebee/khuyen-mai/view-add" class="btnAdd">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
+                    <p>Thêm mới</p>
+                </a>
             </div>
-            <div class="col-lg-2">
-                Từ ngày: <input type="date" class="filterDate" id="startDate" name="ngayBatDau">
-            </div>
-            <div class="col-lg-2">
-                Đến ngày: <input type="date" class="filterDate" id="endDate" name="ngayKetThuc">
-            </div>
-            <div class="col-lg-1">
-                <button class="btnSearch" onclick="filterTable()">Tìm</button>
-            </div>
-
         </div>
-    </form>
-    <div class="container">
+        <form:form action="/bumblebee/khuyen-mai/search-khoang-ngay" method="post" modelAttribute="searchForm">
+            <div class="row">
+                <div class="col-lg-2">
+                    <form:select path="donVi">
+                        <option value="">-- Lọc đơn vị --</option>
+                        <form:option value="VNĐ">VNĐ</form:option>
+                        <form:option value="%">%</form:option>
+                    </form:select>
+                </div>
+                <div class="col-lg-2">
+                    Từ ngày: <form:input type="datetime-local" class="filterDate"  path="fromDate"/>
+                </div>
+                <div class="col-lg-2">
+                    Đến ngày: <form:input type="datetime-local" class="filterDate" path="toDate"/>
+                </div>
+                <div class="col-lg-1">
+                    <button type="submit" class="btnSearch">Tìm</button>
+                </div>
+            </div>
+        </form:form>
+
         <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
             <tr>
@@ -350,7 +349,8 @@
                                                                 </td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
-                                                                <td><fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
+                                                                <td>
+                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
                                                                 <td>${sp.mauSac.ten}</td>
                                                                 <td>${sp.kichCo.size}</td>
                                                                 <td><fmt:formatDate value="${sp.ngayTao}"
@@ -522,16 +522,16 @@
         });
     });
 
-    $("#filterDonVi").change(function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable1 tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-
-        if ("all" == value) {
-            $("#myTable1 tr").show();
-        }
-    });
+    // $("#filterDonVi").change(function () {
+    //     var value = $(this).val().toLowerCase();
+    //     $("#myTable1 tr").filter(function () {
+    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //     });
+    //
+    //     if ("all" == value) {
+    //         $("#myTable1 tr").show();
+    //     }
+    // });
 
     function filterTable() {
         // Get the start and end date values

@@ -261,7 +261,7 @@
     }
 
     .infor-name > h2 {
-        padding: 15px;
+        padding: 0px 0px 15px 0px;
         color: #0b0b0b;
         font-weight: 600;
     }
@@ -415,6 +415,7 @@
         padding-top: 10px;
         border-radius: 10px;
     }
+
 </style>
 <body>
 <main class="ps-main" id="app">
@@ -422,9 +423,6 @@
         <div class="col-lg-3">
             <div class="infor">
                 <div class="row">
-                    <div class="infor-img">
-                        <img src="../../../uploads/aaaf46616a81b3e60a1302bb80200c30.jpg">
-                    </div>
                     <div class="infor-name">
                         <h2>${userLogged.khachHangKH.ho} ${userLogged.khachHangKH.tenDem} ${userLogged.khachHangKH.ten}</h2>
                     </div>
@@ -436,9 +434,9 @@
                     <a href="/bumblebee/thong-tin-ca-nhan"><img class="img" src="../../../img/1315638.png">Thông tin cá
                         nhân</a>
                 </div>
-                <div class="menu-left">
-                    <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>
-                </div>
+<%--                <div class="menu-left">--%>
+<%--                    <a href="#"><img class="img" src="../../../img/lock.png">Đổi mật khẩu</a>--%>
+<%--                </div>--%>
                 <div class="menu-left">
                     <a href="/bumblebee/don-mua"><img class="img" src="../../../img/bill.png">Đơn mua</a>
                 </div>
