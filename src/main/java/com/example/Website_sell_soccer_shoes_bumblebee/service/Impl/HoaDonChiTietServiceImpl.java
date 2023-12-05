@@ -74,7 +74,13 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
             if (hdct.getChiTietSanPham().getCtkm().isEmpty()) {
                 sumGoc += hdct.getDonGia() * hdct.getSoLuong();
             } else {
-                sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+                for (ChiTietKhuyenMai ctkm : hdct.getChiTietSanPham().getCtkm()) {
+                    if (ctkm.getKhuyenMai().getTrangThai() == 1) {
+                        sumGoc += hdct.getDonGia() * hdct.getSoLuong();
+                    } else {
+                        sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+                    }
+                }
             }
             sum = sumGoc + sumKhuyenMai;
         }
@@ -112,7 +118,7 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
 
     @Override
     public HoaDonChiTiet getHDCTDoiTra(UUID idHoaDon, UUID idSP) {
-        return hoaDonChiTietRepository.getHDCTDoiTra(idHoaDon,idSP);
+        return hoaDonChiTietRepository.getHDCTDoiTra(idHoaDon, idSP);
     }
 
     @Override

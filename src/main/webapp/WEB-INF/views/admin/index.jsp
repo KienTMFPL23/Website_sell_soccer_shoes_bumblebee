@@ -1,4 +1,6 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,97 +65,127 @@
             <div class="sidebar-brand-text mx-3">Bumblebee</div>
         </a>
 
+        <c:if test="${userLogged.role == 2}">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/dashboard">
+                    <i class='bx bx-home-alt'></i>
+                    <b>Trang chủ</b></a
+                >
+            </li>
+            <!-- Nav Item - Bán hàng tại quầy -->
+            <li class="nav-item">
+                <a class="nav-link" href="/bumblebee/ban-hang-tai-quay/sell">
+                    <i class="bx bxs-cart-add"></i>
+                    <b>Bán hàng tại quầy</b></a
+                >
+            </li>
+            <!-- Nav Item - Quản lý khuyến mãi -->
+            <li class="nav-item">
+                <a class="nav-link" href="/bumblebee/khuyen-mai/list">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <b>Quản lý khuyến mại</b></a
+                >
+            </li>
+            <!-- Nav Item - Quản lý đổi trả -->
+            <li class="nav-item">
+                <a class="nav-link" href="/bumblebee/doi-hang/list">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <b>Quản lý đổi trả</b></a
+                >
+            </li>
+        </c:if>
+
         <!-- Divider -->
+        <c:if test="${userLogged.role == 1}">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/dashboard">
+                    <i class='bx bx-home-alt'></i>
+                    <b>Trang chủ</b></a
+                >
+            </li>
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/dashboard">
-                <i class='bx bx-home-alt'></i>
-                <b>Trang chủ</b></a
-            >
-        </li>
+            <!-- Nav Item - Thống kê -->
+            <li class="nav-item">
+                <a class="nav-link" href="/bumblebee/thong-ke/san-pham-da-ban">
+                    <i class="bx bx-line-chart"></i>
+                    <b>Thống kê</b>
+                </a>
+            </li>
 
-        <!-- Nav Item - Thống kê -->
-        <li class="nav-item">
-            <a class="nav-link" href="/bumblebee/thong-ke">
-                <i class="bx bx-line-chart"></i>
-                <b>Thống kê</b>
-            </a>
-        </li>
+            <!-- Nav Item - Quản lý sản phẩm -->
+            <li class="nav-item">
+                <a
+                        class="nav-link collapsed"
+                        href="#"
+                        data-toggle="collapse"
+                        data-target="#collapseTwo"
+                        aria-expanded="true"
+                        aria-controls="collapseTwo"
+                >
+                    <i class="fas fa-fw fa-cog"></i>
+                    <b>Quản lý sản phẩm</b>
+                </a>
+                <div
+                        id="collapseTwo"
+                        class="collapse"
+                        aria-labelledby="headingTwo"
+                        data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
 
-        <!-- Nav Item - Quản lý sản phẩm -->
-        <li class="nav-item">
-            <a
-                    class="nav-link collapsed"
-                    href="#"
-                    data-toggle="collapse"
-                    data-target="#collapseTwo"
-                    aria-expanded="true"
-                    aria-controls="collapseTwo"
-            >
-                <i class="fas fa-fw fa-cog"></i>
-                <b>Quản lý sản phẩm</b>
-            </a>
-            <div
-                    id="collapseTwo"
-                    class="collapse"
-                    aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
+                        <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
 
-                    <a class="collapse-item" href="/san-pham/hien-thi">Sản phẩm</a>
-                    <a class="collapse-item" href="/kich-co/hien-thi">Kích cỡ</a>
-
-                    <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
-                    <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
-                    <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
-                    <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
-                    <a class="collapse-item" href="/hinh-anh/hien-thi">Hình ảnh</a>
+                        <a class="collapse-item" href="/mau-sac/hien-thi">Màu sắc</a>
+                        <a class="collapse-item" href="/loai-giay/hien-thi">Loại giày</a>
+                        <a class="collapse-item" href="/de-giay/hien-thi">Đế giày</a>
+                        <a class="collapse-item" href="/chat-lieu/hien-thi">Chất liệu</a>
+                        <a class="collapse-item" href="/hinh-anh/hien-thi">Hình ảnh</a>
+                    </div>
                 </div>
-            </div>
-        </li>
-        <!-- Nav Item - Bán hàng tại quầy -->
-        <li class="nav-item">
-            <a class="nav-link" href="/bumblebee/ban-hang-tai-quay/sell">
-                <i class="bx bxs-cart-add"></i>
-                <b>Bán hàng tại quầy</b></a
-            >
-        </li>
-        <!-- Nav Item - Quản lý tài khoản -->
-        <li class="nav-item">
-            <a
-                    class="nav-link collapsed"
-                    href="#"
-                    data-toggle="collapse"
-                    data-target="#collapseUtilities"
-                    aria-expanded="true"
-                    aria-controls="collapseUtilities"
-            >
-                <i class="bx bxs-user"></i>
-                <b>Quản lý tài khoản</b>
-            </a>
-            <div
-                    id="collapseUtilities"
-                    class="collapse"
-                    aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar"
-            >
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Khách hàng</a>
-                    <a class="collapse-item" href="#">Nhân viên</a>
+            </li>
+            <!-- Nav Item - Bán hàng tại quầy -->
+            <li class="nav-item">
+                <a class="nav-link" href="/bumblebee/ban-hang-tai-quay/sell">
+                    <i class="bx bxs-cart-add"></i>
+                    <b>Bán hàng tại quầy</b></a
+                >
+            </li>
+            <!-- Nav Item - Quản lý tài khoản -->
+            <li class="nav-item">
+                <a
+                        class="nav-link collapsed"
+                        href="#"
+                        data-toggle="collapse"
+                        data-target="#collapseUtilities"
+                        aria-expanded="true"
+                        aria-controls="collapseUtilities"
+                >
+                    <i class="bx bxs-user"></i>
+                    <b>Quản lý tài khoản</b>
+                </a>
+                <div
+                        id="collapseUtilities"
+                        class="collapse"
+                        aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar"
+                >
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/khach-hang/hien-thi">Khách hàng</a>
+                        <a class="collapse-item" href="/nhan-vien/thong-tin">Nhân viên</a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
 
-        <!-- Nav Item - Quản lý đơn hàng -->
-        <li class="nav-item">
-            <a class="nav-link" href="/don-hang/list-all">
-                <i class="bx bxs-truck"></i>
+            <!-- Nav Item - Quản lý đơn hàng -->
+            <li class="nav-item">
+                <a class="nav-link" href="/don-hang/list-all">
+                    <i class="bx bxs-truck"></i>
 
-                <b>Quản lý hoá đơn</b></a
-            >
-        </li>
-
+                    <b>Quản lý hoá đơn</b></a
+                >
+            </li>
 
 
         <!-- Nav Item - Quản lý khuyến mãi -->
@@ -389,6 +421,8 @@
 <!-- Page level custom scripts -->
 <script src="../../../js/demo/chart-area-demo.js"></script>
 <script src="../../../js/demo/chart-pie-demo.js"></script>
+<script src="../../../js/demo/chart-bar-demo.js"></script>
+<script src="../../../js/demo/chart_don_hang_da_ban.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
 <script src="../../../js/mau_sac/mau_sac.js"></script>
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>

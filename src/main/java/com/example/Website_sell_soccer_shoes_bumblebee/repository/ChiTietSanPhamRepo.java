@@ -215,4 +215,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     Page<ChiTietSanPham>  getListSP(Pageable pageable);
 
 
+    // Thống kê
+    @Query("SELECT SUM(c.soLuong) FROM ChiTietSanPham c")
+    int tinhTongSoLuongSanPham();
+
 }

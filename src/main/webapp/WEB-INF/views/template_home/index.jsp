@@ -57,7 +57,6 @@
 <script type="text/javascript" src="../../../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../../plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
 <script type="text/javascript" src="../../../plugins/owl-carousel/owl.carousel.min.js"></script>
-<script type="text/javascript" src="../../../plugins/gmap3.min.js"></script>
 <script type="text/javascript" src="../../../plugins/imagesloaded.pkgd.js"></script>
 <script type="text/javascript" src="../../../plugins/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="../../../plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>

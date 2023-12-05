@@ -19,7 +19,7 @@
 
     .formAdd {
         width: 700px;
-        height: 750px;
+        height: 900px;
         background-color: #37517E;
         border-radius: 20px;
         color: #FFFFFF;
@@ -61,23 +61,43 @@
 
 <body>
 <div class="formAdd">
-    <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA KHUYẾN MẠI</h1>
-    <form:form action="${action}" modelAttribute="km" method="post" id="formAddUpdate">
+    <h1 style="text-align: center; padding-top: 20px;">THÊM/SỬA NHÂN VIÊN</h1>
+    <form:form action="${action}" modelAttribute="nv" method="post" id="formAddUpdate">
         <div class="row mb-3">
             <div class="col-sm-6">
                 <form:input type="hidden" class="form-control" id="inputEmail3" path="id"/>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <label>Mã:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="maKhuyenMai" name="maKhuyenMai" />
-                <form:errors path="maKhuyenMai" cssStyle="color: crimson"></form:errors>
-                <span style="color: crimson">${mess_Ma}</span>
+                <form:input type="text" class="form-control" path="ma" name="ma"/>
+                <form:errors path="ma" cssStyle="color: crimson"></form:errors>
+                    ${mess_Ma}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Họ:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:input type="text" class="form-control" path="ho" name="ho"/>
+                <form:errors path="ho" cssStyle="color: crimson"></form:errors>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <label>Tên đệm:</label>
+            </div>
+            <div class="col-lg-8">
+                <form:input type="text" class="form-control" path="tenDem" name="tenDem"/>
+                <form:errors path="tenDem" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
 
@@ -87,68 +107,58 @@
                 <label>Tên:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="tenKhuyenMai" name="tenKhuyenMai"/>
-                <form:errors path="tenKhuyenMai" cssStyle="color: crimson"></form:errors>
+                <form:input type="text" class="form-control" path="ten" name="ten"/>
+                <form:errors path="ten" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Đơn vị:</label>
+                <label>Giới tính:</label>
             </div>
             <div class="col-lg-8">
-                <form:select type="text" class="form-select" aria-label="Default select example" path="donVi" name="donVi">
-                    <form:option value="VNĐ">VNĐ</form:option>
-                    <form:option value="%">%</form:option>
-                </form:select>
-                <form:errors path="donVi" cssStyle="color: crimson"></form:errors>
+                <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="radioButton" name="gioiTinh"/>
+                <form:errors path="gioiTinh" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Giá trị:</label>
+                <label>Ngày sinh:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="giaTri"/>
-                <form:errors path="giaTri" cssStyle="color: crimson"></form:errors>
-                <span style="color: crimson">${errorGiaTri}</span>
+                <form:input type="date" class="form-control" path="ngaySinh" value="${nv.ngaySinh}"/>
+                <form:errors path="ngaySinh" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Ngày tạo:</label>
+                <label>Địa chỉ:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="datetime-local" class="form-control" path="ngayTao" value="${km.ngayTao}" disabled="true"/>
-                <form:errors path="ngayTao" cssStyle="color: crimson"></form:errors>
+                <form:input type="text" class="form-control" path="diaChi" name="diaChi"/>
+                <form:errors path="diaChi" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Ngày bắt đầu:</label>
+                <label>Số điện thoại:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="datetime-local" class="form-control" path="ngayBatDau" value="${km.ngayBatDau}"/>
-                <form:errors path="ngayBatDau" cssStyle="color: crimson"></form:errors>
+                <form:input type="text" class="form-control" path="soDienThoai" name="soDienThoai"/>
+                <form:errors path="soDienThoai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-
         <div class="row mb-3">
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
-                <label>Ngày kết thúc:</label>
+                <label>Email:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="datetime-local" class="form-control" path="ngayKetThuc" value="${km.ngayKetThuc}"/>
-                <form:errors path="ngayKetThuc" cssStyle="color: crimson"></form:errors>
-                <span style="color: crimson">${mess_Ngay}</span>
+                <form:input type="text" class="form-control" path="email" name="email"/>
+                <form:errors path="email" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
 
@@ -163,9 +173,13 @@
             </div>
         </div>
         <div class="buttonSubmit">
-            <button class="button" type="submit" onclick="thanhCong()">SUBMIT</button>
+            <button class="button" type="submit" onclick="return Validate();">SUBMIT</button>
         </div>
 
     </form:form>
 </div>
 </body>
+
+
+
+

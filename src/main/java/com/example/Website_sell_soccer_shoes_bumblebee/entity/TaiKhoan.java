@@ -2,6 +2,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class TaiKhoan {
     private String password;
 
     @Column(name = "Role")
+    @NotNull(message = "Role không được để trống")
     private Integer role;
 
     @OneToOne(mappedBy = "taiKhoanKH")

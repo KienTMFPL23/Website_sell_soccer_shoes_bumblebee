@@ -338,7 +338,6 @@
                                                             <fmt:formatNumber>
                                                                 ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
                                                             </fmt:formatNumber>
-
                                                         </c:if>
                                                         <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
                                                             <del style="color: crimson; margin-right: 10px;">

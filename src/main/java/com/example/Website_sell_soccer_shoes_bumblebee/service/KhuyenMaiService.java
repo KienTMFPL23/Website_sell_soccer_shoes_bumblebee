@@ -22,7 +22,7 @@ public interface KhuyenMaiService {
 
     KhuyenMai findMa(String ma);
 
-    List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate);
+    List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate, String donVi);
 
     LocalDateTime convertDateToLocalDateTime(Date date);
 

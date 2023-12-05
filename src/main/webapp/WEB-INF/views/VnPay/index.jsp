@@ -14,7 +14,7 @@
                     <form action="/submitOrder" method="post">
                         <div class="form-group">
                             <label for="amount">Số tiền:</label>
-                            <input type="number" class="form-control" id="amount" name="amount" required value="${amount}"/>
+                            <input type="number" class="form-control" id="amount" name="amount" value="${amount}" />
                         </div>
                         <div class="form-group">
                             <label for="orderInfo">Thông tin đơn hàng:</label>
