@@ -25,7 +25,7 @@ public class DeGiay {
     private UUID id;
 
     @Column(name="Ma")
-    @Size(min = 4, max = 100, message = "Mã phải từ 4 đến 150 kí tự")
+    @Size(min = 4, max = 10, message = "Mã phải từ 4 đến 150 kí tự")
     @NotBlank(message = "Mã không được để trống")
     private String ma;
 

@@ -119,7 +119,7 @@
             <div class="card-header py-3">
                 <div class="row">
                     <div class="col-lg-6">
-                        <h6 class="m-0 font-weight-bold text-primary">Sản phẩm đã bán</h6>
+                        <h6 class="m-0 font-weight-bold" style="color: #1cc88a">Đơn hàng đã bán</h6>
                     </div>
                     <div class="col-lg-6">
                         <form>
@@ -142,26 +142,26 @@
             </div>
             <div class="card-body">
                 <div class="chart-bar">
-                    <canvas id="myBarChartSanPhamDaBan"></canvas>
+                    <canvas id="myBarChartDonHangDaBan"></canvas>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
 <script>
-    var soLuongSanPhamDaBanThang11 = ${soLuongSanPhamDaBanThang11};
-    var soLuongSanPhamDaBanThang12 = ${soLuongSanPhamDaBanThang12};
-    var soLuongSanPhamDaBanThang10 = ${soLuongSanPhamDaBanThang10};
-    var soLuongSanPhamDaBanThang9 = ${soLuongSanPhamDaBanThang9};
-    var soLuongSanPhamDaBanThang8 = ${soLuongSanPhamDaBanThang8};
-    var soLuongSanPhamDaBanThang7 = ${soLuongSanPhamDaBanThang7};
-    var soLuongSanPhamDaBanThang6 = ${soLuongSanPhamDaBanThang6};
-    var soLuongSanPhamDaBanThang5 = ${soLuongSanPhamDaBanThang5};
-    var soLuongSanPhamDaBanThang4 = ${soLuongSanPhamDaBanThang2};
-    var soLuongSanPhamDaBanThang3 = ${soLuongSanPhamDaBanThang3};
-    var soLuongSanPhamDaBanThang2 = ${soLuongSanPhamDaBanThang2};
-    var soLuongSanPhamDaBanThang1 = ${soLuongSanPhamDaBanThang1};
+    var soDonHangDaBanThang1 = ${soDonHangDaBanThang1};
+    var soDonHangDaBanThang2 = ${soDonHangDaBanThang2};
+    var soDonHangDaBanThang3 = ${soDonHangDaBanThang3};
+    var soDonHangDaBanThang4 = ${soDonHangDaBanThang4};
+    var soDonHangDaBanThang5 = ${soDonHangDaBanThang5};
+    var soDonHangDaBanThang6 = ${soDonHangDaBanThang6};
+    var soDonHangDaBanThang7 = ${soDonHangDaBanThang7};
+    var soDonHangDaBanThang8 = ${soDonHangDaBanThang8};
+    var soDonHangDaBanThang9 = ${soDonHangDaBanThang9};
+    var soDonHangDaBanThang10 = ${soDonHangDaBanThang10};
+    var soDonHangDaBanThang11 = ${soDonHangDaBanThang11};
+    var soDonHangDaBanThang12 = ${soDonHangDaBanThang12};
+
 
 </script>

@@ -226,6 +226,10 @@ public class BanHangTaiQuayController {
 //        }
         this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
+        if (sp == null){
+            model.addAttribute("erorSP","Không có sản phẩm nào!!!");
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
+        }
         HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
         if (sanPhamInHDCT != null) {
             Integer soLuong = sp.getSoLuong() - 1;
@@ -489,7 +493,7 @@ public class BanHangTaiQuayController {
     }
     @RequestMapping("/them-khach-hang")
     @ResponseBody
-    public Map<String, Object> themKhachHang(@Validated @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
+    public Map<String, Object> themKhachHang(Model model,@Validated @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
 
         // Kiểm tra lỗi validation
@@ -524,7 +528,7 @@ public class BanHangTaiQuayController {
         // Lưu thông tin khách hàng
         khachHang.setTrangThai(5);
         khachHangService.saveKhachHang(khachHang);
-
+        model.addAttribute("idHoaDon",this.idHoaDon);
         response.put("status", "success");
         return response;
 

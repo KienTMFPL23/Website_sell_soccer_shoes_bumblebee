@@ -2,7 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <style>
     .formInfor {
         padding: 30px;
@@ -19,9 +18,17 @@
         font-size: 14px;
     }
 
+    #city, #district, #ward {
+        font-size: 14px;
+        border-radius: 5px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid #A3A3A3;
+        margin-right: 20px;
+    }
+
     .ps-btn btnDatHang {
         margin-left: 100px;
-        củ
     }
 
     .ps-payment-method li img {
@@ -36,41 +43,58 @@
 
 <main class="ps-main">
     <div class="container">
-        <form class="ps-checkout__form" action="/bumblebee/dat-hang" method="post">
+        <form class="ps-checkout__form" method="post">
+            <%--            <div class="row" style="padding-top: 20px;">--%>
+            <%--                <div class="col-lg-12">--%>
+            <%--                    <div class="ps-checkout__order">--%>
+            <%--                        <div class="row" style="padding: 20px">--%>
+            <%--                            <h2 style="color: crimson;">--%>
+            <%--                                <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="25px"--%>
+            <%--                                     height="25px"/>Thông tin--%>
+            <%--                                nhận hàng:--%>
+            <%--                            </h2>--%>
+            <%--                            <p style="font-size: 18px; color: black; font-weight: 600; margin-left: 10px;">${listKH.ho} ${listKH.tenDem} ${listKH.ten}--%>
+            <%--                                - ${listKH.soDienThoai} - ${listKH.diaChi}</p>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                </div>--%>
+            <%--            </div>--%>
+
             <div class="row" style="padding-top: 20px;">
                 <div class="col-lg-12">
                     <div class="ps-checkout__order">
-                        <div class="row" style="padding: 20px">
-                            <h2 style="color: crimson;">
-                                <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="25px"
-                                     height="25px"/>Thông tin
-                                nhận hàng:
-                            </h2>
-                            <p style="font-size: 18px; color: black; font-weight: 600; margin-left: 10px;">${listKH.ho} ${listKH.tenDem} ${listKH.ten}
-                                - ${listKH.soDienThoai} - ${listKH.diaChi}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ps-checkout__order">
+                        <header>
+                            <h3>Thông tin nhận hàng</h3>
+                        </header>
                         <div class="formInfor">
                             <div class="mb-3">
                                 <label class="form-label"></label>
-                                <input type="text" class="form-control" name="tenNguoiNhan"
-                                       value="${listKH.ho} ${listKH.tenDem} ${listKH.ten}"/>
+                                <input type="text" class="form-control" name="tenNguoiNhan" id="tenNguoiNhan"
+                                       value="${listKH.ho} ${listKH.tenDem} ${listKH.ten}"
+                                />
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"></label>
-                                <input type="text" class="form-control" name="sdt"
-                                       value="${listKH.soDienThoai}"/>
+                                <input type="text" class="form-control" name="sdt" value="${listKH.soDienThoai}"
+                                       id="sdt"/>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"></label>
-                                <input type="text" class="form-control" name="diaChiShip"
-                                       value="${listKH.diaChi}"/>
+                                <input type="text" class="form-control" name="diaChiShip" id="diaChiShip" value="${listKH.diaChi}"
+                                />
+                            </div>
+                            <div class="mb-3" id="province">
+                                <select id="city" name="thanhPho" class="filterSelect">
+                                    <option value="" selected>Chọn tỉnh thành</option>
+                                </select>
+
+                                <select id="district" name="huyen" class="filterSelect">
+                                    <option value="" selected>Chọn quận huyện</option>
+                                </select>
+
+                                <select id="ward" name="xa" class="filterSelect">
+                                    <option value="" selected>Chọn phường xã</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -196,7 +220,9 @@
                                         <div class="row">
                                             <div class="col-lg-4"></div>
                                             <div class="col-lg-4">
-                                                <button class="ps-btn">Đặt hàng<i class="ps-icon-next"></i>
+                                                <button class="ps-btn" formaction="/bumblebee/dat-hang" type="submit"
+                                                        onclick="return checkTrongThongTinNhanHang()">Đặt hàng<i
+                                                        class="ps-icon-next"></i>
                                                 </button>
                                             </div>
                                             <div class="col-lg-4"></div>
@@ -210,7 +236,92 @@
             </div>
         </form>
     </div>
+
+    <div id="toast_warring_login" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Bạn cần đầy đủ thông tin nhận hàng</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
 </main>
+
+</select>
+</div>
+
+
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    district.options.add(opt);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
+    }
+</script>
+
+
 <script>
     function conFirm() {
         alert("Đơn hàng của bạn được đặt thành công")
@@ -228,4 +339,64 @@
     }
 
     capNhatTongTien()
+
 </script>
+
+<script>
+    var ten = document.getElementById("tenNguoiNhan");
+    var sdt = document.getElementById("sdt");
+    var diaChiShip = document.getElementById("diaChiShip");
+    var thanhPho = document.getElementById("city");
+    var huyen = document.getElementById("district");
+    var xa = document.getElementById("ward");
+    var province = document.getElementById("province");
+
+    function checkTrongThongTinNhanHang(){
+        if (ten.value === "" || sdt.value === ""){
+            var toastElement = document.getElementById("toast_warring_login");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1500);
+            return false;
+        }
+
+        if(thanhPho.value !== "" && (xa.value === "" || huyen.value === "")){
+            var toastElement = document.getElementById("toast_warring_login");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1500);
+            return false;
+        }
+        return true;
+    }
+
+
+</script>
+
+<script>
+    var filterSelects = document.getElementsByClassName("filterSelect");
+
+    for (var i = 0; i < filterSelects.length; i++) {
+        filterSelects[i].addEventListener("change", function () {
+            updateSelectedValues();
+        });
+    }
+
+    function updateSelectedValues() {
+        var selectedValues = [];
+
+        for (var i = 0; i < filterSelects.length; i++) {
+            var selectedValue = filterSelects[i].value;
+            selectedValues.push(selectedValue);
+        }
+
+        // Hiển thị giá trị đã chọn lên trang HTML
+        document.getElementById("diaChiShip").value = selectedValues.join("- ");
+    }
+</script>
+
+
+</script>
+

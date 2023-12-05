@@ -171,51 +171,51 @@
         --bs-nav-pills-link-active-bg: #A3A3A3;
     }
 
-    .menu-nav{
+    .menu-nav {
         background-color: #D9D9D9;
     }
 </style>
 <body>
-
-<div class="menu-nav">
-    <div class="status text-center">
-        <ul class="nav justify-content-center bg-gradient-light nav-pills">
-            <li class="nav-item">
-                <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
-                   href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
-                    <span class="badge text-bg-secondary">${countHD}</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
-                   href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
-                        class="badge text-bg-secondary">${countHDCho}</span></a>
-            </li>
-        </ul>
+<div class="container">
+    <div class="menu-nav">
+        <div class="status text-center">
+            <ul class="nav justify-content-center bg-gradient-light nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
+                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
+                        <span class="badge text-bg-secondary">${countHD}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
+                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
+                            class="badge text-bg-secondary">${countHDCho}</span></a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<div>
     <div>
-        <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>
-    </div>
+        <div>
+            <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>
+        </div>
 
-<%--    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">--%>
-<%--        <div class="row">--%>
-<%--            <div class="col-lg-2">--%>
-<%--                Từ ngày: <input type="date" class="filterDate" name="ngayBatDau">--%>
-<%--            </div>--%>
-<%--            <div class="col-lg-2">--%>
-<%--                Đến ngày: <input type="date" class="filterDate" name="ngayKetThuc">--%>
-<%--            </div>--%>
-<%--            <div class="col-lg-1">--%>
-<%--                <button class="btnSearch" onclick="filterTable()">Tìm</button>--%>
-<%--            </div>--%>
+        <%--    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">--%>
+        <%--        <div class="row">--%>
+        <%--            <div class="col-lg-2">--%>
+        <%--                Từ ngày: <input type="date" class="filterDate" name="ngayBatDau">--%>
+        <%--            </div>--%>
+        <%--            <div class="col-lg-2">--%>
+        <%--                Đến ngày: <input type="date" class="filterDate" name="ngayKetThuc">--%>
+        <%--            </div>--%>
+        <%--            <div class="col-lg-1">--%>
+        <%--                <button class="btnSearch" onclick="filterTable()">Tìm</button>--%>
+        <%--            </div>--%>
 
-<%--        </div>--%>
-<%--    </form>--%>
+        <%--        </div>--%>
+        <%--    </form>--%>
 
-    <div class="container">
+
         <table id="tableChiTietKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
             <tr>
@@ -257,18 +257,17 @@
                         <c:if test="${ctkm.khuyenMai.trangThai == 0}">Hoạt động</c:if>
                         <c:if test="${ctkm.khuyenMai.trangThai == 1}">Không hoạt động</c:if>
                     </td>
-<%--                    <td>--%>
-<%--                        <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
-<%--                            <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
-<%--                        </a>--%>
-<%--                    </td>--%>
+                        <%--                    <td>--%>
+                        <%--                        <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
+                        <%--                            <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
+                        <%--                        </a>--%>
+                        <%--                    </td>--%>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
 <script>
