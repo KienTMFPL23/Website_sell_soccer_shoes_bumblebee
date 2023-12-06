@@ -24,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -484,7 +485,7 @@ public class ChiTietSanPhamController {
 
 
     @RequestMapping("/chi-tiet-san-pham/update/{id}")
-    public String updateKC(Model model, @Valid @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result) throws IOException, WriterException {
+    public String updateKC(Model model, @Valid @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result, RedirectAttributes redirectAttributes) throws IOException, WriterException {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
@@ -516,6 +517,7 @@ public class ChiTietSanPhamController {
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
 
         //
+//        redirectAttributes.addFlashAttribute("redirectUrl","/chi-tiet-san-pham/hien-thi");
         model.addAttribute("view", "../chi-tiet-san-pham/list.jsp");
         return "redirect:/chi-tiet-san-pham/hien-thi";
     }
@@ -549,7 +551,7 @@ public class ChiTietSanPhamController {
 //update list-spct
 
     @RequestMapping("/chi-tiet-san-pham/update-sp/{id}")
-    public String updateSPCT(Model model, @Valid @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result) throws IOException, WriterException {
+    public String updateSPCT(Model model, @Valid @ModelAttribute("sanpham") QLSanPham qlSanPham, BindingResult result, RedirectAttributes redirectAttributes) throws IOException, WriterException {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
@@ -579,6 +581,9 @@ public class ChiTietSanPhamController {
 
         // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
+
+        //
+//        redirectAttributes.addFlashAttribute("redirectUrl","/chi-tiet-san-pham/list-san-pham/" + idSP);
         model.addAttribute("view", "../chi-tiet-san-pham/list-spct.jsp");
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + idSP;
     }
