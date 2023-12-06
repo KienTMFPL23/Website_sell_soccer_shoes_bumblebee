@@ -28,4 +28,7 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
 
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.id = ?1 and  dtct.chiTietSanPham.id = ?2")
     DoiTraChiTiet getDoiTraCT(UUID idDoiTra,UUID idCTSP);
+
+    @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.hoaDon.maHoaDon = ?1")
+    List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon);
 }

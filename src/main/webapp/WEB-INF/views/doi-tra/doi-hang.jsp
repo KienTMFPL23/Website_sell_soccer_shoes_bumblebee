@@ -11,7 +11,7 @@
         <th scope="col">Kích cỡ</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Đơn giá</th>
-        <th scope="col">Hình thức đổi trả</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -92,16 +92,20 @@
                 <td>${dtct.chiTietSanPham.mauSac.ten}</td>
                 <td>${dtct.chiTietSanPham.kichCo.size}</td>
                 <td>
-                    <input type="number" class="form-control"
-                           min="1"
-                           name="soLuong"
-                           value="${dtct.soLuong}"
-                           onblur="this.form.submit()"
-                           style="width:100px;">
+                        <input type="number" class="form-control"
+                               min="1"
+                               name="soLuong"
+                               value="${dtct.soLuong}"
+                               style="width:100px;">
                 </td>
                 <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
                 <td>
-                    <textarea type="text" name="lyDoDoiTra"></textarea>
+                    <select class="form-control" style="width: 200px" name="lyDoDoiTra">
+                        <option value="">-----</option>
+                        <option value="Mẫu giao sai">Mẫu giao sai</option>
+                        <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
+                        <option value="Giao thiếu hàng">Giao thiếu hàng</option>
+                    </select>
                 </td>
                 <td>
                     <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
@@ -110,12 +114,11 @@
         </c:forEach>
         </tbody>
     </table>
+    <button type="submit" class="btn btn-primary">Đổi hàng</button>
+    <button data-bs-toggle="modal" type="button"
+            data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
+    </button>
 </form>
-<button type="submit" class="btn btn-primary">Đổi hàng</button>
-
-<button data-bs-toggle="modal" type="button"
-        data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
-</button>
 <form method="post" action="/bumblebee/don-hang/create-tra-hang">
     <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">

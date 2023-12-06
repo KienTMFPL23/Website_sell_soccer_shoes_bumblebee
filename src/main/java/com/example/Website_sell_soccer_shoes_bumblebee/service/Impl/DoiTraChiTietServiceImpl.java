@@ -43,4 +43,9 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
     public DoiTraChiTiet getDoiTraCT(UUID idDoiTra, UUID idCTSP) {
         return doiTraCTRepo.getDoiTraCT(idDoiTra,idCTSP);
     }
+
+    @Override
+    public List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon) {
+        return doiTraCTRepo.listDoiTraCTByHoaDon(maHoaDon);
+    }
 }
