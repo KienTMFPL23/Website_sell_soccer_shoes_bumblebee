@@ -21,7 +21,6 @@
                                     <th scope="col">Mã hóa đơn</th>
                                     <th scope="col">Tên khách hàng</th>
                                     <th scope="col">Số điện thoại</th>
-                                    <th scope="col">Trạng thái</th>
                                     <th scope="col"></th>
                                 </tr>
                                 </thead>
@@ -32,7 +31,6 @@
                                         <td>${hd.maHoaDon}</td>
                                         <td>${hd.tenNguoiNhan}</td>
                                         <td>${hd.sdt}</td>
-                                        <td>${hd.trangThai}</td>
                                         <td>
                                             <a class="btn btn-danger" href="/bumblebee/don-hang/tao-doi-tra/${hd.maHoaDon}">
                                                 Chọn

@@ -188,6 +188,32 @@
             </li>
 
 
+<!-- <<<<<<< kientm
+        <!-- Nav Item - Quản lý khuyến mãi -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/khuyen-mai/list">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <b>Quản lý khuyến mại</b></a
+            >
+        </li>
+
+<%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
+<%--        <li class="nav-item">--%>
+<%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
+<%--                <i class="fas fa-fw fa-chart-area"></i>--%>
+<%--                <b>Quản lý hóa đơn</b></a--%>
+<%--            >--%>
+<%--        </li>--%>
+
+
+        <!-- Nav Item - Quản lý đổi trả -->
+        <li class="nav-item">
+            <a class="nav-link" href="/bumblebee/doi-hang/list-tra-hang">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <b>Quản lý đổi trả</b></a
+            >
+        </li>
+======= -->
             <!-- Nav Item - Quản lý khuyến mãi -->
             <li class="nav-item">
                 <a class="nav-link" href="/bumblebee/khuyen-mai/list">

@@ -414,13 +414,6 @@
                                 <form:input path="sdt" min="0" type="number" class="form-control"
                                             placeholder="Nhập số điện thoại..."
                                             onchange="getTenKhachHang(this.value)" id="phoneNumber"/>
-                                <div class="input-group-append">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                             <form:errors path="sdt" cssStyle="color: red"></form:errors>
                             <p style="color: red">${errorSDT}</p>

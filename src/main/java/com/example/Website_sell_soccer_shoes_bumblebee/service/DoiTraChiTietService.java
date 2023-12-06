@@ -17,4 +17,6 @@ public interface DoiTraChiTietService {
     List<DoiTraChiTietCustom> listDoiTraCTCustom(UUID idHoaDon);
 
     DoiTraChiTiet getDoiTraCT(UUID idDoiTra,UUID idCTSP);
+
+    List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon);
 }
