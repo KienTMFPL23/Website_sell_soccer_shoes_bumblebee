@@ -1,0 +1,2198 @@
+[33mcommit b0922dd518bc474a1d8b8935863395123e2bbf59[m[33m ([m[1;36mHEAD -> [m[1;32mbangncph25477[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 664edfd 6567842
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Nov 28 23:00:39 2023 +0700
+
+    Merge pull request #110 from KienTMFPL23/vinhdq
+    
+    Vinhdq
+
+[33mcommit 65678422f83ae954c75e6b1d90f0a345ede8f0b9[m
+Merge: b048aba 664edfd
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Tue Nov 28 22:57:08 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit b048aba6e15050ef283a84abd09099ae17960e04[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Nov 28 22:46:08 2023 +0700
+
+    trang_chu_28/11
+
+[33mcommit 664edfdb8fec530bc9c61ded9769a1f0e6e5747d[m
+Merge: 33f95df f6728f5
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Nov 28 22:16:16 2023 +0700
+
+    Merge pull request #109 from KienTMFPL23/kientm
+    
+    code tra hang
+
+[33mcommit f6728f55e23761cab49372a4b6e190c3d49a01f6[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Tue Nov 28 22:12:27 2023 +0700
+
+    code tra hang
+
+[33mcommit 33f95dfe5085290679a60f0294cf2f85d1be0bc2[m
+Merge: cabd1b7 c4b1384
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Nov 28 21:50:29 2023 +0700
+
+    Merge pull request #108 from KienTMFPL23/bangncph25477
+    
+    Bangncph25477
+
+[33mcommit c4b13844255ac160527d562f1eda66a368ca0be7[m[33m ([m[1;31morigin/bangncph25477[m[33m)[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Tue Nov 28 21:40:32 2023 +0700
+
+    'xuatpdffix'
+
+[33mcommit cabd1b716acc52292dba155ae1b5dc25f5a648d2[m
+Merge: 3f63c61 abd291f
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 27 16:09:42 2023 +0700
+
+    Merge pull request #107 from KienTMFPL23/namntph25455
+    
+    update khuyen mai
+
+[33mcommit abd291f9bf52667733a10afc5749b3a4d5f2ef1c[m
+Merge: d0b0549 3f63c61
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Mon Nov 27 16:07:04 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit d0b0549c44546727cdf5dd7380bfd1798f5ac434[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Mon Nov 27 16:06:10 2023 +0700
+
+    update khuyen mai
+
+[33mcommit 8a4ca74549cd89b0a1fc8936061fd29237350c11[m
+Merge: 1269d5a 49450ca
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Mon Nov 27 15:48:09 2023 +0700
+
+    Merge branch 'kientm' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into vinhdq
+
+[33mcommit 3f63c61f992799925b98ebecdac6650392cac2c4[m
+Merge: 97b816d 1269d5a
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 27 15:42:56 2023 +0700
+
+    Merge pull request #106 from KienTMFPL23/vinhdq
+    
+    trang_chu_27/11
+
+[33mcommit 1269d5acc2a32aa4576bebe8458cf7fed26d0fbb[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Mon Nov 27 15:42:05 2023 +0700
+
+    trang_chu_27/11
+
+[33mcommit 97b816d3ca8105a7404586963f755149cf24494a[m
+Merge: d6044b7 49450ca
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 27 15:17:26 2023 +0700
+
+    Merge pull request #105 from KienTMFPL23/kientm
+    
+    doi san pham
+
+[33mcommit 49450ca9bbb304e24f9655256fccf6f5a3591803[m
+Merge: c518290 d6044b7
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 27 15:16:41 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit c518290eb5883a4d9d28326b9b3ef1ee63d659c3[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Mon Nov 27 15:07:49 2023 +0700
+
+    doi san pham
+
+[33mcommit d6044b7048d6972896b9c10243b06d1155aa35c6[m
+Merge: 732cc8c 8b932ee
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 27 14:03:42 2023 +0700
+
+    Merge pull request #104 from KienTMFPL23/huyenhtt
+    
+    update_donhang_ctsp
+
+[33mcommit 8b932ee62e3d92eca9a696b8a78784eec944dbf0[m
+Merge: 870062b 732cc8c
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Mon Nov 27 12:14:53 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 870062b53f66e1c0753401397bccaa4c395fea41[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Mon Nov 27 12:12:58 2023 +0700
+
+    update_donhang_ctsp
+
+[33mcommit 732cc8c2bbc28019bddb24d005ea971f91f40556[m[33m ([m[1;32mmaster[m[33m)[m
+Merge: b234f34 bf92f75
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Nov 24 21:42:24 2023 +0700
+
+    Merge pull request #103 from KienTMFPL23/vinhdq
+    
+    trang_chu_24/11
+
+[33mcommit bf92f75431169c3b73e6dac36d782dc5afd4a264[m[33m ([m[1;31morigin/vinhdq[m[33m)[m
+Merge: eb10c57 b234f34
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Fri Nov 24 21:41:26 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit eb10c57d7d9de68a52727f72bea1cbc3685ba6c6[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Nov 24 21:34:43 2023 +0700
+
+    trang_chu_24/11
+
+[33mcommit b234f3419548285ea4b527edd9c9ff05d60eeb1f[m
+Merge: 75d9a54 91a86ce
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Nov 24 15:43:19 2023 +0700
+
+    Merge pull request #102 from KienTMFPL23/kientm
+    
+    scan qr hoa don
+
+[33mcommit 91a86ce5012580a05254a2e047dc59dc351c50cf[m[33m ([m[1;31morigin/kientm[m[33m)[m
+Merge: 3bfd76e 75d9a54
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Nov 24 15:21:01 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit 3bfd76e1dfa4eebb17460c3940e402789a680822[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Fri Nov 24 15:15:45 2023 +0700
+
+    scan qr hoa don
+
+[33mcommit 0adf189fb09f39a3e09214c422ae00a12529f599[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Tue Nov 21 21:50:02 2023 +0700
+
+    fixpdf
+
+[33mcommit 75d9a546983935a88d65b0c3c387b6d07f97f1bf[m
+Merge: 6b50930 efedfb6
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sun Nov 19 00:16:31 2023 +0700
+
+    Merge pull request #101 from KienTMFPL23/huyenhtt
+    
+    update v6
+
+[33mcommit efedfb6607e10f68e93ea3e9f0f49cf8596b540c[m[33m ([m[1;31morigin/huyenhtt[m[33m)[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Nov 19 00:15:07 2023 +0700
+
+    update v6
+
+[33mcommit 6b5093039f90cf650d234f73fc273a3ab244e31c[m
+Merge: 9100ccf 00cfde8
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Nov 18 23:48:56 2023 +0700
+
+    Merge pull request #100 from KienTMFPL23/namntph25455
+    
+    update khuyen mai
+
+[33mcommit 00cfde85744c25bcd466d51fbf5accf23c1c2d60[m[33m ([m[1;31morigin/namntph25455[m[33m)[m
+Merge: e5da099 9100ccf
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Sat Nov 18 23:48:14 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit e5da09974be15fe2b38ce7d24af8d9ca4bf427fe[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Sat Nov 18 23:45:54 2023 +0700
+
+    update khuyen mai
+
+[33mcommit 9100ccf92535631db20774d5789d274fb1090f98[m
+Merge: a093900 6b39f6d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Nov 18 22:02:09 2023 +0700
+
+    Merge pull request #99 from KienTMFPL23/vinhdq
+    
+    kmv2
+
+[33mcommit 6b39f6d9d8837c2f1f64d553f2c962c516b10d48[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Sat Nov 18 22:00:48 2023 +0700
+
+    kmv2
+
+[33mcommit a09390093568881e33627d6196efc0be0a317ad9[m
+Merge: eadafdc 7998b03
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Nov 18 21:33:06 2023 +0700
+
+    Merge pull request #98 from KienTMFPL23/vinhdq
+    
+    khuyen_mai/trang_chu
+
+[33mcommit 7998b031a972a4aeea284973d961e374fd572095[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Sat Nov 18 21:31:46 2023 +0700
+
+    khuyen_mai/trang_chu
+
+[33mcommit eadafdc5ca02dfb2faa7e7e13de29acd2c53323d[m
+Merge: 000a8ee ad5279d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Nov 18 21:13:06 2023 +0700
+
+    Merge pull request #97 from KienTMFPL23/huyenhtt
+    
+    xuat_excel
+
+[33mcommit ad5279d5c389f73cf2528bef6edca77290f70e15[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Nov 18 21:02:07 2023 +0700
+
+    xuat_excel
+
+[33mcommit 000a8ee7c6bdf918dfbedf8f361737d07c6efdfa[m
+Merge: b4761c8 be129dd
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Nov 17 23:25:41 2023 +0700
+
+    Merge pull request #96 from KienTMFPL23/kientm
+    
+    update chinh sach doi hang
+
+[33mcommit be129ddad5c1303ff8cae2ec22d0c179ac6b430e[m
+Merge: ecc3fce b4761c8
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Nov 17 23:22:26 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit ecc3fce1e62f017c6dfcd2da940f0b51d1f658ae[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Fri Nov 17 23:17:45 2023 +0700
+
+    update chinh sach doi hang
+
+[33mcommit b4761c8aecbc39442ecc07d92b92f6babd9d8c17[m
+Merge: d9b15e7 8bbbc35
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Nov 17 23:10:43 2023 +0700
+
+    Merge pull request #95 from KienTMFPL23/huyenhtt
+    
+    update_ctsp_v3
+
+[33mcommit 8bbbc356c604cdfcca61de64adba749bb8e64845[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Nov 17 23:08:24 2023 +0700
+
+    update_ctsp_v3
+
+[33mcommit d9b15e748f59613b64e756b7bca9ff41e65ddcdc[m
+Merge: 6fd560e f52646c
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Nov 15 23:02:55 2023 +0700
+
+    Merge pull request #94 from KienTMFPL23/cuongnv
+    
+    thanh toan vnpay
+
+[33mcommit f52646c080bed81ca8e6b184c93dabc6ae8347f2[m[33m ([m[1;31morigin/cuongnv[m[33m)[m
+Merge: daa142b 6fd560e
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Wed Nov 15 22:40:49 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit daa142bd18af94d955a50e90addeb5bb5874fa87[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Wed Nov 15 22:39:34 2023 +0700
+
+    thanh toan vnpay
+
+[33mcommit 6fd560e8359097f29081fc6a687d2b45f15cd052[m
+Merge: 4228c3c 2bd5aa0
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Nov 15 21:37:38 2023 +0700
+
+    Merge pull request #93 from KienTMFPL23/vinhdq
+    
+    trang_chu_15/11
+
+[33mcommit 2bd5aa01d0372af86e143c8cb8a59ec8e63c4e31[m
+Merge: ebbdef2 4228c3c
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Wed Nov 15 21:30:50 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit ebbdef2e19e77b10679fe64b367527258f8ec4ec[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Wed Nov 15 21:21:11 2023 +0700
+
+    trang_chu_15/11
+
+[33mcommit 4228c3c80e1137d958fc936e2d23d593eeddbaad[m
+Merge: 74dd71b 29975d7
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Nov 14 23:23:23 2023 +0700
+
+    Merge pull request #80 from KienTMFPL23/bangncph25477
+    
+    suahoadonpdf
+
+[33mcommit 29975d7d55c75f6473fcddc1479d322be7200ef4[m
+Merge: 2df2655 74dd71b
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Tue Nov 14 23:22:48 2023 +0700
+
+    Merge branch 'master' into bangncph25477
+
+[33mcommit 2df2655488130e515b163935dcfe05e7b47c8f83[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Tue Nov 14 23:10:10 2023 +0700
+
+    import Excel
+
+[33mcommit 74dd71b5df5d3de9ef559b729b646fbc879492ec[m
+Merge: 2525b9d 46326f7
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Nov 14 21:39:45 2023 +0700
+
+    Merge pull request #92 from KienTMFPL23/huyenhtt
+    
+    update_dh3
+
+[33mcommit 46326f766b485056ab25ffcf07cba8f32424f9d2[m
+Merge: 968b6a5 2525b9d
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Tue Nov 14 21:39:03 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 968b6a547b69516d7ee0f5abd97d790808da6514[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Tue Nov 14 21:37:53 2023 +0700
+
+    update_dh3
+
+[33mcommit 2525b9d295e33922bd22e100a4a4318e2f0744e0[m
+Merge: 9c1e7b8 ec30194
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sun Nov 12 22:51:37 2023 +0700
+
+    Merge pull request #91 from KienTMFPL23/namntph25455
+    
+    update chuc nang khuyen mai
+
+[33mcommit ec301944f99c99613eaf9785c402df6824d111fd[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Sun Nov 12 22:49:33 2023 +0700
+
+    update chuc nang khuyen mai
+
+[33mcommit 9c1e7b8cbb6bba5682343a31094e5b9aaa216a14[m
+Merge: ad6bb08 7bc710b
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Nov 11 08:59:36 2023 +0700
+
+    Merge pull request #87 from KienTMFPL23/huyenhtt
+    
+    don_hang_v3
+
+[33mcommit 7bc710b98168db2670255d8f6ec3d5398eba3a65[m
+Merge: 36236f8 ad6bb08
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Sat Nov 11 08:58:20 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit ad6bb08659689187d07176c9859be35b424cf2e9[m
+Merge: 6c46e29 793e968
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Nov 11 08:54:45 2023 +0700
+
+    Merge pull request #90 from KienTMFPL23/vinhdq
+    
+    trang_chu_10/11
+
+[33mcommit 36236f841bb5c9c1e834ede5d11fe22a1f46396f[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Nov 11 08:49:26 2023 +0700
+
+    don_hang_update
+
+[33mcommit 8b2579fd9e07f798c41578bc3c824a81addec89b[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Nov 11 08:43:34 2023 +0700
+
+    don_hang
+
+[33mcommit 6a99f23ef59251fc33c7ded65765f02f2fd72e2f[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Nov 11 08:27:57 2023 +0700
+
+    update_don_hang_11/11
+
+[33mcommit 793e9681c9b862fd473e9c1c484733e301a843c3[m
+Merge: 8f0aef8 6c46e29
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Fri Nov 10 21:49:38 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit 8f0aef8e83abe980f06e3b56279ec1dc3d24bfc8[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Nov 10 21:48:14 2023 +0700
+
+    trang_chu_10/11
+
+[33mcommit 6c46e2937ac90ca6afc1def87ea768a84f7f01b1[m
+Merge: 816b37e b86ea69
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Nov 8 22:38:45 2023 +0700
+
+    Merge pull request #89 from KienTMFPL23/kientm
+    
+    update ban hang tai quay v2
+
+[33mcommit b86ea69e7a645b7da7fabc8abfe2d996f5227def[m
+Merge: ec9593c 816b37e
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Nov 8 22:37:40 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit ec9593c52163828f5eb7410a2220559f7a0a2c93[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Wed Nov 8 22:36:25 2023 +0700
+
+    update ban hang tai quay v2
+
+[33mcommit 816b37e25a0d0fae204f5eda799185064be1cb70[m
+Merge: 84bf6e3 37bb369
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Nov 8 22:13:53 2023 +0700
+
+    Merge pull request #88 from KienTMFPL23/namntph25455
+    
+    up lai code
+
+[33mcommit 37bb3690674107ee96cb9764858b03492de891cf[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Wed Nov 8 22:12:15 2023 +0700
+
+    up lai code
+
+[33mcommit 6faabf92cc13e512702bd61e381ea0ae10f52893[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Tue Nov 7 20:17:29 2023 +0700
+
+    don_hang_v3
+
+[33mcommit 84bf6e3ce9ac857bdb075f1fb60771f37fa858d5[m
+Merge: d560f60 02473ef
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 6 23:33:03 2023 +0700
+
+    Merge pull request #86 from KienTMFPL23/kientm
+    
+    fix ban tai quay
+
+[33mcommit 02473ef09786a0a06a7e2ec9dc5dd015ba86acb5[m
+Merge: ce2bf3c d560f60
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 6 23:32:36 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit ce2bf3cbac7c673a55ea373e7a066084e1074569[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Mon Nov 6 23:27:42 2023 +0700
+
+    fix ban tai quay
+
+[33mcommit d560f605c10e2c09c91bdbe05546249e33f30ebc[m
+Merge: d066043 8514f21
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 6 22:16:23 2023 +0700
+
+    Merge pull request #85 from KienTMFPL23/namntph25455
+    
+    khuyen mai
+
+[33mcommit 8514f2106f9443b9a4f650e2e3855e45eae5c7e3[m
+Merge: 3649631 d066043
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Mon Nov 6 22:13:10 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit 3649631c13e789c26c975efbb94ac572316e03a0[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Mon Nov 6 22:07:03 2023 +0700
+
+    khuyen mai
+
+[33mcommit d0660433357dc3e7a24225b7969794bd1bfe28fc[m
+Merge: 7080af4 862e051
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 6 21:54:02 2023 +0700
+
+    Merge pull request #84 from KienTMFPL23/huyenhtt
+    
+    don_hang v2
+
+[33mcommit 7080af4917c32ee81cf4ecd70f8e5b7195e4c215[m
+Merge: 446b238 62fb3b7
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Nov 6 21:53:11 2023 +0700
+
+    Merge pull request #83 from KienTMFPL23/vinhdq
+    
+    trangchu_06/11
+
+[33mcommit 862e05161f2ee8b8bcc40b4b07e7e9c3beed0765[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Mon Nov 6 21:50:59 2023 +0700
+
+    don_hang v2
+
+[33mcommit 62fb3b7787f47c1339b51d588f23bfc21d45bc6f[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Mon Nov 6 21:47:49 2023 +0700
+
+    trangchu_06/11
+
+[33mcommit 446b238521af68b16057e37b843cd1fc9a4a2c30[m
+Merge: 9593146 7f62fa2
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 31 22:16:14 2023 +0700
+
+    Merge pull request #82 from KienTMFPL23/vinhdq
+    
+    ban_hang_online_3110
+
+[33mcommit 7f62fa2c5f963a3a387dc2aa32b226ae3a726e67[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 31 22:15:13 2023 +0700
+
+    ban_hang_online_3110
+
+[33mcommit 95931464cc87e3a0986d59bf6725db64478ed5d9[m
+Merge: 6b140a9 2bfbad6
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 27 23:10:57 2023 +0700
+
+    Merge pull request #81 from KienTMFPL23/vinhdq
+    
+    trangchu_2710
+
+[33mcommit 2bfbad665985c6cdc0f1d10961650be69a0503f4[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Oct 27 23:08:54 2023 +0700
+
+    trangchu_2710
+
+[33mcommit dbca1633e6e776fb2bb3c772501b0e2caa167282[m
+Merge: 35d54ac 6b140a9
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Fri Oct 27 22:45:10 2023 +0700
+
+    Merge branch 'master' into bangncph25477
+
+[33mcommit 35d54ac6702ee0769e9cdd8c75d1f4cbf4b591a9[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Fri Oct 27 22:39:02 2023 +0700
+
+    suahoadonpdf
+
+[33mcommit 6b140a940e4709de6b3378972fd47f08d7c04ec2[m
+Merge: 240b050 ed5784d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 27 22:23:17 2023 +0700
+
+    Merge pull request #79 from KienTMFPL23/huyenhtt
+    
+    don_hang
+
+[33mcommit ed5784d1f5bd0841d6bcd60d6918ec1f71765171[m
+Merge: 787fce1 240b050
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Fri Oct 27 22:22:17 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 787fce15972e05ea4b5bb1b3a1eb9ab926b17c8c[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Oct 27 22:17:53 2023 +0700
+
+    don_hang
+
+[33mcommit 240b05080142a5775f43ea3f4a5a13f4bdc94b78[m
+Merge: 03a4f65 ba572db
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 27 21:55:27 2023 +0700
+
+    Merge pull request #78 from KienTMFPL23/cuongnv
+    
+    Cuongnv
+
+[33mcommit ba572db7e29fdb938408b23fa63d314a7adaf8b4[m
+Merge: 1f71e1f 03a4f65
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Fri Oct 27 21:54:37 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit 1f71e1f350718814c519424541310f046ff01dbe[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Fri Oct 27 21:47:53 2023 +0700
+
+    hd sua export file exxcel
+
+[33mcommit 03a4f65be23a0f7df91eabc5dff3e10013c0204b[m
+Merge: b86916a 5c996f6
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 27 21:32:29 2023 +0700
+
+    Merge pull request #77 from KienTMFPL23/namntph25455
+    
+    giao hang nhanh
+
+[33mcommit 5c996f6354237310422ab1ac240832be9db21eed[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Fri Oct 27 21:30:30 2023 +0700
+
+    giao hang nhanh
+
+[33mcommit b86916a8910a7a34c1b510b35c07605257dd1ff2[m
+Merge: e72f6eb 68f8e80
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 27 21:22:11 2023 +0700
+
+    Merge pull request #76 from KienTMFPL23/kientm
+    
+    fix them nhanh khach hang
+
+[33mcommit 68f8e806f0b149fcfdb6f8e9c3d84a49ea3700d8[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Fri Oct 27 21:18:49 2023 +0700
+
+    fix them nhanh khach hang
+
+[33mcommit e72f6eb12659450671f1a9aba9d294b5f67e6b0e[m
+Merge: 816dd3b 95adad3
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 26 23:26:24 2023 +0700
+
+    Merge pull request #75 from KienTMFPL23/vinhdq
+    
+    update_cart_26/10
+
+[33mcommit 95adad323c5c855f62c686f7123ee100c38e99ce[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Oct 26 23:18:06 2023 +0700
+
+    update_cart_26/10
+
+[33mcommit 816dd3b810ee0e9365b29c6603cb68beb6e4dee5[m
+Merge: 8fdd8a6 71180fa
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 24 22:59:22 2023 +0700
+
+    Merge pull request #74 from KienTMFPL23/vinhdq
+    
+    trangchu__2410
+
+[33mcommit 71180fa90fab50b259766fbb4168e62a7beb9c14[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 24 22:54:43 2023 +0700
+
+    trangchu__2410
+
+[33mcommit 8fdd8a69363ce44899ae6559d3d66bad7ef5257f[m
+Merge: f918269 239b9a0
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 24 22:48:10 2023 +0700
+
+    Merge pull request #73 from KienTMFPL23/kientm
+    
+    update ban hang
+
+[33mcommit 239b9a02f9c9e89872c212cc9a187ed0df087aef[m
+Merge: 9e44de8 f918269
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 24 22:47:57 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit 9e44de8afd981c03e34e64a4a50bd04ef5f87b0c[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Tue Oct 24 22:45:34 2023 +0700
+
+    update ban hang
+
+[33mcommit f918269f61eedaa4a2a9237a33f3b86ec6bf5c09[m
+Merge: 2cb8ce4 8156a46
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 21 01:42:56 2023 +0700
+
+    Merge pull request #72 from KienTMFPL23/vinhdq
+    
+    ..
+
+[33mcommit 8156a4618b74f7077837f30885cb58788954a7b1[m
+Merge: 82091c9 2cb8ce4
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Sat Oct 21 01:42:18 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit 82091c9ef9f9b59b1a81a0320d7adb99cff309db[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Sat Oct 21 01:40:54 2023 +0700
+
+    ..
+
+[33mcommit 6ef6bf17da3ae3ceaee71b6f6187f8c948760b5b[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 21 01:34:31 2023 +0700
+
+    hd
+
+[33mcommit 2cb8ce405b7cdb859c2e5a57c266cda14d660296[m
+Merge: 7d8c6e2 3f18595
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 21 01:34:05 2023 +0700
+
+    Merge pull request #70 from KienTMFPL23/namntph25455
+    
+    fix loi thanh toan
+
+[33mcommit 3f18595326d19fd6588fa36dce8461ce673beaad[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Sat Oct 21 01:33:11 2023 +0700
+
+    fix loi thanh toan
+
+[33mcommit 7d8c6e2c91e935b44a7eab12d9772de1c0cf977c[m
+Merge: 874b27c 06cb4e2
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 21 00:26:16 2023 +0700
+
+    Merge pull request #69 from KienTMFPL23/cuongnv
+    
+    Cuongnv
+
+[33mcommit 06cb4e25208ca975a9a6a60b82be4eaadec92f20[m
+Merge: 277b92f 874b27c
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Sat Oct 21 00:25:20 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit 277b92f4a63b39fe4670c80b43a1cc7363a88378[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 21 00:19:57 2023 +0700
+
+    man hinh hoa don
+
+[33mcommit 874b27c105a09a46edf29dd40d7a6232b37859fb[m
+Merge: 10b2cf4 d6ad183
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 21 00:18:17 2023 +0700
+
+    Merge pull request #68 from KienTMFPL23/vinhdq
+    
+    update_21/10
+
+[33mcommit d6ad183d9b002a95182a735f689f0b559f5d5fd9[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Sat Oct 21 00:17:23 2023 +0700
+
+    update_21/10
+
+[33mcommit 10b2cf4935a82915abe028fa64fe0477c8ff465c[m
+Merge: 047e849 69db139
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 23:43:36 2023 +0700
+
+    Merge pull request #67 from KienTMFPL23/huyenhtt
+    
+    don_hang
+
+[33mcommit 69db13919df1abe01d79cb0b882627f317fc8345[m
+Merge: 5934615 047e849
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Fri Oct 20 23:42:58 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 5934615911ad10f37e5651589418042448a34f5a[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Oct 20 23:40:49 2023 +0700
+
+    don_hang
+
+[33mcommit 047e849283abc0d24eafe9e1ccb53c34aa5ed2e9[m
+Merge: 3b0d40f f336513
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 23:39:14 2023 +0700
+
+    Merge pull request #66 from KienTMFPL23/namntph25455
+    
+    giao dien trang thai don hang
+
+[33mcommit f3365135f1a451ec2a58ac7e788e71888c6105c1[m
+Merge: e4bc3fc 3b0d40f
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Fri Oct 20 23:38:35 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit e4bc3fc22f1ef90cbdfe6bdb8b5e41c0c6f3462e[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Fri Oct 20 23:34:44 2023 +0700
+
+    giao dien trang thai don hang
+
+[33mcommit 3b0d40ff8713ed8c3ec233c916c9cd2c72c7dd3c[m
+Merge: 077db87 c633e98
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 23:32:34 2023 +0700
+
+    Merge pull request #65 from KienTMFPL23/bangncph25477
+    
+    xuathoadonpdf
+
+[33mcommit c633e98f00708161a4fafb56564191b89b8df750[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Fri Oct 20 23:31:13 2023 +0700
+
+    xuathoadonpdf
+
+[33mcommit 077db877e33eb59e465baf7626c1f6de5437780c[m
+Merge: 41409ab 7af60b6
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 22:05:24 2023 +0700
+
+    Merge pull request #64 from KienTMFPL23/revert-63-kientm
+    
+    Revert "update ban hang v2"
+
+[33mcommit 7af60b684563403fb1a527c13f42691c4f857c47[m[33m ([m[1;31morigin/revert-63-kientm[m[33m)[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 22:05:04 2023 +0700
+
+    Revert "update ban hang v2"
+
+[33mcommit 41409abab7b1858ada145c33ac1b647d8300f392[m
+Merge: 3f9274a c28d16d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 22:02:01 2023 +0700
+
+    Merge pull request #63 from KienTMFPL23/kientm
+    
+    update ban hang v2
+
+[33mcommit c28d16d03ca75feb76825591bb8398ee312a5e10[m
+Merge: 34b1d20 3f9274a
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 22:01:20 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit 34b1d20062af321b55ada31652f3495b2840a6a0[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Fri Oct 20 21:58:58 2023 +0700
+
+    update ban hang v2
+
+[33mcommit 3f9274af4b7dc9d940666bd57a05721e4ff6d4b3[m
+Merge: b461877 c300908
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 21:56:21 2023 +0700
+
+    Merge pull request #62 from KienTMFPL23/vinhdq
+    
+    update_20/10
+
+[33mcommit c300908e91fb35d8640e3ee090d4473ffd6dab7b[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Oct 20 21:53:43 2023 +0700
+
+    update_20/10
+
+[33mcommit b461877e9a98d1d4e4a5ebc6f3b2e5816d48bfa7[m
+Merge: f9f0c08 2a6ec11
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 20 21:42:26 2023 +0700
+
+    Merge pull request #61 from KienTMFPL23/vinhdq
+    
+    trangchu_20/10
+
+[33mcommit 2a6ec117791b3fa5c1e97f88168bfc8aab8ae026[m
+Merge: c88dbd9 f9f0c08
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Fri Oct 20 21:41:30 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit c88dbd9e9887bfbe7896ee83804e507d7b288d89[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Oct 20 21:30:55 2023 +0700
+
+    trangchu_20/10
+
+[33mcommit f9f0c081ffaea287c6617efd3e3b650ccc1f8874[m
+Merge: 2a7125e 714c237
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 19 23:19:42 2023 +0700
+
+    Merge pull request #60 from KienTMFPL23/namntph25455
+    
+    thanh toan paypal + don mua
+
+[33mcommit 714c237f09f9791bfb75028e2af4083e473c2ede[m
+Merge: 453e467 2a7125e
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Thu Oct 19 23:14:53 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit 453e4676016a113fc3c8ac07834fb9760418479e[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Thu Oct 19 23:05:00 2023 +0700
+
+    thanh toan paypal + don mua
+
+[33mcommit 2a7125ed983a5a544a506f45e2d6f862a0487bf8[m
+Merge: c7ba333 40717b3
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 17 22:31:05 2023 +0700
+
+    Merge pull request #59 from KienTMFPL23/kientm
+    
+    update ban hang
+
+[33mcommit 40717b36e80fbd8c6818582b1217529c35d936a2[m
+Author: KienTMFPL23 <kientmph25520@fpt.edu.vn>
+Date:   Tue Oct 17 22:25:35 2023 +0700
+
+    update ban hang
+
+[33mcommit c7ba3333b76ca130f3f927cd3ff4ccc4fd2d73d3[m
+Merge: 18f6140 c6492b5
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 14 00:40:07 2023 +0700
+
+    Merge pull request #58 from KienTMFPL23/cuongnv
+    
+    Cuongnv
+
+[33mcommit 74430b2051a56db7171c3c19b9de699866829113[m
+Merge: c6492b5 18f6140
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 14 00:35:34 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into cuongnv
+
+[33mcommit c6492b5baa1814ca2063634dcc477702c625e3a1[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 14 00:22:52 2023 +0700
+
+    hd...
+
+[33mcommit 6ae0a2ad65f85c46b603b09f7cee6212c0b94927[m
+Merge: 3dc423b c1c01e3
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 14 00:17:41 2023 +0700
+
+    hd...
+
+[33mcommit 18f6140a0e28b0e8822a07ca7136724e64fcb14f[m
+Merge: c1c01e3 44ed9d6
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 14 00:15:15 2023 +0700
+
+    Merge pull request #57 from KienTMFPL23/kientm
+    
+    fix tim khach hang
+
+[33mcommit 44ed9d612ca119d18aacb73d0db1bebb45ad6e48[m
+Merge: 766ee58 c1c01e3
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 14 00:13:24 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit 3dc423b4df79f55710b3e136f1038653bf6add36[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 14 00:12:19 2023 +0700
+
+    update
+
+[33mcommit 766ee58396a70ab2f7468bf22be10cd2078a687d[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 14 00:11:10 2023 +0700
+
+    fix tim khach hang
+
+[33mcommit cef62a374fddf98de9c50f4b807c038a50a84e5a[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Oct 14 00:10:57 2023 +0700
+
+    hd design
+
+[33mcommit c1c01e3c4d2a6f87da374cca8a8cdb13c9225c32[m
+Merge: 4571bef de8aab2
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 14 00:10:33 2023 +0700
+
+    Merge pull request #56 from KienTMFPL23/vinhdq
+    
+    themgiohangupdatesoluong
+
+[33mcommit de8aab27657b19c8ad46ae3af913489969b148b5[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Sat Oct 14 00:09:30 2023 +0700
+
+    themgiohangupdatesoluong
+
+[33mcommit 4571befb6488f236434a83b8fba100dd9d387837[m
+Merge: dfebd29 a55239b
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 13 22:05:39 2023 +0700
+
+    Merge pull request #55 from KienTMFPL23/kientm
+    
+    fix ban hang
+
+[33mcommit a55239bd3bc79c5323bf1d60e833db221571ef38[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 13 22:04:44 2023 +0700
+
+    fix ban hang
+
+[33mcommit dfebd296b04a038038fc793f8dd3a7a8fe72c83e[m
+Merge: d935add fb90f3d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 13 22:02:59 2023 +0700
+
+    Merge pull request #54 from KienTMFPL23/vinhdq
+    
+    themgiohang-1310
+
+[33mcommit fb90f3d1c73f311ffc7e4ad462b50464142af290[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Oct 13 22:01:55 2023 +0700
+
+    themgiohang-1310
+
+[33mcommit d935adda804a7bd790a80682ab88a80afeae6262[m
+Merge: 72f1643 b682c1e
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 13 21:55:15 2023 +0700
+
+    Merge pull request #53 from KienTMFPL23/huyenhtt
+    
+    ctsp_v6
+
+[33mcommit b682c1efbe0597eba0b6a32cba5580dced183573[m
+Merge: dfd5706 72f1643
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Fri Oct 13 21:49:34 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit dfd5706736fddd4169acee4bc27df40f9b9c47b4[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Oct 13 21:44:23 2023 +0700
+
+    ctsp_v6
+
+[33mcommit 72f164394dc235cf087885692f49243c73e712fd[m
+Merge: ab80beb f537dfe
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 13 21:09:43 2023 +0700
+
+    Merge pull request #52 from KienTMFPL23/cuongnv
+    
+    hoa don search
+
+[33mcommit f537dfe5538bb0f20cdb6c4fb4fd4e69027fef73[m
+Merge: 8bd25c2 ab80beb
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Fri Oct 13 18:48:49 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit 8bd25c2bd9b52f970b4aa54919a526b581dccf8e[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Fri Oct 13 18:46:59 2023 +0700
+
+    hd search
+
+[33mcommit ab80bebf44380b29c45222e470bb39f240ea2c20[m
+Merge: 797ce37 3e194ae
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 12 23:33:23 2023 +0700
+
+    Merge pull request #51 from KienTMFPL23/kientm
+    
+    them nhanh khach hang
+
+[33mcommit 3e194ae405cdbc428ca4d1b815d54e8c774b2935[m
+Merge: 9055320 797ce37
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 12 23:32:26 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit 90553201a07b927457fe002fda3a3c28ef65590a[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 12 23:28:25 2023 +0700
+
+    them nhanh khach hang
+
+[33mcommit 797ce3781b59daf64ba4125df951a48d068f7a87[m
+Merge: 88ee6b6 c001e55
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 12 22:57:10 2023 +0700
+
+    Merge pull request #50 from KienTMFPL23/vinhdq
+    
+    Vinhdq
+
+[33mcommit c001e55e901ad40fb731635d736866ef3213b3e4[m
+Merge: 413c5ae a4cbc35
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Oct 12 22:55:29 2023 +0700
+
+    Merge branch 'vinhdq' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into vinhdq
+
+[33mcommit 413c5aef8876175b5acdd27cd7d37dde9ac2627b[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Oct 12 22:44:23 2023 +0700
+
+    themgh
+
+[33mcommit 62f7602a4317826b9db7da356055bb7cd0098f6d[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Oct 12 22:42:09 2023 +0700
+
+    themgiohangv3
+
+[33mcommit 97b4ae9c62d0422d08525bf0723bd69fb8af96d6[m
+Merge: 29aaf0a 594c3f3
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Oct 12 22:38:14 2023 +0700
+
+    themgiohangv2
+
+[33mcommit 88ee6b632f48e296b7edf9f4926a614d139105da[m
+Merge: 594c3f3 a4cbc35
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 12 22:20:36 2023 +0700
+
+    Merge pull request #49 from KienTMFPL23/vinhdq
+    
+    them-gio-hang
+
+[33mcommit a4cbc35907be938e8aa2eb52d033c47285dd291f[m
+Merge: 29aaf0a 594c3f3
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Thu Oct 12 22:18:51 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit 29aaf0a37784e0d683ff5202a243b3b727103e1f[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Oct 12 22:08:23 2023 +0700
+
+    them-gio-hang
+
+[33mcommit 594c3f3d174f87c5a0c5e1dd0ff1b85d935e68cd[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Thu Oct 12 21:56:43 2023 +0700
+
+    mua hang online
+
+[33mcommit 59af9eca51a8b62cdda6d499f01a0363df7eaa2e[m
+Merge: d81f018 2f7d696
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Wed Oct 11 15:54:26 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into cuongnv
+
+[33mcommit d81f018bfa9faec3a2a6097de6ef0125a400832e[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Wed Oct 11 11:19:04 2023 +0700
+
+    up code hd
+
+[33mcommit 2f7d696665d9e5209658832ca3a289029302ab3f[m
+Merge: 0b2e5ac a1a1b18
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 10 10:56:32 2023 +0700
+
+    Merge pull request #47 from KienTMFPL23/vinhdq
+    
+    fake_cart
+
+[33mcommit a1a1b18ce7885a356bc7db6e5168b39499a02c5e[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 10 09:19:45 2023 +0700
+
+    fake_cart
+
+[33mcommit 0b2e5ac444dc9e02166e1d9ffbf35c98f526152e[m
+Merge: 6e673f6 4d6d703
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Oct 9 22:16:09 2023 +0700
+
+    Merge pull request #46 from KienTMFPL23/vinhdq
+    
+    0910-10h14
+
+[33mcommit 4d6d7037dcfb1b3a7b25cc8a5585effecdb5d9c1[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Mon Oct 9 22:14:35 2023 +0700
+
+    0910-10h14
+
+[33mcommit 6e673f616f850c00ba5908ce3562817452b9e976[m
+Merge: b1014c1 ea42903
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Oct 9 21:43:17 2023 +0700
+
+    Merge pull request #45 from KienTMFPL23/vinhdq
+    
+    template_home_0910
+
+[33mcommit ea4290328a044babc5557b91245aceb5fa5dc148[m
+Merge: ceeca9d b1014c1
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Mon Oct 9 21:37:21 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit ceeca9d977bb1f6dc2dd327ad0b1769f2edce33f[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Mon Oct 9 21:33:39 2023 +0700
+
+    template_home_0910
+
+[33mcommit b1014c1c0d6bab96a4368d0c47df864e87e008cc[m
+Merge: c1d101a 285261d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Oct 9 21:26:49 2023 +0700
+
+    Merge pull request #44 from KienTMFPL23/cuongnv
+    
+    hdct thieu search khoang ngay
+
+[33mcommit 285261d71f9b3bf29b3c83c3c295cc4cc9becfa0[m
+Merge: a829167 c1d101a
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Mon Oct 9 21:25:14 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit a8291679596bd2cb17963093e35cfefff277cc99[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Mon Oct 9 21:22:47 2023 +0700
+
+    hdct thieu search khoang ngay
+
+[33mcommit c1d101af8d8ee65a81d5ff4365bf7ab73b65ed19[m
+Merge: 34aefb6 78710ef
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 7 03:50:02 2023 +0700
+
+    Merge pull request #43 from KienTMFPL23/huyenhtt
+    
+    updatevii
+
+[33mcommit 78710efefa5c81ca21878e16dfd0969873dbda87[m
+Merge: bf2a7aa 34aefb6
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Sat Oct 7 03:49:06 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit bf2a7aaae2f593f89409a5769e0bf9d339d42a23[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Oct 7 03:47:00 2023 +0700
+
+    updatevii
+
+[33mcommit 34aefb67b74c8f07404b22a5119709a10e29b65d[m
+Merge: 378d205 4e9c4cf
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 7 03:12:19 2023 +0700
+
+    Merge pull request #42 from KienTMFPL23/namntph25455
+    
+    tim kiem filter modal
+
+[33mcommit 4e9c4cf53b430a13246eee8a741e2e16cd35e634[m
+Merge: 7350922 378d205
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Sat Oct 7 03:11:43 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit 7350922769caf8364e342ec89a1ce16018c91ebe[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Sat Oct 7 03:05:44 2023 +0700
+
+    tim kiem filter modal
+
+[33mcommit 378d20516e971fe199313dd1715154923e1495d7[m
+Merge: 924d7b3 2634c3e
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 7 02:44:29 2023 +0700
+
+    Merge pull request #41 from KienTMFPL23/vinhdq
+    
+    template_home_v2
+
+[33mcommit 2634c3e4d2ee329f757c850a99f11e5339b7cf87[m
+Merge: 5ca1c56 924d7b3
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Sat Oct 7 02:43:48 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit 5ca1c56c89d0ae7e9447266621ae73da93888f1c[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Sat Oct 7 02:41:46 2023 +0700
+
+    template_home_v2
+
+[33mcommit 924d7b31eeb1f2f20854100a70d5764f046c1160[m
+Merge: 8ea2458 da3c852
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 7 00:16:23 2023 +0700
+
+    Merge pull request #40 from KienTMFPL23/huyenhtt
+    
+    hinh_anhv3
+
+[33mcommit da3c8522ba635fa14d4e9867ae54c55e0c284955[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Oct 7 00:14:57 2023 +0700
+
+    hinh_anhv3
+
+[33mcommit 8ea24588365affdc9f808cb15703a380914589f5[m
+Merge: 50ce769 7d8f042
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 7 00:13:45 2023 +0700
+
+    Merge pull request #39 from KienTMFPL23/kientm
+    
+    update thanh toan and qrcode
+
+[33mcommit 7d8f0423a004ee718daeee462f34f6d553330872[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Oct 7 00:11:27 2023 +0700
+
+    update thanh toan and qrcode
+
+[33mcommit 50ce769f5efda2b457e9035584666e93030d352d[m
+Merge: bf29321 a5f186d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 6 21:48:06 2023 +0700
+
+    Merge pull request #38 from KienTMFPL23/huyenhtt
+    
+    hinh_anh
+
+[33mcommit a5f186de003378a0330925972b7d178f91076164[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Oct 6 21:46:30 2023 +0700
+
+    hinh_anh
+
+[33mcommit bf293213e8e33a7f0a44deca4fbe189ad33c4bfc[m
+Merge: ba0e4f9 7d7332f
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Oct 6 21:29:18 2023 +0700
+
+    Merge pull request #37 from KienTMFPL23/vinhdq
+    
+    template_home
+
+[33mcommit 7d7332f3518aa71620addbcf26f8778278f3a95d[m
+Merge: 2543e74 ba0e4f9
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Fri Oct 6 21:28:37 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit 2543e744851f3c6bc9af23537b97f102f37dbca7[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Fri Oct 6 21:26:30 2023 +0700
+
+    template_home
+
+[33mcommit ba0e4f983f794f62f26188a1c7015b54139fae7a[m
+Merge: f0d01f7 7ea5e97
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 5 23:25:39 2023 +0700
+
+    Merge pull request #36 from KienTMFPL23/huyenhtt
+    
+    update_ctsp_v3
+
+[33mcommit 7ea5e97e2d45312367771b52256baed7fd977b39[m
+Merge: 9295281 f0d01f7
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Thu Oct 5 23:24:58 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 92952816a750c3fd480330bfbde9d7e63f84af73[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Thu Oct 5 23:21:37 2023 +0700
+
+    update_ctsp_v3
+
+[33mcommit f0d01f76dc2dd03edd49dcf3b08b2c451d5b0e46[m
+Merge: e33a827 7ae36e5
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 5 23:01:22 2023 +0700
+
+    Merge pull request #35 from KienTMFPL23/namntph25455
+    
+    crud hinh anh
+
+[33mcommit 7ae36e58da77a402bf83c52e9bd5fe6ed0b93da2[m
+Merge: 0190352 e33a827
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Thu Oct 5 22:59:46 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit 0190352bdf0d25aa6378e194cf0641d63372ee43[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Thu Oct 5 22:58:30 2023 +0700
+
+    crud hinh anh
+
+[33mcommit e33a827aae360c76ec39ffceb471a33000d191de[m
+Merge: 54a4208 384998b
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 5 22:50:25 2023 +0700
+
+    Merge pull request #34 from KienTMFPL23/kientm
+    
+    update thanh toan ban hang tai quay
+
+[33mcommit 384998b79cd185503512425b66208a1b7f3a269d[m
+Merge: 196820c 54a4208
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 5 22:48:51 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit 196820c3ded07583c347add7718273987294cc31[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Oct 5 22:47:03 2023 +0700
+
+    update thanh toan ban hang tai quay
+
+[33mcommit 54a420871e5edde5da11b233e03c9540d8ab6b6d[m
+Merge: c02eab5 4c10462
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 23:37:49 2023 +0700
+
+    Merge pull request #33 from KienTMFPL23/cuongnv
+    
+    view bills
+
+[33mcommit 4c104625a6346a5477938a1a8393498a0f61e2ec[m
+Merge: e55da27 c02eab5
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Wed Oct 4 23:16:01 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit e55da27581e179b10a19d93e0346cd317b1e7c2c[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Wed Oct 4 23:13:06 2023 +0700
+
+    view bills
+
+[33mcommit c02eab53069cd608ebdbf210a3c578bb61f48087[m
+Merge: 08b3b1d a7853c8
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 23:06:17 2023 +0700
+
+    Merge pull request #32 from KienTMFPL23/bangncph25477
+    
+    update curd mau sac
+
+[33mcommit a7853c883e9ad8cc5dcf57df046c490e5a7f1bcc[m
+Merge: 3929831 08b3b1d
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Wed Oct 4 22:45:18 2023 +0700
+
+    Merge branch 'master' into bangncph25477
+
+[33mcommit 39298319eb80f59ea2cd7c68c14fc4d275728ad6[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Wed Oct 4 22:41:49 2023 +0700
+
+    update curd mau sac
+
+[33mcommit 08b3b1de154824a1066573bd811942429c9fcf83[m
+Merge: 908510a 83606ec
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 21:54:26 2023 +0700
+
+    Merge pull request #31 from KienTMFPL23/namntph25455
+    
+    chuc nang dang ky dang nhap dang xuat
+
+[33mcommit 83606ecd28780a0494f09d2f16a33e02aac84143[m
+Merge: 1792a7c 908510a
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Wed Oct 4 21:50:05 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit 1792a7c31a9db55a7e0f940d8a7a186854790020[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Wed Oct 4 21:47:32 2023 +0700
+
+    chuc nang dang ky dang nhap dang xuat
+
+[33mcommit 908510a70e729517ec64071fefbc4489ee7ac0de[m
+Merge: 890e11a bcb5ec4
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 21:44:02 2023 +0700
+
+    Merge pull request #30 from KienTMFPL23/kientm
+    
+    them sp gio hang
+
+[33mcommit bcb5ec41258150b0238f2952d99f83bec7c90cdb[m
+Merge: adc95d5 890e11a
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 21:39:08 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit adc95d5ec9e20419ad4b6abcdcf032ceb8b71099[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 21:35:27 2023 +0700
+
+    them sp gio hang
+
+[33mcommit 890e11a0f06459470858e88796f2bf3aeb8637f1[m
+Merge: ac92217 661d655
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Wed Oct 4 21:32:47 2023 +0700
+
+    Merge pull request #29 from KienTMFPL23/huyenhtt
+    
+    gen qr code
+
+[33mcommit 661d655e1b47d36825e615c2105628098c9cf270[m
+Merge: 6501a51 ac92217
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Wed Oct 4 16:58:16 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 6501a51a66eb37572d2aae2551b85875511336d0[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Wed Oct 4 16:56:57 2023 +0700
+
+    gen qr code
+
+[33mcommit ac922173c5ffecc1973de252078a8a5510a77b83[m
+Merge: eb5143c 1ebaf37
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 23:38:06 2023 +0700
+
+    Merge pull request #28 from KienTMFPL23/vinhdq
+    
+    update_datatable_v3
+
+[33mcommit 1ebaf37f643f276c6bb7f7601f6d2c36dffa258f[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 3 23:35:38 2023 +0700
+
+    update_datatable_v3
+
+[33mcommit eb5143c7e1552042132491309a0d486d8d65817b[m
+Merge: 035991f 4b71344
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 23:24:05 2023 +0700
+
+    Merge pull request #27 from KienTMFPL23/vinhdq
+    
+    update_datatable_v2
+
+[33mcommit 4b71344806a8b4a2287d2f2363e2d6786a07655b[m
+Merge: 0f5e4ee 035991f
+Author: dqvinh <109582017+vihhii@users.noreply.github.com>
+Date:   Tue Oct 3 23:23:02 2023 +0700
+
+    Merge branch 'master' into vinhdq
+
+[33mcommit 0f5e4ee05f6754a3550830032b15a0dad578c79c[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 3 23:21:13 2023 +0700
+
+    update_datatable_v2
+
+[33mcommit 035991f3f2a747c48bce6f77d4d599dfde51b4f8[m
+Merge: 92a21f6 c0d37ed
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 23:06:30 2023 +0700
+
+    Merge pull request #26 from KienTMFPL23/namntph25455
+    
+    giao dien dang ky dang nhap
+
+[33mcommit c0d37ed0027b1fd5b4c7039387165fa00a615d42[m
+Merge: fd39fc3 92a21f6
+Author: NamNguyenTien10 <136804281+NamNguyenTien10@users.noreply.github.com>
+Date:   Tue Oct 3 23:05:28 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit 92a21f680e48a4dfa3f90699cdf68b902ae72318[m
+Merge: 9eafcc3 6f5f829
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 23:02:56 2023 +0700
+
+    Merge pull request #25 from KienTMFPL23/huyenhtt
+    
+    ctsp_v3
+
+[33mcommit fd39fc3e2dab43ca641f47ee860c6d54cbb15171[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Tue Oct 3 23:02:15 2023 +0700
+
+    giao dien dang ky dang nhap
+
+[33mcommit 6f5f829fe51570311de5f6b4e83099232ebc990a[m
+Merge: 5c53fd1 9eafcc3
+Author: huyenhtt02 <106076818+huyenhtt@users.noreply.github.com>
+Date:   Tue Oct 3 23:00:18 2023 +0700
+
+    Merge branch 'master' into huyenhtt
+
+[33mcommit 5c53fd191dbe7f0a29d7ab0cbf1cc349f6931a21[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Tue Oct 3 22:56:01 2023 +0700
+
+    ctsp_v3
+
+[33mcommit 9eafcc37246803241d14b58fdcb170c4b0b8d75e[m
+Merge: d7da318 c8d26cd
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 22:35:03 2023 +0700
+
+    Merge pull request #24 from KienTMFPL23/kientm
+    
+    create hoadoncho
+
+[33mcommit c8d26cd8b09e9c400c415f9bf93ff28e0847bd79[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 22:30:39 2023 +0700
+
+    create hoadoncho
+
+[33mcommit d7da3183e6bf8c78c6b39b4506c35cfa782256eb[m
+Merge: 218a858 f22d4a2
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 14:14:43 2023 +0700
+
+    Merge pull request #23 from KienTMFPL23/cuongnv
+    
+    update cl
+
+[33mcommit f22d4a2ccfb53f7534f974d6930bea5313de2ab7[m
+Merge: af4314c 218a858
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Tue Oct 3 14:13:38 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit af4314c81bfc2dd944bc64ff520dfdfe00005392[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Tue Oct 3 14:12:32 2023 +0700
+
+    update cl
+
+[33mcommit 218a85844372f26565e77817ddb7f5507ad12d1a[m
+Merge: fc289e2 a1e88c5
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Tue Oct 3 13:10:24 2023 +0700
+
+    Merge pull request #22 from KienTMFPL23/vinhdq
+    
+    Vinhdq
+
+[33mcommit a1e88c5a8be620cced387592a6232a06b1311a31[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 3 12:40:17 2023 +0700
+
+    update_giaodien_banhangtaiquay
+
+[33mcommit e9d76e4e6ac267cf640edff0ef3d8a5d470e6006[m
+Merge: e703a97 fc289e2
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 3 11:31:37 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into vinhdq
+    
+     Conflicts:
+    	src/main/webapp/WEB-INF/views/admin/index.jsp
+
+[33mcommit e703a97e2d23d150160cbd8da21d8f807c428079[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 3 11:26:08 2023 +0700
+
+    template_update
+
+[33mcommit 0db222bf4fba40853f645c581a2ebe49520cdf05[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Tue Oct 3 11:22:59 2023 +0700
+
+    template_v1
+
+[33mcommit fc289e22e828e1fcf4462777309e2b6d29198e1c[m
+Merge: 8ee8896 89ae40f
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Oct 2 22:21:30 2023 +0700
+
+    Merge pull request #20 from KienTMFPL23/vinhdq
+    
+    update_datatable_loaigiay
+
+[33mcommit 8ee889673b15cc889e9212122428decb7cd03ab9[m
+Merge: 68b38c9 fd2ed69
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Oct 2 22:21:10 2023 +0700
+
+    Merge pull request #21 from KienTMFPL23/kientm
+    
+    giao dien ban hang
+
+[33mcommit fd2ed69585108b54d45eebcde0182e1836592459[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Mon Oct 2 22:19:47 2023 +0700
+
+    giao dien ban hang
+
+[33mcommit 89ae40fd7ca9112531036f5bd1207f7d5eb9eb4d[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Mon Oct 2 22:11:57 2023 +0700
+
+    update_datatable_loaigiay
+
+[33mcommit 68b38c974ba15a8b54e0c8781237734040435fa8[m
+Merge: 94066f9 a2b9ff0
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sun Oct 1 13:10:03 2023 +0700
+
+    Merge pull request #19 from KienTMFPL23/cuongnv
+    
+    sua giao dien list chat lieu
+
+[33mcommit 94066f9de46c684a80825d67eae26c02619e30d7[m
+Merge: 564eca2 c7ca009
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sun Oct 1 13:08:24 2023 +0700
+
+    Merge pull request #18 from KienTMFPL23/huyenhtt
+    
+    Huyenhtt
+
+[33mcommit a2b9ff03e229bab799e6b0fbf6ed28f5bccde3fd[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sun Oct 1 12:51:06 2023 +0700
+
+    sua giao dien list chat lieu
+
+[33mcommit c7ca009e948a470a1084f2c2a29325349c16c918[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Oct 1 12:29:45 2023 +0700
+
+    ctsp_update_search
+
+[33mcommit 128d222cd215b369328e5216694898bff3b499bd[m
+Merge: d7dc1b1 33de974
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Oct 1 12:26:28 2023 +0700
+
+    Merge branch 'huyenhtt' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into huyenhtt
+    
+     Conflicts:
+    	src/main/java/com/example/Website_sell_soccer_shoes_bumblebee/controller/ChiTietSanPhamController.java
+    	src/main/java/com/example/Website_sell_soccer_shoes_bumblebee/repository/ChiTietSanPhamRepo.java
+
+[33mcommit d7dc1b11a484e027aa7a26749e7ed1d704765861[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Oct 1 12:09:06 2023 +0700
+
+    update_ctsp
+
+[33mcommit 9765a171d533f6adb579668d860db73939191c3e[m
+Merge: fb47d7b 564eca2
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Oct 1 11:29:22 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into huyenhtt
+    
+     Conflicts:
+    	src/main/resources/application.properties
+    	src/main/webapp/WEB-INF/views/admin/index.jsp
+
+[33mcommit 33de9740926763e14569bffca682924dcc931f15[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Oct 1 11:03:45 2023 +0700
+
+    ctsp v2
+
+[33mcommit fb47d7b31ffcebb643188b036aa3b3a38a5f68d7[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sun Oct 1 10:40:14 2023 +0700
+
+    chi-tiet-san-pham v2
+
+[33mcommit 564eca239c585aab7da84534dfe295099fafa56f[m
+Merge: 21a621d 34aefef
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sun Oct 1 01:04:29 2023 +0700
+
+    Merge pull request #17 from KienTMFPL23/cuongnv
+    
+    update datatable
+
+[33mcommit 21a621d9b7c6d845ca1aaa57d0933bc13af9b0e9[m
+Merge: a08f1b2 0f68a09
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sun Oct 1 01:03:59 2023 +0700
+
+    Merge pull request #16 from KienTMFPL23/namntph25455
+    
+    update giao dien degiay
+
+[33mcommit 34aefeffb77ad1edbf29e130d04be2754e6038af[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sun Oct 1 01:03:19 2023 +0700
+
+    update datatable
+
+[33mcommit 0f68a0967f159d5a113a178798f1192ed9f0afac[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Sun Oct 1 01:02:36 2023 +0700
+
+    update giao dien degiay
+
+[33mcommit 4f51a834f4e6042e53ea71f32665a81261776ea8[m
+Merge: 7fa6e91 a08f1b2
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Sat Sep 30 17:26:09 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into huyenhtt
+
+[33mcommit a08f1b2e61014335043eb9eb65bc60771e47a720[m
+Merge: 652d56c 083de78
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Sep 30 15:28:59 2023 +0700
+
+    Merge pull request #15 from KienTMFPL23/kientm
+    
+    update giao dien san pham
+
+[33mcommit 083de789599a0cd8fd700dbc03634f2138b9d0d4[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Sep 30 15:27:41 2023 +0700
+
+    update giao dien san pham
+
+[33mcommit 652d56c81cd02c3adf8ecd8705c4691261f21c42[m
+Merge: 259496e 0d1acaa
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Sat Sep 30 08:33:19 2023 +0700
+
+    Merge pull request #14 from KienTMFPL23/cuongnv
+    
+    sua giao dien chat lieu
+
+[33mcommit 0d1acaa49186709746aff370117df987b7141c83[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Sat Sep 30 00:00:31 2023 +0700
+
+    sua giao dien chat lieu
+
+[33mcommit 259496e91766dddbe1de58541a9d692d43678ed5[m
+Merge: c6b44da ded1d51
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 22:45:28 2023 +0700
+
+    Merge pull request #13 from KienTMFPL23/namntph25455
+    
+    update crud degiay
+
+[33mcommit ded1d516a0fb3f50de1709899eb44426f6b3c09c[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Fri Sep 29 22:44:06 2023 +0700
+
+    update crud degiay
+
+[33mcommit c6b44daa96b1f473e94c42570f2a52abb14557e8[m
+Merge: df8831a 67d9a34
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 22:43:04 2023 +0700
+
+    Merge pull request #12 from KienTMFPL23/cuongnv
+    
+    update Crud chat lieu
+
+[33mcommit 67d9a34343c9da088f0a4c8919189ce8213b6c81[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Fri Sep 29 22:37:48 2023 +0700
+
+    update Crud chat lieu
+
+[33mcommit 7fa6e91a3e601e3508c1ecbb0d7bf99dcdccc2ca[m
+Merge: ed7b34b df8831a
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Sep 29 22:25:24 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into huyenhtt
+
+[33mcommit df8831a033c2e49e588f25a3615da5ec6da1931e[m
+Merge: 84fa8a1 de1f89d
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 22:24:40 2023 +0700
+
+    Merge pull request #11 from KienTMFPL23/huyenhtt
+    
+    kichco_chitietsanpham
+
+[33mcommit ed7b34b015ee2a428be6b83ade979b44d93450d0[m
+Merge: de1f89d 84fa8a1
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Sep 29 22:20:47 2023 +0700
+
+    Merge branch 'master' of https://github.com/KienTMFPL23/Website_sell_soccer_shoes_bumblebee into huyenhtt
+
+[33mcommit 84fa8a19e0d38667009e1cc0017fe5ec2912497e[m
+Merge: 026aef3 10d1f6c
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 22:20:15 2023 +0700
+
+    Merge pull request #10 from KienTMFPL23/kientm
+    
+    udpate data tables sanpham
+
+[33mcommit 10d1f6cb926d95c756ae831e66288d5d5444efdb[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 22:17:58 2023 +0700
+
+    udpate data tables sanpham
+
+[33mcommit de1f89d1e426bd917236c03bc74356cedcf7186f[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Fri Sep 29 22:11:19 2023 +0700
+
+    kichco_chitietsanpham
+
+[33mcommit 026aef3d60806829239143ed1fdde8dd1355bb24[m
+Merge: 03dc0e5 061977f
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 14:47:21 2023 +0700
+
+    Merge pull request #9 from KienTMFPL23/namntph25455
+    
+    update crud degiay
+
+[33mcommit 061977f12561883f4eec6683208d786651f76d35[m
+Merge: d7bdd13 03dc0e5
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 14:45:57 2023 +0700
+
+    Merge branch 'master' into namntph25455
+
+[33mcommit d7bdd13ba8902b708d7b5ffedc1e6a5820d77ead[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Fri Sep 29 14:40:55 2023 +0700
+
+    update crud degiay
+
+[33mcommit 03dc0e5b2012823c85b7d1e4225147638a78e67b[m
+Merge: 828c4ac 6b9e98e
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 10:18:21 2023 +0700
+
+    Merge pull request #8 from KienTMFPL23/bangncph25477
+    
+    'crudMauSac'
+
+[33mcommit 6b9e98ec3b0783db2249086ef5116b7c2df143fa[m
+Merge: a9b6da8 828c4ac
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 10:17:58 2023 +0700
+
+    Merge branch 'master' into bangncph25477
+
+[33mcommit 828c4ac7e3541a933418823d1228bcccc3908220[m
+Merge: 8c721f8 72daea7
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Fri Sep 29 10:17:16 2023 +0700
+
+    Merge pull request #7 from KienTMFPL23/cuongnv
+    
+    crud chat lieu
+
+[33mcommit a9b6da8784f0dd96d87890951250dca1f342574d[m
+Author: bangncph25477 <113442198+bangnguyen75@users.noreply.github.com>
+Date:   Fri Sep 29 01:09:48 2023 +0700
+
+    'crudMauSac'
+
+[33mcommit 72daea766e49f12bf40483b5ff38405859243e4b[m
+Merge: 1b66cd8 8c721f8
+Author: Cường Nguyễn <114817523+nguyencuong2106@users.noreply.github.com>
+Date:   Fri Sep 29 00:31:37 2023 +0700
+
+    Merge branch 'master' into cuongnv
+
+[33mcommit 1b66cd8d4e018534af36f8112465bcf5646baac9[m
+Author: nguyen cuong <cuongdola2106@gmail.com>
+Date:   Fri Sep 29 00:29:17 2023 +0700
+
+    crud chat lieu
+
+[33mcommit 8c721f8a4495de5a99f9c5a974705e58c513dcb9[m
+Merge: 9d43684 20a2832
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 22:47:11 2023 +0700
+
+    Merge pull request #5 from KienTMFPL23/vinhdq
+    
+    validate-loaigiay
+
+[33mcommit 20a2832151bd487a09fe4016b3f8b5a7fcdf753e[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Sep 28 22:45:52 2023 +0700
+
+    validate-loaigiay
+
+[33mcommit 9d43684d95c18a90469466ba8e2917a18b41270c[m
+Merge: d645d27 5cc1479
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 22:38:02 2023 +0700
+
+    Merge pull request #4 from KienTMFPL23/namntph25455
+    
+    update crud + template admin
+
+[33mcommit 5cc1479b65c55d596a07b0ee3721138a76ee64ff[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Thu Sep 28 22:35:33 2023 +0700
+
+    update crud + template admin
+
+[33mcommit d645d2780624a4358647784666f5f961d6f314fa[m
+Merge: a2c6d23 ea457d2
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 21:41:39 2023 +0700
+
+    Merge pull request #3 from KienTMFPL23/namntph25455
+    
+    crud de giay + template admin
+
+[33mcommit ea457d2ced738fc40838b57826bdc05f962e7d8c[m
+Author: NamNguyenTien10 <nnt271003@gmail.com>
+Date:   Thu Sep 28 21:31:06 2023 +0700
+
+    crud de giay + template admin
+
+[33mcommit a2c6d230b49d85427289f1de0fba28245b746c32[m
+Merge: 353a27b db3b413
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 14:48:56 2023 +0700
+
+    Merge pull request #2 from KienTMFPL23/kientm
+    
+    Kientm
+
+[33mcommit db3b41375d77c9b1bd9ef5da8fe64976c43f10d7[m
+Merge: f136fc4 353a27b
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 14:46:16 2023 +0700
+
+    Merge branch 'master' into kientm
+
+[33mcommit f136fc476eb12262a2e07010c736f027ce1eb59a[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 14:43:33 2023 +0700
+
+    sanpham
+
+[33mcommit 8af2c1ac07d220b9ab75c9025bff77c9edf8af71[m
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 14:37:27 2023 +0700
+
+    crud sanpham
+
+[33mcommit 353a27b988ee56b002c898f95b72cc0e50a4af92[m
+Merge: 7297dcf a678b75
+Author: KienTMFPL23 <117133352+KienTMFPL23@users.noreply.github.com>
+Date:   Thu Sep 28 14:36:37 2023 +0700
+
+    Merge pull request #1 from KienTMFPL23/vinhdq
+    
+    Vinhdq
+
+[33mcommit a678b756aea12cba0d67c2c55b24b20c131321a4[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Thu Sep 28 08:51:13 2023 +0700
+
+    2809
+
+[33mcommit ad4c993dc6ee2a75ba086eab250bd57e5080de73[m
+Author: dqvinh <vinhdqph25527@fpt.edu.vn>
+Date:   Wed Sep 27 23:16:46 2023 +0700
+
+    crudLoaiGiay
+
+[33mcommit 7297dcf7ddbe0e441adacb286737843ada568fb0[m
+Author: huyenhtt02 <huyenhttph25539@fpt.edu.vn>
+Date:   Wed Sep 27 09:55:17 2023 +0700
+
+    v1

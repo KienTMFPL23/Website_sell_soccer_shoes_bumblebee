@@ -439,8 +439,8 @@ public class BanHangTaiQuayController {
 
         document.add(TongCong);
 
-        Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
-        DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
+//        Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
+//        DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
         Paragraph camOn = new Paragraph("CAM ON QUY KHACH DA SU DUNG DICH VU");
         camOn.setAlignment(Paragraph.ALIGN_CENTER);
         ////// insert document
@@ -451,7 +451,7 @@ public class BanHangTaiQuayController {
 //            document.add(Tien);
 
 
-        document.add(DongGanCuoi);
+//        document.add(DongGanCuoi);
         document.add(camOn);
         document.close();
 
