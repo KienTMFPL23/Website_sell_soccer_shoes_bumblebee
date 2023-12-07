@@ -61,19 +61,19 @@
         <nav class="navbar navHoaDon navbar-expand-lg">
             <%-- list hóa đơn chờ--%>
             <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
-                    <div class="hoaDonCho" id="hoaDonStatus_${hd.id}">
-                        <a id="content" class="theHoaDon"
-                           href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
-                           style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
-                        </a>
+                <div class="hoaDonCho" id="hoaDonStatus_${hd.id}">
+                    <a id="content" class="theHoaDon"
+                       href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
+                       style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
+                    </a>
 
-                        <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
-                           onclick="return confirm('Bạn có muốn xóa không ?')"
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
+                       onclick="return confirm('Bạn có muốn xóa không ?')"
 
-                           class="btndele"><img
-                                src="/images_template/deleteHD.png"></a>
+                       class="btndele"><img
+                            src="/images_template/deleteHD.png"></a>
 
-                    </div>
+                </div>
             </c:forEach>
             <div style="margin-left: 20px">
                 <a id="themHoaDon" onclick="showAlertHoaDon(event)"
@@ -321,7 +321,6 @@
                                         <td>
                                             <input type="number" class="form-control"
                                                    min="1"
-                                                   max="5"
                                                    name="soLuong"
                                                    value="${hdct.soLuong}"
                                                    onblur="this.form.submit()"
@@ -446,13 +445,13 @@
                     <div class="dropdown mt-3">
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
-                        <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+                        <button id="btnThanhToan" type="submit" style="display: none" class="btn btn-primary"
 
-                                onclick="return alertThanhToan(event)"
-
-                                style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
+                                onclick="return alertThanhToan(event)">
                             Thanh toán
                         </button>
+                        <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
+                            Thanh toán
                     </div>
                     </form:form>
                 </div>
@@ -485,7 +484,8 @@
                                 <div id="duplicate" style="color: crimson;"></div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="submitFormKhachHang()">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitFormKhachHang()">Submit
+                                </button>
                             </div>
                         </form:form>
                     </div>
@@ -720,9 +720,11 @@
         document.getElementById('tienThua').innerHTML = change - ${sumMoney};
         var soDu = change - ${sumMoney};
         if (soDu >= 0) {
-            document.getElementById('btnThanhToan').disabled = false;
+            document.getElementById('btnThanhToan').style.display = 'block';
+            document.getElementById('btnThanhToan_disable').style.display = 'none';
         } else {
-            document.getElementById('btnThanhToan').disabled = true;
+            document.getElementById('btnThanhToan_disable').style.display = 'block';
+            document.getElementById('btnThanhToan').style.display = 'none';
         }
     }
 </script>
@@ -789,7 +791,7 @@
             });
             setTimeout(function () {
                 return true;
-            },2000);
+            }, 2000);
         } else {
             return false;
         }

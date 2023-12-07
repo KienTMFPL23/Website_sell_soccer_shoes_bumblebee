@@ -54,18 +54,17 @@ public class DoiTraController {
     private List<ChiTietSanPham> listCTSP = null;
     private UUID idHoaDon = null;
 
-    @GetMapping("/bumblebee/doi-hang/list")
-    public String danhSachCho(Model model) {
+    @GetMapping("/bumblebee/doi-hang/list-san-pham-loi")
+    public String danhSachSanPhamLoi(Model model) {
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
-        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
-        getTaiKhoan(model);
+        model.addAttribute("listDoiTra", doiTraChiTietService.findSanPhamLoi());
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-doi-hang")
     public String danhSachHuy(Model model) {
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
-        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
+//        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
         model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra());
         return "/admin/index";
     }
@@ -73,28 +72,45 @@ public class DoiTraController {
     @GetMapping("/bumblebee/doi-hang/list-tra-hang")
     public String danhSachThanhCong(Model model) {
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
-        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
         model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong());
         return "/admin/index";
     }
 
+//    @GetMapping("/bumblebee/don-hang/{maHD}")
+//    public String chiTietDonHang(Model model, @PathVariable("maHD") String maHoaDon) {
+//        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
+//        List<HoaDonChiTiet> listSPMuonDoi = hoaDonChiTietService.listHDCTByMaHD(maHoaDon);
+//        model.addAttribute("listHDCT", listSPMuonDoi);
+//        model.addAttribute("listDoiTraCT",doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
+//
+//        getTaiKhoan(model);
+//        return "/admin/index";
+//    }
+
     @GetMapping("/bumblebee/don-hang/{maHD}")
-    public String chiTietDonHang(Model model, @PathVariable("maHD") String maHoaDon) {
-        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-        List<HoaDonChiTiet> listSPMuonDoi = hoaDonChiTietService.listHDCTByMaHD(maHoaDon);
-        model.addAttribute("listHDCT", listSPMuonDoi);
-        model.addAttribute("listDoiTraCT",doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
-
-        getTaiKhoan(model);
-        return "/admin/index";
-    }
-
-    @GetMapping("/bumblebee/don-hang/searchByQr/{maHD}")
     public String searchHoaDon(Model model, @PathVariable("maHD") String maHD) {
-        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-        List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(maHD);
-        model.addAttribute("listHDCT", lstHoaDonCT);
-        return "/admin/index";
+        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
+        getTaiKhoan(model);
+        List<HoaDon> listHoaDonDuDK = hoaDonService.danhSachHDDuDK();
+        if (listHoaDonDuDK != null){
+            for (HoaDon hd : listHoaDonDuDK){
+                if (hd.getMaHoaDon().equals(maHD)){
+                    HoaDon hoaDon  = hoaDonService.searchHoaDon(maHD);
+                    model.addAttribute("hoaDonMua",hoaDon);
+                    List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(maHD);
+                    model.addAttribute("listHDCT", lstHoaDonCT);
+                    Double sumMoney = hoaDonChiTietService.getTotalMoney(lstHoaDonCT);
+                    model.addAttribute("sumMoney",sumMoney);
+                    this.maHoaDon = maHD;
+                    return "/admin/index";
+                }
+            }
+            model.addAttribute("notFound","Khong tim thay");
+            return "redirect:/bumblebee/doi-hang/list-tra-hang";
+        }else {
+            model.addAttribute("notFound","Khong tim thay");
+            return "redirect:/bumblebee/doi-hang/list-tra-hang";
+        }
     }
 
     @GetMapping("/bumblebee/don-hang/list-sp/{id}")
@@ -307,5 +323,17 @@ public class DoiTraController {
     public String huyDoiTra() {
         doiTraService.huyDoiTra(this.idDoiTra);
         return "redirect:/bumblebee/doi-hang/list";
+    }
+
+    @RequestMapping("/bumblebee/doi-hang/chi-tiet/{id}")
+    public String chiTietDoitra(Model model,@PathVariable("id")UUID id) {
+        model.addAttribute("view", "../doi-tra/detail-doi-tra.jsp");
+        List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+        List<DoiTraChiTiet> lstDoiTraCT = doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
+        HoaDon hoaDon = hoaDonService.getOne(id);
+        model.addAttribute("hoaDon",hoaDon);
+        model.addAttribute("listHoaDonCT",lstHoaDonCT);
+        model.addAttribute("listDoiTraCT",lstDoiTraCT);
+        return "admin/index";
     }
 }
