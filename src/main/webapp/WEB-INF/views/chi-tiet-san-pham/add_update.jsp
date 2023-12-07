@@ -4,6 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </br>
 <style>
@@ -171,10 +172,12 @@
             </div>
         </div>
 
+        <input type="hidden" id="submitStatus" name="submitStatus" value="${submitStatus}">
+
         <%--    22                onclick="return confirm('Bạn có chắc muốn thực hiện ?');"--%>
         <div class="text-center" style="padding-bottom: 20px">
             <button type="submit" id="but" class="btn btn-success"
-                    onclick="submitForm()"
+                    onclick=" submitForm()"
             >
                 Submit
             </button>
@@ -437,12 +440,110 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css"/>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%--<script>--%>
+<%--    $(document).ready(function () {--%>
+<%--        $("#sanPhamForm").validate({--%>
+<%--            rules: {--%>
+<%--                giaBan: {--%>
+<%--                    required: true,--%>
+<%--                    min: 1--%>
+<%--                },--%>
+<%--                soLuong: {--%>
+<%--                    required: true,--%>
+<%--                    min: 1--%>
+<%--                },--%>
+<%--                moTaCT: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                trangThai: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                loaiGiay: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                kichCo: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                mauSac: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                chatLieu: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                deGiay: {--%>
+<%--                    required: true--%>
+<%--                }--%>
+<%--            },--%>
+<%--            messages: {--%>
+<%--                giaBan: {--%>
+<%--                    required: "Vui lòng nhập giá bán",--%>
+<%--                    min: "Giá bán phải lớn hơn hoặc bằng 1"--%>
+<%--                },--%>
+<%--                soLuong: {--%>
+<%--                    required: "Vui lòng nhập số lượng",--%>
+<%--                    min: "Số lượng phải lớn hơn hoặc bằng 1"--%>
+<%--                },--%>
+<%--                moTaCT: {--%>
+<%--                    required: "Vui lòng nhập mô tả"--%>
+<%--                },--%>
+<%--                trangThai: {--%>
+<%--                    required: "Vui lòng chọn trạng thái"--%>
+<%--                },--%>
+<%--                loaiGiay: {--%>
+<%--                    required: "Vui lòng chọn loại giầy"--%>
+<%--                },--%>
+<%--                kichCo: {--%>
+<%--                    required: "Vui lòng chọn kích cỡ"--%>
+<%--                },--%>
+<%--                mauSac: {--%>
+<%--                    required: "Vui lòng chọn màu sắc"--%>
+<%--                },--%>
+<%--                chatLieu: {--%>
+<%--                    required: "Vui lòng chọn chất liệu"--%>
+<%--                },--%>
+<%--                deGiay: {--%>
+<%--                    required: "Vui lòng chọn đế giầy"--%>
+<%--                }--%>
+<%--            },--%>
+<%--            submitHandler: function (form) {--%>
+<%--                submitForm();--%>
+<%--            }--%>
+<%--        });--%>
 
-<%--    function submitForm() {--%>
-<%--        alert("Thêm thành công !")--%>
-<%--    }--%>
+<%--        function submitForm() {--%>
+
+<%--            $.ajax({--%>
+<%--                type: "POST",--%>
+<%--                url: "${action}",--%>
+<%--                data: $("#sanPhamForm").serialize(),--%>
+<%--                success: function (data) {--%>
+<%--                    Swal.fire({--%>
+<%--                        position: "center",--%>
+<%--                        icon: "success",--%>
+<%--                        title: "Your data has been saved",--%>
+<%--                        showConfirmButton: false,--%>
+<%--                        timer: 3000--%>
+<%--                    }).then(() => {--%>
+<%--                        var redirectUrl = "${redirectUrl}";--%>
+<%--                        window.location.href = redirectUrl;--%>
+<%--                    });--%>
+<%--                },--%>
+<%--                error: function (error) {--%>
+<%--                    console.log("Error occurred:", error);--%>
+
+<%--                    // Hiển thị thông báo lỗi cho người dùng--%>
+<%--                    Swal.fire({--%>
+<%--                        title: 'Lỗi!',--%>
+<%--                        text: 'Đã xảy ra lỗi. Vui lòng thử lại sau.',--%>
+<%--                        icon: 'error',--%>
+<%--                        showConfirmButton: true--%>
+<%--                    });--%>
+<%--                }--%>
+<%--            });--%>
+<%--        }--%>
+
+<%--    });--%>
 <%--</script>--%>
 <script>
     function clearErrors() {

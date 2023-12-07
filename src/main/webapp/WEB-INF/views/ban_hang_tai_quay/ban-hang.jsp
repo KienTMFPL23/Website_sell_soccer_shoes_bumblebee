@@ -447,7 +447,9 @@
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button id="btnThanhToan" type="submit" style="display: none" class="btn btn-primary"
 
+
                                 onclick="return alertThanhToan(event)">
+
                             Thanh toán
                         </button>
                         <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
@@ -556,20 +558,86 @@
         $("#phoneNumber").select2();
     });
 </script>
+<script>
+
+</script>
+<script>
+    // Đặt giá trị idHoaDon
+    var idHoaDon = "${idHoaDon}";
+    function alertThanhToan(event) {
+        var result = confirm('Bạn có muốn thanh toán không ??');
+        if (result.valueOf()) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thanh toán thành công",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function () {
+                return true;
+            }, 2000);
+        } else {
+            return false;
+        }
+    }
+    function taivepdf() {
+        // alert(idHoaDon);
+        var link = document.createElement('a');
+        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
+        link.target = '_blank';
+        link.download = 'hoadon_'+ idHoaDon + '.pdf';
+        document.body.appendChild(link);
+        // Yêu cầu sự tương tác người dùng
+        link.click();
+        document.body.removeChild(link);
+    }
+    var ThanhToanButton = document.getElementById('btnThanhToan');
+    ThanhToanButton.onclick = function() {
+        taivepdf();
+        alertThanhToan();
+    };
+</script>
+
+<%--<script>--%>
+<%--    function downloadHoaDon() {--%>
+<%--        // Thực hiện yêu cầu tải về sử dụng XMLHttpRequest--%>
+<%--        var xhr = new XMLHttpRequest();--%>
+<%--        var url_for_download = `/bumblebee/ban-hang-tai-quay/download-pdf/{idHoaDon}`; // Thay thế bằng URL thích hợp--%>
+
+<%--        xhr.open('GET', url_for_download, true);--%>
+<%--        xhr.responseType = 'blob';--%>
+
+<%--        xhr.onload = function () {--%>
+<%--            // Tạo một đường link ảo để tải về--%>
+<%--            var blob = new Blob([xhr.response], {type: 'application/pdf'});--%>
+<%--            var link = document.createElement('a');--%>
+
+<%--            link.href = window.URL.createObjectURL(blob);--%>
+<%--            link.download = 'hoadon_${idHoaDon}.pdf'; // Thay thế bằng tên file thích hợp--%>
+
+<%--            // Kích hoạt sự kiện click trên đường link ảo để tải về--%>
+<%--            link.click();--%>
+<%--        };--%>
+
+<%--        // Gửi yêu cầu--%>
+<%--        xhr.send();--%>
+<%--    }--%>
+<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script>
-    function downloadComplete() {
+<%--<script>--%>
+<%--    function downloadComplete() {--%>
 
-        window.onload = function () {
+<%--        window.onload = function () {--%>
 
-            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
-        };
-        return true;
-    }
-</script>
+<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
+<%--        };--%>
+<%--        return true;--%>
+<%--    }--%>
+<%--</script>--%>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
@@ -704,16 +772,16 @@
 <script src="../../../js/ban_hang_tai_quay/them-khach-hang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    function downloadComplete() {
+<%--<script>--%>
+<%--    function downloadComplete() {--%>
 
-        window.onload = function () {
+<%--        window.onload = function () {--%>
 
-            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
-        };
-        return true;
-    }
-</script>
+<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
+<%--        };--%>
+<%--        return true;--%>
+<%--    }--%>
+<%--</script>--%>
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;
@@ -778,6 +846,7 @@
     }
 
 </script>
+
 <script>
     function alertThanhToan(event) {
         var result = confirm('Bạn có muốn thanh toán không ??');
@@ -797,6 +866,7 @@
         }
     }
 </script>
+
 <script>
     function changeColor(id) {
         if (id === ${idHDCT}) {

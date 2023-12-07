@@ -244,11 +244,11 @@ public class HomeController {
         return "template_home/index";
     }
 
-    @DeleteMapping("/bumblebee/remove-ghct/{id}")
-    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
-        gioHangChiTietRepo.deleteById(id);
-        return ResponseEntity.ok("Record deleted successfully");
-    }
+//    @DeleteMapping("/bumblebee/remove-ghct/{id}")
+//    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
+//        gioHangChiTietRepo.deleteById(id);
+//        return ResponseEntity.ok("Record deleted successfully");
+//    }
 
     @PostMapping("/bumblebee/add-to-cart")
     public ResponseEntity<String> addCart(Model model,

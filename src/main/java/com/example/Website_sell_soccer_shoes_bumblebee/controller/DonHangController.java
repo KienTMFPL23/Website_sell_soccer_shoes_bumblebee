@@ -566,6 +566,12 @@ public class DonHangController {
                 hoaDonService.updateHoaDon(id, 8, hoaDonDB);
                 hoaDonDB.setGhiChu(ghiChu);
                 hoaDonRepository.save(hoaDonDB);
+                List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+                if (listHoaDonCT.size() != 0) {
+                    for (HoaDonChiTiet hdct : listHoaDonCT) {
+                        chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
+                    }
+                }
             }
             return "redirect:/don-hang/list-huy";
         } else {
