@@ -276,9 +276,9 @@ public class BanHangTaiQuayController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
         Integer soLuongTon = chiTietSanPham.getSoLuong() + hoaDonChiTiet.getSoLuong();
-        if (soLuong > 5) {
-            hoaDonChiTiet.setSoLuong(5);
-            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - 5);
+        if (soLuong > soLuongTon) {
+            hoaDonChiTiet.setSoLuong(soLuongTon);
+            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), 0);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
             return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
         }

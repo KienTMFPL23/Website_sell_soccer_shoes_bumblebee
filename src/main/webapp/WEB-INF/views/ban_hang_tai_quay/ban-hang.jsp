@@ -321,7 +321,6 @@
                                         <td>
                                             <input type="number" class="form-control"
                                                    min="1"
-                                                   max="5"
                                                    name="soLuong"
                                                    value="${hdct.soLuong}"
                                                    onblur="this.form.submit()"
@@ -446,13 +445,15 @@
                     <div class="dropdown mt-3">
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
-                        <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+                        <button id="btnThanhToan" type="submit" style="display: none" class="btn btn-primary"
 
-<%--                                onclick="return alertThanhToan(event)"--%>
 
-                                style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
+                                onclick="return alertThanhToan(event)">
+
                             Thanh toán
                         </button>
+                        <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
+                            Thanh toán
                     </div>
                     </form:form>
                 </div>
@@ -787,9 +788,11 @@
         document.getElementById('tienThua').innerHTML = change - ${sumMoney};
         var soDu = change - ${sumMoney};
         if (soDu >= 0) {
-            document.getElementById('btnThanhToan').disabled = false;
+            document.getElementById('btnThanhToan').style.display = 'block';
+            document.getElementById('btnThanhToan_disable').style.display = 'none';
         } else {
-            document.getElementById('btnThanhToan').disabled = true;
+            document.getElementById('btnThanhToan_disable').style.display = 'block';
+            document.getElementById('btnThanhToan').style.display = 'none';
         }
     }
 </script>
@@ -842,6 +845,26 @@
 
     }
 
+</script>
+
+<script>
+    function alertThanhToan(event) {
+        var result = confirm('Bạn có muốn thanh toán không ??');
+        if (result.valueOf()) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thanh toán thành công",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function () {
+                return true;
+            }, 2000);
+        } else {
+            return false;
+        }
+    }
 </script>
 
 <script>

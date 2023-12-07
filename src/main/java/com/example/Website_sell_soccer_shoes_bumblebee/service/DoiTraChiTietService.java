@@ -19,4 +19,8 @@ public interface DoiTraChiTietService {
     DoiTraChiTiet getDoiTraCT(UUID idDoiTra,UUID idCTSP);
 
     List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon);
+
+    List<DoiTraChiTiet> listDoiTraCTByIdHoaDon(UUID idHoaDon);
+
+    List<DoiTraChiTiet> findSanPhamLoi();
 }
