@@ -46,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -356,6 +357,10 @@ public class BanHangTaiQuayController {
         Document document = new Document();
         PdfWriter.getInstance(document, baos);
         document.open();
+        // Sử dụng font mặc định của iText với bảng mã Unicode
+        Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+
+
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
         List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
 
@@ -364,7 +369,7 @@ public class BanHangTaiQuayController {
         BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
         com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-        qrCodeImage.setAbsolutePosition(400, 400);
+        qrCodeImage.setAbsolutePosition(400, 300);
 
         document.add(qrCodeImage);
 
@@ -380,19 +385,29 @@ public class BanHangTaiQuayController {
         document.add(khoangTrang);
         Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
         //// Table
-        Paragraph MaHoaDon = new Paragraph("Ma Hoa Don     :    " + hoaDonThanhToan.getMaHoaDon());
+        Paragraph MaHoaDon = new Paragraph("Mã hoá đơn      :    " + hoaDonThanhToan.getMaHoaDon(), titleFont);
         Paragraph ma = new Paragraph();
 
-        Paragraph Ngay = new Paragraph("Ngay Mua    :    " + hoaDonThanhToan.getNgayTao());
+        Paragraph Ngay = new Paragraph("Ngày Mua    :    " + hoaDonThanhToan.getNgayTao(), titleFont);
 
         document.add(MaHoaDon);
         document.add(Ngay);
 
 
-        Paragraph tennhanvien = new Paragraph("Nhan vien    :    " + nameNhanVien);
+        Paragraph tennhanvien = new Paragraph("Nhân viên    :    " + nameNhanVien, titleFont);
         document.add(tennhanvien);
-        Paragraph tenKhac = new Paragraph("Khach hang    :    " + hoaDonThanhToan.getTenNguoiNhan());
-        document.add(tenKhac);
+        KhachHang khachHang = hoaDonThanhToan.getKhachHang();
+        if (khachHang != null) {
+            // Tiếp tục xử lý chỉ khi khách hàng không phải là null
+            String tenKhachHang = khachHang.getTen();
+            Paragraph tenKhach = new Paragraph("Khách hàng    :    " + tenKhachHang, titleFont);
+            document.add(tenKhach);
+        } else {
+            // Xử lý khi khách hàng là null
+            Paragraph tenKhach = new Paragraph("Khách hàng    :     Khách vãn lai", titleFont);
+            document.add(tenKhach);
+        }
+
 
 //            table.addCell(MaHoaDon);
 //            table.addCell(Ma);
@@ -403,24 +418,26 @@ public class BanHangTaiQuayController {
         khoangtrang2.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(khoangtrang2);
         ////
-        PdfPTable productTable1 = new PdfPTable(4);
-        productTable1.setWidthPercentage(100);
-        productTable1.addCell(new Paragraph("Ten san pham"));
-        productTable1.addCell(new Paragraph("So luong"));
-        productTable1.addCell(new Paragraph("Gia tien"));
-        productTable1.addCell(new Paragraph("Thanh tien"));
-        document.add(productTable1);
-        for (HoaDonChiTiet hoaDon1 : listHoaDon1) {
-            PdfPTable productTable = new PdfPTable(4);
-            productTable.setWidthPercentage(100);
-            productTable.addCell(hoaDon1.getChiTietSanPham().getSanPham().getTenSanPham());
-            productTable.addCell(String.valueOf(hoaDon1.getSoLuong()));
-            productTable.addCell(String.valueOf(hoaDon1.getDonGia()));
-            productTable.addCell(String.valueOf(hoaDon1.getDonGia() * hoaDon1.getSoLuong()));
+        PdfPTable productTable = new PdfPTable(4);
+        productTable.setWidthPercentage(100);
+        float[] columnWidths = {3f, 1f, 2f, 2f};
+        productTable.setWidths(columnWidths);
 
-            document.add(productTable);
+        productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
+        productTable.addCell(createTableCell("Số lượng", titleFont));
+        productTable.addCell(createTableCell("Giá tiền", titleFont));
+        productTable.addCell(createTableCell("Thành tiền", titleFont));
 
+        List<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
+        for (HoaDonChiTiet hoaDonChiTiet : listHoaDonChiTiet) {
+            productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont));
+            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
+            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
+            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));
         }
+
+        document.add(productTable);
+
 
 
         Paragraph dong = new Paragraph("==========================================================================");
@@ -441,7 +458,7 @@ public class BanHangTaiQuayController {
 
 //        Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
 //        DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
-        Paragraph camOn = new Paragraph("CAM ON QUY KHACH DA SU DUNG DICH VU");
+        Paragraph camOn = new Paragraph("CẢM ƠN QUÝ KHÁCH ĐÃ SỬ DỤNG DỊCH VỤ ",titleFont);
         camOn.setAlignment(Paragraph.ALIGN_CENTER);
         ////// insert document
 
@@ -453,17 +470,21 @@ public class BanHangTaiQuayController {
 
 //        document.add(DongGanCuoi);
         document.add(camOn);
-        document.close();
-
-//         Thiết lập phản hồi để kích hoạt tải về
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "hoadon_" + idHoaDon + ".pdf");
+        headers.setContentDispositionFormData("attachment", "hoadon_" + hoaDonThanhToan.getMaHoaDon() + ".pdf");
 
-
-        return new ResponseEntity<>(baos.toByteArray(), HttpStatus.OK);
-
+        // Trả về dữ liệu PDF
+        document.close();
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
     }
+        private PdfPCell createTableCell(String text, Font font) {
+            PdfPCell cell = new PdfPCell(new Phrase(text, font));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            return cell;
+        }
+
 
     //    @RequestMapping("/them-khach-hang")
 //    public String themKhachHang(Model model, @Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
