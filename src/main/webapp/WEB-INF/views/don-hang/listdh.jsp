@@ -18,6 +18,8 @@
         crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVl6uA7z3IQjzbZgJGwL4" crossorigin="anonymous">
+
 <style>
     button {
         border: none;
@@ -246,8 +248,12 @@
                                 <a id="content7" type="submit" class="btn btn-secondary" data-bs-toggle="modal"
                                    data-bs-target="#${hd.id}" style="border-radius: 20px">Xem
                                 </a>
+                                <a href="/don-hang/print/${hd.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
+                                    <i class="fas fa-print"></i> In hoá đơn
+                                </a>
 
-                                    <%--        trạng thái chờ xác nhận--%>
+
+                            <%--        trạng thái chờ xác nhận--%>
                                 <c:if test="${hd.trangThai== 1 }">
                                     <c:if test="${hd.loaiHoaDon==0}">
                                         <%--                                        href="/don-hang/update-xac-nhan/${hd.id}"--%>

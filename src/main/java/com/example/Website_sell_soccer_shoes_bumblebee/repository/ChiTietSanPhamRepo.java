@@ -17,7 +17,9 @@ import java.util.UUID;
 
 @Repository
 public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> {
-
+    boolean existsBySanPhamAndMauSacAndLoaiGiayAndKichCoAndChatLieuAndDeGiay(
+            SanPham sanPham, MauSac mauSac, LoaiGiay loaiGiay, KichCo kichCo, ChatLieu chatLieu, DeGiay deGiay
+    );
 
     @Query(value = "SELECT ctsp FROM ChiTietSanPham ctsp WHERE  ctsp.sanPham.tenSanPham like %?1%")
     Page<ChiTietSanPham> searchCTSP(String keyword, Pageable pageable);
