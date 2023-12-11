@@ -1,6 +1,8 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTra;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,10 +22,10 @@ public interface DoiTraRepository extends JpaRepository<DoiTra, UUID> {
     String maxMaDoiTra();
 
     @Query("select dt from DoiTra dt where dt.trangThai = 2")
-    List<DoiTra> getListDoiTraThanhCong();
+    Page<DoiTra> getListDoiTraThanhCong(Pageable pageable);
 
     @Query("select dt from DoiTra dt where dt.trangThai = 1")
-    List<DoiTra> getListHuyDoiTra();
+    Page<DoiTra> getListHuyDoiTra(Pageable pageable);
 
     @Query("select dt from DoiTra dt where dt.trangThai = 0")
     List<DoiTra> getListChoXacNhan();

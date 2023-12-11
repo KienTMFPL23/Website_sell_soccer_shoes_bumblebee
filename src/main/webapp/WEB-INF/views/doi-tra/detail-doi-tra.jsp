@@ -37,7 +37,7 @@
                 </tr>
             </c:forEach>
             <tr>
-              <td colspan="5"><strong>Tổng tiền :</strong></td>
+                <td colspan="5"><strong>Tổng tiền :</strong></td>
             </tr>
             </tbody>
         </table>
@@ -83,14 +83,11 @@
     <div class="infor-san-pham-mua">
         <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
     </div>
+
+</div>
+
 </div>
 <a href="/bumblebee/doi-hang/print/${hoaDon.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
     <i class="fas fa-print"></i> In hoá đơn
 </a>
-<%--<button onclick="printInvoice()">In Hóa Đơn</button>--%>
-<%--<script>--%>
-<%--    function printInvoice() {--%>
-<%--        // Kích hoạt lệnh in trang hiện tại--%>
-<%--        window.print();--%>
-<%--    }--%>
-<%--</script>--%>
+

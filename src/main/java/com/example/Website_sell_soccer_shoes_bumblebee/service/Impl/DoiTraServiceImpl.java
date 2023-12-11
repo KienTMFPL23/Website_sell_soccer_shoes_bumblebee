@@ -4,6 +4,9 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTra;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.DoiTraRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.DoiTraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,13 +44,16 @@ public class DoiTraServiceImpl implements DoiTraService {
     }
 
     @Override
-    public List<DoiTra> listDoiTraThanhCong() {
-        return doiTraRepo.getListDoiTraThanhCong();
+    public Page<DoiTra> listDoiTraThanhCong(Integer page)
+    {
+        Pageable pageable = PageRequest.of(page,5);
+        return doiTraRepo.getListDoiTraThanhCong(pageable);
     }
 
     @Override
-    public List<DoiTra> listHuyDoiTra() {
-        return doiTraRepo.getListHuyDoiTra();
+    public Page<DoiTra> listHuyDoiTra(Integer page) {
+        Pageable pageable = PageRequest.of(page,5);
+        return doiTraRepo.getListHuyDoiTra(pageable);
     }
 
     @Override
