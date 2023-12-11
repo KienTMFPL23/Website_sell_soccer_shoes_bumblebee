@@ -22,17 +22,17 @@ public class ChatLieu {
     private UUID id;
 
     @Column(name = "MaChatLieu")
-    @NotBlank(message = "không để trống")
-    @Length(min = 4,max = 50, message = "Không dưới 5 kí tự và quá 50 kí tự")
+    @NotBlank(message = "* không để trống")
+    @Length(min = 4,max = 50, message = "* Không dưới 5 kí tự và quá 50 kí tự")
     private String ma;
 
     @Column(name = "TenChatLieu")
-    @NotBlank(message = "không để trống")
-    @Length(max = 100, message = "Không quá 100 kí tự")
+    @NotBlank(message = "* không để trống")
+    @Length(max = 100, message = "* Không quá 100 kí tự")
     private String ten;
 
     @Column(name = "TrangThai")
-    @NotNull(message = "Trạng thái không được để trống")
+    @NotNull(message = "* Trạng thái không được để trống")
     private Integer trangThai;
 
 }

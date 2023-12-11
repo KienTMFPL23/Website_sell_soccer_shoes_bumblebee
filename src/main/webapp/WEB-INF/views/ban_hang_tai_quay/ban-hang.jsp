@@ -586,7 +586,7 @@
         var link = document.createElement('a');
         link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
         link.target = '_blank';
-        link.download = 'hoadon_'+ idHoaDon + '.pdf';
+        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';
         document.body.appendChild(link);
         // Yêu cầu sự tương tác người dùng
         link.click();
@@ -594,8 +594,9 @@
     }
     var ThanhToanButton = document.getElementById('btnThanhToan');
     ThanhToanButton.onclick = function() {
-        taivepdf();
         alertThanhToan();
+        taivepdf();
+
     };
 </script>
 

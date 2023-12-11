@@ -97,6 +97,7 @@
                         <td>${dt.hoaDon.tenNguoiNhan}</td>
                         <td>
                             <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
+
                         </td>
                     </tr>
                 </c:forEach>

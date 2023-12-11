@@ -4,6 +4,10 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.Impl.HoaDonServiceImpl;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +20,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.List;
 
 @Controller
 public class DonHangController {
@@ -233,7 +240,7 @@ public class DonHangController {
         if (page < 0) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         String donHang = "all";
         model.addAttribute("donHang", donHang);
 
@@ -433,7 +440,7 @@ public class DonHangController {
                                 @RequestParam(name = "donHang", required = false) String donHang,
                                 @ModelAttribute("searchForm") DonHangController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 50);
+        Pageable pageable = PageRequest.of(page, 10);
 
         if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.fromDate.equals(searchForm.toDate)) {
             LocalDate localEndDate = searchForm.toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -444,12 +451,11 @@ public class DonHangController {
         Page<HoaDon> listS = null;
         if (" ".equals(donHang)) {
             model.addAttribute("mess", "Hiện không có đơn hàng. Vui lòng thử lại !");
-        }else if("all".equals(donHang)){
+        } else if ("all".equals(donHang)) {
             listS = hoaDonRepository.searchHDByNgayTaoAndLoaiDon(searchForm.fromDate, searchForm.toDate, searchForm.keyword, pageable);
-        }
-        else {
+        } else {
             // Use the same search method for all states
-            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, searchForm.keyword,getTrangThaiLoaiDonId(donHang), pageable);
+            listS = this.hoaDonService.searchHDByNgayTaoAndLoaiDonTT(searchForm.fromDate, searchForm.toDate, searchForm.keyword, getTrangThaiLoaiDonId(donHang), pageable);
         }
 
         model.addAttribute("page", listS);
@@ -499,7 +505,7 @@ public class DonHangController {
                                        @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
 
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
 
@@ -508,7 +514,7 @@ public class DonHangController {
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
             hoaDonService.updateHoaDon(id, 2, hoaDonDB);
-            if (ghiChu !=null){
+            if (ghiChu != null) {
                 hoaDonDB.setGhiChu(ghiChu);
                 hoaDonService.saveHoaDon(hoaDonDB);
             }
@@ -527,7 +533,7 @@ public class DonHangController {
                                    @RequestParam(value = "ghiChu", required = false) String ghiChu,
                                    @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
@@ -535,7 +541,7 @@ public class DonHangController {
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
             hoaDonService.updateHoaDon(id, 4, hoaDonDB);
-            if (ghiChu !=null){
+            if (ghiChu != null) {
                 hoaDonDB.setGhiChu(ghiChu);
                 hoaDonService.saveHoaDon(hoaDonDB);
             }
@@ -553,7 +559,7 @@ public class DonHangController {
                              @RequestParam(value = "ghiChu", required = false) String ghiChu,
                              @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
@@ -572,6 +578,7 @@ public class DonHangController {
                         chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
                     }
                 }
+
             }
             return "redirect:/don-hang/list-huy";
         } else {
@@ -590,7 +597,7 @@ public class DonHangController {
                                @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                                @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -612,7 +619,7 @@ public class DonHangController {
                           @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                           @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
@@ -633,7 +640,7 @@ public class DonHangController {
                            @RequestParam(value = "ghiChu", required = false) String ghiChu,
                            @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -660,7 +667,7 @@ public class DonHangController {
                             @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                             @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -753,6 +760,7 @@ public class DonHangController {
         }
         return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
     }
+
     @RequestMapping("/don-hang/delete-hdct/{id}")
     public String deleteDonHangCT(Model model, @PathVariable("id") UUID id) {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
@@ -762,4 +770,139 @@ public class DonHangController {
         return "redirect:/don-hang/xem-don-hang/" + this.idHoaDon;
     }
 
+    @RequestMapping("/don-hang/print/{id}")
+    public void xuatFilePdf(HttpServletResponse response, Model model, @PathVariable("id") UUID id, @ModelAttribute("hoaDon") HoaDon hoaDon) throws ParseException {
+
+        HoaDon hoaDonThanhToan = hoaDonService.getOne(id);
+
+        List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
+        try{
+            Document document = new Document();
+            document.setPageSize(PageSize.A4);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PdfWriter writer = PdfWriter.getInstance(document, baos);
+            PdfWriter.getInstance(document, baos);
+
+
+
+            ////
+            document.open();
+
+            String qrCodeData = hoaDonThanhToan.getMaHoaDon();
+            BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
+            com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
+//
+            qrCodeImage.setAbsolutePosition(400, 190);
+
+            document.add(qrCodeImage);
+            Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
+            ////////////// hoá đơn
+            Paragraph HoaDon = new Paragraph(" BUMBLEBEE SHOES" + "\n", largeFont);
+
+            HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(HoaDon);
+            Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph tieuDeThongTin = new Paragraph("Thông tin đơn hàng ", titleFont);
+            document.add(tieuDeThongTin);
+//           khoảng trắng
+            Paragraph KhoangTrang1 = new Paragraph("                                                         ");
+            document.add(KhoangTrang1);
+//      Mã đơn hàng
+            Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph maDonHang = new Paragraph("Mã Đơn hàng        :        " + hoaDonThanhToan.getMaHoaDon(), titleFont);
+            document.add(maDonHang);
+            if(hoaDonThanhToan.getLoaiHoaDon()==1){
+                Paragraph loaiHoaDon = new Paragraph("Loại Hoá Đơn        :           Bán tại quầy   " ,titleFont);
+                document.add(loaiHoaDon);
+            }else{
+                Paragraph loaiHoaDon = new Paragraph("Loại Hoá Đơn        :           Bán online   " ,titleFont);
+                document.add(loaiHoaDon);
+            }
+            Paragraph KhoangTrang = new Paragraph("                                                         ");
+            document.add(KhoangTrang);
+            Paragraph tenKhachHang = null;
+            KhachHang khachHang = hoaDonThanhToan.getKhachHang();
+            if (khachHang != null) {
+                tenKhachHang = new Paragraph("Tên Khách Hàng     :         " + khachHang.getTen(), titleFont);
+            } else {
+                tenKhachHang = new Paragraph("Tên Khách Hàng     :         Khách hàng vãn lai", titleFont);
+            }
+
+            document.add(tenKhachHang);
+
+            Paragraph sdt = new Paragraph("Số Điện Thoại       :         " + hoaDonThanhToan.getSdt(), titleFont);
+            document.add(sdt);
+            if(hoaDonThanhToan.getDiaChiShip()!=null){
+                Paragraph diaChi = new Paragraph("Địa Chỉ               :         " + hoaDonThanhToan.getDiaChiShip(), titleFont);
+                document.add(diaChi);
+            }else{
+                Paragraph diaChi = new Paragraph("Địa Chỉ               :         " + "Khách mua tại quầy ", titleFont);
+                document.add(diaChi);
+            }
+
+            PdfContentByte cb = writer.getDirectContent();
+            cb.setColorStroke(BaseColor.PINK); // Set the line color to pink
+            cb.moveTo(50, 300); // Starting point of the line (x, y)
+            cb.lineTo(550, 300); // Ending point of the line (x, y)
+            cb.setLineWidth(2); // Set the line width
+            cb.stroke();
+            Paragraph thongTinSanPham = new Paragraph("Thông tin sản phẩm ", titleFont);
+            document.add(thongTinSanPham);
+            Paragraph KhoangTrang2 = new Paragraph("                                                         ");
+            document.add(KhoangTrang2);
+//        bảng sản phẩm
+            PdfPTable productTable = new PdfPTable(4);
+            productTable.setWidthPercentage(100);
+            float[] columnWidths = {3f, 1f, 2f, 2f};
+            productTable.setWidths(columnWidths);
+
+            productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
+            productTable.addCell(createTableCell("Số lượng", titleFont));
+            productTable.addCell(createTableCell("Giá tiền", titleFont));
+            productTable.addCell(createTableCell("Thành tiền", titleFont));
+            double tongTien = 0.0;
+            List<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
+            for (HoaDonChiTiet hoaDonChiTiet : listHoaDonChiTiet) {
+                productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));
+                double giaTriSanPham = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong();
+                tongTien += giaTriSanPham;
+            }
+
+            document.add(productTable);
+            Paragraph dong1 = new Paragraph("==========================================================================");
+            document.add(dong1);
+            Paragraph TongCong = new Paragraph("Tổng Hoá Đơn       :    " + tongTien + "VNĐ", titleFont);
+
+            document.add(TongCong);
+            document.close();
+//
+//
+
+            byte[] pdfBytes = baos.toByteArray();
+            response.setContentType("application/pdf");
+            response.setContentLength(pdfBytes.length);
+
+            // Thay đổi giá trị "inline" thành "attachment"
+            // Thay đổi giá trị "inline" thành "attachment"
+            response.setHeader("Content-Disposition", "attachment; filename=" + hoaDonThanhToan.getMaHoaDon() + ".pdf");
+
+
+            response.getOutputStream().write(pdfBytes);
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+//
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+
+    private PdfPCell createTableCell(String text, Font font) {
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        return cell;
+    }
 }

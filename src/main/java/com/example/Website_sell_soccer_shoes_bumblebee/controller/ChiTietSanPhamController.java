@@ -622,7 +622,7 @@ public class ChiTietSanPhamController {
 
     @RequestMapping("/chi-tiet-san-pham/loai-giay/add/{id}")
     @ResponseBody
-    public Map<String, Object> save(Model model, @PathVariable("id") UUID id,@Valid @ModelAttribute("lg") LoaiGiay loaiGiay, BindingResult result) {
+    public Map<String, Object> save(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("lg") LoaiGiay loaiGiay, BindingResult result) {
         Boolean hasE = result.hasErrors();
         Map<String, Object> response = new HashMap<>();
         List<LoaiGiay> list = loaiGiayRepo.findAll();
@@ -1012,20 +1012,11 @@ public class ChiTietSanPhamController {
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + sp.getId();
     }
 
+
     @PostMapping("/chi-tiet-san-pham/upload")
     public String uploadExcelFile(@RequestParam("file") MultipartFile file, Model model) {
         try {
             // Kiểm tra loại tệp Excel
-//            List<ChiTietSanPham> persons = ExcelUtil.readExcel(file);
-//
-//            for (ChiTietSanPham person : persons) {
-//                if (StringUtils.isEmpty(person.getSoLuong())) {
-//                    model.addAttribute("error", "Trường 'số lượng' không được để trống.");
-//                    return "forward:/chi-tiet-san-pham/hien-thi";
-//                }if(StringUtils.isEmpty())
-//                // Kiểm tra các trường thuộc tính khác và xử lý tương tự nếu cần.
-//            }
-
             if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
                 model.addAttribute("error", "Vui lòng chọn một tệp Excel (.xls hoặc .xlsx).");
                 return "redirect:/chi-tiet-san-pham/hien-thi";
@@ -1041,6 +1032,5 @@ public class ChiTietSanPhamController {
             return "forward:/chi-tiet-san-pham/hien-thi";
         }
     }
-
 
 }
