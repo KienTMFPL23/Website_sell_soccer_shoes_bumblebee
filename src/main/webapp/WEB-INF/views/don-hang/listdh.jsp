@@ -49,12 +49,14 @@
             <li class="nav-item" onclick="changeState('all')">
                 <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
                    href="/don-hang/list-all">Tất cả
-                    <span class="badge text-bg-secondary">${countHD}</span></a>
+<%--                    <span class="badge text-bg-secondary">${countHD}</span>--%>
+                </a>
             </li>
             <li class="nav-item" onclick="changeState('cho-xac-nhan')">
                 <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
                    href="/don-hang/list-cho-xac-nhan">Chờ xác nhận <span
-                        class="badge text-bg-secondary">${countHDCho}</span></a>
+                        class="badge text-bg-secondary">${countHDCho}</span>
+                </a>
             </li>
             <li class="nav-item" onclick="changeState('chuan-bi')">
                 <a class="nav-link  ${donHang == 'chuan-bi' ? 'active' : ''}"

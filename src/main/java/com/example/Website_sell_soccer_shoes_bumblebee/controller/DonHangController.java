@@ -240,7 +240,7 @@ public class DonHangController {
         if (page < 0) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         String donHang = "all";
         model.addAttribute("donHang", donHang);
 
@@ -440,7 +440,7 @@ public class DonHangController {
                                 @RequestParam(name = "donHang", required = false) String donHang,
                                 @ModelAttribute("searchForm") DonHangController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 50);
+        Pageable pageable = PageRequest.of(page, 10);
 
         if (searchForm.fromDate != null && searchForm.toDate != null && searchForm.fromDate.equals(searchForm.toDate)) {
             LocalDate localEndDate = searchForm.toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -505,7 +505,7 @@ public class DonHangController {
                                        @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
 
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
 
@@ -533,7 +533,7 @@ public class DonHangController {
                                    @RequestParam(value = "ghiChu", required = false) String ghiChu,
                                    @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> donHangCho = hoaDonRepository.donHangChoXacNhan(pageable);
@@ -559,7 +559,7 @@ public class DonHangController {
                              @RequestParam(value = "ghiChu", required = false) String ghiChu,
                              @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         Page<HoaDon> pageDonDaHuy = hoaDonRepository.donHangDaHuy(pageable);
@@ -578,6 +578,7 @@ public class DonHangController {
                         chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
                     }
                 }
+
             }
             return "redirect:/don-hang/list-huy";
         } else {
@@ -596,7 +597,7 @@ public class DonHangController {
                                @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                                @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -618,7 +619,7 @@ public class DonHangController {
                           @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                           @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
         if (hoaDonDB != null) {
@@ -639,7 +640,7 @@ public class DonHangController {
                            @RequestParam(value = "ghiChu", required = false) String ghiChu,
                            @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);
@@ -666,7 +667,7 @@ public class DonHangController {
                             @RequestParam(defaultValue = "0", name = "p") int p, @PathVariable UUID id,
                             @ModelAttribute("searchForm") HoaDonController.SearchForm searchForm
     ) {
-        Pageable pageable = PageRequest.of(p, 5);
+        Pageable pageable = PageRequest.of(p, 10);
         model.addAttribute("searchLoaiDon", new SearchLoaiHoaDon());
         model.addAttribute("searchForm", new HoaDonController.SearchForm());
         HoaDon hoaDonDB = hoaDonService.getOne(id);

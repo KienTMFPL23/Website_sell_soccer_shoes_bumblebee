@@ -622,7 +622,7 @@ public class ChiTietSanPhamController {
 
     @RequestMapping("/chi-tiet-san-pham/loai-giay/add/{id}")
     @ResponseBody
-    public Map<String, Object> save(Model model, @PathVariable("id") UUID id,@Valid @ModelAttribute("lg") LoaiGiay loaiGiay, BindingResult result) {
+    public Map<String, Object> save(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("lg") LoaiGiay loaiGiay, BindingResult result) {
         Boolean hasE = result.hasErrors();
         Map<String, Object> response = new HashMap<>();
         List<LoaiGiay> list = loaiGiayRepo.findAll();

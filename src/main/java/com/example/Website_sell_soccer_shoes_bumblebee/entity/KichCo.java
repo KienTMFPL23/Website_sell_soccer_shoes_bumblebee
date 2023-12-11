@@ -24,7 +24,7 @@ public class KichCo {
     @Size(min = 5, max = 100, message = "Mã không dưới 5 kí tự và không quá 100 kí tự ")
     private String maKichCo;
 
-    @NotNull(message = "Không để trống")
+    @NotNull(message = "* Không để trống")
     @Min(value = 33, message = "Size phải lớn hơn hoặc bằng 33")
     @Max(value = 49, message = "Size phải nhỏ hơn 50")
     @Column(name = "Size")
@@ -32,7 +32,7 @@ public class KichCo {
 
 //    @NotNull(message = "Mời chọn giới tính")
 //    @Column(name = "Gioitinh")
-    private Boolean gioiTinh;
+//    private Boolean gioiTinh;
 
     @NotNull(message = "Chọn trạng thái")
     @Column(name = "Trangthai")
