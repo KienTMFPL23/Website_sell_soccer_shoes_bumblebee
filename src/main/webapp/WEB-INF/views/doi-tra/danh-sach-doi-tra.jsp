@@ -86,6 +86,9 @@
                         <td>${dt.hoaDon.tenNguoiNhan}</td>
                         <td>
                             <a class="btn btn-primary" href="/bumblebee/doi-hang/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
+                            <a href="/bumblebee/doi-hang/print/${dt.hoaDon.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
+                                <i class="fas fa-print"></i> In hoá đơn
+                            </a>
 <%--                            <a id="openDoiTra"--%>
 <%--                               onclick="showDoiTraCT(`${dt.hoaDon.id}`)"--%>
 <%--                               class="btn btn-primary"--%>
