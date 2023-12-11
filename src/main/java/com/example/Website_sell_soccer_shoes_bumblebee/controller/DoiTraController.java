@@ -388,11 +388,13 @@ public class DoiTraController {
             HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(HoaDon);
 //
-            Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 20, Font.BOLD, BaseColor.BLACK);
-            Paragraph tieuDeThongTin = new Paragraph("HOÁ ĐƠN BÁN HÀNG  ", titleFont);
-            document.add(tieuDeThongTin);
             Paragraph maHoaDon = new Paragraph(hoaDonDoiTra.getMaHoaDon());
             maHoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(maHoaDon);
+            Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph tieuDeThongTin = new Paragraph("HOÁ ĐƠN BÁN HÀNG  ", titleFont);
+            document.add(tieuDeThongTin);
+
 //            Thông tin hoá dơn
             Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 15, Font.NORMAL, BaseColor.BLACK);
             Paragraph nhanVien = new Paragraph("Nhân Viên bán hàng : "+hoaDonDoiTra.getNhanVien().getHo()+" "+hoaDonDoiTra.getNhanVien().getTenDem()+" "+hoaDonDoiTra.getNhanVien().getTen(),titleFont1);
