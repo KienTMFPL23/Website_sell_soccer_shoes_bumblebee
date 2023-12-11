@@ -369,7 +369,7 @@ public class BanHangTaiQuayController {
         BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
         com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-        qrCodeImage.setAbsolutePosition(400, 300);
+        qrCodeImage.setAbsolutePosition(400, 150);
 
         document.add(qrCodeImage);
 
@@ -400,7 +400,7 @@ public class BanHangTaiQuayController {
         if (khachHang != null) {
             // Tiếp tục xử lý chỉ khi khách hàng không phải là null
             String tenKhachHang = khachHang.getTen();
-            Paragraph tenKhach = new Paragraph("Khách hàng    :    " + tenKhachHang, titleFont);
+            Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
             document.add(tenKhach);
         } else {
             // Xử lý khi khách hàng là null
@@ -452,7 +452,7 @@ public class BanHangTaiQuayController {
 //
 //
 //            }
-        Paragraph TongCong = new Paragraph("Tong cong       :    " + sumMoney);
+        Paragraph TongCong = new Paragraph("Tổng Cộng       :    " + sumMoney,titleFont);
 
         document.add(TongCong);
 

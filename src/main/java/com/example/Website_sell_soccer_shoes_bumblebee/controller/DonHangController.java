@@ -794,6 +794,12 @@ public class DonHangController {
             qrCodeImage.setAbsolutePosition(400, 190);
 
             document.add(qrCodeImage);
+            Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
+            ////////////// hoá đơn
+            Paragraph HoaDon = new Paragraph(" BUMBLEBEE SHOES" + "\n", largeFont);
+
+            HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(HoaDon);
             Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
             Paragraph tieuDeThongTin = new Paragraph("Thông tin đơn hàng ", titleFont);
             document.add(tieuDeThongTin);
