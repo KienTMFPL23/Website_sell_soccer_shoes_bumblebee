@@ -96,6 +96,14 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public boolean isChiTietSanPhamExists(QLSanPham sp) {
+        return repo.existsBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+                sp.getSanPham(), sp.getChatLieu(), sp.getLoaiGiay(), sp.getMauSac(), sp.getDeGiay(), sp.getKichCo()
+        );
+    }
+
+
+    @Override
     public Page<ChiTietSanPham> searchByMau(UUID idMau, Pageable pageable) {
         return repo.searchByMau(idMau, pageable);
     }

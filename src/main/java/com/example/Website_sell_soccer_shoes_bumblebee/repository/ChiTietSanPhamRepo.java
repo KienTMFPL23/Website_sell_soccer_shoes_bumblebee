@@ -214,6 +214,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select ctsp from ChiTietSanPham ctsp order by ctsp.ngayTao desc ")
     Page<ChiTietSanPham>  getListSP(Pageable pageable);
 
+    boolean existsBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
+    );
 
     // Thống kê
     @Query("SELECT SUM(c.soLuong) FROM ChiTietSanPham c")
