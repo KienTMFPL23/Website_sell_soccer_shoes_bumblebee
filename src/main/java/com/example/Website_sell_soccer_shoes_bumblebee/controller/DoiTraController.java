@@ -53,26 +53,27 @@ public class DoiTraController {
     private String nameNhanVien = "";
     private List<ChiTietSanPham> listCTSP = null;
     private UUID idHoaDon = null;
+    private List<Integer> listSoLuong = new ArrayList<>();
 
     @GetMapping("/bumblebee/doi-hang/list-san-pham-loi")
     public String danhSachSanPhamLoi(Model model) {
-        model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
+        model.addAttribute("view", "../doi-tra/danh-sach-san-pham-loi.jsp");
         model.addAttribute("listDoiTra", doiTraChiTietService.findSanPhamLoi());
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-doi-hang")
-    public String danhSachHuy(Model model) {
+    public String danhSachHuy(Model model, @RequestParam(defaultValue = "0", name = "page") Integer page) {
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
 //        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
-        model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra());
+        model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra(page));
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-tra-hang")
-    public String danhSachThanhCong(Model model) {
+    public String danhSachThanhCong(Model model, @RequestParam(defaultValue = "0", name = "page") Integer page) {
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
-        model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong());
+        model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong(page));
         return "/admin/index";
     }
 
@@ -87,28 +88,34 @@ public class DoiTraController {
 //        return "/admin/index";
 //    }
 
+    @GetMapping("/bumblebee/don-hang/tao-doi-tra/{maHD}")
+    public String hienThiDoiTra(Model model, @ModelAttribute("doiTraCT") DoiTraChiTiet doiTraCT, @PathVariable("maHD") String maHD) {
+        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
+        HoaDon hoaDon = hoaDonService.searchHoaDon(maHD);
+        model.addAttribute("hoaDonMua", hoaDon);
+        List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(maHD);
+        model.addAttribute("listHDCT", lstHoaDonCT);
+        model.addAttribute("listDoiTraCT", doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
+        Double sumMoney = hoaDonChiTietService.getTotalMoney(lstHoaDonCT);
+        model.addAttribute("sumMoney", sumMoney);
+        this.maHoaDon = maHD;
+        return "/admin/index";
+    }
+
     @GetMapping("/bumblebee/don-hang/{maHD}")
     public String searchHoaDon(Model model, @PathVariable("maHD") String maHD) {
-        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
         getTaiKhoan(model);
         List<HoaDon> listHoaDonDuDK = hoaDonService.danhSachHDDuDK();
-        if (listHoaDonDuDK != null){
-            for (HoaDon hd : listHoaDonDuDK){
-                if (hd.getMaHoaDon().equals(maHD)){
-                    HoaDon hoaDon  = hoaDonService.searchHoaDon(maHD);
-                    model.addAttribute("hoaDonMua",hoaDon);
-                    List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(maHD);
-                    model.addAttribute("listHDCT", lstHoaDonCT);
-                    Double sumMoney = hoaDonChiTietService.getTotalMoney(lstHoaDonCT);
-                    model.addAttribute("sumMoney",sumMoney);
-                    this.maHoaDon = maHD;
-                    return "/admin/index";
+        if (listHoaDonDuDK != null) {
+            for (HoaDon hd : listHoaDonDuDK) {
+                if (hd.getMaHoaDon().equals(maHD)) {
+                    return "redirect:/bumblebee/don-hang/tao-doi-tra/" + maHD;
                 }
             }
-            model.addAttribute("notFound","Khong tim thay");
+            model.addAttribute("notFound", "Khong tim thay");
             return "redirect:/bumblebee/doi-hang/list-tra-hang";
-        }else {
-            model.addAttribute("notFound","Khong tim thay");
+        } else {
+            model.addAttribute("notFound", "Khong tim thay");
             return "redirect:/bumblebee/doi-hang/list-tra-hang";
         }
     }
@@ -132,43 +139,38 @@ public class DoiTraController {
         return ResponseEntity.ok(lstDoiTraCT);
     }
 
-    @RequestMapping("/bumblebee/don-hang/tao-doi-tra/{maHD}")
-    public String taoDoiTra(Model model, @PathVariable("maHD") String maHD) throws ParseException {
-        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-        this.maHoaDon = maHD;
-        return "redirect:/bumblebee/don-hang/" + maHD;
-    }
-
-    private void createDoiTraCT(DoiTra doiTra, String lydo, Integer soLuong) {
-        for (ChiTietSanPham ctsp : listCTSP) {
+    private List<String> listlyDo = new ArrayList<>();
+    private void createDoiTraCT(DoiTra doiTra, List<String> lydo) {
+        for (int h = 0; h < listCTSP.size(); h++) {
             DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
-            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, ctsp.getId());
-            doiTraChiTiet.setChiTietSanPham(ctsp);
+            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, listCTSP.get(h).getId());
+            doiTraChiTiet.setChiTietSanPham(listCTSP.get(h));
             doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
-            doiTraChiTiet.setSoLuong(soLuong);
+            doiTraChiTiet.setSoLuong(listSoLuong.get(h));
             doiTraChiTiet.setDoiTra(doiTra);
-            doiTraChiTiet.setLyDoDoiTra(lydo);
-            doiTraChiTiet.setDonGia(ctsp.getGiaBan());
+            doiTraChiTiet.setLyDoDoiTra(lydo.get(h));
+            doiTraChiTiet.setDonGia(listCTSP.get(h).getGiaBan());
             doiTraChiTiet.setTrangThai(2);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
         }
+//        for (ChiTietSanPham ctsp : listCTSP) {
+//            DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
+//            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, ctsp.getId());
+//            doiTraChiTiet.setChiTietSanPham(ctsp);
+//            doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
+//            doiTraChiTiet.setSoLuong(ctsp.getSoLuong());
+//            doiTraChiTiet.setDoiTra(doiTra);
+//            doiTraChiTiet.setLyDoDoiTra(lydo.get());
+//            doiTraChiTiet.setDonGia(ctsp.getGiaBan());
+//            doiTraChiTiet.setTrangThai(2);
+//            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+//        }
         this.idDoiTra = doiTra.getId();
     }
 
     private static int maDoiTra = 1;
 
     private void createMaDoiTraAuto(DoiTra doiTra, HoaDon hoaDon) throws ParseException {
-        String formatDoiTra = "DT" + String.format("%07d", maDoiTra);
-        DoiTra checkMaDoiTra = doiTraService.getDoiTraByMa(formatDoiTra);
-        if (checkMaDoiTra != null) {
-            String maDoiTraMax = doiTraService.maxMaDoiTra();
-            maDoiTra = Integer.valueOf(maDoiTraMax.substring(2));
-            maDoiTra++;
-            String formatSoMa = "DT" + String.format("%07d", maDoiTra);
-            doiTra.setMaDoiTra(formatSoMa);
-        } else {
-            doiTra.setMaDoiTra(formatDoiTra);
-        }
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String format = sdf.format(date);
@@ -179,12 +181,12 @@ public class DoiTraController {
         this.idHoaDon = hoaDon.getId();
     }
 
-    private void createDoiSanPham(UUID idSanPham, DoiTra doiTra) {
+    private void createDoiSanPham(UUID idSanPham, DoiTra doiTra, HoaDon hoaDon) {
         DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
-//        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, idCTSP);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), idCTSP);
         ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
         doiTraChiTiet.setChiTietSanPham(ctsp);
-//        doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
+        doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
         doiTraChiTiet.setSoLuong(1);
         doiTraChiTiet.setDoiTra(doiTra);
         doiTraChiTiet.setDonGia(ctsp.getGiaBan());
@@ -193,27 +195,39 @@ public class DoiTraController {
         this.idDoiTra = doiTra.getId();
     }
 
-    @RequestMapping("/bumblebee/don-hang/create-doi-tra/{idSanPham}")
-    public String createDoiTra(Model model, @PathVariable("idSanPham") UUID idSanPham
-    ) throws ParseException {
-        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-        DoiTra doiTra = new DoiTra();
-        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
-        createMaDoiTraAuto(doiTra,hoaDon);
-        idCTSP = idSanPham;
-        createDoiSanPham(idSanPham, doiTra);
-        return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
-    }
 
     @RequestMapping("/bumblebee/don-hang/update-so-Luong")
-    public String updateSoLuong(@RequestParam("soLuong") Integer soLuong){
+    public String updateSoLuong(@RequestParam("soLuong") Integer soLuong) {
         DoiTraChiTiet doiTraChiTiet = doiTraChiTietService.getDoiTraCT(this.idDoiTra, idCTSP);
         doiTraChiTiet.setSoLuong(soLuong);
         return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
     }
+
+    @RequestMapping("/bumblebee/don-hang/create-doi-tra/{idSanPham}")
+    public String createDoiTra(Model model, @PathVariable("idSanPham") UUID idSanPham
+    ) {
+        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
+        DoiTra checkDoiTra = doiTraService.getOneDoiTra(this.maHoaDon);
+        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
+
+        if (checkDoiTra != null) {
+            createDoiSanPham(idSanPham, checkDoiTra, hoaDon);
+        } else {
+            DoiTra doiTra = new DoiTra();
+            doiTra.setHoaDon(hoaDon);
+            doiTra.setNhanVien(nhanVien);
+            doiTraService.saveDoiTra(doiTra);
+            this.idHoaDon = hoaDon.getId();
+            createDoiSanPham(idSanPham, doiTra, hoaDon);
+            idCTSP = idSanPham;
+        }
+        return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
+    }
+
     @RequestMapping("/bumblebee/don-hang/xac-nhan-doi")
     public String doiHang(@RequestParam("lyDoDoiTra") String lyDoDoiTra,
                           @RequestParam("soLuong") Integer soLuong) throws ParseException {
+
         DoiTra doiTra = doiTraService.getOneDoiTra(this.maHoaDon);
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -234,12 +248,10 @@ public class DoiTraController {
         doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
         hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
         if (lyDoDoiTra.equals("Sản phẩm lỗi")) {
-
+            return "redirect:/bumblebee/doi-hang/list-doi-hang";
         } else {
             ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
             chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), soLuong);
-        }
-        for (DoiTraChiTiet dtct : lstDoiTraCT) {
         }
         return "redirect:/bumblebee/doi-hang/list-doi-hang";
     }
@@ -247,12 +259,9 @@ public class DoiTraController {
     @RequestMapping("/bumblebee/don-hang/create-tra-hang")
     public String createTraHang(Model model,
                                 @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
-                                @RequestParam(name = "lyDoDoiTra") String lyDoDoiTra,
-// <<<<<<< vinhdq123
-//                                 @RequestParam(name = "soLuongTra") Integer soLuong) {
-// =======
-                                @RequestParam(name = "soLuong") Integer soLuong) throws ParseException {
-// >>>>>>> master
+                                @RequestParam("lyDoDoiTra") String [] lyDoDoiTra,
+                                @RequestParam("soLuong") Integer[] soLuong) throws ParseException {
+
         model.addAttribute("view", "../doi-tra/doi-hang.jsp");
         DoiTra doiTra = new DoiTra();
         HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
@@ -263,42 +272,52 @@ public class DoiTraController {
                 .map(UUID::fromString)
                 .collect(Collectors.toList());
         listCTSP = new ArrayList<>();
-        for (UUID id : idCartUUIDList) {
-            ChiTietSanPham ctkm = chiTietSanPhamService.getOne(id);
+        listSoLuong = Arrays.asList(soLuong)
+                .stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+       listlyDo = Arrays.asList(lyDoDoiTra)
+                .stream()
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+        for (int i = 0; i < idCartUUIDList.size(); i++) {
+            ChiTietSanPham ctkm = chiTietSanPhamService.getOne(idCartUUIDList.get(i));
             listCTSP.add(ctkm);
         }
+//        for (UUID id : idCartUUIDList) {
+//            for (Integer sl : listSoLuong) {
+//                ChiTietSanPham ctkm = chiTietSanPhamService.getOne(id);
+//                ctkm.setSoLuong(sl.intValue());
+//                listCTSP.add(ctkm);
+//            }
+//        }
         DoiTra checkDoiTra = doiTraService.getOneDoiTra(this.maHoaDon);
-//        if (checkDoiTra != null){
         checkDoiTra.setTrangThai(2);
         doiTraService.saveDoiTra(checkDoiTra);
-        createDoiTraCT(checkDoiTra, lyDoDoiTra, soLuong);
-//        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
+        createDoiTraCT(checkDoiTra, listlyDo);
         hoaDon.setTrangThai(7);
         hoaDonService.saveHoaDon(hoaDon);
-        for (ChiTietSanPham ctsp : listCTSP) {
-            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, ctsp.getId());
+        for (int j = 0; j < listCTSP.size(); j++) {
+            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, listCTSP.get(j).getId());
             hoaDonChiTiet.setTrangThai(0);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
-            if (lyDoDoiTra.equals("Sản phẩm lỗi")) {
-
+            if (listlyDo.get(j).equals("Sản phẩm lỗi")) {
+                return "redirect:/bumblebee/doi-hang/list-tra-hang";
             } else {
-                ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(ctsp.getId());
-                chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), soLuong);
+                ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(listCTSP.get(j).getId());
+                Integer soLuongTra = listSoLuong.get(j);
+                chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), soLuongTra);
             }
         }
-
-//        }else {
-//            DoiTra doiTra = new DoiTra();
-//            HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
-//            checkDoiTra.setTrangThai(2);
-//            doiTraService.saveDoiTra(checkDoiTra);
-//            createDoiTraCT(doiTra,lyDoDoiTra,soLuong);
-//            hoaDon.setTrangThai(7);
-//            hoaDonService.saveHoaDon(hoaDon);
-//            for (ChiTietSanPham ctsp : listCTSP){
-//                HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon,ctsp.getId());
-//                hoaDonChiTiet.setTrangThai(0);
-//                hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+//        for (ChiTietSanPham ctsp : listCTSP) {
+//            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, ctsp.getId());
+//            hoaDonChiTiet.setTrangThai(0);
+//            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+//            if (!(lyDoDoiTra.equals("Sản phẩm lỗi"))) {
+//                for (Integer sl : listSoLuong){
+//                    ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(ctsp.getId());
+//                    chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), );
+//                }
 //            }
 //        }
         return "redirect:/bumblebee/doi-hang/list-tra-hang";
@@ -325,15 +344,17 @@ public class DoiTraController {
         return "redirect:/bumblebee/doi-hang/list";
     }
 
-    @RequestMapping("/bumblebee/doi-hang/chi-tiet/{id}")
-    public String chiTietDoitra(Model model,@PathVariable("id")UUID id) {
+    @RequestMapping("/bumblebee/doi-tra/chi-tiet/{id}")
+    public String chiTietDoitra(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("view", "../doi-tra/detail-doi-tra.jsp");
         List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-        List<DoiTraChiTiet> lstDoiTraCT = doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
+        List<DoiTraChiTiet> lstSanPhamTra= doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
+        List<DoiTraChiTiet> lstSanPhamDoi = doiTraChiTietService.listSanPhamDoi(id);
         HoaDon hoaDon = hoaDonService.getOne(id);
-        model.addAttribute("hoaDon",hoaDon);
-        model.addAttribute("listHoaDonCT",lstHoaDonCT);
-        model.addAttribute("listDoiTraCT",lstDoiTraCT);
+        model.addAttribute("hoaDon", hoaDon);
+        model.addAttribute("listHoaDonCT", lstHoaDonCT);
+        model.addAttribute("listDoiTraCT", lstSanPhamTra);
+        model.addAttribute("listSanPhamDoi", lstSanPhamDoi);
         return "admin/index";
     }
 }

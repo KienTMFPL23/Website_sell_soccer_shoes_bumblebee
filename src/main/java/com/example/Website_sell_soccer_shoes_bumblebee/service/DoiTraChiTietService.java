@@ -23,4 +23,6 @@ public interface DoiTraChiTietService {
     List<DoiTraChiTiet> listDoiTraCTByIdHoaDon(UUID idHoaDon);
 
     List<DoiTraChiTiet> findSanPhamLoi();
+
+    List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon );
 }

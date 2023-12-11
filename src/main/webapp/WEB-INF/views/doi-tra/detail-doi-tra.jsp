@@ -7,7 +7,7 @@
     <div class="infor-hoa-don">
         <p style="text-align: center"><strong>${hoaDon.maHoaDon}</strong></p>
         <p><strong> Nhân viên bán hàng: </strong>${hoaDon.nhanVien.ho} ${hoaDon.nhanVien.tenDem} ${hoaDon.nhanVien.ten} </p>
-        <p><strong> Khác hàng: </strong>${hoaDon.tenNguoiNhan}</p>
+        <p><strong> Khách hàng: </strong>${hoaDon.tenNguoiNhan}</p>
         <p><strong> Số điện thoại: </strong>${hoaDon.sdt}</p>
     </div>
     <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG MUA</h4>
@@ -37,7 +37,7 @@
                 </tr>
             </c:forEach>
             <tr>
-              <td colspan="5"><strong>Tổng tiền :</strong></td>
+                <td colspan="5"><strong>Tổng tiền :</strong></td>
             </tr>
             </tbody>
         </table>
@@ -84,10 +84,3 @@
         <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
     </div>
 </div>
-<button onclick="printInvoice()">In Hóa Đơn</button>
-<script>
-    function printInvoice() {
-        // Kích hoạt lệnh in trang hiện tại
-        window.print();
-    }
-</script>

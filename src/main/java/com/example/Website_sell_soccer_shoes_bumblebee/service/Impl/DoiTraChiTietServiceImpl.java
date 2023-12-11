@@ -51,11 +51,16 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
 
     @Override
     public List<DoiTraChiTiet> listDoiTraCTByIdHoaDon(UUID idHoaDon) {
-        return doiTraCTRepo.listDoiTraCT(idHoaDon);
+        return doiTraCTRepo.listTraHang(idHoaDon);
     }
 
     @Override
     public List<DoiTraChiTiet> findSanPhamLoi() {
         return doiTraCTRepo.findSanPhamLoi();
+    }
+
+    @Override
+    public List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon) {
+        return doiTraCTRepo.listSanPhamDoi(idHoaDon);
     }
 }

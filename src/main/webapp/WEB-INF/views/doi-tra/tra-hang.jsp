@@ -80,9 +80,57 @@
     <div class="show-sum">
         <strong>Tổng tiền <fmt:formatNumber value="${sumMoney}" type="number"/></strong>
     </div>
-    <button data-bs-toggle="modal" type="button"
-            data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
-    </button>
+    <hr>
+    <h2 style="text-align: center">Sản phẩm khách hàng đổi</h2>
+    <form method="post" action="/bumblebee/don-hang/xac-nhan-doi">
+        <table class="table table-bordered" style="margin-top: 10px">
+            <thead>
+            <tr>
+                <th scope="col"> Tên sản phẩm</th>
+                <th scope="col"> Màu sắc</th>
+                <th scope="col"> Kích cỡ</th>
+                <th scope="col"> Số lượng</th>
+                <th scope="col"> Đơn giá</th>
+                <th scope="col"> Lý do đổi trả</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="dtct" items="${listDoiTraCT}">
+                <tr>
+                    <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
+                    <td>${dtct.chiTietSanPham.mauSac.ten}</td>
+                    <td>${dtct.chiTietSanPham.kichCo.size}</td>
+                    <td>
+                        <input type="number" class="form-control"
+                               min="1"
+                               name="soLuong"
+                               value="${dtct.soLuong}"
+                               style="width:100px;">
+                    </td>
+                    <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
+                    <td>
+                        <select class="form-control" style="width: 200px" name="lyDoDoiTra">
+                            <option value="">-----</option>
+                            <option value="Mẫu giao sai">Mẫu giao sai</option>
+                            <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
+                            <option value="Giao thiếu hàng">Giao thiếu hàng</option>
+                        </select>
+                    </td>
+                    <td>
+                        <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Đổi hàng</button>
+        <button data-bs-toggle="modal" type="button"
+                data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
+        </button>
+    </form>
+    <hr>
+
     <form method="post" action="/bumblebee/don-hang/create-tra-hang">
         <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -104,6 +152,7 @@
                                 <th scope="col">Kích cỡ</th>
                                 <th scope="col">Số lượng</th>
                                 <th scope="col">Đơn giá</th>
+                                <th scope="col">Lý do</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -122,26 +171,27 @@
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
-                                                   value=""
-                                                   onchange="changeSoLuong('${hd.soLuong}','${hd.chiTietSanPham.id}')"
                                                    style="width:50px;"> /${hd.soLuong}
                                             <strong><p style="color: red" id="erorSluong"></p></strong>
                                         </div>
                                     </td>
                                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
+                                    <td>
+                                        <strong>Lý do trả hàng</strong>
+                                        <select id="lyDoTra" class="form-control" style="width: 200px" name="lyDoDoiTra">
+                                            <option value="">-----</option>
+                                            <option value="Mẫu giao sai">Mẫu giao sai</option>
+                                            <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
+                                            <option value="Giao thiếu hàng">Giao thiếu hàng</option>
+                                        </select>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                         <strong><p style="color: red" id="logError"></p></strong>
                         <div>
-                            <strong>Lý do trả hàng</strong>
-                            <select id="lyDoTra" class="form-control" style="width: 200px" name="lyDoDoiTra">
-                                <option value="">-----</option>
-                                <option value="Mẫu giao sai">Mẫu giao sai</option>
-                                <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
-                                <option value="Giao thiếu hàng">Giao thiếu hàng</option>
-                            </select>
+
                             <%--                        <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>--%>
                             <strong><p style="color: red" id="erorText"></p></strong>
                         </div>

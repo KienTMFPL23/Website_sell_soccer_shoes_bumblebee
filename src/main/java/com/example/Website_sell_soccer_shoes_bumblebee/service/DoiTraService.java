@@ -1,6 +1,8 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTra;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +19,9 @@ public interface DoiTraService {
 
     List<DoiTra> listChoXacNhan();
 
-    List<DoiTra> listDoiTraThanhCong();
+    Page<DoiTra> listDoiTraThanhCong(Integer page);
 
-    List<DoiTra> listHuyDoiTra();
+    Page<DoiTra> listHuyDoiTra(Integer page);
 
     void huyDoiTra(UUID id);
 }
