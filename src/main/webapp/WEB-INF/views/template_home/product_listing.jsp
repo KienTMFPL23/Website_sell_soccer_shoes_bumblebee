@@ -44,15 +44,17 @@
                                 </div>
                                 <div class="favorite favorite_left"></div>
                                 <c:forEach var="km" items="${item.ctkm}">
-                                    <c:if test="${km.khuyenMai.donVi == '%'}">
-                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
-                                            <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
-                                    </c:if>
-                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                        <div class="product_bubble product_bubble_left product_bubble_green ">
+                                    <c:if test="${km.khuyenMai.trangThai == 0}">
+                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
+                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                        </c:if>
+                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                            <div class="product_bubble product_bubble_left product_bubble_green ">
                                                 <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
                                                                           type="number"/>đ</span>
-                                        </div>
+                                            </div>
+                                        </c:if>
                                     </c:if>
                                 </c:forEach>
                                 <div class="product_info">
@@ -62,19 +64,26 @@
                                     <div class="product_price">
                                         <c:if test="${not empty item.ctkm}">
                                             <c:forEach var="km" items="${item.ctkm}">
-                                                <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                    <label style="color: crimson;font-size: 15px"><fmt:formatNumber
-                                                            value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
-                                                            type="number"/> đ</label>
-                                                    <span><fmt:formatNumber value="${item.giaBan}"
-                                                                            type="number"/> đ</span>
+                                                <c:if test="${km.khuyenMai.trangThai == 0}">
+                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
+                                                                type="number"/> đ</label>
+                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                type="number"/> đ</span>
+                                                    </c:if>
+                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                                value="${item.giaBan - km.khuyenMai.giaTri}"
+                                                                type="number"/> đ</label>
+                                                        <span><fmt:formatNumber value="${item.giaBan}"
+                                                                                type="number"/> đ</span>
+                                                    </c:if>
                                                 </c:if>
-                                                <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                    <label style="color: crimson;font-size: 15px"><fmt:formatNumber
-                                                            value="${item.giaBan - km.khuyenMai.giaTri}"
-                                                            type="number"/> đ</label>
-                                                    <span><fmt:formatNumber value="${item.giaBan}"
-                                                                            type="number"/> đ</span>
+                                                <c:if test="${km.khuyenMai.trangThai == 1}">
+                                                    <label>
+                                                        <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                    </label>
                                                 </c:if>
                                             </c:forEach>
                                         </c:if>
@@ -296,6 +305,14 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function () {
+        $(document).on('hidden.bs.modal', '[id^="kichCoModal_"]', function () {
+            // Xử lý khi modal được đóng
+            console.log('Modal đóng');
+            $('body').removeClass('modal-open');
+            $('body').css('padding-right', '0');
+        });
+    });
     function themVaoGioHang(idsp,idms) {
         <c:if test="${userLogged.username == null}">
         var toastElement = document.getElementById("toast_warring_login");

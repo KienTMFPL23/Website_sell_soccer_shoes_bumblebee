@@ -256,7 +256,7 @@ section
 	left: 0;
 	width: 100%;
 	background: #FFFFFF;
-	z-index: 10;
+	z-index: 100;
 }
 .top_nav
 {

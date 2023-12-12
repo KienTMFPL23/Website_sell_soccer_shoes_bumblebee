@@ -79,25 +79,39 @@
                         </div>
                         <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px">
                             <div class="product_price">
-                                <c:if test="${ctsp.ctkm != null}">
+                                <c:if test="${not empty ctsp.ctkm}">
+                                    <c:set var="allTrangThai1" value="false"/>
                                     <c:forEach var="km" items="${ctsp.ctkm}">
-                                        <c:if test="${km.khuyenMai.donVi == '%'}">
-                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
-                                                <fmt:formatNumber
-                                                        value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
-                                                        type="number"/> đ
-                                            </label>
+                                        <c:if test="${km.khuyenMai.trangThai == 0}">
+                                            <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                <label style="font-weight: 500" id="donGiaKhuyenMai">
+                                                    <fmt:formatNumber
+                                                            value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
+                                                            type="number"/> đ
+                                                </label>
+                                                <c:set var="allTrangThai1" value="true"/>
+                                            </c:if>
+                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                <label style="font-weight: 500" id="donGiaKhuyenMai">
+                                                    <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
+                                                                      type="number"/> đ
+                                                </label>
+                                                <c:set var="allTrangThai1" value="true"/>
+                                            </c:if>
+                                            <label style="font-weight: 500" id="giaSP"></label>
+                                            <span id="donGiaChuaGiam"><fmt:formatNumber value="${ctsp.giaBan}"
+                                                                                        type="number"/> đ</span>
                                         </c:if>
-                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
-                                                <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
-                                                                  type="number"/> đ
-                                            </label>
-                                        </c:if>
-                                        <label style="font-weight: 500" id="giaSP"></label>
-                                        <span id="donGiaChuaGiam"><fmt:formatNumber value="${ctsp.giaBan}"
-                                                                                    type="number"/> đ</span>
                                     </c:forEach>
+                                    <c:if test="${allTrangThai1 eq false}">
+                                        <label style="font-weight: 500" id="giaSP"><fmt:formatNumber
+                                                value="${ctsp.giaBan}"
+                                                type="number"/>
+                                            đ</label>
+                                        <label style="font-weight: 500" id="donGiaKhuyenMai"></label>
+                                        <span id="donGiaChuaGiam"></span>
+                                        <c:set var="allTrangThai1" value="true"/>
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${empty ctsp.ctkm}">
                                     <label style="font-weight: 500" id="giaSP"><fmt:formatNumber value="${ctsp.giaBan}"
@@ -470,7 +484,7 @@
                 toastElement1.style.display = "none";
             }, 1500);
             return false;
-        }else{
+        } else {
             return true;
         }
     }

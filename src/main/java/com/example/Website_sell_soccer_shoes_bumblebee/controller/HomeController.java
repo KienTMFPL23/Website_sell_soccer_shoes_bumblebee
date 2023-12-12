@@ -125,12 +125,20 @@ public class HomeController {
         ChiTietSanPham ctsp = chiTietSanPhamRepo.getCTSPByKichCo(idMS, idSP, size);
         Double giaBan = 0.0;
         if (ctsp.getCtkm().size() > 0) {
+            Boolean allTranhThai1 = false;
             for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()) {
-                if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
-                    giaBan = ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100;
-                } else {
-                    giaBan = ctsp.getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
+                if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0){
+                    if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
+                        allTranhThai1 = true;
+                        giaBan = ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100;
+                    } else {
+                        allTranhThai1 = true;
+                        giaBan = ctsp.getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
+                    }
                 }
+            }
+            if (allTranhThai1 == false){
+                giaBan = ctsp.getGiaBan();
             }
         } else {
             giaBan = ctsp.getGiaBan();
@@ -218,13 +226,12 @@ public class HomeController {
         }
     }
 
+    @DeleteMapping("/bumblebee/remove-ghct/{id}")
+    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
+        gioHangChiTietRepo.deleteById(id);
+        return ResponseEntity.ok("Record deleted successfully");
+    }
 
-
-//    @DeleteMapping("/bumblebee/remove-ghct/{id}")
-//    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
-//        gioHangChiTietRepo.deleteById(id);
-//        return ResponseEntity.ok("Record deleted successfully");
-//    }
 
 
     @GetMapping("/bumblebee/detail")
@@ -243,12 +250,6 @@ public class HomeController {
         model.addAttribute("view", "../template_home/product_detail.jsp");
         return "template_home/index";
     }
-
-//    @DeleteMapping("/bumblebee/remove-ghct/{id}")
-//    public ResponseEntity<String> removeGHCT(@PathVariable UUID id) {
-//        gioHangChiTietRepo.deleteById(id);
-//        return ResponseEntity.ok("Record deleted successfully");
-//    }
 
     @PostMapping("/bumblebee/add-to-cart")
     public ResponseEntity<String> addCart(Model model,
@@ -287,13 +288,15 @@ public class HomeController {
         if (ctsp.getCtkm() != null) {
             double donGiaKhiGiam = 0;
             for (ChiTietKhuyenMai ctkm : ctsp.getCtkm()) {
-                if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
-                    donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
-                    gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
-                }
-                if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
-                    donGiaKhiGiam = ctsp.getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
-                    gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                if (ctkm.getKhuyenMai().getTrangThai() == 0){
+                    if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                        donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
+                    if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                        donGiaKhiGiam = ctsp.getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                        gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
+                    }
                 }
             }
         }
@@ -323,19 +326,30 @@ public class HomeController {
             GioHangChiTiet ghct = new GioHangChiTiet();
             ghct.setCtsp(chiTietSanPham);
             ghct.setSoLuong(soLuong);
-            ghct.setDonGia(chiTietSanPham.getGiaBan());
             if (ghct.getCtsp().getCtkm() != null) {
                 double donGiaKhiGiam = 0;
+                Boolean allTranhThai1 = false;
                 for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()) {
-                    if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
-                        donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
-                        ghct.setDonGiaKhiGiam(donGiaKhiGiam);
+                    if (ctkm.getKhuyenMai().getTrangThai() == 0){
+                        ghct.setDonGia(chiTietSanPham.getGiaBan());
+                        if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                            donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                            ghct.setDonGiaKhiGiam(donGiaKhiGiam);
+                            allTranhThai1 = true;
+                        }
+                        if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                            donGiaKhiGiam = ghct.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                            ghct.setDonGiaKhiGiam(donGiaKhiGiam);
+                            allTranhThai1 = true;
+                        }
                     }
-                    if (ctkm.getKhuyenMai().getDonVi().equals("VNÐ")) {
-                        donGiaKhiGiam = ghct.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
-                        ghct.setDonGiaKhiGiam(donGiaKhiGiam);
-                    }
+
                 }
+                if (allTranhThai1 == false){
+                    ghct.setDonGia(chiTietSanPham.getGiaBan());
+                }
+            }else{
+                ghct.setDonGia(chiTietSanPham.getGiaBan());
             }
             listGHCT.add(ghct);
             model.addAttribute("listGHCT", listGHCT);
@@ -440,23 +454,28 @@ public class HomeController {
             hdct.setChiTietSanPham(ghct.getCtsp());
             hdct.setSoLuong(ghct.getSoLuong());
             if (ghct.getCtsp().getCtkm() != null) {
-                if (ghct.getDonGiaKhiGiam() != null) {
-                    hdct.setDonGiaKhiGiam(ghct.getDonGiaKhiGiam());
-                }else {
                     double donGiaKhiGiam = 0;
+                    Boolean allTrangThai1 = false;
                     for(ChiTietKhuyenMai chiTietKhuyenMai : ghct.getCtsp().getCtkm()){
-                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
-                            donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100);
-                            hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                        if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0){
+                            allTrangThai1 = true;
+                            hdct.setDonGia(ghct.getDonGia());
+                            if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
+                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100);
+                                hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                            }
+                            if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
+                                hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                            }
                         }
-                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNÐ")) {
-                            donGiaKhiGiam = ghct.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
-                            hdct.setDonGiaKhiGiam(donGiaKhiGiam);
-                        }
-                    }
                 }
+                    if (allTrangThai1 == false){
+                        hdct.setDonGia(ghct.getDonGia());
+                    }
+            }else{
+                hdct.setDonGia(ghct.getDonGia());
             }
-            hdct.setDonGia(ghct.getDonGia());
             hdct.setTrangThai(3);
             hoaDonChiTietService.save(hdct);
             ChiTietSanPham ctsp = chiTietSanPhamService.getOne(ghct.getCtsp().getId());
@@ -506,7 +525,26 @@ public class HomeController {
                 hdct.setHoaDon(hoaDon);
                 hdct.setChiTietSanPham(ghct.getCtsp());
                 hdct.setSoLuong(ghct.getSoLuong());
-                hdct.setDonGia(ghct.getDonGia());
+                if (ghct.getCtsp().getCtkm() != null){
+                    Boolean allTranhThai1 = false;
+                    Double donGiaKhiGiam = 0.0;
+                    for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()){
+                        if (ctkm.getKhuyenMai().getTrangThai() == 0){
+                            allTranhThai1 = true;
+                            hdct.setDonGia(ghct.getCtsp().getGiaBan());
+                            if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
+                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                                hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                            }
+                            else  {
+                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                                hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                            }
+                        }
+                    }
+                }else {
+                    hdct.setDonGia(ghct.getDonGia());
+                }
                 hdct.setTrangThai(3);
                 hoaDonChiTietService.save(hdct);
                 gioHangChiTietService.deleteGHCT(ghct.getId());

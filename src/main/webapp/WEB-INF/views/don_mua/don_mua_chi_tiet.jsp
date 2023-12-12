@@ -549,8 +549,22 @@
                             </td>
                             <td style="text-align: center;padding-top: 25px;" class="thanhTien">
                                 <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
-                                    <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
-                                                      type="number"/> đ
+                                    <c:set var="allTrangThai1" value="false"/>
+                                    <c:forEach var="ctkm" items="${hdct.chiTietSanPham.ctkm}">
+                                        <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                            <c:set var="allTrangThai1" value="true"/>
+                                            <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
+                                                              type="number"/> đ
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:if test="${allTrangThai1 eq false and not empty hdct.donGiaKhiGiam}">
+                                        <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
+                                                          type="number"/> đ
+                                    </c:if>
+                                    <c:if test="${allTrangThai1 eq false and empty hdct.donGiaKhiGiam }">
+                                        <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
+                                                           type="number"/> đ
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                     <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
@@ -593,7 +607,8 @@
 
                     </div>
                     <div class="col-lg-3">
-                        <span>Tổng tiền: <fmt:formatNumber value="${sumMoney}" type="number"/> đ</span>
+<%--                        <span id="tongTien">Tổng tiền: <fmt:formatNumber value="${sumMoney}" type="number"/> đ</span>--%>
+                        <span id="tongTien"></span>
                     </div>
                 </div>
             </div>
@@ -601,6 +616,17 @@
         </div>
     </div>
     <script>
+        function capNhatTongTien() {
+            var thanhTienList = document.getElementsByClassName("thanhTien");
+            var total = 0;
+            for (let i = 0; i < thanhTienList.length; i++) {
+                var donGia = parseInt(thanhTienList.item(i).innerHTML.trim().replace(/[^\d]/g, ''), 10);
+                total += donGia;
+            }
+            var totalFormatted = total.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+            document.getElementById("tongTien").innerHTML ="Tổng tiền: " + totalFormatted;
+        }
+        capNhatTongTien();
         document.addEventListener("DOMContentLoaded", function () {
             const statusItems = document.querySelectorAll(".status-item");
             const hoaDonTrangThai = "${hoaDon.trangThai}";
