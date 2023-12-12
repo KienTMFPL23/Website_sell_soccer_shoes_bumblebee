@@ -561,44 +561,44 @@
 <script>
 
 </script>
-<script>
-    // Đặt giá trị idHoaDon
-    var idHoaDon = "${idHoaDon}";
-    function alertThanhToan(event) {
-        var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result.valueOf()) {
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Thanh toán thành công",
-                showConfirmButton: false,
-                timer: 2000
-            });
-            setTimeout(function () {
-                return true;
-            }, 2000);
-        } else {
-            return false;
-        }
-    }
-    function taivepdf() {
-        // alert(idHoaDon);
-        var link = document.createElement('a');
-        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
-        link.target = '_blank';
-        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';
-        document.body.appendChild(link);
-        // Yêu cầu sự tương tác người dùng
-        link.click();
-        document.body.removeChild(link);
-    }
-    var ThanhToanButton = document.getElementById('btnThanhToan');
-    ThanhToanButton.onclick = function() {
-        alertThanhToan();
-        taivepdf();
+<%--<script>--%>
+<%--    // Đặt giá trị idHoaDon--%>
+<%--    var idHoaDon = "${idHoaDon}";--%>
+<%--    function alertThanhToan(event) {--%>
+<%--        var result = confirm('Bạn có muốn thanh toán không ??');--%>
+<%--        if (result.valueOf()) {--%>
+<%--            Swal.fire({--%>
+<%--                position: "center",--%>
+<%--                icon: "success",--%>
+<%--                title: "Thanh toán thành công",--%>
+<%--                showConfirmButton: false,--%>
+<%--                timer: 2000--%>
+<%--            });--%>
+<%--            setTimeout(function () {--%>
+<%--                return true;--%>
+<%--            }, 2000);--%>
+<%--        } else {--%>
+<%--            return false;--%>
+<%--        }--%>
+<%--    }--%>
+<%--    function taivepdf() {--%>
+<%--        // alert(idHoaDon);--%>
+<%--        var link = document.createElement('a');--%>
+<%--        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;--%>
+<%--        link.target = '_blank';--%>
+<%--        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';--%>
+<%--        document.body.appendChild(link);--%>
+<%--        // Yêu cầu sự tương tác người dùng--%>
+<%--        link.click();--%>
+<%--        document.body.removeChild(link);--%>
+<%--    }--%>
+<%--    var ThanhToanButton = document.getElementById('btnThanhToan');--%>
+<%--    ThanhToanButton.onclick = function() {--%>
+<%--        alertThanhToan();--%>
+<%--        taivepdf();--%>
 
-    };
-</script>
+<%--    };--%>
+<%--</script>--%>
 
 <%--<script>--%>
 <%--    function downloadHoaDon() {--%>
@@ -850,8 +850,10 @@
 
 <script>
     function alertThanhToan(event) {
+        var idHoaDon = "${idHoaDon}"
         var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result.valueOf()) {
+        if (result) {
+            // Thực hiện thanh toán
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -859,14 +861,24 @@
                 showConfirmButton: false,
                 timer: 2000
             });
-            setTimeout(function () {
-                return true;
-            }, 2000);
+
+            // Tạo và tải hóa đơn PDF
+            var link = document.createElement('a');
+            link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
+            link.target = '_blank';
+            link.download = 'hoadon_' + idHoaDon + '.pdf';
+            document.body.appendChild(link);
+
+            // Yêu cầu sự tương tác người dùng
+            link.click();
+            document.body.removeChild(link);
         } else {
+            // Người dùng đã hủy thanh toán
             return false;
         }
     }
 </script>
+
 
 <script>
     function changeColor(id) {
