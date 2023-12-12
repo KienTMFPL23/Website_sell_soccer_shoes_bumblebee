@@ -396,17 +396,17 @@ public class BanHangTaiQuayController {
 
         Paragraph tennhanvien = new Paragraph("Nhân viên    :    " + nameNhanVien, titleFont);
         document.add(tennhanvien);
-        KhachHang khachHang = hoaDonThanhToan.getKhachHang();
-        if (khachHang != null) {
+//        KhachHang khachHang = hoaDonThanhToan.getKhachHang();
+//        if (khachHang != null) {
             // Tiếp tục xử lý chỉ khi khách hàng không phải là null
-            String tenKhachHang = khachHang.getTen();
+//            String tenKhachHang = khachHang.getTen();
             Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
             document.add(tenKhach);
-        } else {
+//        } else {
             // Xử lý khi khách hàng là null
-            Paragraph tenKhach = new Paragraph("Khách hàng    :     Khách vãn lai", titleFont);
-            document.add(tenKhach);
-        }
+//            Paragraph tenKhach = new Paragraph("Khách hàng    :     Khách vãn lai", titleFont);
+//            document.add(tenKhach);
+//        }
 
 
 //            table.addCell(MaHoaDon);
@@ -418,12 +418,14 @@ public class BanHangTaiQuayController {
         khoangtrang2.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(khoangtrang2);
         ////
-        PdfPTable productTable = new PdfPTable(4);
+        PdfPTable productTable = new PdfPTable(6);
         productTable.setWidthPercentage(100);
-        float[] columnWidths = {3f, 1f, 2f, 2f};
+        float[] columnWidths = {3f, 3f, 1f, 1f,2f,2f};
         productTable.setWidths(columnWidths);
 
         productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
+        productTable.addCell(createTableCell("Màu sắc", titleFont));
+        productTable.addCell(createTableCell("Size", titleFont));
         productTable.addCell(createTableCell("Số lượng", titleFont));
         productTable.addCell(createTableCell("Giá tiền", titleFont));
         productTable.addCell(createTableCell("Thành tiền", titleFont));
@@ -431,6 +433,8 @@ public class BanHangTaiQuayController {
         List<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
         for (HoaDonChiTiet hoaDonChiTiet : listHoaDonChiTiet) {
             productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont));
+            productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont));
+            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));
