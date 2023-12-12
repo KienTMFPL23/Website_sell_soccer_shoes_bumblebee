@@ -25,16 +25,16 @@ public class DeGiay {
     private UUID id;
 
     @Column(name="Ma")
-    @Size(min = 4, max = 10, message = "Mã phải từ 4 đến 150 kí tự")
-    @NotBlank(message = "Mã không được để trống")
+    @Size(min = 4, max = 10, message = "* Mã phải từ 4 đến 150 kí tự")
+    @NotBlank(message = "* Mã không được để trống")
     private String ma;
 
     @Column(name="LoaiDe")
-    @NotBlank(message = "Loại đế không được để trống")
-    @Size(max = 150, message = "Loại đế không được quá 150 kí tự")
+    @NotBlank(message = "* Loại đế không được để trống")
+    @Size(max = 150, message = "* Loại đế không được quá 150 kí tự")
     private String loaiDe;
 
     @Column(name="TrangThai")
-    @NotNull(message = "Trạng thái không được để trống")
+    @NotNull(message = "* Trạng thái không được để trống")
     private Integer trangThai;
 }

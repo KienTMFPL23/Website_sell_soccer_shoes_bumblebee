@@ -61,19 +61,19 @@
         <nav class="navbar navHoaDon navbar-expand-lg">
             <%-- list hóa đơn chờ--%>
             <c:forEach items="${listHoaDonCho}" var="hd" varStatus="i">
-                    <div class="hoaDonCho" id="hoaDonStatus_${hd.id}">
-                        <a id="content" class="theHoaDon"
-                           href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
-                           style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
-                        </a>
+                <div class="hoaDonCho" id="hoaDonStatus_${hd.id}">
+                    <a id="content" class="theHoaDon"
+                       href="/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/${hd.id}"
+                       style="margin-left: 5px"><b>Hóa đơn${i.count}</b>
+                    </a>
 
-                        <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
-                           onclick="return confirm('Bạn có muốn xóa không ?')"
+                    <a href="/bumblebee/ban-hang-tai-quay/delete-hoadon/${hd.id}"
+                       onclick="return confirm('Bạn có muốn xóa không ?')"
 
-                           class="btndele"><img
-                                src="/images_template/deleteHD.png"></a>
+                       class="btndele"><img
+                            src="/images_template/deleteHD.png"></a>
 
-                    </div>
+                </div>
             </c:forEach>
             <div style="margin-left: 20px">
                 <a id="themHoaDon" onclick="showAlertHoaDon(event)"
@@ -321,7 +321,6 @@
                                         <td>
                                             <input type="number" class="form-control"
                                                    min="1"
-                                                   max="5"
                                                    name="soLuong"
                                                    value="${hdct.soLuong}"
                                                    onblur="this.form.submit()"
@@ -414,13 +413,6 @@
                                 <form:input path="sdt" min="0" type="number" class="form-control"
                                             placeholder="Nhập số điện thoại..."
                                             onchange="getTenKhachHang(this.value)" id="phoneNumber"/>
-                                <div class="input-group-append">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                             <form:errors path="sdt" cssStyle="color: red"></form:errors>
                             <p style="color: red">${errorSDT}</p>
@@ -453,13 +445,15 @@
                     <div class="dropdown mt-3">
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
-                        <button disabled="true" id="btnThanhToan" type="submit" class=" btn-primary"
+                        <button id="btnThanhToan" type="submit" style="display: none" class="btn btn-primary"
 
-                                onclick="return alertThanhToan(event)"
 
-                                style="background-color: #37517E;cursor: pointer;color: white;border: none;padding: 10px 20px;border-radius: 10px">
+                                onclick="return alertThanhToan(event)">
+
                             Thanh toán
                         </button>
+                        <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
+                            Thanh toán
                     </div>
                     </form:form>
                 </div>
@@ -492,7 +486,8 @@
                                 <div id="duplicate" style="color: crimson;"></div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="submitFormKhachHang()">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitFormKhachHang()">Submit
+                                </button>
                             </div>
                         </form:form>
                     </div>
@@ -563,20 +558,87 @@
         $("#phoneNumber").select2();
     });
 </script>
+<script>
+
+</script>
+<script>
+    // Đặt giá trị idHoaDon
+    var idHoaDon = "${idHoaDon}";
+    function alertThanhToan(event) {
+        var result = confirm('Bạn có muốn thanh toán không ??');
+        if (result.valueOf()) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thanh toán thành công",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function () {
+                return true;
+            }, 2000);
+        } else {
+            return false;
+        }
+    }
+    function taivepdf() {
+        // alert(idHoaDon);
+        var link = document.createElement('a');
+        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
+        link.target = '_blank';
+        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';
+        document.body.appendChild(link);
+        // Yêu cầu sự tương tác người dùng
+        link.click();
+        document.body.removeChild(link);
+    }
+    var ThanhToanButton = document.getElementById('btnThanhToan');
+    ThanhToanButton.onclick = function() {
+        alertThanhToan();
+        taivepdf();
+
+    };
+</script>
+
+<%--<script>--%>
+<%--    function downloadHoaDon() {--%>
+<%--        // Thực hiện yêu cầu tải về sử dụng XMLHttpRequest--%>
+<%--        var xhr = new XMLHttpRequest();--%>
+<%--        var url_for_download = `/bumblebee/ban-hang-tai-quay/download-pdf/{idHoaDon}`; // Thay thế bằng URL thích hợp--%>
+
+<%--        xhr.open('GET', url_for_download, true);--%>
+<%--        xhr.responseType = 'blob';--%>
+
+<%--        xhr.onload = function () {--%>
+<%--            // Tạo một đường link ảo để tải về--%>
+<%--            var blob = new Blob([xhr.response], {type: 'application/pdf'});--%>
+<%--            var link = document.createElement('a');--%>
+
+<%--            link.href = window.URL.createObjectURL(blob);--%>
+<%--            link.download = 'hoadon_${idHoaDon}.pdf'; // Thay thế bằng tên file thích hợp--%>
+
+<%--            // Kích hoạt sự kiện click trên đường link ảo để tải về--%>
+<%--            link.click();--%>
+<%--        };--%>
+
+<%--        // Gửi yêu cầu--%>
+<%--        xhr.send();--%>
+<%--    }--%>
+<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script>
-    function downloadComplete() {
+<%--<script>--%>
+<%--    function downloadComplete() {--%>
 
-        window.onload = function () {
+<%--        window.onload = function () {--%>
 
-            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
-        };
-        return true;
-    }
-</script>
+<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
+<%--        };--%>
+<%--        return true;--%>
+<%--    }--%>
+<%--</script>--%>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
@@ -711,25 +773,27 @@
 <script src="../../../js/ban_hang_tai_quay/them-khach-hang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    function downloadComplete() {
+<%--<script>--%>
+<%--    function downloadComplete() {--%>
 
-        window.onload = function () {
+<%--        window.onload = function () {--%>
 
-            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';
-        };
-        return true;
-    }
-</script>
+<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
+<%--        };--%>
+<%--        return true;--%>
+<%--    }--%>
+<%--</script>--%>
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;
         document.getElementById('tienThua').innerHTML = change - ${sumMoney};
         var soDu = change - ${sumMoney};
         if (soDu >= 0) {
-            document.getElementById('btnThanhToan').disabled = false;
+            document.getElementById('btnThanhToan').style.display = 'block';
+            document.getElementById('btnThanhToan_disable').style.display = 'none';
         } else {
-            document.getElementById('btnThanhToan').disabled = true;
+            document.getElementById('btnThanhToan_disable').style.display = 'block';
+            document.getElementById('btnThanhToan').style.display = 'none';
         }
     }
 </script>
@@ -783,6 +847,7 @@
     }
 
 </script>
+
 <script>
     function alertThanhToan(event) {
         var result = confirm('Bạn có muốn thanh toán không ??');
@@ -796,12 +861,13 @@
             });
             setTimeout(function () {
                 return true;
-            },2000);
+            }, 2000);
         } else {
             return false;
         }
     }
 </script>
+
 <script>
     function changeColor(id) {
         if (id === ${idHDCT}) {
