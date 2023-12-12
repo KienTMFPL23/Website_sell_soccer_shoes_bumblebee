@@ -531,7 +531,7 @@ public class HomeController {
                     for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()){
                         if (ctkm.getKhuyenMai().getTrangThai() == 0){
                             allTranhThai1 = true;
-                            hdct.setDonGia(ghct.getCtsp().getGiaBan());
+                            hdct.setDonGia(ghct.getDonGia());
                             if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
                                 donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
                                 hdct.setDonGiaKhiGiam(donGiaKhiGiam);
@@ -541,6 +541,9 @@ public class HomeController {
                                 hdct.setDonGiaKhiGiam(donGiaKhiGiam);
                             }
                         }
+                    }
+                    if(allTranhThai1 == false){
+                        hdct.setDonGia(ghct.getDonGia());
                     }
                 }else {
                     hdct.setDonGia(ghct.getDonGia());
@@ -588,10 +591,7 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/don-mua/{id}")
     public String donMuaChiTet(Model model, HttpSession session, @PathVariable(name = "id") UUID id) {
-
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-        Double sumMoney = hoaDonChiTietService.getTotalMoney(list);
-        model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("id", id);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
         model.addAttribute("listHoaDonChiTiet", hoaDonChiTietService.getHoaDonById(id));
