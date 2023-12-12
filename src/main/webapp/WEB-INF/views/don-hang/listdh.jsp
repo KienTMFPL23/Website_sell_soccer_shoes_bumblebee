@@ -250,10 +250,6 @@
                                 <a id="content7" type="submit" class="btn btn-secondary" data-bs-toggle="modal"
                                    data-bs-target="#${hd.id}" style="border-radius: 20px">Xem
                                 </a>
-                                <a href="/don-hang/print/${hd.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
-                                    <i class="fas fa-print"></i> In hoá đơn
-                                </a>
-
 
                             <%--        trạng thái chờ xác nhận--%>
                                 <c:if test="${hd.trangThai== 1 }">
@@ -296,17 +292,20 @@
                                     <a onclick="confirmAndHuy('${hd.id}')" class="btn btn-danger"
                                        style="border-radius: 20px">Huỷ</a>
                                 </c:if>
-                                    <%--                                <c:if test="${hd.trangThai== 5}">--%>
-                                    <%--                                    <a href="/don-hang/doi-hang/${hd.id}" style="border-radius: 20px"--%>
-                                    <%--                                       class="btn btn-warning" onclick="return confirm('Xác nhận đổi hàng ?');">Đổi--%>
-                                    <%--                                        hàng</a>--%>
-                                    <%--                                </c:if>--%>
-                                    <%--                                <c:if test="${hd.trangThai== 6}">--%>
+                                <c:if test="${hd.trangThai== 5}">
+<%--                                                                        <a href="/don-hang/doi-hang/${hd.id}" style="border-radius: 20px"--%>
+<%--                                                                           class="btn btn-warning" onclick="return confirm('Xác nhận đổi hàng ?');">Đổi--%>
+<%--                                                                            hàng</a>--%>
+                                    <a href="/don-hang/print/${hd.id}" style="border-radius: 20px;" class="btn btn-success">
+                                       In hoá đơn
+                                    </a>
+                                </c:if>
+<%--                                                                    <c:if test="${hd.trangThai== 6}">--%>
 
-                                    <%--                                    <a href="/don-hang/da-doi-hang/${hd.id}" style="border-radius: 20px"--%>
-                                    <%--                                       class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn đổi hàng ?');">Xác--%>
-                                    <%--                                        nhận</a>--%>
-                                    <%--                                </c:if>--%>
+<%--                                                                        <a href="/don-hang/da-doi-hang/${hd.id}" style="border-radius: 20px"--%>
+<%--                                                                           class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn đổi hàng ?');">Xác--%>
+<%--                                                                            nhận</a>--%>
+<%--                                                                    </c:if>--%>
 
                                 <div class="modal fade" id="${hd.id}" data-bs-backdrop="static"
                                      data-bs-keyboard="false"

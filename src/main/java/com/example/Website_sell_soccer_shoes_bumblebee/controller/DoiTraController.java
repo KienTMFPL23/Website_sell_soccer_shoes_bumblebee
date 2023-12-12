@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,24 +63,33 @@ public class DoiTraController {
     private List<Integer> listSoLuong = new ArrayList<>();
 
     @GetMapping("/bumblebee/doi-hang/list-san-pham-loi")
-    public String danhSachSanPhamLoi(Model model) {
+    public String danhSachSanPhamLoi(Model model, @RequestParam(defaultValue = "0", name = "p") Integer p ) {
         model.addAttribute("view", "../doi-tra/danh-sach-san-pham-loi.jsp");
-        model.addAttribute("listDoiTra", doiTraChiTietService.findSanPhamLoi());
+        if (p<=0){
+            p=0;
+        }
+        model.addAttribute("listDoiTra", doiTraChiTietService.findSanPhamLoi(p));
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-doi-hang")
-    public String danhSachHuy(Model model, @RequestParam(defaultValue = "0", name = "page") Integer page) {
-        model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
+    public String danhSachHuy(Model model, @RequestParam(defaultValue = "0", name = "p") Integer p) {
+        if (p<=0){
+            p=0;
+        }
+        model.addAttribute("view", "../doi-tra/danh-sach-doi.jsp");
 //        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
-        model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra(page));
+        model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra(p));
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-tra-hang")
-    public String danhSachThanhCong(Model model, @RequestParam(defaultValue = "0", name = "page") Integer page) {
+    public String danhSachThanhCong(Model model, @RequestParam(defaultValue = "0", name = "p") Integer p) {
+        if (p<=0){
+            p=0;
+        }
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
-        model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong(page));
+        model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong(p));
         return "/admin/index";
     }
 

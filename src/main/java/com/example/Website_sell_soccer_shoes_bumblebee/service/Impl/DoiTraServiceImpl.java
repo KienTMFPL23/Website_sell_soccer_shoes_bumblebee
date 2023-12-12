@@ -46,13 +46,13 @@ public class DoiTraServiceImpl implements DoiTraService {
     @Override
     public Page<DoiTra> listDoiTraThanhCong(Integer page)
     {
-        Pageable pageable = PageRequest.of(page,5);
+        Pageable pageable = PageRequest.of(page,2);
         return doiTraRepo.getListDoiTraThanhCong(pageable);
     }
 
     @Override
     public Page<DoiTra> listHuyDoiTra(Integer page) {
-        Pageable pageable = PageRequest.of(page,5);
+        Pageable pageable = PageRequest.of(page,2);
         return doiTraRepo.getListHuyDoiTra(pageable);
     }
 
