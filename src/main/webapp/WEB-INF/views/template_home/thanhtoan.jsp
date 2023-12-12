@@ -133,20 +133,34 @@
 
                                         <td style="text-align: center;padding-top: 25px;">
                                             <c:if test="${not empty sp.ctsp.ctkm}">
+                                                <c:set var="allTrangThai1" value="false"/>
                                                 <c:forEach var="km" items="${sp.ctsp.ctkm}">
-                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                        <label id="thanhTien_${sp.id}"
-                                                               class="thanhTien"><fmt:formatNumber
-                                                                value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
-                                                                type="number"/> đ</label>
-                                                    </c:if>
-                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                        <label id="thanhTien_${sp.id}"
-                                                               class="thanhTien"><fmt:formatNumber
-                                                                value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"
-                                                                type="number"/> đ</label>
+                                                    <c:if test="${km.khuyenMai.trangThai == 0}">
+                                                        <c:set var="allTrangThai1" value="true"/>
+                                                        <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                            <label id="thanhTien_${sp.id}"
+                                                                   class="thanhTien"><fmt:formatNumber
+                                                                    value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
+                                                                    type="number"/> đ</label>
+                                                        </c:if>
+                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                            <label id="thanhTien_${sp.id}"
+                                                                   class="thanhTien"><fmt:formatNumber
+                                                                    value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"
+                                                                    type="number"/> đ</label>
+                                                        </c:if>
+                                                        <p style="text-decoration: line-through"><fmt:formatNumber
+                                                                value="${sp.donGia*sp.soLuong}"
+                                                                type="number"/> đ</p>
                                                     </c:if>
                                                 </c:forEach>
+                                                <c:if test="${allTrangThai1 eq false}">
+                                                    <label class="thanhTien">
+                                                        <fmt:formatNumber
+                                                                value="${sp.donGia * sp.soLuong}"
+                                                                type="number"/> đ
+                                                    </label>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${empty sp.ctsp.ctkm}">
                                                 <label class="thanhTien">

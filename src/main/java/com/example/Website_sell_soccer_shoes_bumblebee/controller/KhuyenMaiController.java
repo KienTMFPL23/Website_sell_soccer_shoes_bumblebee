@@ -137,7 +137,7 @@ public class KhuyenMaiController {
         idKhuyenMai = km.getId();
         for (ChiTietSanPham ctsp : listCTKM) {
             ChiTietKhuyenMai chiTietKhuyenMai = chiTietKhuyenMaiService.findCtkmByIdKmAndCtsp(ctsp.getId(), idKM);
-            ChiTietKhuyenMai chiTietKhuyenMai1 = chiTietKhuyenMaiService.findIdCTSP(ctsp.getId());
+//            ChiTietKhuyenMai chiTietKhuyenMai1 = chiTietKhuyenMaiService.findIdCTSP(ctsp.getId());
 //            // Tổng giá trị khuyến mại đã có
 //            for (ChiTietKhuyenMai ctKhuyenMai : chiTietKhuyenMaiService.findIdCTSP(ctsp.getId())) {
 //                tongKhuyenMai += ctKhuyenMai.getKhuyenMai().getGiaTri();
@@ -171,11 +171,11 @@ public class KhuyenMaiController {
             }
 
             // Validate Một sản phẩm chỉ đc một khuyến mại
-            if (chiTietKhuyenMai1 != null) {
-                model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
-                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
-                return "admin/index";
-            }
+//            if (chiTietKhuyenMai1 != null) {
+//                model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
+//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+//                return "admin/index";
+//            }
 
 //            // Validate tổng giá trị khuyến mại < 40%
 //            else if (tongKhuyenMai > 0.4) {
