@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -47,10 +48,6 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
         return repo.findMa(ma);
     }
 
-    @Override
-    public List<KhuyenMai> searchKMByNgayTaoAndDonVi(Date fromDate, Date toDate, String donVi) {
-        return repo.searchKMByNgayTaoAndDonVi(fromDate, toDate, donVi);
-    }
 
 
     @Override
@@ -74,6 +71,13 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
             khuyenMai.setTrangThai(1);
             repo.save(khuyenMai);
         }
+    }
+
+    @Override
+    public KhuyenMai getBestPromotion(List<KhuyenMai> promotions) {
+        return promotions.stream()
+                .max(Comparator.comparing(KhuyenMai::getTrangThai))
+                .orElse(null);
     }
 
 }

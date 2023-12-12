@@ -200,6 +200,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("listKhachHang", khachHangService.getAllKHOderBy());
         getTaiKhoan(model);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
+
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         sumMoney = hoaDonChiTietService.getTotalMoney(list);
         if (sumMoney < 0) {
@@ -208,6 +209,7 @@ public class BanHangTaiQuayController {
         } else {
             model.addAttribute("sumMoney", sumMoney);
         }
+
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());

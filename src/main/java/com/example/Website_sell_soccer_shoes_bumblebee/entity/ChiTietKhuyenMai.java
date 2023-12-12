@@ -23,10 +23,8 @@ public class ChiTietKhuyenMai {
     @Column(name = "Id")
     private UUID id;
 
-    @Column(name = "NgayCapNhat")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngayCapNhat;
+    @Column(name = "GiaKhuyenMai")
+    private Double giaKhuyenMai;
 
     @Column(name = "TrangThai")
     private Integer trangThai;
