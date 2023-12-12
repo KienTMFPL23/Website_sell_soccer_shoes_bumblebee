@@ -74,17 +74,24 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
             if (hdct.getChiTietSanPham().getCtkm().isEmpty()) {
                 sumGoc += hdct.getDonGia() * hdct.getSoLuong();
             } else {
-                for (ChiTietKhuyenMai ctkm : hdct.getChiTietSanPham().getCtkm()) {
-                    if (ctkm.getKhuyenMai().getTrangThai() == 1) {
-                        sumGoc += hdct.getDonGia() * hdct.getSoLuong();
-                    } else {
-                        sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+                Boolean allTrangThai1 = false;
+                for (ChiTietKhuyenMai chiTietKhuyenMai : hdct.getChiTietSanPham().getCtkm()) {
+                    if (chiTietKhuyenMai.getTrangThai() == 0) {
+                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
+                            sumKhuyenMai += (chiTietKhuyenMai.getCtsp().getGiaBan() - (chiTietKhuyenMai.getCtsp().getGiaBan()
+                                    * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100)) * hdct.getSoLuong();
+                        }else{
+                            sumKhuyenMai += (chiTietKhuyenMai.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri()) * hdct.getSoLuong();
+                        }
+                        allTrangThai1 = true;
                     }
+                }
+                if (allTrangThai1 == false){
+                    sumGoc += hdct.getDonGia() * hdct.getSoLuong();
                 }
             }
             sum = sumGoc + sumKhuyenMai;
         }
-
         return sum;
     }
 

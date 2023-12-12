@@ -147,13 +147,14 @@ public class HomeController {
     private List<GioHangChiTiet> listGHCT = null;
     private List<UUID> idCartUUIDList = null;
 
-
     @RequestMapping("/bumblebee/home")
     public String home(Model model, @RequestParam(defaultValue = "0") int p, HttpSession session) {
         int page = p; // Trang đầu tiên
         int pageSize = 10;
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ChiTietSanPham> pageSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
+
+
         model.addAttribute("pageSP", pageSP);
         model.addAttribute("view", "../template_home/home.jsp");
         return "template_home/index";
@@ -467,7 +468,8 @@ public class HomeController {
             }
         }
 
-        return "redirect:/bumblebee/don-mua/cho-xac-nhan";
+        //return "redirect:/bumblebee/don-mua/cho-xac-nhan";
+        return "redirect:/bumblebee/bill/" + hoaDon.getId();
     }
 
     // THANH TOÁN VNPAY

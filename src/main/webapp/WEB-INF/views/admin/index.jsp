@@ -173,7 +173,7 @@
                 >
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/khach-hang/hien-thi">Khách hàng</a>
-                        <a class="collapse-item" href="/nhan-vien/thong-tin">Nhân viên</a>
+                        <a class="collapse-item" href="/nhan-vien/tai-khoan">Nhân viên</a>
                     </div>
                 </div>
             </li>
@@ -213,7 +213,7 @@
                 <b>Quản lý đổi trả</b></a
             >
         </li>
-======= -->
+
             <!-- Nav Item - Quản lý khuyến mãi -->
             <li class="nav-item">
                 <a class="nav-link" href="/bumblebee/khuyen-mai/list">

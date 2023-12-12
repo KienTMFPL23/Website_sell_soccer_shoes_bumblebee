@@ -39,7 +39,8 @@
                                         <a
                                                 class="ps-shoe__overlay"
                                                 href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt="" width="221px" height="221px"></a>
+                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt="" width="221px"
+                                                height="221px"></a>
                                     </div>
                                     <div class="favorite favorite_left"></div>
                                     <c:forEach var="km" items="${item.ctkm}">
@@ -47,7 +48,7 @@
                                             <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
                                                 <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
                                         </c:if>
-                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                        <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
                                             <div class="product_bubble product_bubble_left product_bubble_green ">
                                                 <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
                                                                           type="number"/>đ</span>
@@ -128,7 +129,8 @@
                                                         <p>Chọn số lượng</p>
                                                         <input type="number"
                                                                style="width: 100px;font-size: 15px;padding-left: 10px;height: 27px;border: 1px solid #b1b1b8"
-                                                               name="soLuong" value="1" id="slchon_${item.sanPham.id}_${item.mauSac.id}"
+                                                               name="soLuong" value="1"
+                                                               id="slchon_${item.sanPham.id}_${item.mauSac.id}"
                                                                onchange="thayDoiSoLuong('${item.sanPham.id}','${item.mauSac.id}')"
                                                                oninput="chonSoLuong('${item.sanPham.id}','${item.mauSac.id}',event)">
                                                     </div>
@@ -148,7 +150,8 @@
                                                         id="btn-themgh_${item.sanPham.id}_${item.mauSac.id}"
                                                         style="font-size:15px;background-color: white; color: black;border: 1px solid black"
                                                         type="button"
-                                                        onclick="return themVaoGioHang('${item.sanPham.id}','${item.mauSac.id}')">Thêm vào giỏ hàng
+                                                        onclick="return themVaoGioHang('${item.sanPham.id}','${item.mauSac.id}')">
+                                                    Thêm vào giỏ hàng
                                                 </button>
                                             </div>
                                         </div>
@@ -226,8 +229,9 @@
                                                             </c:if>
                                                             <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                                 <div class="product_bubble product_bubble_left product_bubble_green ">
-                                                <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
-                                                                          type="number"/>đ</span>
+                                                                                                        <span>- <fmt:formatNumber
+                                                                                                                value="${km.khuyenMai.giaTri}"
+                                                                                                                type="number"/>đ</span>
                                                                 </div>
                                                             </c:if>
                                                         </c:forEach>
@@ -330,7 +334,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function themVaoGioHang(idsp,idms) {
+    function themVaoGioHang(idsp, idms) {
         <c:if test="${userLogged.username == null}">
         var toastElement = document.getElementById("toast_warring_login");
         toastElement.style.display = "block";

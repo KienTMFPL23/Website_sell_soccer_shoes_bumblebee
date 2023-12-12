@@ -91,14 +91,13 @@ public class DangNhapController {
     public String register(Model model,
                            @Valid @ModelAttribute(name = "taikhoan") TaiKhoan taikhoan, BindingResult result,
                            HttpSession session,
-                           @RequestParam(name = "password") String password,
                            @RequestParam(name = "confirmpassword") String confirmpassword
     ) {
         if (result.hasErrors()) {
             return "dang_nhap/dang_ky";
         }
 
-        if (!password.equalsIgnoreCase(confirmpassword)) {
+        if (!confirmpassword.equalsIgnoreCase(taikhoan.getPassword())) {
             model.addAttribute("messageConfirmPass", "Mật khẩu không trùng khớp");
             return "/dang_nhap/dang_ky";
         }

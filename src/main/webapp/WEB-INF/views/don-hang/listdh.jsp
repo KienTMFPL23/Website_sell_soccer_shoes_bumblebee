@@ -74,16 +74,16 @@
                     huỷ<span
                             class="badge text-bg-secondary">${countHDHuy}</span></a>
             </li>
-<%--            <li class="nav-item"  onclick="changeState('don-doi')">--%>
-<%--                <a class="nav-link  ${donHang == 'don-doi' ? 'active' : ''}"--%>
-<%--                   href="/don-hang/list-don-doi">Đổi trả hàng<span--%>
-<%--                        class="badge text-bg-secondary">${countHDDoiHang}</span></a>--%>
-<%--            </li>--%>
-<%--            <li class="nav-item"  onclick="changeState('don-da-doi')">--%>
-<%--                <a class="nav-link  ${donHang == 'don-da-doi' ? 'active' : ''}"--%>
-<%--                   href="/don-hang/list-don-da-doi">Đã đổi trả hàng<span--%>
-<%--                        class="badge text-bg-secondary">${countHDDaDoi}</span></a>--%>
-<%--            </li>--%>
+            <%--            <li class="nav-item"  onclick="changeState('don-doi')">--%>
+            <%--                <a class="nav-link  ${donHang == 'don-doi' ? 'active' : ''}"--%>
+            <%--                   href="/don-hang/list-don-doi">Đổi trả hàng<span--%>
+            <%--                        class="badge text-bg-secondary">${countHDDoiHang}</span></a>--%>
+            <%--            </li>--%>
+            <%--            <li class="nav-item"  onclick="changeState('don-da-doi')">--%>
+            <%--                <a class="nav-link  ${donHang == 'don-da-doi' ? 'active' : ''}"--%>
+            <%--                   href="/don-hang/list-don-da-doi">Đã đổi trả hàng<span--%>
+            <%--                        class="badge text-bg-secondary">${countHDDaDoi}</span></a>--%>
+            <%--            </li>--%>
         </ul>
     </div>
     <br>
@@ -132,6 +132,8 @@
             <a href="/don-hang/exportExcel" class=" btn btn-secondary">
                 <i class="bi bi-file-earmark-arrow-down text-md"></i>
             </a>
+
+            <button onclick="Print()">In hóa đơn</button>
         </div>
     </div>
     </br>
@@ -255,11 +257,11 @@
                                            onclick="confirmAndUpdateXacNhan('${hd.id}')">Xác
                                             nhận</a>
                                     </c:if>
-<%--                                    <c:if test="${hd.loaiHoaDon==1}">--%>
-<%--                                        <a style="border-radius: 20px"--%>
-<%--                                           class="btn btn-warning" onclick="confirmAndXacNhanGiao('${hd.id}')">Xác--%>
-<%--                                            nhận</a>--%>
-<%--                                    </c:if>--%>
+                                    <%--                                    <c:if test="${hd.loaiHoaDon==1}">--%>
+                                    <%--                                        <a style="border-radius: 20px"--%>
+                                    <%--                                           class="btn btn-warning" onclick="confirmAndXacNhanGiao('${hd.id}')">Xác--%>
+                                    <%--                                            nhận</a>--%>
+                                    <%--                                    </c:if>--%>
                                     <c:if test="${ hd.loaiHoaDon==0}">
                                         <a class="btn btn-danger"
                                            onclick="confirmAndHuy('${hd.id}')"
@@ -492,6 +494,11 @@
     function changeState(state) {
         document.getElementById('donHang').value = state; // Set the hidden field value
         document.getElementById('searchForm').submit(); // Submit the form
+    }
+</script>
+<script>
+    function Print() {
+        window.print();
     }
 </script>
 <script type="text/javascript">
