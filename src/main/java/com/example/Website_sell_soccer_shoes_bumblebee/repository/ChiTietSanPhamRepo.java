@@ -17,7 +17,9 @@ import java.util.UUID;
 
 @Repository
 public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> {
-
+    boolean existsBySanPhamAndMauSacAndLoaiGiayAndKichCoAndChatLieuAndDeGiay(
+            SanPham sanPham, MauSac mauSac, LoaiGiay loaiGiay, KichCo kichCo, ChatLieu chatLieu, DeGiay deGiay
+    );
 
     @Query(value = "SELECT ctsp FROM ChiTietSanPham ctsp WHERE  ctsp.sanPham.tenSanPham like %?1%")
     Page<ChiTietSanPham> searchCTSP(String keyword, Pageable pageable);
@@ -214,6 +216,9 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select ctsp from ChiTietSanPham ctsp order by ctsp.ngayTao desc ")
     Page<ChiTietSanPham>  getListSP(Pageable pageable);
 
+    boolean existsBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
+    );
 
     // Thống kê
     @Query("SELECT SUM(c.soLuong) FROM ChiTietSanPham c")

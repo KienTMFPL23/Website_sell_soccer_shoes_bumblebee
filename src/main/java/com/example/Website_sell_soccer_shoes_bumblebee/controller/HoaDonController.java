@@ -142,20 +142,20 @@ public class HoaDonController {
         return "redirect:/hoa-don/hien-thi";
     }
 
-    @GetMapping("/hoa-don/exportExcel")
-    public void exportToExcel(HttpServletResponse response) throws Exception {
-        response.setContentType("application/octet-stream");
-
-        String headerKey = "Content-Disposition";
-        DateFormat dateFormat = (DateFormat) new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String current = dateFormat.format(new Date());
-        String filename = "bills_" + current + ".xls";
-        String headerValue = "attachment;filename=" + filename;
-
-        response.setHeader(headerKey, headerValue);
-
-        hoaDonService.exportExcel(response);
-    }
+//    @GetMapping("/hoa-don/exportExcel")
+//    public void exportToExcel(HttpServletResponse response) throws Exception {
+//        response.setContentType("application/octet-stream");
+//
+//        String headerKey = "Content-Disposition";
+//        DateFormat dateFormat = (DateFormat) new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+//        String current = dateFormat.format(new Date());
+//        String filename = "bills_" + current + ".xls";
+//        String headerValue = "attachment;filename=" + filename;
+//
+//        response.setHeader(headerKey, headerValue);
+//
+//        hoaDonService.exportExcel(response);
+//    }
 
 //    package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 //

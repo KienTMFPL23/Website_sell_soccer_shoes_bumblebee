@@ -233,6 +233,7 @@ public class HomeController {
     }
 
 
+
     @GetMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
@@ -249,7 +250,6 @@ public class HomeController {
         model.addAttribute("view", "../template_home/product_detail.jsp");
         return "template_home/index";
     }
-
 
     @PostMapping("/bumblebee/add-to-cart")
     public ResponseEntity<String> addCart(Model model,

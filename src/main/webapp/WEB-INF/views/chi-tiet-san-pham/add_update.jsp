@@ -4,6 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </br>
 <style>
@@ -77,25 +78,25 @@
         <div class="row">
             <div class="col-lg-6 ">
                 <div class="item inp">
-                    <label class="form-label">Tên sản phẩm: </label>
+                    <label class="form-label">Tên sản phẩm <span style="color: red">*</span> : </label>
                     <form:input path="sanPham" class="form-control" cssStyle="margin-left: 12px" type="hidden"/>
 
                     <form:input path="sanPham.tenSanPham" value="${tensp}" cssStyle="margin-left: 12px"
                                 readonly="true"/>
                 </div>
                 <div class="item inp">
-                    <label class="form-label">Giá Bán: </label>
+                    <label class="form-label">Giá Bán <span style="color: red">*</span> : </label>
                     <form:input path="giaBan" type="number" min="1" cssStyle="margin-left: 50px"/>
                     <p><form:errors path="giaBan" cssStyle="color: crimson"/></p>
                 </div>
 
                 <div class="item inp">
-                    <label class="form-label">Số lượng: </label>
+                    <label class="form-label">Số lượng <span style="color: red">*</span> : </label>
                     <form:input path="soLuong" type="number" min="1" cssStyle="margin-left: 44px"/>
                     <p><form:errors path="soLuong" cssStyle="color: crimson"/></p>
                 </div>
                 <div class="item">
-                    <label class="form-label">Mô tả: </label>
+                    <label class="form-label">Mô tả <span style="color: red">*</span> : </label>
                     <form:textarea cols="50" rows="5" path="moTaCT"
                                    cssStyle="border: none; width: 280px;height: 100px;border-radius: 15px;margin-left: 65px;margin-top: 20px"/>
                     <p><form:errors path="moTaCT" cssStyle="color: crimson"/></p>
@@ -103,7 +104,7 @@
                 <br>
                 <div class="item form-check-inline">
                     <br>
-                    <label class="form-label">Trạng Thái</label>
+                    <label class="form-label">Trạng Thái <span style="color: red">*</span> :</label>
                     <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"
                                        cssStyle="margin-right: 15px;margin-left: 35px;"/>
                     <p><form:errors path="trangThai" cssStyle="color: crimson"/></p>
@@ -111,7 +112,7 @@
             </div>
             <div class="col-lg-6 ">
                 <div class="item-right">
-                    <label class="form-label" cssStyle="margin-right: 15px;margin-left: 35px;">Loại giầy: </label>
+                    <label class="form-label" cssStyle="margin-right: 15px;margin-left: 35px;">Loại giầy <span style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName10" path="loaiGiay">
                         <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
@@ -123,7 +124,7 @@
                 </div>
 
                 <div class="item-right">
-                    <label class="form-label">Kích cỡ: </label>
+                    <label class="form-label">Kích cỡ <span style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName11" path="kichCo" cssClass=".searchName1">
                         <form:option value="">Chọn kích cỡ</form:option>
                         <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
@@ -134,7 +135,7 @@
                     <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
                 </div>
                 <div class="item-right">
-                    <label class="form-label">Màu sắc: </label>
+                    <label class="form-label">Màu sắc <span style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName12" path="mauSac" cssClass=".searchName2">
                         <form:option value="">Chọn màu sắc</form:option>
                         <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
@@ -146,7 +147,7 @@
 
                 </div>
                 <div class="item-right">
-                    <label class="form-label">Chất liệu: </label>
+                    <label class="form-label">Chất liệu <span style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName14" path="chatLieu">
                         <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
@@ -157,7 +158,7 @@
                     <div><form:errors path="chatLieu" cssStyle="color: crimson"/></div>
                 </div>
                 <div class="item-right">
-                    <label class="form-label">Đế giầy: </label>
+                    <label class="form-label">Đế giầy <span style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName13" path="deGiay" cssClass=".searchName4">
                         <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
@@ -171,10 +172,12 @@
             </div>
         </div>
 
+        <input type="hidden" id="submitStatus" name="submitStatus" value="${submitStatus}">
+
         <%--    22                onclick="return confirm('Bạn có chắc muốn thực hiện ?');"--%>
         <div class="text-center" style="padding-bottom: 20px">
             <button type="submit" id="but" class="btn btn-success"
-                    onclick="submitForm()"
+                    onclick=" submitForm()"
             >
                 Submit
             </button>
@@ -437,13 +440,137 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css"/>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<%--<script>--%>
+<%--    $(document).ready(function () {--%>
+<%--        $("#sanPhamForm").validate({--%>
+<%--            rules: {--%>
+<%--                giaBan: {--%>
+<%--                    required: true,--%>
+<%--                    min: 1--%>
+<%--                },--%>
+<%--                soLuong: {--%>
+<%--                    required: true,--%>
+<%--                    min: 1--%>
+<%--                },--%>
+<%--                moTaCT: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                trangThai: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                loaiGiay: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                kichCo: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                mauSac: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                chatLieu: {--%>
+<%--                    required: true--%>
+<%--                },--%>
+<%--                deGiay: {--%>
+<%--                    required: true--%>
+<%--                }--%>
+<%--            },--%>
+<%--            messages: {--%>
+<%--                giaBan: {--%>
+<%--                    required: "Vui lòng nhập giá bán",--%>
+<%--                    min: "Giá bán phải lớn hơn hoặc bằng 1"--%>
+<%--                },--%>
+<%--                soLuong: {--%>
+<%--                    required: "Vui lòng nhập số lượng",--%>
+<%--                    min: "Số lượng phải lớn hơn hoặc bằng 1"--%>
+<%--                },--%>
+<%--                moTaCT: {--%>
+<%--                    required: "Vui lòng nhập mô tả"--%>
+<%--                },--%>
+<%--                trangThai: {--%>
+<%--                    required: "Vui lòng chọn trạng thái"--%>
+<%--                },--%>
+<%--                loaiGiay: {--%>
+<%--                    required: "Vui lòng chọn loại giầy"--%>
+<%--                },--%>
+<%--                kichCo: {--%>
+<%--                    required: "Vui lòng chọn kích cỡ"--%>
+<%--                },--%>
+<%--                mauSac: {--%>
+<%--                    required: "Vui lòng chọn màu sắc"--%>
+<%--                },--%>
+<%--                chatLieu: {--%>
+<%--                    required: "Vui lòng chọn chất liệu"--%>
+<%--                },--%>
+<%--                deGiay: {--%>
+<%--                    required: "Vui lòng chọn đế giầy"--%>
+<%--                }--%>
+<%--            },--%>
+<%--            submitHandler: function (form) {--%>
+<%--                submitForm();--%>
+<%--            }--%>
+<%--        });--%>
 
+<%--        function submitForm() {--%>
+
+<%--            $.ajax({--%>
+<%--                type: "POST",--%>
+<%--                url: "${action}",--%>
+<%--                data: $("#sanPhamForm").serialize(),--%>
+<%--                success: function (data) {--%>
+<%--                    Swal.fire({--%>
+<%--                        position: "center",--%>
+<%--                        icon: "success",--%>
+<%--                        title: "Your data has been saved",--%>
+<%--                        showConfirmButton: false,--%>
+<%--                        timer: 3000--%>
+<%--                    }).then(() => {--%>
+<%--                        var redirectUrl = "${redirectUrl}";--%>
+<%--                        window.location.href = redirectUrl;--%>
+<%--                    });--%>
+<%--                },--%>
+<%--                error: function (error) {--%>
+<%--                    console.log("Error occurred:", error);--%>
+
+<%--                    // Hiển thị thông báo lỗi cho người dùng--%>
+<%--                    Swal.fire({--%>
+<%--                        title: 'Lỗi!',--%>
+<%--                        text: 'Đã xảy ra lỗi. Vui lòng thử lại sau.',--%>
+<%--                        icon: 'error',--%>
+<%--                        showConfirmButton: true--%>
+<%--                    });--%>
+<%--                }--%>
+<%--            });--%>
+<%--        }--%>
+
+<%--    });--%>
+<%--</script>--%>
 <%--<script>--%>
 
-<%--    function submitForm() {--%>
-<%--        alert("Thêm thành công !")--%>
+<%--    var submitStatus = document.getElementById("submitStatus").value;--%>
+
+<%--    // Hàm hiển thị SweetAlert--%>
+<%--    function showSweetAlert(title, message, icon) {--%>
+<%--        Swal.fire({--%>
+<%--            title: title,--%>
+<%--            text: message,--%>
+<%--            icon: icon--%>
+<%--        });--%>
+<%--    }--%>
+
+<%--    // Kiểm tra xem có thông báo SweetAlert không--%>
+<%--    if (submitStatus === "success") {--%>
+<%--        showSweetAlert('Thành công!', 'Thêm thành công sản phẩm !', 'success');--%>
+<%--        setTimeout(function() {--%>
+<%--            window.location.href = "${redirectUrl}";--%>
+<%--        }, 5000);--%>
+<%--    } else if (submitStatus === "error1") {--%>
+<%--        showSweetAlert('Lỗi!', 'Sản phẩm đã tồn tại!', 'error1');--%>
+<%--    } else if (submitStatus === "error") {--%>
+<%--        showSweetAlert('Lỗi!', 'Vui lòng kiểm tra các trường trên!', 'error');--%>
 <%--    }--%>
 <%--</script>--%>
+
 <script>
     function clearErrors() {
         $("#error-message").empty();
