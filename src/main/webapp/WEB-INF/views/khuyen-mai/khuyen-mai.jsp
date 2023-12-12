@@ -354,21 +354,25 @@
 
                                                         <tbody id="myTable3">
                                                         <c:forEach items="${listCTSP}" var="sp" varStatus="i">
-                                                            <tr style="background-color: ${not empty sp.ctkm ? '#e8e8e8':'white'}">
+                                                            <tr>
                                                                 <td>
                                                                     <c:if test="${not empty sp.ctkm}">
-                                                                        <c:forEach items="${sp.ctkm}" var="ctkm">
+
+                                                                        <c:forEach var="ctkm" items="${sp.ctkm}">
+                                                                            <c:set var="allTrangThai1" value="false"/>
                                                                             <c:if test="${ctkm.khuyenMai.trangThai == 0}">
                                                                                 <input disabled checked type="checkbox">
-                                                                            </c:if>
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                                                <input
-                                                                                        class="checkCart"
-                                                                                        type="checkbox"
-                                                                                        name="idListCartDetail"
-                                                                                        value="${sp.id}">
+                                                                                <c:set var="allTrangThai1" value="true"/>
                                                                             </c:if>
                                                                         </c:forEach>
+                                                                        <c:if test="${allTrangThai1 eq false}">
+                                                                            <input
+                                                                                    class="checkCart" type="checkbox"
+                                                                                    name="idListCartDetail"
+                                                                                    value="${sp.id}">
+                                                                            <c:set var="allTrangThai1" value="true"/>
+                                                                        </c:if>
+
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
 

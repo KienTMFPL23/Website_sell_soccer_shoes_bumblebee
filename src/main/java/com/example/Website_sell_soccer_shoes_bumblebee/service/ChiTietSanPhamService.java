@@ -41,6 +41,8 @@ public interface ChiTietSanPhamService {
 
     void deleteSP(UUID id);
 
+    boolean isChiTietSanPhamExists(QLSanPham sp);
+
     //seacrchByMau
     Page<ChiTietSanPham> searchByMau(UUID idMau, Pageable pageable);
 

@@ -105,7 +105,7 @@
                     <b>Trang chủ</b></a
                 >
             </li>
-
+        </c:if>
             <!-- Nav Item - Thống kê -->
             <li class="nav-item">
                 <a class="nav-link" href="/bumblebee/thong-ke/san-pham-da-ban">
@@ -186,33 +186,6 @@
                     <b>Quản lý hoá đơn</b></a
                 >
             </li>
-
-
-<!-- <<<<<<< kientm
-        <!-- Nav Item - Quản lý khuyến mãi -->
-        <li class="nav-item">
-            <a class="nav-link" href="/bumblebee/khuyen-mai/list">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <b>Quản lý khuyến mại</b></a
-            >
-        </li>
-
-<%--        <!-- Nav Item - Quản lý hóa đơn -->--%>
-<%--        <li class="nav-item">--%>
-<%--            <a class="nav-link" href="/hoa-don/hien-thi">--%>
-<%--                <i class="fas fa-fw fa-chart-area"></i>--%>
-<%--                <b>Quản lý hóa đơn</b></a--%>
-<%--            >--%>
-<%--        </li>--%>
-
-
-        <!-- Nav Item - Quản lý đổi trả -->
-        <li class="nav-item">
-            <a class="nav-link" href="/bumblebee/doi-hang/list-tra-hang">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <b>Quản lý đổi trả</b></a
-            >
-        </li>
 
             <!-- Nav Item - Quản lý khuyến mãi -->
             <li class="nav-item">
@@ -430,6 +403,7 @@
 <script src="../../../js/ban_hang_tai_quay/doi-hang.js"></script>
 <script src="../../../js/doi_hang/san-pham-doi.js"></script>
 <script src="../../../js/doi_hang/validate-modal.js"></script>
+<script src="../../../js/doi_hang/web-cam-doi-tra.js"></script>
 <script src="../../../js/doi_hang/list-doi-tra-ct.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"

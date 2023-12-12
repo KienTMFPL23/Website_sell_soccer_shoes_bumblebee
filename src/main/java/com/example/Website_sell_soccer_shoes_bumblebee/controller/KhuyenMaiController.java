@@ -134,7 +134,8 @@ public class KhuyenMaiController {
         idKhuyenMai = km.getId();
         for (ChiTietSanPham ctsp : listCTKM) {
             ChiTietKhuyenMai chiTietKhuyenMai = chiTietKhuyenMaiService.findCtkmByIdKmAndCtsp(ctsp.getId(), idKM);
-            ChiTietKhuyenMai chiTietKhuyenMai1 = chiTietKhuyenMaiService.findIdCTSP(ctsp.getId());
+
+//            ChiTietKhuyenMai chiTietKhuyenMai1 = chiTietKhuyenMaiService.findIdCTSP(ctsp.getId());
 
 //            // Tổng giá trị khuyến mại đã có
 //            for (ChiTietKhuyenMai ctKhuyenMai : chiTietKhuyenMaiService.findIdCTSP(ctsp.getId())) {
@@ -174,18 +175,21 @@ public class KhuyenMaiController {
                 model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
                 return "admin/index";
             }
-//            if (listCTKMByTrangThai1 != null) {
-//                for (ChiTietKhuyenMai chiTietKM : listCTKMByTrangThai1) {
-//                    chiTietKM.getCtsp().setGiaBan(ctsp.getGiaBan());
-//                    chiTietKhuyenMaiService.save(chiTietKM);
-//                }
+
+
+            // Validate Một sản phẩm chỉ đc một khuyến mại
+//            if (chiTietKhuyenMai1 != null) {
+//                model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
+//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+//                return "admin/index";
 //            }
-//
-//            if (listCTKMByTrangThai0 != null && listCTKMByTrangThai1 != null) {
-//                for (ChiTietKhuyenMai chiTietKM : listCTKMByTrangThai1) {
-//                    chiTietKM.getCtsp().setGiaBan(chiTietKM.getGiaKhuyenMai());
-//                    chiTietKhuyenMaiService.save(chiTietKM);
-//                }
+
+//            // Validate tổng giá trị khuyến mại < 40%
+//            else if (tongKhuyenMai > 0.4) {
+//                model.addAttribute("error", "Khuyến mại quá 40% rồiii");
+//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+//                return "admin/index";
+
 //            }
 
             else {

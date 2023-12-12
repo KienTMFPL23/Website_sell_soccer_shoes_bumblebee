@@ -28,10 +28,10 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query("SELECT hd FROM HoaDon hd WHERE hd.ngayTao >= ?1 AND hd.ngayTao < ?2")
     Page<HoaDon> searchALlBetweenDates(Date startDate, Date endDate, Pageable pageable);
 // 20.11
-    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) order by h.ngayTao desc ")
+    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and not (h.trangThai = 1 AND h.loaiHoaDon = 1) order by h.ngayTao desc ")
     Page<HoaDon> searchHDByNgayTaoAndLoaiDon(Date fromDate, Date toDate, Integer key, Pageable pageable);
 
-    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and (?4 is null or h.trangThai=?4) order by h.ngayTao desc ")
+    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and (?4 is null or h.trangThai=?4) and not (h.trangThai = 1 AND h.loaiHoaDon = 1)   order by h.ngayTao desc ")
     Page<HoaDon> searchHDByNgayTaoAndLoaiDonTT(Date fromDate, Date toDate, Integer key,Integer trangThai, Pageable pageable);
 
     @Query("select hd from HoaDon hd where hd.id =?1")
@@ -65,7 +65,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query("select hd from HoaDon hd where  hd.trangThai=7 order by hd.ngayTao DESC")
     Page<HoaDon> donHangDaTra(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=1  order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where hd.trangThai=1 and hd.loaiHoaDon=0 order by hd.ngayTao DESC")
     Page<HoaDon> donHangChoXacNhan(Pageable pageable);
 
     @Query("select hd from HoaDon hd where  hd.trangThai=4  order by hd.ngayTao DESC")
@@ -105,7 +105,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
 
     //13.11.2023
     //số hoá đone chờ
-    @Query(value = "select count(*) from HoaDon hd where hd.TrangThai=1", nativeQuery = true)
+    @Query(value = "select count(*) from HoaDon hd where hd.TrangThai=1 and hd.LoaiHoaDon=0", nativeQuery = true)
     Integer countHDCho();
 
     @Query(value = "select count(*) from HoaDon hd where hd.TrangThai=2", nativeQuery = true)
@@ -158,7 +158,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
 
 
-    @Query(value = "select hd from HoaDon hd order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.trangThai <> 1 or hd.loaiHoaDon <> 1 order by hd.ngayTao DESC")
     Page<HoaDon> findAllDonHang(Pageable pageable);
 
 

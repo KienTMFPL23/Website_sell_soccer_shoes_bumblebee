@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
-<%--danh sách hàng trả--%>
+
 <div class="content">
     <h1 style="text-align: center">Danh sách hóa đơn đổi trả</h1>
     <div class="row">
@@ -96,8 +96,7 @@
 
                     <td>${dt.hoaDon.tenNguoiNhan}</td>
                     <td>
-                        <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
-
+                        <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.id}">Chi tiết</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -106,17 +105,18 @@
     </div>
     <div>
         <nav aria-label="Page navigation example">
-                        <ul class="pagination" style="justify-content: center">
-                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=0">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link"
-                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number-1}"><<</a></li>
-                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number+1}">>></a></li>
-                            <li class="page-item"><a class="page-link"
-                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.totalPages - 1}">Next</a>
-                            </li>
-                        </ul>
+            <ul class="pagination" style="justify-content: center">
 
+                <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-doi-hang?p=0">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-doi-hang?p=${listDoiTra.number-1}"><<</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-doi-hang?p=${listDoiTra.number+1}">>></a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-doi-hang?p=${listDoiTra.totalPages-1}">Next</a>
+                </li>
+            </ul>
         </nav>
     </div>
 </div>

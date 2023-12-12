@@ -148,6 +148,7 @@
                     <th>Loại giầy</th>
                     <th>Màu sắc</th>
                     <th>Đế giầy</th>
+                    <th>Chất liệu</th>
                     <th>Kích cỡ</th>
                     <th>Giá Bán</th>
                     <th>Số lượng</th>
@@ -165,6 +166,7 @@
                         <td>${sp.loaiGiay.tentheloai}</td>
                         <td>${sp.mauSac.ten}</td>
                         <td>${sp.deGiay.loaiDe}</td>
+                        <td>${sp.chatLieu.ten}</td>
                         <td>${sp.kichCo.size}</td>
                         <td><fmt:formatNumber value="${sp.giaBan}" maxFractionDigits="20" type="number"/></td>
 

@@ -221,7 +221,12 @@ public class SanPhamController {
         sp.setNgayTao(Calendar.getInstance().getTime());
         ChiTietSanPham ctsp = new ChiTietSanPham();
         ctsp.loadFromViewModel(sp);
-
+        if (service.isChiTietSanPhamExists(sp)) {
+            model.addAttribute("submitStatus", "error1");
+            model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
+            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+            return "/admin/index";
+        }
         model.addAttribute("tensp", sanPham1.getTenSanPham());
         service.addKC(ctsp);
 
@@ -234,7 +239,7 @@ public class SanPhamController {
 //        // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
         //
-//        redirectAttributes.addFlashAttribute("redirectUrl","/chi-tiet-san-pham/list-san-pham/" + id);
+        redirectAttributes.addFlashAttribute("redirectUrl", "/chi-tiet-san-pham/list-san-pham/" + id);
 
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }

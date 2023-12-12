@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
-<%--danh sách hàng trả--%>
+
 <div class="content">
     <h1 style="text-align: center">Danh sách hóa đơn đổi trả</h1>
     <div class="row">
@@ -81,24 +81,24 @@
             <thead>
             <tr>
                 <th scope="col">STT</th>
-                <th scope="col">Mã hóa đơn</th>
-                <th scope="col">Nhân viên</th>
-                <th scope="col">Khách hàng</th>
-                <th scope="col"></th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Màu sắc</th>
+                <th scope="col">Kích cỡ</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Nhân viên thực hiện</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach varStatus="i" items="${listDoiTra.content}" var="dt">
                 <tr>
                     <td>${i.count}</td>
-                    <td>${dt.hoaDon.maHoaDon}</td>
-                    <td>${dt.nhanVien.ho} ${dt.nhanVien.tenDem} ${dt.nhanVien.ten}</td>
-
-                    <td>${dt.hoaDon.tenNguoiNhan}</td>
-                    <td>
-                        <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
-
-                    </td>
+                    <td>${dt.chiTietSanPham.sanPham.tenSanPham}</td>
+                    <td>${dt.chiTietSanPham.mauSac.ten}</td>
+                    <td>${dt.chiTietSanPham.kichCo.size}</td>
+                    <td>${dt.soLuong}</td>
+                    <td><fmt:formatNumber value="${dt.donGia}" type="number"/></td>
+                    <td>${dt.doiTra.nhanVien.ho} ${dt.doiTra.nhanVien.tenDem} ${dt.doiTra.nhanVien.ten}</td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -106,17 +106,19 @@
     </div>
     <div>
         <nav aria-label="Page navigation example">
-                        <ul class="pagination" style="justify-content: center">
-                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=0">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link"
-                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number-1}"><<</a></li>
-                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number+1}">>></a></li>
-                            <li class="page-item"><a class="page-link"
-                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.totalPages - 1}">Next</a>
-                            </li>
-                        </ul>
-
+            <ul class="pagination" style="justify-content: center">
+                <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-san-pham-loi?p=0">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-san-pham-loi?p=${listDoiTra.number-1}"><<</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-san-pham-loi?p=${listDoiTra.number+1}">>></a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-san-pham-loi?p=${listDoiTra.totalPages-1}">Next</a>
+                </li>
+            </ul>
         </nav>
     </div>
 </div>

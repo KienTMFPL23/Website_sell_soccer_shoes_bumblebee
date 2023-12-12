@@ -2,6 +2,8 @@ package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,12 +25,21 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
             "                        join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
             "                        join HoaDonChiTiet hdct on hdct.Id = dtct.IdHDCT\n" +
             "                        join HoaDon hd on hd.Id = hdct.IdHoaDon\n" +
-            "                        WHERE hd.id = ?1",nativeQuery = true)
+            "                        WHERE hd.id = ?1", nativeQuery = true)
     List<DoiTraChiTietCustom> listDoiTraCTCustom(UUID idHoaDon);
 
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.id = ?1 and  dtct.chiTietSanPham.id = ?2")
-    DoiTraChiTiet getDoiTraCT(UUID idDoiTra,UUID idCTSP);
+    DoiTraChiTiet getDoiTraCT(UUID idDoiTra, UUID idCTSP);
 
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.hoaDon.maHoaDon = ?1")
     List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon);
+
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.doiTra.trangThai = 2")
+    List<DoiTraChiTiet> listTraHang(UUID idHoaDon);
+
+    @Query(value = "select * from DoiTraChiTiet where LyDoDoiTra like N'%Sản phẩm lỗi%'",nativeQuery = true)
+    Page<DoiTraChiTiet> findSanPhamLoi(Pageable pageable);
+
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.doiTra.trangThai = 1")
+    List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon);
 }
