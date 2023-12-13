@@ -93,17 +93,6 @@ public class DoiTraController {
         return "/admin/index";
     }
 
-//    @GetMapping("/bumblebee/don-hang/{maHD}")
-//    public String chiTietDonHang(Model model, @PathVariable("maHD") String maHoaDon) {
-//        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
-//        List<HoaDonChiTiet> listSPMuonDoi = hoaDonChiTietService.listHDCTByMaHD(maHoaDon);
-//        model.addAttribute("listHDCT", listSPMuonDoi);
-//        model.addAttribute("listDoiTraCT",doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
-//
-//        getTaiKhoan(model);
-//        return "/admin/index";
-//    }
-
     @GetMapping("/bumblebee/don-hang/tao-doi-tra/{maHD}")
     public String hienThiDoiTra(Model model, @ModelAttribute("doiTraCT") DoiTraChiTiet doiTraCT, @PathVariable("maHD") String maHD) {
         model.addAttribute("view", "../doi-tra/tra-hang.jsp");
@@ -111,7 +100,6 @@ public class DoiTraController {
         model.addAttribute("hoaDonMua", hoaDon);
         List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(maHD);
         model.addAttribute("listHDCT", lstHoaDonCT);
-        model.addAttribute("listDoiTraCT", doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
         Double sumMoney = hoaDonChiTietService.getTotalMoney(lstHoaDonCT);
         model.addAttribute("sumMoney", sumMoney);
         this.maHoaDon = maHD;
@@ -156,6 +144,7 @@ public class DoiTraController {
     }
 
     private List<String> listlyDo = new ArrayList<>();
+
     private void createDoiTraCT(DoiTra doiTra, List<String> lydo) {
         for (int h = 0; h < listCTSP.size(); h++) {
             DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
@@ -199,7 +188,7 @@ public class DoiTraController {
 
     private void createDoiSanPham(UUID idSanPham, DoiTra doiTra, HoaDon hoaDon) {
         DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), idCTSP);
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), idSanPham);
         ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
         doiTraChiTiet.setChiTietSanPham(ctsp);
         doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
@@ -212,37 +201,61 @@ public class DoiTraController {
     }
 
 
-    @RequestMapping("/bumblebee/don-hang/update-so-Luong")
-    public String updateSoLuong(@RequestParam("soLuong") Integer soLuong) {
-        DoiTraChiTiet doiTraChiTiet = doiTraChiTietService.getDoiTraCT(this.idDoiTra, idCTSP);
-        doiTraChiTiet.setSoLuong(soLuong);
-        return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
+    @RequestMapping("/bumblebee/don-hang/huy/{id}")
+    public String huyDoiHang(@PathVariable("id")UUID id){
+        doiTraChiTietService.deleteDoiTraCT(id);
+        doiTraService.huyDoiTra(id);
+        return "redirect:/bumblebee/don-hang/tao-doi-tra/"+ this.maHoaDon;
+    }
+    @RequestMapping("/bumblebee/don-hang/update-so-Luong/{id}")
+    public String updateSoLuong(@RequestParam("soLuong") Integer soLuong,@PathVariable("id")UUID id) {
+        DoiTraChiTiet doiTraChiTiet = doiTraChiTietService.getOneDoiTraCT(id);
+        Integer soLuongDaMua = doiTraChiTiet.getHoaDonChiTiet().getSoLuong();
+        if (soLuong > soLuongDaMua){
+            doiTraChiTiet.setSoLuong(soLuongDaMua);
+            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+        }else if (soLuong <= 0){
+            doiTraChiTiet.setSoLuong(1);
+            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+        }
+        else {
+            doiTraChiTiet.setSoLuong(soLuong);
+            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+        }
+        return "redirect:/bumblebee/don-hang/doi-san-pham";
+    }
+
+    @RequestMapping("/bumblebee/don-hang/update-ly-do/{id}")
+    public String updateLyDo(@RequestParam("lyDoDoiTra") String lyDoDoiTra,@PathVariable("id")UUID id) {
+        DoiTraChiTiet doiTraChiTiet = doiTraChiTietService.getOneDoiTraCT(id);
+        doiTraChiTiet.setLyDoDoiTra(lyDoDoiTra);
+        doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+        return "redirect:/bumblebee/don-hang/doi-san-pham";
     }
 
     @RequestMapping("/bumblebee/don-hang/create-doi-tra/{idSanPham}")
     public String createDoiTra(Model model, @PathVariable("idSanPham") UUID idSanPham
     ) {
-        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
         DoiTra checkDoiTra = doiTraService.getOneDoiTra(this.maHoaDon);
         HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
 
         if (checkDoiTra != null) {
+            this.idDoiTra = checkDoiTra.getId();
             createDoiSanPham(idSanPham, checkDoiTra, hoaDon);
         } else {
             DoiTra doiTra = new DoiTra();
             doiTra.setHoaDon(hoaDon);
             doiTra.setNhanVien(nhanVien);
             doiTraService.saveDoiTra(doiTra);
-            this.idHoaDon = hoaDon.getId();
             createDoiSanPham(idSanPham, doiTra, hoaDon);
             idCTSP = idSanPham;
+            this.idDoiTra = doiTra.getId();
         }
-        return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
+        return "redirect:/bumblebee/don-hang/doi-san-pham";
     }
 
     @RequestMapping("/bumblebee/don-hang/xac-nhan-doi")
-    public String doiHang(@RequestParam("lyDoDoiTra") String lyDoDoiTra,
-                          @RequestParam("soLuong") Integer soLuong) throws ParseException {
+    public String doiHang(@RequestParam("lyDoDoiTra") String[] lyDoDoiTra) throws ParseException {
 
         DoiTra doiTra = doiTraService.getOneDoiTra(this.maHoaDon);
         Date date = new Date();
@@ -254,20 +267,27 @@ public class DoiTraController {
         HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
         hoaDon.setTrangThai(7);
         hoaDonService.saveHoaDon(hoaDon);
+
+        listlyDo = Arrays.asList(lyDoDoiTra)
+                .stream()
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
         List<DoiTraChiTiet> lstDoiTraCT = doiTraChiTietService.listDoiTraCTById(this.idDoiTra);
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), idCTSP);
-        hoaDonChiTiet.setTrangThai(0);
-        DoiTraChiTiet doiTraChiTiet = doiTraChiTietService.getDoiTraCT(this.idDoiTra, idCTSP);
-        doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
-        doiTraChiTiet.setLyDoDoiTra(lyDoDoiTra);
-        doiTraChiTiet.setSoLuong(soLuong);
-        doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-        hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+        for (DoiTraChiTiet doitraCT : lstDoiTraCT) {
+            DoiTraChiTiet doiTraChiTiet = doiTraChiTietService.getDoiTraCT(doitraCT.getDoiTra().getId(), doitraCT.getChiTietSanPham().getId());
+            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, doitraCT.getChiTietSanPham().getId());
+            hoaDonChiTiet.setTrangThai(0);
+//            doiTraChiTiet.setLyDoDoiTra(listlyDo.get());
+//            doiTraChiTiet.setSoLuong(listSoLuong);
+            doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
+            hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+        }
         if (lyDoDoiTra.equals("Sản phẩm lỗi")) {
             return "redirect:/bumblebee/doi-hang/list-doi-hang";
         } else {
             ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-            chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), soLuong);
+//            chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), soLuong);
         }
         return "redirect:/bumblebee/doi-hang/list-doi-hang";
     }
@@ -275,7 +295,7 @@ public class DoiTraController {
     @RequestMapping("/bumblebee/don-hang/create-tra-hang")
     public String createTraHang(Model model,
                                 @RequestParam(name = "idListCartDetail", required = false) String idListCartDetail,
-                                @RequestParam("lyDoDoiTra") String [] lyDoDoiTra,
+                                @RequestParam("lyDoDoiTra") String[] lyDoDoiTra,
                                 @RequestParam("soLuong") Integer[] soLuong) throws ParseException {
 
         model.addAttribute("view", "../doi-tra/doi-hang.jsp");
@@ -292,7 +312,7 @@ public class DoiTraController {
                 .stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-       listlyDo = Arrays.asList(lyDoDoiTra)
+        listlyDo = Arrays.asList(lyDoDoiTra)
                 .stream()
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
@@ -351,7 +371,7 @@ public class DoiTraController {
     @RequestMapping("/bumblebee/don-hang/remove-doi-tra/{id}")
     public String removeDoiTraCT(@PathVariable("id") UUID id) {
         doiTraChiTietService.removeDoiTraCT(id);
-        return "redirect:/bumblebee/don-hang/" + this.maHoaDon;
+        return "redirect:/bumblebee/don-hang/doi-san-pham";
     }
 
     @RequestMapping("/bumblebee/doi-hang/list-tra-hang")
@@ -364,7 +384,7 @@ public class DoiTraController {
     public String chiTietDoitra(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("view", "../doi-tra/detail-doi-tra.jsp");
         List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-        List<DoiTraChiTiet> lstSanPhamTra= doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
+        List<DoiTraChiTiet> lstSanPhamTra = doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
         List<DoiTraChiTiet> lstSanPhamDoi = doiTraChiTietService.listSanPhamDoi(id);
         HoaDon hoaDon = hoaDonService.getOne(id);
         model.addAttribute("hoaDon", hoaDon);
@@ -373,12 +393,24 @@ public class DoiTraController {
         model.addAttribute("listSanPhamDoi", lstSanPhamDoi);
         return "admin/index";
     }
+
+    @GetMapping("/bumblebee/don-hang/doi-san-pham")
+    public String doiHang(Model model) {
+        model.addAttribute("view", "../doi-tra/doi-hang.jsp");
+        model.addAttribute("maHoaDon",this.maHoaDon);
+        model.addAttribute("idDoiTra",this.idDoiTra);
+        List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(this.maHoaDon);
+        model.addAttribute("listHDCT", lstHoaDonCT);
+        model.addAttribute("listDoiTraCT", doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
+        return "/admin/index";
+    }
+
     @RequestMapping("/bumblebee/doi-hang/print/{id}")
-    public void print(HttpServletResponse response,@PathVariable("id") UUID id)throws ParseException{
+    public void print(HttpServletResponse response, @PathVariable("id") UUID id) throws ParseException {
         HoaDon hoaDonDoiTra = hoaDonService.getOne(id);
         List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
         List<DoiTraChiTiet> listDoiTra = doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
-        try{
+        try {
             Document document = new Document();
             document.setPageSize(PageSize.A4);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -408,21 +440,21 @@ public class DoiTraController {
 
 //            Thông tin hoá dơn
             Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 15, Font.NORMAL, BaseColor.BLACK);
-            Paragraph nhanVien = new Paragraph("Nhân Viên bán hàng : "+hoaDonDoiTra.getNhanVien().getHo()+" "+hoaDonDoiTra.getNhanVien().getTenDem()+" "+hoaDonDoiTra.getNhanVien().getTen(),titleFont1);
+            Paragraph nhanVien = new Paragraph("Nhân Viên bán hàng : " + hoaDonDoiTra.getNhanVien().getHo() + " " + hoaDonDoiTra.getNhanVien().getTenDem() + " " + hoaDonDoiTra.getNhanVien().getTen(), titleFont1);
             document.add(nhanVien);
-            Paragraph khachHang = new Paragraph("Khách hàng : "+hoaDonDoiTra.getKhachHang().getTen(),titleFont1);
+            Paragraph khachHang = new Paragraph("Khách hàng : " + hoaDonDoiTra.getKhachHang().getTen(), titleFont1);
             document.add(khachHang);
-            Paragraph sdt = new Paragraph("Số điện thoại : "+hoaDonDoiTra.getSdt(),titleFont1);
+            Paragraph sdt = new Paragraph("Số điện thoại : " + hoaDonDoiTra.getSdt(), titleFont1);
             document.add(sdt);
             Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
-            Paragraph danhSachMua = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH MUA",titleFont2);
+            Paragraph danhSachMua = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH MUA", titleFont2);
             danhSachMua.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(danhSachMua);
             Paragraph KhoangTrang = new Paragraph("                                                         ");
             document.add(KhoangTrang);
             PdfPTable productTable = new PdfPTable(6);
             productTable.setWidthPercentage(100);
-            float[] columnWidths = {3f, 3f, 2f, 2f, 2f,2f};
+            float[] columnWidths = {3f, 3f, 2f, 2f, 2f, 2f};
             productTable.setWidths(columnWidths);
 
             productTable.addCell(createTableCell("Tên sản phẩm", titleFont1));
@@ -450,7 +482,7 @@ public class DoiTraController {
             Paragraph KhoangTrang1 = new Paragraph("                                                         ");
             document.add(KhoangTrang1);
 //            Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
-            Paragraph danhSachTra = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH TRẢ",titleFont2);
+            Paragraph danhSachTra = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH TRẢ", titleFont2);
             danhSachTra.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(danhSachTra);
             Paragraph KhoangTrang2 = new Paragraph("                                                         ");
@@ -468,14 +500,14 @@ public class DoiTraController {
             productTable1.addCell(createTableCell("Nhân viên thực hiện", titleFont1));
             productTable1.addCell(createTableCell("Lí do", titleFont1));
 //            double tongTienTra = 0.0;
-            for(DoiTraChiTiet doiTraChiTiet: listDoiTra){
-               productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont1));
+            for (DoiTraChiTiet doiTraChiTiet : listDoiTra) {
+                productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont1));
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getSoLuong()), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()), titleFont1));
-                productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()*doiTraChiTiet.getSoLuong()), titleFont1));
-                productTable1.addCell(createTableCell(doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getHo()+" "+doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTenDem()+" "+doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTen(), titleFont1));
+                productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong()), titleFont1));
+                productTable1.addCell(createTableCell(doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getHo() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTenDem() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(doiTraChiTiet.getLyDoDoiTra(), titleFont1));
 
             }
@@ -508,5 +540,5 @@ public class DoiTraController {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         return cell;
     }
-    }
+}
 
