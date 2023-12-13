@@ -59,7 +59,7 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
 
     @Override
     public Page<DoiTraChiTiet> findSanPhamLoi(Integer page) {
-        Pageable pageable= PageRequest.of(page,2);
+        Pageable pageable= PageRequest.of(page,5);
         return doiTraCTRepo.findSanPhamLoi(pageable);
     }
 

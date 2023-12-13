@@ -211,7 +211,7 @@
                     <b>Quản lý đổi trả</b></a
                 >
             </li>
-        </c:if>
+<%--        </c:if>--%>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block"/>
 
