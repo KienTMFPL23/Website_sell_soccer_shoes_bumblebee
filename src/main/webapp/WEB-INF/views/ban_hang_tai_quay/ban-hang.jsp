@@ -323,7 +323,7 @@
                                                    min="1"
                                                    name="soLuong"
                                                    value="${hdct.soLuong}"
-                                                   onblur="this.form.submit()"
+                                                   onchange="this.form.submit()"
                                                    style="width:100px;">
                                         </td>
                                         <td>
@@ -412,7 +412,7 @@
                             <div class="input-group">
                                 <form:input path="sdt" min="0" type="number" class="form-control"
                                             placeholder="Nhập số điện thoại..."
-                                            onchange="getTenKhachHang(this.value)" id="phoneNumber"/>
+                                            oninput="getTenKhachHang(this.value)" id="phoneNumber"/>
                             </div>
                             <form:errors path="sdt" cssStyle="color: red"></form:errors>
                             <p style="color: red">${errorSDT}</p>
@@ -438,7 +438,7 @@
                         <%--                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>--%>
 
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
-                                                     onchange="getMoneyChange()"></p>
+                                                     oninput="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly/> đ</p>
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
@@ -453,7 +453,7 @@
                             Thanh toán
                         </button>
                         <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
-                            Thanh toán
+                            Thanh toán</button>
                     </div>
                     </form:form>
                 </div>
@@ -629,16 +629,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<%--<script>--%>
-<%--    function downloadComplete() {--%>
 
-<%--        window.onload = function () {--%>
-
-<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
-<%--        };--%>
-<%--        return true;--%>
-<%--    }--%>
-<%--</script>--%>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
