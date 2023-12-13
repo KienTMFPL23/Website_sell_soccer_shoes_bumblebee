@@ -174,25 +174,39 @@
     .menu-nav {
         background-color: #D9D9D9;
     }
+
+    .nav-link.active {
+        background-color: #0d6efd;
+    }
 </style>
 <body>
 <div class="container">
-    <div class="menu-nav">
-        <div class="status text-center">
-            <ul class="nav justify-content-center bg-gradient-light nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
-                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
-                        <span class="badge text-bg-secondary">${countHD}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
-                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
-                            class="badge text-bg-secondary">${countHDCho}</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <%--    <div class="menu-nav">--%>
+    <%--        <div class="status text-center">--%>
+    <%--            <ul class="nav justify-content-center bg-gradient-light nav-pills">--%>
+    <%--                <li class="nav-item">--%>
+    <%--                    <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"--%>
+    <%--                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại--%>
+    <%--                        <span class="badge text-bg-secondary">${countHD}</span></a>--%>
+    <%--                </li>--%>
+    <%--                <li class="nav-item">--%>
+    <%--                    <a class="nav-link ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"--%>
+    <%--                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span--%>
+    <%--                            class="badge text-bg-secondary">${countHDCho}</span></a>--%>
+    <%--                </li>--%>
+    <%--            </ul>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}"
+               href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}" href="/bumblebee/san-pham-khuyen-mai/list">Sản
+                phẩm khuyến mại</a>
+        </li>
+    </ul>
 
 
     <div>
@@ -225,7 +239,9 @@
                 <th>Giá trị khuyến mại</th>
                 <th>Giá bán</th>
                 <th>Giá khuyến mại</th>
-                <th>Trạng thái</th>
+                <th>Trạng thái KM</th>
+                <th>Trạng thái CTKM</th>
+                <th></th>
             </tr>
             </thead>
 
@@ -245,23 +261,51 @@
                     </td>
                     <td><fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></td>
                     <td>
-                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                            <fmt:formatNumber> ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}</fmt:formatNumber>
-                        </c:if>
-                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                            <fmt:formatNumber> ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>
-                        </c:if>
-
+                            <%--                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
+                            <%--                            <fmt:formatNumber> ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}</fmt:formatNumber>--%>
+                            <%--                        </c:if>--%>
+                            <%--                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">--%>
+                            <%--                            <fmt:formatNumber> ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>--%>
+                            <%--                        </c:if>--%>
+                        <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
                     </td>
                     <td>
                         <c:if test="${ctkm.khuyenMai.trangThai == 0}">Hoạt động</c:if>
                         <c:if test="${ctkm.khuyenMai.trangThai == 1}">Không hoạt động</c:if>
                     </td>
-                        <%--                    <td>--%>
-                        <%--                        <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
-                        <%--                            <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
-                        <%--                        </a>--%>
-                        <%--                    </td>--%>
+                    <td>
+                        <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
+                        <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
+                    </td>
+                        <%--                                            <td>--%>
+                        <%--                                                <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
+                        <%--                                                    <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
+                        <%--                                                </a>--%>
+                        <%--                                            </td>--%>
+                    <td>
+                        <c:if test="${ctkm.trangThai == 0}">
+                            <div class="form-check form-switch">
+                                <form action="/bumblebee/khuyen-mai/update-ctkm-khong-hoat-dong/${ctkm.id}"
+                                      method="post">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                           id="flexSwitchCheckChecked"
+                                           oninput="this.form.submit()"
+                                           checked>
+                                </form>
+                            </div>
+                        </c:if>
+                        <c:if test="${ctkm.trangThai == 1}">
+                            <div class="form-check form-switch">
+                                <form action="/bumblebee/khuyen-mai/update-ctkm-hoat-dong/${ctkm.id}" method="post">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                           id="flexSwitchCheckNoChecked"
+                                           oninput="this.form.submit()"
+                                    >
+                                </form>
+                            </div>
+                        </c:if>
+
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

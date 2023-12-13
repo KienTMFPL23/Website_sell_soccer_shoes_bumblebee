@@ -216,30 +216,21 @@
                                                                 <td id="kichCo">${sp.kichCo.size}</td>
                                                                 <td id="loaiGiay">${sp.loaiGiay.tentheloai}</td>
                                                                 <td>
-                                                                    <c:if test="${sp.ctkm != null}">
+                                                                    <c:if test="${not empty sp.ctkm}">
+                                                                        <c:set var="allTrangThai1" value="false"/>
                                                                         <c:forEach items="${sp.ctkm}" var="ctkm">
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 0}">
-                                                                                <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                                                    <fmt:formatNumber>
-                                                                                        ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
-                                                                                    </fmt:formatNumber>
-                                                                                    <del style="color: crimson;">
-                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                                                    </del>
-                                                                                </c:if>
-                                                                                <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                                                    <fmt:formatNumber>
-                                                                                        ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
-                                                                                    </fmt:formatNumber>
-                                                                                    <del style="color: crimson;">
-                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                                                    </del>
-                                                                                </c:if>
+                                                                            <c:if test="${ctkm.trangThai == 0}">
+                                                                                <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
+                                                                                <del style="color: crimson">
+                                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></del>
+                                                                                <c:set var="allTrangThai1" value="true"/>
                                                                             </c:if>
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                                                <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
-                                                                            </c:if>
+
                                                                         </c:forEach>
+                                                                        <c:if test="${allTrangThai1 eq false}">
+                                                                            <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
+                                                                            <c:set var="allTrangThai1" value="true"/>
+                                                                        </c:if>
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
                                                                         <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
@@ -327,54 +318,38 @@
                                                    style="width:100px;">
                                         </td>
                                         <td>
-                                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                            <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
+                                                <c:set var="allTrangThai1" value="false"/>
                                                 <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 0}">
-                                                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                            <del style="color: crimson; margin-right: 10px;">
-                                                                <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                            </del>
-                                                            <fmt:formatNumber>
-                                                                ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
-                                                            </fmt:formatNumber>
-                                                        </c:if>
-                                                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                            <del style="color: crimson; margin-right: 10px;">
-                                                                <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                            </del>
-                                                            <fmt:formatNumber>
-                                                                ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
-                                                            </fmt:formatNumber>
-                                                        </c:if>
-                                                    </c:if>
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:if test="${ctkm.trangThai == 0}">
+                                                        <del style="color: crimson">
+                                                            <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber></del>
+                                                        <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
+                                                        <c:set var="allTrangThai1" value="true"/>
                                                     </c:if>
                                                 </c:forEach>
+                                                <c:if test="${allTrangThai1 eq false}">
+                                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:set var="allTrangThai1" value="true"/>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                                 <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
                                             </c:if>
                                         </td>
                                         <td>
-                                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                            <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
+                                                <c:set var="allTrangThai1" value="false"/>
                                                 <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 0}">
-                                                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                            <fmt:formatNumber
-                                                                    value="${hdct.soLuong * (ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan))}"
-                                                                    type="number"/>
-                                                        </c:if>
-                                                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                            <fmt:formatNumber
-                                                                    value="${hdct.soLuong * (ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri)}"
-                                                                    type="number"/>
-                                                        </c:if>
-                                                    </c:if>
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:if test="${ctkm.trangThai == 0}">
+                                                        <fmt:formatNumber>${hdct.soLuong * ctkm.giaKhuyenMai}</fmt:formatNumber>
+                                                        <c:set var="allTrangThai1" value="true"/>
                                                     </c:if>
                                                 </c:forEach>
+                                                <c:if test="${allTrangThai1 eq false}">
+                                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:set var="allTrangThai1" value="true"/>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                                 <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
@@ -561,44 +536,44 @@
 <script>
 
 </script>
-<script>
-    // Đặt giá trị idHoaDon
-    var idHoaDon = "${idHoaDon}";
-    function alertThanhToan(event) {
-        var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result.valueOf()) {
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Thanh toán thành công",
-                showConfirmButton: false,
-                timer: 2000
-            });
-            setTimeout(function () {
-                return true;
-            }, 2000);
-        } else {
-            return false;
-        }
-    }
-    function taivepdf() {
-        // alert(idHoaDon);
-        var link = document.createElement('a');
-        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
-        link.target = '_blank';
-        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';
-        document.body.appendChild(link);
-        // Yêu cầu sự tương tác người dùng
-        link.click();
-        document.body.removeChild(link);
-    }
-    var ThanhToanButton = document.getElementById('btnThanhToan');
-    ThanhToanButton.onclick = function() {
-        alertThanhToan();
-        taivepdf();
+<%--<script>--%>
+<%--    // Đặt giá trị idHoaDon--%>
+<%--    var idHoaDon = "${idHoaDon}";--%>
+<%--    function alertThanhToan(event) {--%>
+<%--        var result = confirm('Bạn có muốn thanh toán không ??');--%>
+<%--        if (result.valueOf()) {--%>
+<%--            Swal.fire({--%>
+<%--                position: "center",--%>
+<%--                icon: "success",--%>
+<%--                title: "Thanh toán thành công",--%>
+<%--                showConfirmButton: false,--%>
+<%--                timer: 2000--%>
+<%--            });--%>
+<%--            setTimeout(function () {--%>
+<%--                return true;--%>
+<%--            }, 2000);--%>
+<%--        } else {--%>
+<%--            return false;--%>
+<%--        }--%>
+<%--    }--%>
+<%--    function taivepdf() {--%>
+<%--        // alert(idHoaDon);--%>
+<%--        var link = document.createElement('a');--%>
+<%--        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;--%>
+<%--        link.target = '_blank';--%>
+<%--        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';--%>
+<%--        document.body.appendChild(link);--%>
+<%--        // Yêu cầu sự tương tác người dùng--%>
+<%--        link.click();--%>
+<%--        document.body.removeChild(link);--%>
+<%--    }--%>
+<%--    var ThanhToanButton = document.getElementById('btnThanhToan');--%>
+<%--    ThanhToanButton.onclick = function() {--%>
+<%--        alertThanhToan();--%>
+<%--        taivepdf();--%>
 
-    };
-</script>
+<%--    };--%>
+<%--</script>--%>
 
 <%--<script>--%>
 <%--    function downloadHoaDon() {--%>
@@ -841,8 +816,10 @@
 
 <script>
     function alertThanhToan(event) {
+        var idHoaDon = "${idHoaDon}"
         var result = confirm('Bạn có muốn thanh toán không ??');
-        if (result.valueOf()) {
+        if (result) {
+            // Thực hiện thanh toán
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -850,14 +827,30 @@
                 showConfirmButton: false,
                 timer: 2000
             });
+
             setTimeout(function () {
                 return true;
             }, 2000);
+
+
+            // Tạo và tải hóa đơn PDF
+            var link = document.createElement('a');
+            link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
+            link.target = '_blank';
+            link.download = 'hoadon_' + idHoaDon + '.pdf';
+            document.body.appendChild(link);
+
+            // Yêu cầu sự tương tác người dùng
+            link.click();
+            document.body.removeChild(link);
+
         } else {
+            // Người dùng đã hủy thanh toán
             return false;
         }
     }
 </script>
+
 
 <script>
     function changeColor(id) {

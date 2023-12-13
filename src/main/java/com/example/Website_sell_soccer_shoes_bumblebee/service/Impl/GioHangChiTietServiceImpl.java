@@ -41,11 +41,24 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             if (hdct.getCtsp().getCtkm().isEmpty()) {
                 sumGoc += hdct.getDonGia() * hdct.getSoLuong();
             } else {
-                sumKhuyenMai += hdct.getDonGiaKhiGiam() * hdct.getSoLuong();
+                Boolean allTrangThai1 = false;
+                for (ChiTietKhuyenMai chiTietKhuyenMai : hdct.getCtsp().getCtkm()) {
+                    if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0) {
+                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
+                            sumKhuyenMai += (chiTietKhuyenMai.getCtsp().getGiaBan() - (chiTietKhuyenMai.getCtsp().getGiaBan()
+                                   * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100)) * hdct.getSoLuong();
+                        }else{
+                            sumKhuyenMai += (chiTietKhuyenMai.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri()) * hdct.getSoLuong();
+                        }
+                        allTrangThai1 = true;
+                    }
+                }
+                if (allTrangThai1 == false){
+                    sumGoc += hdct.getDonGia() * hdct.getSoLuong();
+                }
             }
             sum = sumGoc + sumKhuyenMai;
         }
-
         return sum;
     }
 

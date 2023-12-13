@@ -244,8 +244,22 @@
 
                                                     <td style="text-align: center;padding-top: 25px;" class="thanhTien">
                                                         <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
-                                                            <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
-                                                                              type="number"/> đ
+                                                            <c:set var="allTrangThai1" value="false"/>
+                                                            <c:forEach var="ctkm" items="${hdct.chiTietSanPham.ctkm}">
+                                                                <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                                    <c:set var="allTrangThai1" value="true"/>
+                                                                    <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
+                                                                                      type="number"/> đ
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            <c:if test="${allTrangThai1 eq false and not empty hdct.donGiaKhiGiam }">
+                                                                <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
+                                                                                  type="number"/> đ
+                                                            </c:if>
+                                                            <c:if test="${allTrangThai1 eq false and empty hdct.donGiaKhiGiam }">
+                                                                <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"
+                                                                                   type="number"/> đ
+                                                            </c:if>
                                                         </c:if>
                                                         <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                                             <fmt:formatNumber value="${hdct.donGia * hdct.soLuong}"

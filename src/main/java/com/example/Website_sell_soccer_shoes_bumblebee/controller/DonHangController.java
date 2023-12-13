@@ -809,13 +809,13 @@ public class DonHangController {
             document.add(KhoangTrang1);
 //      Mã đơn hàng
             Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
-            Paragraph maDonHang = new Paragraph("Mã Đơn hàng        :        " + hoaDonThanhToan.getMaHoaDon(), titleFont);
+            Paragraph maDonHang = new Paragraph("Mã Đơn hàng : " + hoaDonThanhToan.getMaHoaDon(), titleFont);
             document.add(maDonHang);
             if(hoaDonThanhToan.getLoaiHoaDon()==1){
-                Paragraph loaiHoaDon = new Paragraph("Loại Hoá Đơn        :           Bán tại quầy   " ,titleFont);
+                Paragraph loaiHoaDon = new Paragraph("Loại Hoá Đơn : Bán tại quầy   " ,titleFont);
                 document.add(loaiHoaDon);
             }else{
-                Paragraph loaiHoaDon = new Paragraph("Loại Hoá Đơn        :           Bán online   " ,titleFont);
+                Paragraph loaiHoaDon = new Paragraph("Loại Hoá Đơn : Bán online   " ,titleFont);
                 document.add(loaiHoaDon);
             }
             Paragraph KhoangTrang = new Paragraph("                                                         ");
@@ -823,20 +823,20 @@ public class DonHangController {
             Paragraph tenKhachHang = null;
             KhachHang khachHang = hoaDonThanhToan.getKhachHang();
             if (khachHang != null) {
-                tenKhachHang = new Paragraph("Tên Khách Hàng     :         " + khachHang.getTen(), titleFont);
+                tenKhachHang = new Paragraph("Tên Khách Hàng : " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
             } else {
-                tenKhachHang = new Paragraph("Tên Khách Hàng     :         Khách hàng vãn lai", titleFont);
+                tenKhachHang = new Paragraph("Tên Khách Hàng : Khách hàng vãn lai", titleFont);
             }
 
             document.add(tenKhachHang);
 
-            Paragraph sdt = new Paragraph("Số Điện Thoại       :         " + hoaDonThanhToan.getSdt(), titleFont);
+            Paragraph sdt = new Paragraph("Số Điện Thoại : " + hoaDonThanhToan.getSdt(), titleFont);
             document.add(sdt);
             if(hoaDonThanhToan.getDiaChiShip()!=null){
-                Paragraph diaChi = new Paragraph("Địa Chỉ               :         " + hoaDonThanhToan.getDiaChiShip(), titleFont);
+                Paragraph diaChi = new Paragraph("Địa Chỉ : " + hoaDonThanhToan.getDiaChiShip(), titleFont);
                 document.add(diaChi);
             }else{
-                Paragraph diaChi = new Paragraph("Địa Chỉ               :         " + "Khách mua tại quầy ", titleFont);
+                Paragraph diaChi = new Paragraph("Địa Chỉ : " + "Khách mua tại quầy ", titleFont);
                 document.add(diaChi);
             }
 
@@ -851,12 +851,14 @@ public class DonHangController {
             Paragraph KhoangTrang2 = new Paragraph("                                                         ");
             document.add(KhoangTrang2);
 //        bảng sản phẩm
-            PdfPTable productTable = new PdfPTable(4);
+            PdfPTable productTable = new PdfPTable(6);
             productTable.setWidthPercentage(100);
-            float[] columnWidths = {3f, 1f, 2f, 2f};
+            float[] columnWidths = {3f, 4f, 1f, 1f,2f,2f};
             productTable.setWidths(columnWidths);
 
             productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
+            productTable.addCell(createTableCell("Màu sắc", titleFont));
+            productTable.addCell(createTableCell("Size", titleFont));
             productTable.addCell(createTableCell("Số lượng", titleFont));
             productTable.addCell(createTableCell("Giá tiền", titleFont));
             productTable.addCell(createTableCell("Thành tiền", titleFont));
@@ -864,6 +866,8 @@ public class DonHangController {
             List<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
             for (HoaDonChiTiet hoaDonChiTiet : listHoaDonChiTiet) {
                 productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont));
+                productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));

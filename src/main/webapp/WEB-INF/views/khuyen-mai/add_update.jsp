@@ -118,16 +118,6 @@
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
-                <label>Ngày tạo:</label>
-            </div>
-            <div class="col-lg-8">
-                <form:input type="datetime-local" class="form-control" path="ngayTao" value="${km.ngayTao}" disabled="true"/>
-                <form:errors path="ngayTao" cssStyle="color: crimson"></form:errors>
-            </div>
-        </div>
 
         <div class="row mb-3">
             <div class="col-lg-1"></div>

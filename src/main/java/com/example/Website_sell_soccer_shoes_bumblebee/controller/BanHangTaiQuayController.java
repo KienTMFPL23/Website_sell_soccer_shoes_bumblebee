@@ -200,6 +200,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("listKhachHang", khachHangService.getAllKHOderBy());
         getTaiKhoan(model);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
+
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         sumMoney = hoaDonChiTietService.getTotalMoney(list);
         if (sumMoney < 0) {
@@ -208,6 +209,7 @@ public class BanHangTaiQuayController {
         } else {
             model.addAttribute("sumMoney", sumMoney);
         }
+
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
@@ -412,12 +414,14 @@ public class BanHangTaiQuayController {
         khoangtrang2.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(khoangtrang2);
         ////
-        PdfPTable productTable = new PdfPTable(4);
+        PdfPTable productTable = new PdfPTable(6);
         productTable.setWidthPercentage(100);
-        float[] columnWidths = {3f, 1f, 2f, 2f};
+        float[] columnWidths = {3f, 3f, 1f, 1f,2f,2f};
         productTable.setWidths(columnWidths);
 
         productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
+        productTable.addCell(createTableCell("Màu sắc", titleFont));
+        productTable.addCell(createTableCell("Size", titleFont));
         productTable.addCell(createTableCell("Số lượng", titleFont));
         productTable.addCell(createTableCell("Giá tiền", titleFont));
         productTable.addCell(createTableCell("Thành tiền", titleFont));
@@ -425,6 +429,8 @@ public class BanHangTaiQuayController {
         List<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(idHoaDon);
         for (HoaDonChiTiet hoaDonChiTiet : listHoaDonChiTiet) {
             productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont));
+            productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont));
+            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));

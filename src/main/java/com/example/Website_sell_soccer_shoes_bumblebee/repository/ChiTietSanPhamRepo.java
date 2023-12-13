@@ -220,8 +220,7 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
     );
 
-    // Thống kê
-    @Query("SELECT SUM(c.soLuong) FROM ChiTietSanPham c")
-    int tinhTongSoLuongSanPham();
+
+
 
 }

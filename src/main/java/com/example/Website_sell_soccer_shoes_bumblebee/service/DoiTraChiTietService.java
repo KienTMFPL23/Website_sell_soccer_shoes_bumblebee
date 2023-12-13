@@ -2,6 +2,8 @@ package com.example.Website_sell_soccer_shoes_bumblebee.service;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public interface DoiTraChiTietService {
 
     List<DoiTraChiTiet> listDoiTraCTByIdHoaDon(UUID idHoaDon);
 
-    List<DoiTraChiTiet> findSanPhamLoi();
+    Page<DoiTraChiTiet> findSanPhamLoi(Integer page);
 
     List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon );
 

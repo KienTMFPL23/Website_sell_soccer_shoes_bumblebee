@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,24 +63,33 @@ public class DoiTraController {
     private List<Integer> listSoLuong = new ArrayList<>();
 
     @GetMapping("/bumblebee/doi-hang/list-san-pham-loi")
-    public String danhSachSanPhamLoi(Model model) {
+    public String danhSachSanPhamLoi(Model model, @RequestParam(defaultValue = "0", name = "p") Integer p ) {
         model.addAttribute("view", "../doi-tra/danh-sach-san-pham-loi.jsp");
-        model.addAttribute("listDoiTra", doiTraChiTietService.findSanPhamLoi());
+        if (p<=0){
+            p=0;
+        }
+        model.addAttribute("listDoiTra", doiTraChiTietService.findSanPhamLoi(p));
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-doi-hang")
-    public String danhSachHuy(Model model, @RequestParam(defaultValue = "0", name = "page") Integer page) {
-        model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
+    public String danhSachHuy(Model model, @RequestParam(defaultValue = "0", name = "p") Integer p) {
+        if (p<=0){
+            p=0;
+        }
+        model.addAttribute("view", "../doi-tra/danh-sach-doi.jsp");
 //        model.addAttribute("listDuDK", hoaDonService.danhSachHDDuDK());
-        model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra(page));
+        model.addAttribute("listDoiTra", doiTraService.listHuyDoiTra(p));
         return "/admin/index";
     }
 
     @GetMapping("/bumblebee/doi-hang/list-tra-hang")
-    public String danhSachThanhCong(Model model, @RequestParam(defaultValue = "0", name = "page") Integer page) {
+    public String danhSachThanhCong(Model model, @RequestParam(defaultValue = "0", name = "p") Integer p) {
+        if (p<=0){
+            p=0;
+        }
         model.addAttribute("view", "../doi-tra/danh-sach-doi-tra.jsp");
-        model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong(page));
+        model.addAttribute("listDoiTra", doiTraService.listDoiTraThanhCong(p));
         return "/admin/index";
     }
 
@@ -420,11 +431,13 @@ public class DoiTraController {
             HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(HoaDon);
 //
-            Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 20, Font.BOLD, BaseColor.BLACK);
-            Paragraph tieuDeThongTin = new Paragraph("HOÁ ĐƠN BÁN HÀNG  ", titleFont);
-            document.add(tieuDeThongTin);
             Paragraph maHoaDon = new Paragraph(hoaDonDoiTra.getMaHoaDon());
             maHoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(maHoaDon);
+            Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph tieuDeThongTin = new Paragraph("HOÁ ĐƠN BÁN HÀNG  ", titleFont);
+            document.add(tieuDeThongTin);
+
 //            Thông tin hoá dơn
             Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 15, Font.NORMAL, BaseColor.BLACK);
             Paragraph nhanVien = new Paragraph("Nhân Viên bán hàng : " + hoaDonDoiTra.getNhanVien().getHo() + " " + hoaDonDoiTra.getNhanVien().getTenDem() + " " + hoaDonDoiTra.getNhanVien().getTen(), titleFont1);

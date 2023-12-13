@@ -2,6 +2,8 @@ package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -36,7 +38,7 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     List<DoiTraChiTiet> listTraHang(UUID idHoaDon);
 
     @Query(value = "select * from DoiTraChiTiet where LyDoDoiTra like N'%Sản phẩm lỗi%'",nativeQuery = true)
-    List<DoiTraChiTiet> findSanPhamLoi();
+    Page<DoiTraChiTiet> findSanPhamLoi(Pageable pageable);
 
     @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.hoaDon.id = ?1 and dtct.doiTra.trangThai = 1")
     List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon);
