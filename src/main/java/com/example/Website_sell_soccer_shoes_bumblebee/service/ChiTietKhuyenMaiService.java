@@ -21,7 +21,6 @@ public interface ChiTietKhuyenMaiService {
 
     ChiTietKhuyenMai findCtkmByIdKmAndCtsp(UUID idCTSP, UUID idKM);
 
-    List<ChiTietKhuyenMai> searchKhoangNgay(Date ngayBatDau, Date ngayKetThuc);
 
 
 }

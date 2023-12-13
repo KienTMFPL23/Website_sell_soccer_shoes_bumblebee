@@ -200,6 +200,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("listKhachHang", khachHangService.getAllKHOderBy());
         getTaiKhoan(model);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
+
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         sumMoney = hoaDonChiTietService.getTotalMoney(list);
         if (sumMoney < 0) {
@@ -208,6 +209,7 @@ public class BanHangTaiQuayController {
         } else {
             model.addAttribute("sumMoney", sumMoney);
         }
+
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
@@ -338,7 +340,7 @@ public class BanHangTaiQuayController {
             hoaDonThanhToan.setGhiChu(hoaDon.getGhiChu());
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
-            this.idHoaDon = null;
+//            this.idHoaDon = null;
 
             model.addAttribute("successThanhToan", "Thanh toán thất bại");
 //            System.out.println("thất bại");
@@ -396,17 +398,11 @@ public class BanHangTaiQuayController {
 
         Paragraph tennhanvien = new Paragraph("Nhân viên    :    " + nameNhanVien, titleFont);
         document.add(tennhanvien);
-//        KhachHang khachHang = hoaDonThanhToan.getKhachHang();
-//        if (khachHang != null) {
-            // Tiếp tục xử lý chỉ khi khách hàng không phải là null
-//            String tenKhachHang = khachHang.getTen();
-            Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
-            document.add(tenKhach);
-//        } else {
-            // Xử lý khi khách hàng là null
-//            Paragraph tenKhach = new Paragraph("Khách hàng    :     Khách vãn lai", titleFont);
-//            document.add(tenKhach);
-//        }
+
+        Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
+
+        document.add(tenKhach);
+
 
 
 //            table.addCell(MaHoaDon);

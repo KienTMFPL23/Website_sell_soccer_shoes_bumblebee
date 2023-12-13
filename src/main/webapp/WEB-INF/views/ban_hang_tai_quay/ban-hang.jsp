@@ -216,30 +216,21 @@
                                                                 <td id="kichCo">${sp.kichCo.size}</td>
                                                                 <td id="loaiGiay">${sp.loaiGiay.tentheloai}</td>
                                                                 <td>
-                                                                    <c:if test="${sp.ctkm != null}">
+                                                                    <c:if test="${not empty sp.ctkm}">
+                                                                        <c:set var="allTrangThai1" value="false"/>
                                                                         <c:forEach items="${sp.ctkm}" var="ctkm">
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 0}">
-                                                                                <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                                                    <fmt:formatNumber>
-                                                                                        ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
-                                                                                    </fmt:formatNumber>
-                                                                                    <del style="color: crimson;">
-                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                                                    </del>
-                                                                                </c:if>
-                                                                                <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                                                    <fmt:formatNumber>
-                                                                                        ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
-                                                                                    </fmt:formatNumber>
-                                                                                    <del style="color: crimson;">
-                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                                                    </del>
-                                                                                </c:if>
+                                                                            <c:if test="${ctkm.trangThai == 0}">
+                                                                                <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
+                                                                                <del style="color: crimson">
+                                                                                    <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></del>
+                                                                                <c:set var="allTrangThai1" value="true"/>
                                                                             </c:if>
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                                                <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
-                                                                            </c:if>
+
                                                                         </c:forEach>
+                                                                        <c:if test="${allTrangThai1 eq false}">
+                                                                            <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
+                                                                            <c:set var="allTrangThai1" value="true"/>
+                                                                        </c:if>
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
                                                                         <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
@@ -323,58 +314,42 @@
                                                    min="1"
                                                    name="soLuong"
                                                    value="${hdct.soLuong}"
-                                                   onblur="this.form.submit()"
+                                                   onchange="this.form.submit()"
                                                    style="width:100px;">
                                         </td>
                                         <td>
-                                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                            <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
+                                                <c:set var="allTrangThai1" value="false"/>
                                                 <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 0}">
-                                                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                            <del style="color: crimson; margin-right: 10px;">
-                                                                <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                            </del>
-                                                            <fmt:formatNumber>
-                                                                ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}
-                                                            </fmt:formatNumber>
-                                                        </c:if>
-                                                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                            <del style="color: crimson; margin-right: 10px;">
-                                                                <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber>
-                                                            </del>
-                                                            <fmt:formatNumber>
-                                                                ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}
-                                                            </fmt:formatNumber>
-                                                        </c:if>
-                                                    </c:if>
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:if test="${ctkm.trangThai == 0}">
+                                                        <del style="color: crimson">
+                                                            <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber></del>
+                                                        <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
+                                                        <c:set var="allTrangThai1" value="true"/>
                                                     </c:if>
                                                 </c:forEach>
+                                                <c:if test="${allTrangThai1 eq false}">
+                                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:set var="allTrangThai1" value="true"/>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                                 <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
                                             </c:if>
                                         </td>
                                         <td>
-                                            <c:if test="${hdct.chiTietSanPham.ctkm != null}">
+                                            <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
+                                                <c:set var="allTrangThai1" value="false"/>
                                                 <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 0}">
-                                                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">
-                                                            <fmt:formatNumber
-                                                                    value="${hdct.soLuong * (ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan))}"
-                                                                    type="number"/>
-                                                        </c:if>
-                                                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
-                                                            <fmt:formatNumber
-                                                                    value="${hdct.soLuong * (ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri)}"
-                                                                    type="number"/>
-                                                        </c:if>
-                                                    </c:if>
-                                                    <c:if test="${ctkm.khuyenMai.trangThai == 1}">
-                                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:if test="${ctkm.trangThai == 0}">
+                                                        <fmt:formatNumber>${hdct.soLuong * ctkm.giaKhuyenMai}</fmt:formatNumber>
+                                                        <c:set var="allTrangThai1" value="true"/>
                                                     </c:if>
                                                 </c:forEach>
+                                                <c:if test="${allTrangThai1 eq false}">
+                                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                    <c:set var="allTrangThai1" value="true"/>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                                 <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
@@ -412,7 +387,7 @@
                             <div class="input-group">
                                 <form:input path="sdt" min="0" type="number" class="form-control"
                                             placeholder="Nhập số điện thoại..."
-                                            onchange="getTenKhachHang(this.value)" id="phoneNumber"/>
+                                            oninput="getTenKhachHang(this.value)" id="phoneNumber"/>
                             </div>
                             <form:errors path="sdt" cssStyle="color: red"></form:errors>
                             <p style="color: red">${errorSDT}</p>
@@ -438,7 +413,7 @@
                         <%--                    <p><b>Tổng tiền phải thu : </b> <fmt:formatNumber value="${sumMoney}" type="number"/> đ</p>--%>
 
                     <p><b>Tiền khách đưa: </b><input class="form-control" type="number" id="change"
-                                                     onchange="getMoneyChange()"></p>
+                                                     oninput="getMoneyChange()"></p>
                     <p><b>Tiền thừa:</b> <label type="number" id="tienThua" name="tienThua" readonly/> đ</p>
                     <p><b style="color: red">${errorThanhToan}</b></p>
                     <p><b>Ghi chú:</b> <form:textarea path="ghiChu" type="text" style="width: 300px"/></p>
@@ -453,7 +428,7 @@
                             Thanh toán
                         </button>
                         <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
-                            Thanh toán
+                            Thanh toán</button>
                     </div>
                     </form:form>
                 </div>
@@ -629,16 +604,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<%--<script>--%>
-<%--    function downloadComplete() {--%>
 
-<%--        window.onload = function () {--%>
-
-<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
-<%--        };--%>
-<%--        return true;--%>
-<%--    }--%>
-<%--</script>--%>
 <script>
     var data = {
         <c:forEach items="${listKhachHang}" var="k">
@@ -862,6 +828,11 @@
                 timer: 2000
             });
 
+            setTimeout(function () {
+                return true;
+            }, 2000);
+
+
             // Tạo và tải hóa đơn PDF
             var link = document.createElement('a');
             link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
@@ -872,6 +843,7 @@
             // Yêu cầu sự tương tác người dùng
             link.click();
             document.body.removeChild(link);
+
         } else {
             // Người dùng đã hủy thanh toán
             return false;

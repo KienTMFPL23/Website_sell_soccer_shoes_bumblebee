@@ -36,13 +36,13 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.hoaDon.maHoaDon = ?1")
     List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon);
 
-    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.doiTra.trangThai = 2")
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.hoaDon.id = ?1 and dtct.doiTra.trangThai = 2")
     List<DoiTraChiTiet> listTraHang(UUID idHoaDon);
 
     @Query(value = "select * from DoiTraChiTiet where LyDoDoiTra like N'%Sản phẩm lỗi%'", nativeQuery = true)
     Page<DoiTraChiTiet> findSanPhamLoi(Pageable pageable);
 
-    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.doiTra.trangThai = 1")
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.hoaDon.id = ?1 and dtct.doiTra.trangThai = 1")
     List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon);
 
     @Query("select dt from DoiTraChiTiet dt  where dt.lyDoDoiTra like '%Sản phẩm lỗi%' and dt.chiTietSanPham.sanPham.tenSanPham like '%1%'")

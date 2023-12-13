@@ -29,12 +29,19 @@ public interface ChiTietKhuyenMaiRepository extends JpaRepository<ChiTietKhuyenM
     @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.id = ?1")
     ChiTietKhuyenMai findId(UUID id);
 
-    @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.ctsp.id = ?1 and ctkm.khuyenMai.id = ?2")
+    @Query(value = "select ctkm from ChiTietKhuyenMai ctkm where ctkm.ctsp.id = ?1 and ctkm.khuyenMai.id = ?2 and ctkm.khuyenMai.trangThai = 1")
     ChiTietKhuyenMai findCtkmByIdKmAndCtsp(UUID idCTSP, UUID idKM);
 
     @Query(value = "update ChiTietKhuyenMai set TrangThai = 1 where NgayKetThuc < getdate()", nativeQuery = true)
     List<ChiTietKhuyenMai> updateTrangThaiByNgayKetThuc();
 
-    @Query(value = "select km from KhuyenMai km where km.ngayTao between :ngayBatDau and :ngayKetThuc")
-    List<ChiTietKhuyenMai> searchKhoangNgay(@Param("ngayBatDau") Date ngayBatDau, @Param("ngayKetThuc") Date ngayKetThuc);
+    @Query("select ctkm from ChiTietKhuyenMai ctkm where ctkm.khuyenMai.trangThai = 1")
+    List<ChiTietKhuyenMai> ctkmByTrangThai1();
+
+    @Query("select ctkm from ChiTietKhuyenMai ctkm where ctkm.trangThai = 0")
+    List<ChiTietKhuyenMai> ctkmByTrangThai0();
+
+
+
+
 }

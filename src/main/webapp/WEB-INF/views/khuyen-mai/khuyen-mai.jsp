@@ -168,12 +168,18 @@
     }
 
     .nav-pills {
-        --bs-nav-pills-link-active-bg: #A3A3A3;
+        --bs-nav-pills-link-active-bg: #37517E;
     }
 
     .menu-nav {
-        background-color: #D9D9D9;
+        background-color: #fff;
     }
+
+    <%--.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.${donHang == 'khuyen-mai' ? 'active' : ''} {--%>
+    <%--     color: #fff;--%>
+    <%--    background-color: #2185d0;--%>
+    <%--    border-color: #2185d0 #2185d0 #2185d0;--%>
+    <%--}--%>
 </style>
 <body>
 <div class="container">
@@ -194,6 +200,20 @@
         </div>
     </div>
 
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
+               href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}" href="/bumblebee/san-pham-khuyen-mai/list">Sản
+                phẩm khuyến mại</a>
+        </li>
+    </ul>
+
+
+
+
     <%--<div class="tab">--%>
     <%--    <button class="tablinks active" onclick="openCity(event, 'London')">Quản lý khuyến mại</button>--%>
     <%--    <button class="tablinks" onclick="openCity(event, 'Paris')">Sản phẩm khuyến mại</button>--%>
@@ -213,26 +233,28 @@
                 </a>
             </div>
         </div>
-        <form:form action="/bumblebee/khuyen-mai/search-khoang-ngay" method="post" modelAttribute="searchForm">
-            <div class="row">
-                <div class="col-lg-2">
-                    <form:select path="donVi">
-                        <option value="">-- Lọc đơn vị --</option>
-                        <form:option value="VNĐ">VNĐ</form:option>
-                        <form:option value="%">%</form:option>
-                    </form:select>
-                </div>
-                <div class="col-lg-2">
-                    Từ ngày: <form:input type="datetime-local" class="filterDate"  path="fromDate"/>
-                </div>
-                <div class="col-lg-2">
-                    Đến ngày: <form:input type="datetime-local" class="filterDate" path="toDate"/>
-                </div>
-                <div class="col-lg-1">
-                    <button type="submit" class="btnSearch">Tìm</button>
-                </div>
-            </div>
-        </form:form>
+                <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-2">
+                            <form:select path="donVi">
+                                <option value="">-- Lọc đơn vị --</option>
+                                <form:option value="VNĐ">VNĐ</form:option>
+                                <form:option value="%">%</form:option>
+                            </form:select>
+                        </div>
+                        <div class="col-lg-2">
+                            <form:select path="trangThai">
+                                <option value="">-- Lọc trạng thái --</option>
+                                <form:option value="0">Hoạt động</form:option>
+                                <form:option value="1">Không hoạt động</form:option>
+                            </form:select>
+                        </div>
+                        <div class="col-lg-1">
+                            <button type="submit" class="btnSearch">Tìm</button>
+                        </div>
+                    </div>
+                </form:form>
 
         <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
@@ -242,7 +264,6 @@
                 <th>Tên khuyến mãi</th>
                 <th>Giá trị</th>
                 <th>Đơn vị</th>
-                <th>Ngày tạo</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Trạng thái</th>
@@ -266,7 +287,6 @@
                         </c:if>
                     </td>
                     <td>${km.donVi}</td>
-                    <td>${km.ngayTao}</td>
                     <td>${km.ngayBatDau}</td>
                     <td>${km.ngayKetThuc}</td>
                     <td>
@@ -323,12 +343,12 @@
                                                         <thead>
                                                         <tr>
                                                             <th></th>
+                                                            <th></th>
                                                             <th scope="col">Tên sản phẩm</th>
                                                             <th scope="col">Số lượng</th>
                                                             <th scope="col">Giá bán</th>
                                                             <th scope="col">Màu sắc</th>
                                                             <th scope="col">Kích cỡ</th>
-                                                            <th scope="col">Ngày tạo</th>
                                                         </tr>
                                                         </thead>
 
@@ -337,6 +357,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <c:if test="${not empty sp.ctkm}">
+
                                                                         <c:forEach var="ctkm" items="${sp.ctkm}">
                                                                             <c:set var="allTrangThai1" value="false"/>
                                                                             <c:if test="${ctkm.khuyenMai.trangThai == 0}">
@@ -351,23 +372,28 @@
                                                                                     value="${sp.id}">
                                                                             <c:set var="allTrangThai1" value="true"/>
                                                                         </c:if>
+
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
+
                                                                         <input
-                                                                                class="checkCart" type="checkbox"
+                                                                                class="checkCart"
+                                                                                type="checkbox"
                                                                                 name="idListCartDetail"
                                                                                 value="${sp.id}">
+
                                                                     </c:if>
 
+
                                                                 </td>
+                                                                <td><img src="../../../uploads/${sp.hinhAnhs.tenanh}"
+                                                                         width="50px" height="50px"></td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
                                                                 <td>
                                                                     <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
                                                                 <td>${sp.mauSac.ten}</td>
                                                                 <td>${sp.kichCo.size}</td>
-                                                                <td><fmt:formatDate value="${sp.ngayTao}"
-                                                                                    pattern="dd/MM/yyyy HH:mm:ss"/></td>
                                                             </tr>
                                                         </c:forEach>
                                                         </tbody>
@@ -566,6 +592,12 @@
         }
     }
 
+</script>
+<script>
+    // Initialization for ES Users
+    import { Tab, initMDB } from "mdb-ui-kit";
+
+    initMDB({ Tab });
 </script>
 </body>
 

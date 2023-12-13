@@ -66,6 +66,7 @@
                                                 <div>${item.ctsp.mauSac.ten} - ${item.ctsp.kichCo.size}</div>
                                                 <c:if test="${item.ctsp.ctkm != null}">
                                                     <c:forEach var="km" items="${item.ctsp.ctkm}">
+
                                                         <c:set var="allTrangThai1" value="false"/>
                                                         <c:if test="${km.khuyenMai.trangThai == 0}">
                                                             <c:if test="${km.khuyenMai.donVi == '%'}">
@@ -82,6 +83,7 @@
                                                                        value="${item.ctsp.giaBan}">
                                                                 <c:set var="allTrangThai1" value="true"/>
                                                             </c:if>
+
                                                         </c:if>
                                                     </c:forEach>
                                                     <c:if test="${allTrangThai1 eq false}">
