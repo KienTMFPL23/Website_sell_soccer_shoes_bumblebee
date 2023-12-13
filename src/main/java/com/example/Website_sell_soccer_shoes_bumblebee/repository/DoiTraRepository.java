@@ -29,4 +29,10 @@ public interface DoiTraRepository extends JpaRepository<DoiTra, UUID> {
 
     @Query("select dt from DoiTra dt where dt.trangThai = 0")
     List<DoiTra> getListChoXacNhan();
+
+    @Query("select dt from DoiTra dt where (?1 is null or dt.hoaDon.maHoaDon = ?1) and dt.trangThai=2 ")
+    Page<DoiTra> searchTraHang(String maHD,Pageable pageable);
+
+    @Query("select dt from DoiTra dt where (?1 is null or dt.hoaDon.maHoaDon = ?1) and dt.trangThai=1 ")
+    Page<DoiTra> searchHuyDoiTra(String maHD,Pageable pageable);
 }
