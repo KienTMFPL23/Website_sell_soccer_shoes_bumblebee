@@ -824,15 +824,12 @@
                 icon: "success",
                 title: "Thanh toán thành công",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 3000
             });
-
             setTimeout(function () {
                 return true;
-            }, 2000);
+            }, 3000);
 
-
-            // Tạo và tải hóa đơn PDF
             var link = document.createElement('a');
             link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
             link.target = '_blank';
@@ -842,11 +839,13 @@
             // Yêu cầu sự tương tác người dùng
             link.click();
             document.body.removeChild(link);
+            // Tạo và tải hóa đơn PDF
 
         } else {
             // Người dùng đã hủy thanh toán
             return false;
         }
+
     }
 </script>
 

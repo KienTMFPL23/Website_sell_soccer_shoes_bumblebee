@@ -120,7 +120,7 @@ public class BanHangTaiQuayController {
     public String banHang(Model model) {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
-        this.idHoaDon = null;
+        this.idHoaDon = idHoaDon;
         this.sumMoney = 0.0;
         getTaiKhoan(model);
         model.addAttribute("idHoaDon", idHoaDon);
@@ -352,7 +352,7 @@ public class BanHangTaiQuayController {
             hoaDonThanhToan.setGhiChu(hoaDon.getGhiChu());
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
-//            this.idHoaDon = null;
+            this.idHoaDon = id;
 
             model.addAttribute("successThanhToan", "Thanh toán thất bại");
 //            System.out.println("thất bại");
@@ -383,7 +383,7 @@ public class BanHangTaiQuayController {
         BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
         com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-        qrCodeImage.setAbsolutePosition(400, 150);
+        qrCodeImage.setAbsolutePosition(400, 590);
 
         document.add(qrCodeImage);
 
@@ -400,20 +400,22 @@ public class BanHangTaiQuayController {
         Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
         //// Table
         Paragraph MaHoaDon = new Paragraph("Mã hoá đơn      :    " + hoaDonThanhToan.getMaHoaDon(), titleFont);
-        Paragraph ma = new Paragraph();
 
         Paragraph Ngay = new Paragraph("Ngày Mua    :    " + hoaDonThanhToan.getNgayTao(), titleFont);
 
-        document.add(MaHoaDon);
-        document.add(Ngay);
+
 
 
         Paragraph tennhanvien = new Paragraph("Nhân viên    :    " + nameNhanVien, titleFont);
-        document.add(tennhanvien);
 
         Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
 
+        document.add(MaHoaDon);
+        document.add(Ngay);
+        document.add(tennhanvien);
         document.add(tenKhach);
+
+
 
 
 
