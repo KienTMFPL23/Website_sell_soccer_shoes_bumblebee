@@ -43,8 +43,4 @@ public class ChiTietKhuyenMaiServiceImpl implements ChiTietKhuyenMaiService {
         return repo.findCtkmByIdKmAndCtsp(idCTSP, idKM);
     }
 
-    @Override
-    public List<ChiTietKhuyenMai> searchKhoangNgay(Date ngayBatDau, Date ngayKetThuc) {
-        return repo.searchKhoangNgay(ngayBatDau, ngayKetThuc);
-    }
 }

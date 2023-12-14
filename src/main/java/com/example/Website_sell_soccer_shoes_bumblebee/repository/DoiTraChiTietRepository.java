@@ -1,9 +1,13 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.repository;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTra;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,12 +36,16 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.hoaDon.maHoaDon = ?1")
     List<DoiTraChiTiet> listDoiTraCTByHoaDon(String maHoaDon);
 
-    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.doiTra.trangThai = 2")
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.hoaDon.id = ?1 and dtct.doiTra.trangThai = 2")
     List<DoiTraChiTiet> listTraHang(UUID idHoaDon);
 
-    @Query(value = "select * from DoiTraChiTiet where LyDoDoiTra like N'%Sản phẩm lỗi%'",nativeQuery = true)
-    List<DoiTraChiTiet> findSanPhamLoi();
+    @Query(value = "select * from DoiTraChiTiet where LyDoDoiTra like N'%Sản phẩm lỗi%'", nativeQuery = true)
+    Page<DoiTraChiTiet> findSanPhamLoi(Pageable pageable);
 
-    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.doiTra.trangThai = 1")
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.hoaDon.id = ?1 and dtct.doiTra.trangThai = 1")
     List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon);
+
+    @Query("select dt from DoiTraChiTiet dt  where dt.lyDoDoiTra like '%Sản phẩm lỗi%' and dt.chiTietSanPham.sanPham.tenSanPham like '%1%'")
+    Page<DoiTraChiTiet> searchSanPhamLoi (String tenSP, Pageable pageable);
+
 }

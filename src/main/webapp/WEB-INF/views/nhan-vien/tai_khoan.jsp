@@ -97,14 +97,14 @@
         <div class="status text-center">
             <ul class="nav justify-content-center bg-gradient-light nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'thong-tin-nhan-vien' ? 'active' : ''}" aria-current="page"
-                       href="/nhan-vien/thong-tin">Thông tin nhân viên
-                        <span class="badge text-bg-secondary">${countHD}</span></a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link  ${donHang == 'tai-khoan-nhan-vien' ? 'active' : ''}"
                        href="/nhan-vien/tai-khoan">Tài khoản nhân viên<span
                             class="badge text-bg-secondary">${countHDCho}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  ${donHang == 'thong-tin-nhan-vien' ? 'active' : ''}" aria-current="page"
+                       href="/nhan-vien/thong-tin">Thông tin nhân viên
+                        <span class="badge text-bg-secondary">${countHD}</span></a>
                 </li>
             </ul>
         </div>
@@ -130,6 +130,7 @@
                 <th scope="col">Password</th>
                 <th scope="col">Vai trò</th>
                 <th scope="col">Action</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -146,6 +147,161 @@
                         <a href="/nhan-vien/tai-khoan/view-update/${nv.id}">
                             <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>
                         </a>
+                    </td>
+                    <td>
+                        <c:if test="${nv.nhanVien.id == null}">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${nv.id}"
+                                style="border-radius: 20px;">Chọn
+                        </button>
+                        <!-- Modal -->
+                        <form:form action="/nhan-vien/them-thong-tin/${nv.id}" modelAttribute="nv" method="post">
+                            <div class="modal fade" id="${nv.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Thông tin nhân viên</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <div class="col-sm-6">
+                                                    <form:input type="hidden" class="form-control" id="inputEmail3"
+                                                                path="id"/>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Mã:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="ma" name="ma"/>
+                                                    <form:errors path="ma" cssStyle="color: crimson"></form:errors>
+                                                        ${mess_Ma}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Họ:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="ho" name="ho"/>
+                                                    <form:errors path="ho" cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Tên đệm:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="tenDem"
+                                                                name="tenDem"/>
+                                                    <form:errors path="tenDem" cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Tên:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="ten" name="ten"/>
+                                                    <form:errors path="ten" cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Giới tính:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh"
+                                                                       class="radioButton" name="gioiTinh"/>
+                                                    <form:errors path="gioiTinh"
+                                                                 cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Ngày sinh:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="date" class="form-control" path="ngaySinh"/>
+                                                    <form:errors path="ngaySinh"
+                                                                 cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Địa chỉ:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="diaChi"
+                                                                name="diaChi"/>
+                                                    <form:errors path="diaChi" cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Số điện thoại:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="soDienThoai"
+                                                                name="soDienThoai"/>
+                                                    <form:errors path="soDienThoai"
+                                                                 cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Email:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:input type="text" class="form-control" path="email"
+                                                                name="email"/>
+                                                    <form:errors path="email" cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-2">
+                                                    <label>Trạng thái:</label>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <form:radiobuttons items="${dsTrangThai}" path="trangThai"
+                                                                       class="radioButton" name="trangThai"/>
+                                                    <form:errors path="trangThai"
+                                                                 cssStyle="color: crimson"></form:errors>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary"
+                                            >Thêm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form:form>
+                        </c:if>
+                        <c:if test="${nv.nhanVien.id != null}">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${nv.id}"
+                                    style="border-radius: 20px;" disabled>Chọn
+                            </button>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

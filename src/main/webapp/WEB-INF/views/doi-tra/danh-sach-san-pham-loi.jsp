@@ -45,13 +45,15 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="input-group">
-                <input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
-                       aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-                </div>
+                <form:form action="/bumblebee/doi-hang/search-san-pham-loi" modelAttribute="searchDT">
+                    <form:input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
+                                aria-label="Search" aria-describedby="basic-addon2" path="keyword" />
+<%--                    <div class="input-group-append">--%>
+                        <span><button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button></span>
+<%--                    </div>--%>
+                </form:form>
             </div>
         </div>
     </div>
@@ -59,18 +61,18 @@
     <div class="status">
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
+                <a class="nav-link  ${donHang == 'list-san-pham-loi' ? 'active' : ''}" aria-current="page"
                    href="/bumblebee/doi-hang/list-tra-hang">Danh sách trả hàng
                     <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
+                <a class="nav-link  ${donHang == 'list-doi-hang' ? 'active' : ''}"
                    href="/bumblebee/doi-hang/list-doi-hang">Danh sách đổi hàng<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
-                   href="/bumblebee/doi-hang/list-doi-hang">Danh sách sản phẩm lỗi<span
+                <a class="nav-link  ${donHang == 'list-san-pham-loi' ? 'active' : ''}"
+                   href="/bumblebee/doi-hang/list-san-pham-loi">Danh sách sản phẩm lỗi<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
         </ul>
@@ -90,7 +92,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach varStatus="i" items="${listDoiTra}" var="dt">
+            <c:forEach varStatus="i" items="${listDoiTra.content}" var="dt">
                 <tr>
                     <td>${i.count}</td>
                     <td>${dt.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -105,11 +107,19 @@
         </table>
     </div>
     <div>
-        <nav aria-label="Page navigation example" >
+        <nav aria-label="Page navigation example">
             <ul class="pagination" style="justify-content: center">
-                <li class="page-item"><a class="page-link" href=/bumblebee/doi-hang/list-doi-hang?page=${page.number-1}">Previous</a>
+                <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-san-pham-loi?p=0">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-doi-hang?page=${page.number+1}">Next</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-san-pham-loi?p=${listDoiTra.number-1}"><<</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-san-pham-loi?p=${listDoiTra.number+1}">>></a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-san-pham-loi?p=${listDoiTra.totalPages-1}">Next</a>
+                </li>
             </ul>
         </nav>
     </div>

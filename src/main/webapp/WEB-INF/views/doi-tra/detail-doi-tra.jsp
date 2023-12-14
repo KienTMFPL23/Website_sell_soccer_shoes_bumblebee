@@ -43,50 +43,56 @@
         </table>
     </div>
     <hr>
-    <div class="infor-san-pham-mua">
-        <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG TRẢ</h4>
-        <table class="table table-bordered" style="margin-top: 10px">
-            <thead>
-            <tr>
-                <th scope="col">STT</th>
-                <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Màu sắc</th>
-                <th scope="col">Kích cỡ</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Đơn giá</th>
-                <th scope="col">Thành tiền</th>
-                <th scope="col">Nhân viên thực hiện</th>
-                <th scope="col">Lý do</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="traHang" items="${listDoiTraCT}" varStatus="i">
+    <c:if test="${listDoiTraCT.size() != 0}">
+        <div class="infor-san-pham-mua">
+            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG TRẢ</h4>
+            <table class="table table-bordered" style="margin-top: 10px">
+                <thead>
                 <tr>
-                    <td>${i.count}</td>
-                    <td>${traHang.chiTietSanPham.sanPham.tenSanPham}</td>
-                    <td>${traHang.chiTietSanPham.mauSac.ten}</td>
-                    <td>${traHang.chiTietSanPham.kichCo.size}</td>
-                    <td>${traHang.soLuong}</td>
-                    <td><fmt:formatNumber value="${traHang.donGia}" type="number"/></td>
-                    <td><fmt:formatNumber value="${traHang.donGia * traHang.soLuong}" type="number"/></td>
-                    <td>${traHang.doiTra.nhanVien.ho} ${traHang.doiTra.nhanVien.tenDem} ${traHang.doiTra.nhanVien.ten}</td>
-                    <td>${traHang.lyDoDoiTra}</td>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Màu sắc</th>
+                    <th scope="col">Kích cỡ</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col">Nhân viên thực hiện</th>
+                    <th scope="col">Lý do</th>
                 </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="traHang" items="${listDoiTraCT}" varStatus="i">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${traHang.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${traHang.chiTietSanPham.mauSac.ten}</td>
+                        <td>${traHang.chiTietSanPham.kichCo.size}</td>
+                        <td>${traHang.soLuong}</td>
+                        <td><fmt:formatNumber value="${traHang.donGia}" type="number"/></td>
+                        <td><fmt:formatNumber value="${traHang.donGia * traHang.soLuong}" type="number"/></td>
+                        <td>${traHang.doiTra.nhanVien.ho} ${traHang.doiTra.nhanVien.tenDem} ${traHang.doiTra.nhanVien.ten}</td>
+                        <td>${traHang.lyDoDoiTra}</td>
+                    </tr>
+                </c:forEach>
                 <tr>
                     <td colspan="5"><strong>Tổng tiền :</strong></td>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-    <hr>
-    <div class="infor-san-pham-mua">
-        <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
-    </div>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+    </c:if>
+    <c:if test="${listSanPhamDoi.size() != 0}">
+        <div class="infor-san-pham-doi">
+            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
+        </div>
+    </c:if>
+
+
 
 </div>
 
-</div>
+
 <a href="/bumblebee/doi-hang/print/${hoaDon.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
     <i class="fas fa-print"></i> In hoá đơn
 </a>

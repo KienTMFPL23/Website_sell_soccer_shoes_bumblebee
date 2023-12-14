@@ -6,7 +6,8 @@
 <div class="content">
     <h2 style="text-align: center">Hóa đơn khách hàng đã mua</h2>
     <div><strong>Mã hóa đơn: </strong>${hoaDonMua.maHoaDon}</div>
-    <div><strong>Nhân viên bán hàng: </strong>${hoaDonMua.nhanVien.ho} ${hoaDonMua.nhanVien.tenDem} ${hoaDonMua.nhanVien.ten} </div>
+    <div><strong>Nhân viên bán
+        hàng: </strong>${hoaDonMua.nhanVien.ho} ${hoaDonMua.nhanVien.tenDem} ${hoaDonMua.nhanVien.ten} </div>
     <div><strong>Khác hàng: </strong>${hoaDonMua.tenNguoiNhan}</div>
     <div><strong>Số điện thoại: </strong>${hoaDonMua.sdt}</div>
     <div class="content-list-tra">
@@ -19,7 +20,6 @@
                 <th scope="col">Số lượng</th>
                 <th scope="col">Đơn giá</th>
                 <th scope="col">Đơn giá khi giảm</th>
-                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -31,47 +31,6 @@
                     <td>${hd.soLuong}</td>
                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                     <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
-                    <td>
-                        </a>
-                        <a id="openModalSanPham"
-                           onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
-                           class="btn btn-primary"
-                           type="submit"
-                           data-bs-toggle="modal"
-                           data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px;"
-                        >Đổi sản phẩm
-                        </a>
-                        <div class="modal fade" id="modalSanPham" tabindex="-1"
-                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách sản phẩm đổi</h1>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Tên</th>
-                                                <th scope="col">Màu sắc</th>
-                                                <th scope="col">Kích cỡ</th>
-                                                <th scope="col">Số lượng</th>
-                                                <th scope="col">Đơn giá</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tableSanPham">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -81,56 +40,11 @@
         <strong>Tổng tiền <fmt:formatNumber value="${sumMoney}" type="number"/></strong>
     </div>
     <hr>
-    <h2 style="text-align: center">Sản phẩm khách hàng đổi</h2>
-    <form method="post" action="/bumblebee/don-hang/xac-nhan-doi">
-        <table class="table table-bordered" style="margin-top: 10px">
-            <thead>
-            <tr>
-                <th scope="col"> Tên sản phẩm</th>
-                <th scope="col"> Màu sắc</th>
-                <th scope="col"> Kích cỡ</th>
-                <th scope="col"> Số lượng</th>
-                <th scope="col"> Đơn giá</th>
-                <th scope="col"> Lý do đổi trả</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="dtct" items="${listDoiTraCT}">
-                <tr>
-                    <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
-                    <td>${dtct.chiTietSanPham.mauSac.ten}</td>
-                    <td>${dtct.chiTietSanPham.kichCo.size}</td>
-                    <td>
-                        <input type="number" class="form-control"
-                               min="1"
-                               name="soLuong"
-                               value="${dtct.soLuong}"
-                               style="width:100px;">
-                    </td>
-                    <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
-                    <td>
-                        <select class="form-control" style="width: 200px" name="lyDoDoiTra">
-                            <option value="">-----</option>
-                            <option value="Mẫu giao sai">Mẫu giao sai</option>
-                            <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
-                            <option value="Giao thiếu hàng">Giao thiếu hàng</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-primary">Đổi hàng</button>
-        <button data-bs-toggle="modal" type="button"
-                data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
-        </button>
-    </form>
-    <hr>
-
+    <button data-bs-toggle="modal" type="button"
+            data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
+    </button>
+    <a href="/bumblebee/don-hang/doi-san-pham" class="btn btn-primary">Đổi hàng
+    </a>
     <form method="post" action="/bumblebee/don-hang/create-tra-hang">
         <div class="modal fade" id="modalTraHang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -167,7 +81,7 @@
                                     <td>${hd.chiTietSanPham.kichCo.size}</td>
                                     <td>
                                         <div>
-                                            <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}"
+                                            <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}" class="soLuongtra"
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
@@ -178,7 +92,8 @@
                                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                                     <td>
                                         <strong>Lý do trả hàng</strong>
-                                        <select id="lyDoTra" class="form-control" style="width: 200px" name="lyDoDoiTra">
+                                        <select id="lyDoTra" class="form-control" style="width: 200px"
+                                                name="lyDoDoiTra">
                                             <option value="">-----</option>
                                             <option value="Mẫu giao sai">Mẫu giao sai</option>
                                             <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
@@ -207,5 +122,4 @@
             </div>
         </div>
     </form>
-
 </div>

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
-    @Query("select hd from HoaDon  hd where hd.trangThai = 1 and hd.loaiHoaDon=1 order by hd.ngayTao")
+    @Query("select hd from HoaDon  hd where hd.trangThai = 1 and hd.loaiHoaDon=1 order by hd.ngayThanhToan")
     List<HoaDon> getListByTrangThai();
 
     @Query(value = "SELECT hd FROM HoaDon hd where hd.maHoaDon like %?1% or hd.sdt like %?1%  or hd.tenNguoiNhan like %?1% ")
@@ -53,51 +53,51 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     HoaDon listHoaDonByTrangThai();
 
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=8 order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where  hd.trangThai=8 order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangDaHuy(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=2  order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where  hd.trangThai=2  order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangDangChuanBi(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=6  order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where  hd.trangThai=6  order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangTra(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=7 order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where  hd.trangThai=7 order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangDaTra(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where hd.trangThai=1 and hd.loaiHoaDon=0 order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where hd.trangThai=1 and hd.loaiHoaDon=0 order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangChoXacNhan(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=4  order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where  hd.trangThai=4  order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangDangGiao(Pageable pageable);
 
-    @Query("select hd from HoaDon hd where  hd.trangThai=5  order by hd.ngayTao DESC")
+    @Query("select hd from HoaDon hd where  hd.trangThai=5  order by hd.ngayThanhToan DESC")
     Page<HoaDon> donHangHoanThanh(Pageable pageable);
 
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonMua(UUID idKH);
 
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 1 order by hd.ngayTao DESC ")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 1 order by hd.ngayThanhToan DESC ")
     List<HoaDon> listHoaDonChoThanhToan(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 2 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 2 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonDangChuanBi(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 4 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 4 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonDangGiao(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 5 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 5 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonHoanThanh(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 8 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 8 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonDaHuy(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonTraHang(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = ?1")
@@ -158,116 +158,17 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     Page<HoaDon> searchLoaiHoaDonDaTra(@Param("loaiDon") Integer loaiDon, Pageable pageable);
 
 
-    @Query(value = "select hd from HoaDon hd where hd.trangThai <> 1 or hd.loaiHoaDon <> 1 order by hd.ngayTao DESC")
+    @Query(value = "select hd from HoaDon hd where hd.trangThai <> 1 or hd.loaiHoaDon <> 1 order by hd.ngayThanhToan DESC")
     Page<HoaDon> findAllDonHang(Pageable pageable);
 
 
     @Query(value = "select * from HoaDon where TrangThai = 5 and (GETDATE() - NgayThanhToan) <=7",nativeQuery = true)
     List<HoaDon> danhSachHDDuDK();
 
-
-
-    // Thống kê
-    @Query("SELECT COUNT(hd.id) FROM HoaDon hd")
-    int tinhTongSoLuongHoaDonDaBan();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 1", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang1();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 2", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang2();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 3", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang3();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 4", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang4();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 5", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang5();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 6", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang6();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 7", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang7();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 8", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang8();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 9", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang9();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 10", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang10();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 11", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang11();
-
-    @Query(value = "SELECT\n" +
-            "COUNT(Id) AS SoLuongHoaDon\n" +
-            "FROM HoaDon\n" +
-            "WHERE\n" +
-            "YEAR(NgayThanhToan) = YEAR(GETDATE())\n" +
-            "AND MONTH(NgayThanhToan) = 12", nativeQuery = true)
-    int tinhTongHoaDonDaBanThang12();
-
     @Query("delete from HoaDon hd where hd.id = ?1")
     void deletHoaDonById(UUID idHoaDon);
+
+    @Query("select hd from HoaDon hd")
+    List<HoaDon> findAllHoaDon();
 
 }

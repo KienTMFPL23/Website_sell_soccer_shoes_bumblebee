@@ -106,14 +106,6 @@
                 >
             </li>
         </c:if>
-            <!-- Nav Item - Thống kê -->
-            <li class="nav-item">
-                <a class="nav-link" href="/bumblebee/thong-ke/san-pham-da-ban">
-                    <i class="bx bx-line-chart"></i>
-                    <b>Thống kê</b>
-                </a>
-            </li>
-
             <!-- Nav Item - Quản lý sản phẩm -->
             <li class="nav-item">
                 <a
@@ -173,7 +165,7 @@
                 >
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/khach-hang/hien-thi">Khách hàng</a>
-                        <a class="collapse-item" href="/nhan-vien/thong-tin">Nhân viên</a>
+                        <a class="collapse-item" href="/nhan-vien/tai-khoan">Nhân viên</a>
                     </div>
                 </div>
             </li>
@@ -211,7 +203,6 @@
                     <b>Quản lý đổi trả</b></a
                 >
             </li>
-        </c:if>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block"/>
 

@@ -12,8 +12,15 @@ checkedAllCheckbox.addEventListener('click', function () {
     });
 });
 function taoDoiTra(idSP) {
+    var checkSoLuong = document.querySelectorAll('.soLuongtra');
+    checkSoLuong.forEach(function (checkbox) {
+        if (checkSoLuong.value === "") {
+            alert('Nhap so luong');
+            return false;
+        }
+    });
+
     var numberOfCheckedCheckboxes = 0;
-    var textLydo = lyDo.value;
     checkboxes.forEach(function (checkbox) {
         if (checkbox.checked) {
             numberOfCheckedCheckboxes++;
@@ -25,11 +32,11 @@ function taoDoiTra(idSP) {
         logEror.innerText = 'Vui lòng chọn sản phẩm cần trả';
         return false;
     }
-    // if (textLydo === '') {
-    //     var erorText = document.getElementById('erorText');
-    //     erorText.innerText = 'Vui lòng nhập lý do đổi trả';
-    //     return false;
-    // }
+    if (textLydo === '') {
+        var erorText = document.getElementById('erorText');
+        erorText.innerText = 'Vui lòng nhập lý do đổi trả';
+        return false;
+    }
     else {
         Swal.fire({
             position: "center",
@@ -43,11 +50,11 @@ function taoDoiTra(idSP) {
         },1500);
     }
 }
-// function changeSoLuong(soLuongMax,id) {
-//     var slTra = document.getElementById('soLuongTra_'+ id);
-//     if (slTra.value === 0 || slTra.value < 0 || slTra.value === ''){
-//         slTra.value = 1;
-//     }else if(slTra.value > soLuongMax ){
-//         slTra.value = soLuongMax;
-//     }
-// }
+function changeSoLuong(soLuongMax,id) {
+    var slTra = document.getElementById('soLuongTra_'+ id);
+    if (slTra.value === 0 || slTra.value < 0 || slTra.value === ''){
+        slTra.value = 1;
+    }else if(slTra.value > soLuongMax ){
+        slTra.value = soLuongMax;
+    }
+}

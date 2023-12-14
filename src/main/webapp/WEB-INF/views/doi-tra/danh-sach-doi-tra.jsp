@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
-
+<%--danh sách hàng trả--%>
 <div class="content">
     <h1 style="text-align: center">Danh sách hóa đơn đổi trả</h1>
     <div class="row">
@@ -42,34 +42,36 @@
         </div>
     </div>
     <br>
-   <div class="row">
-       <div class="col-lg-4">
-           <div class="input-group">
-               <input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
-                      aria-label="Search" aria-describedby="basic-addon2">
-               <div class="input-group-append">
-                   <button class="btn btn-primary" type="button">
-                       <i class="fas fa-search fa-sm"></i>
-                   </button>
-               </div>
-           </div>
-       </div>
-   </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <form:form action="/bumblebee/doi-hang/search-tra-hang" modelAttribute="searchDT">
+                <form:input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
+                       aria-label="Search" aria-describedby="basic-addon2" path="keyword" />
+<%--                <div class="input-group-append">--%>
+                    <span><button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button></span>
+<%--                </div>--%>
+                </form:form>
+            </div>
+        </div>
+    </div>
     <br>
     <div class="status">
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'all' ? 'active' : ''}" aria-current="page"
+                <a class="nav-link  ${donHang == 'list-san-pham-loi' ? 'active' : ''}" aria-current="page"
                    href="/bumblebee/doi-hang/list-tra-hang">Danh sách trả hàng
                     <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
+                <a class="nav-link  ${donHang == 'list-doi-hang' ? 'active' : ''}"
                    href="/bumblebee/doi-hang/list-doi-hang">Danh sách đổi hàng<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'cho-xac-nhan' ? 'active' : ''}"
+                <a class="nav-link  ${donHang == 'list-san-pham-loi' ? 'active' : ''}"
                    href="/bumblebee/doi-hang/list-san-pham-loi">Danh sách sản phẩm lỗi<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
@@ -88,29 +90,35 @@
             </tr>
             </thead>
             <tbody>
-                <c:forEach varStatus="i" items="${listDoiTra.content}" var="dt">
-                    <tr>
-                        <td>${i.count}</td>
-                        <td>${dt.hoaDon.maHoaDon}</td>
-                        <td>${dt.nhanVien.ho} ${dt.nhanVien.tenDem} ${dt.nhanVien.ten}</td>
+            <c:forEach varStatus="i" items="${listDoiTra.content}" var="dt">
+                <tr>
+                    <td>${i.count}</td>
+                    <td>${dt.hoaDon.maHoaDon}</td>
+                    <td>${dt.nhanVien.ho} ${dt.nhanVien.tenDem} ${dt.nhanVien.ten}</td>
 
-                        <td>${dt.hoaDon.tenNguoiNhan}</td>
-                        <td>
-                            <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
+                    <td>${dt.hoaDon.tenNguoiNhan}</td>
+                    <td>
+                        <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
 
-                        </td>
-                    </tr>
-                </c:forEach>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
     <div>
-        <nav aria-label="Page navigation example" >
-            <ul class="pagination" style="justify-content: center">
-                <li class="page-item"><a class="page-link" href=/bumblebee/doi-hang/list-tra-hang?p=${page.number-1}">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=${page.number+1}">Next</a></li>
-            </ul>
+        <nav aria-label="Page navigation example">
+                        <ul class="pagination" style="justify-content: center">
+                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=0">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number-1}"><<</a></li>
+                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number+1}">>></a></li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.totalPages - 1}">Next</a>
+                            </li>
+                        </ul>
+
         </nav>
     </div>
 </div>

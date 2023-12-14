@@ -45,12 +45,6 @@ public class KhuyenMai {
     @NotNull(message = "Đơn vị không được để trống")
     private String donVi;
 
-    @Column(name = "NgayTao")
-    //@NotNull(message = "Ngày tạo không được để trống")
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngayTao;
-
     @Column(name = "NgayBatDau")
     @NotNull(message = "Ngày bắt đầu không được để trống")
 //    @DateTimeFormat(pattern = "dd/MM/yyyy")
