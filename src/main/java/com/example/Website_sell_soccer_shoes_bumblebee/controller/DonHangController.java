@@ -247,6 +247,7 @@ public class DonHangController {
         Page<HoaDon> list = hoaDonRepository.findAllDonHang(pageable);
         model.addAttribute("page", list);
 
+
         model.addAttribute("view", "../don-hang/listdh.jsp");
         return "/admin/index";
     }
@@ -578,7 +579,6 @@ public class DonHangController {
                         chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
                     }
                 }
-
             }
             return "redirect:/don-hang/list-huy";
         } else {
@@ -692,6 +692,14 @@ public class DonHangController {
 //        List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
 //        sumMoney = hoaDonChiTietService.getTotalMoney(list);
 //        model.addAttribute("sumMoney", sumMoney);
+        List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+        sumMoney = hoaDonChiTietService.getTotalMoney(list);
+        if (sumMoney < 0) {
+            sumMoney = 0.0;
+            model.addAttribute("sumMoney", sumMoney);
+        } else {
+            model.addAttribute("sumMoney", sumMoney);
+        }
         model.addAttribute("view", "../don-hang/xem-don-hang.jsp");
         return "/admin/index";
     }

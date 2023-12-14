@@ -354,7 +354,6 @@
                                             <c:if test="${empty hdct.chiTietSanPham.ctkm}">
                                                 <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
                                             </c:if>
-
                                         </td>
                                         <td>
                                             <a

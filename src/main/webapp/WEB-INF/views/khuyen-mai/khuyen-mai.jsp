@@ -183,22 +183,22 @@
 </style>
 <body>
 <div class="container">
-    <div class="menu-nav">
-        <div class="status text-center">
-            <ul class="nav justify-content-center bg-gradient-light nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
-                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
-                        <span class="badge text-bg-secondary">${countHD}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
-                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
-                            class="badge text-bg-secondary">${countHDCho}</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<%--    <div class="menu-nav">--%>
+<%--        <div class="status text-center">--%>
+<%--            <ul class="nav justify-content-center bg-gradient-light nav-pills">--%>
+<%--                <li class="nav-item">--%>
+<%--                    <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"--%>
+<%--                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại--%>
+<%--                        <span class="badge text-bg-secondary">${countHD}</span></a>--%>
+<%--                </li>--%>
+<%--                <li class="nav-item">--%>
+<%--                    <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"--%>
+<%--                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span--%>
+<%--                            class="badge text-bg-secondary">${countHDCho}</span></a>--%>
+<%--                </li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
