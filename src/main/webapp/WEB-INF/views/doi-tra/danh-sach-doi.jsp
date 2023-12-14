@@ -45,13 +45,15 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="input-group">
-                <input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
-                       aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-                </div>
+                <form:form action="/bumblebee/doi-hang/search-doi-hang" modelAttribute="searchDT">
+                    <form:input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
+                                aria-label="Search" aria-describedby="basic-addon2" path="keyword" />
+<%--                    <div class="input-group-append">--%>
+                        <span><button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button></span>
+<%--                    </div>--%>
+                </form:form>
             </div>
         </div>
     </div>
@@ -96,7 +98,7 @@
 
                     <td>${dt.hoaDon.tenNguoiNhan}</td>
                     <td>
-                        <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.id}">Chi tiết</a>
+                        <a class="btn btn-primary" href="/bumblebee/doi-tra/chi-tiet/${dt.hoaDon.id}">Chi tiết</a>
                     </td>
                 </tr>
             </c:forEach>

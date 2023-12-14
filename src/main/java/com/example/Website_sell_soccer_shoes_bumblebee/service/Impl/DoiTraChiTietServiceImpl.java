@@ -30,11 +30,12 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
     }
 
     @Override
-    public void removeDoiTraCT(UUID id) {
+    public DoiTraChiTiet removeDoiTraCT(UUID id) {
         DoiTraChiTiet dtct = doiTraCTRepo.findById(id).orElse(null);
         if (dtct != null){
              doiTraCTRepo.delete(dtct);
         }
+        return dtct;
     }
 
     @Override
@@ -59,12 +60,29 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
 
     @Override
     public Page<DoiTraChiTiet> findSanPhamLoi(Integer page) {
-        Pageable pageable= PageRequest.of(page,2);
+        Pageable pageable= PageRequest.of(page,5);
         return doiTraCTRepo.findSanPhamLoi(pageable);
     }
 
     @Override
     public List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon) {
         return doiTraCTRepo.listSanPhamDoi(idHoaDon);
+    }
+
+    @Override
+    public DoiTraChiTiet getOneDoiTraCT(UUID idDoiTraCT) {
+        DoiTraChiTiet dtct = doiTraCTRepo.findById(idDoiTraCT).orElse(null);
+        if (dtct != null){
+            return dtct;
+        }
+        return dtct;
+    }
+
+    @Override
+    public void deleteDoiTraCT(UUID idDoiTra) {
+        DoiTraChiTiet doiTraChiTiet = doiTraCTRepo.findById(idDoiTra).orElse(null);
+        if (doiTraChiTiet != null){
+            doiTraCTRepo.delete(doiTraChiTiet);
+        }
     }
 }

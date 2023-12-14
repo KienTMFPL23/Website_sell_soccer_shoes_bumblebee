@@ -14,7 +14,7 @@ public interface DoiTraChiTietService {
 
     List<DoiTraChiTiet> listDoiTraCTById(UUID idDoiTra);
 
-    void removeDoiTraCT(UUID id);
+    DoiTraChiTiet removeDoiTraCT(UUID id);
 
     List<DoiTraChiTietCustom> listDoiTraCTCustom(UUID idHoaDon);
 
@@ -27,4 +27,8 @@ public interface DoiTraChiTietService {
     Page<DoiTraChiTiet> findSanPhamLoi(Integer page);
 
     List<DoiTraChiTiet> listSanPhamDoi(UUID idHoaDon );
+
+    DoiTraChiTiet getOneDoiTraCT(UUID idDoiTraCT);
+
+    void deleteDoiTraCT(UUID idDoiTra);
 }
