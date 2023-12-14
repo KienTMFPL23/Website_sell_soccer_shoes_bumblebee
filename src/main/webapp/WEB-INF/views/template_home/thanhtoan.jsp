@@ -143,7 +143,7 @@
                                                                     value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
                                                                     type="number"/> đ</label>
                                                         </c:if>
-                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
                                                             <label id="thanhTien_${sp.id}"
                                                                    class="thanhTien"><fmt:formatNumber
                                                                     value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"

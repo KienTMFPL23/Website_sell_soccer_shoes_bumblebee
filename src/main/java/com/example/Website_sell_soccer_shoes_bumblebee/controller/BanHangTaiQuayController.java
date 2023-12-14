@@ -190,7 +190,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("khachHang", new KhachHang());
         idHoaDon = id;
-        model.addAttribute("idHDCT",id);
+        model.addAttribute("idHDCT", id);
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
@@ -229,8 +229,8 @@ public class BanHangTaiQuayController {
 //        }
         this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
-        if (sp == null){
-            model.addAttribute("erorSP","Không có sản phẩm nào!!!");
+        if (sp == null) {
+            model.addAttribute("erorSP", "Không có sản phẩm nào!!!");
             return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
         }
         HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
@@ -245,12 +245,24 @@ public class BanHangTaiQuayController {
             hoaDonChiTiet.setSoLuong(1);
             hoaDonChiTiet.setDonGia(sp.getGiaBan());
             hoaDonChiTiet.setTrangThai(1);
-            if (sp.getCtkm() != null) {
-                Double donGiaKhiGiam = hoaDonChiTietService.getDonGiaKhiGiam(sp.getCtkm());
-                hoaDonChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
-            } else {
+
+            if (sp.getCtkm().isEmpty()) {
                 hoaDonChiTiet.setDonGiaKhiGiam(0.0);
+            } else {
+                ChiTietKhuyenMai ctkmNull = null;
+                for (ChiTietKhuyenMai ctkm : sp.getCtkm()) {
+                    System.out.println("CTKM: " + ctkm.getId());
+                    if (ctkm.getTrangThai() == 0) {
+                        ctkmNull = ctkm;
+                    }
+                }
+                if (ctkmNull != null){
+                    hoaDonChiTiet.setDonGiaKhiGiam(ctkmNull.getGiaKhuyenMai());
+                } else {
+                    hoaDonChiTiet.setDonGiaKhiGiam(0.0);
+                }
             }
+
             Integer soLuong = sp.getSoLuong() - 1;
             chiTietSanPhamService.updateSoLuongTon(id, soLuong);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
@@ -301,17 +313,17 @@ public class BanHangTaiQuayController {
 
     @RequestMapping("/thanhtoan/{idHoaDon}")
     public String thanhToan(Model model, HttpServletResponse response, @PathVariable("idHoaDon") UUID id,
-                            @Valid @ModelAttribute("hoaDon")HoaDon hoaDon,
+                            @Valid @ModelAttribute("hoaDon") HoaDon hoaDon,
                             BindingResult result) throws ParseException, DocumentException, IOException {
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
         KhachHang khachHang = null;
         String sdt = hoaDon.getSdt();
-        if (sdt != ""){
+        if (sdt != "") {
             khachHang = khachHangRepository.findKHBySDT(hoaDon.getSdt());
         }
 
         if (result.hasErrors()) {
-           return  "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
         }
 //        if (! hoaDon.getSdt().startsWith("0")){
 //            model.addAttribute("errorSDT","Số điện thoại bắt đầu bằng 0");
@@ -333,7 +345,7 @@ public class BanHangTaiQuayController {
             if (khachHang != null) {
                 hoaDonThanhToan.setKhachHang(khachHang);
                 hoaDonThanhToan.setTenNguoiNhan(khachHang.getTen());
-            }else {
+            } else {
                 hoaDonThanhToan.setTenNguoiNhan("Khách vãng lai");
             }
             hoaDonThanhToan.setPhuongThucThanhToan(1);
@@ -400,12 +412,12 @@ public class BanHangTaiQuayController {
         document.add(tennhanvien);
 //        KhachHang khachHang = hoaDonThanhToan.getKhachHang();
 //        if (khachHang != null) {
-            // Tiếp tục xử lý chỉ khi khách hàng không phải là null
+        // Tiếp tục xử lý chỉ khi khách hàng không phải là null
 //            String tenKhachHang = khachHang.getTen();
-            Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
-            document.add(tenKhach);
+        Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
+        document.add(tenKhach);
 //        } else {
-            // Xử lý khi khách hàng là null
+        // Xử lý khi khách hàng là null
 //            Paragraph tenKhach = new Paragraph("Khách hàng    :     Khách vãn lai", titleFont);
 //            document.add(tenKhach);
 //        }
@@ -422,7 +434,7 @@ public class BanHangTaiQuayController {
         ////
         PdfPTable productTable = new PdfPTable(6);
         productTable.setWidthPercentage(100);
-        float[] columnWidths = {3f, 3f, 1f, 1f,2f,2f};
+        float[] columnWidths = {3f, 3f, 1f, 1f, 2f, 2f};
         productTable.setWidths(columnWidths);
 
         productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
@@ -445,7 +457,6 @@ public class BanHangTaiQuayController {
         document.add(productTable);
 
 
-
         Paragraph dong = new Paragraph("==========================================================================");
 
         document.add(dong);
@@ -458,13 +469,13 @@ public class BanHangTaiQuayController {
 //
 //
 //            }
-        Paragraph TongCong = new Paragraph("Tổng Cộng       :    " + sumMoney,titleFont);
+        Paragraph TongCong = new Paragraph("Tổng Cộng       :    " + sumMoney, titleFont);
 
         document.add(TongCong);
 
 //        Paragraph DongGanCuoi = new Paragraph("CHI XUAT HOA DON TRONG NGAY");
 //        DongGanCuoi.setAlignment(Paragraph.ALIGN_CENTER);
-        Paragraph camOn = new Paragraph("CẢM ƠN QUÝ KHÁCH ĐÃ SỬ DỤNG DỊCH VỤ ",titleFont);
+        Paragraph camOn = new Paragraph("CẢM ƠN QUÝ KHÁCH ĐÃ SỬ DỤNG DỊCH VỤ ", titleFont);
         camOn.setAlignment(Paragraph.ALIGN_CENTER);
         ////// insert document
 
@@ -484,12 +495,13 @@ public class BanHangTaiQuayController {
         document.close();
         return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
     }
-        private PdfPCell createTableCell(String text, Font font) {
-            PdfPCell cell = new PdfPCell(new Phrase(text, font));
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            return cell;
-        }
+
+    private PdfPCell createTableCell(String text, Font font) {
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        return cell;
+    }
 
 
     //    @RequestMapping("/them-khach-hang")
@@ -518,9 +530,10 @@ public class BanHangTaiQuayController {
         result.getFieldErrors().forEach(error -> errors.add(error.getField() + ": " + error.getDefaultMessage()));
         return errors;
     }
+
     @RequestMapping("/them-khach-hang")
     @ResponseBody
-    public Map<String, Object> themKhachHang(Model model,@Validated @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
+    public Map<String, Object> themKhachHang(Model model, @Validated @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
 
         // Kiểm tra lỗi validation
@@ -555,7 +568,7 @@ public class BanHangTaiQuayController {
         // Lưu thông tin khách hàng
         khachHang.setTrangThai(5);
         khachHangService.saveKhachHang(khachHang);
-        model.addAttribute("idHoaDon",this.idHoaDon);
+        model.addAttribute("idHoaDon", this.idHoaDon);
         response.put("status", "success");
         return response;
 

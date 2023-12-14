@@ -342,42 +342,46 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-        List<ChiTietKhuyenMai> listCTKmByIdKM = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
-        List<ChiTietKhuyenMai> listCTKMByTrangThai0 = chiTietKhuyenMaiRepository.ctkmByTrangThai0();
-
-
-        for (ChiTietKhuyenMai ctkm1 : listCTKmByIdKM) {
-            System.out.println("aa " + ctkm1.getCtsp().getId());
-        }
-
-        List<ChiTietKhuyenMai> listRemove = new ArrayList<>();
-
-        for (ChiTietKhuyenMai ctkm1 : listCTKmByIdKM) {
-            for (ChiTietKhuyenMai ctkm2 : listCTKMByTrangThai0) {
-                if (ctkm1.getCtsp().getId().equals(ctkm2.getCtsp().getId())) {
-                    listRemove.add(ctkm1);
-                }
-            }
-        }
-
-        for (ChiTietKhuyenMai chiTietKhuyenMai : listRemove) {
-            listCTKmByIdKM.remove(chiTietKhuyenMai);
-        }
-
-        for (ChiTietKhuyenMai ctkm : listCTKmByIdKM) {
-            ctkm.setTrangThai(0);
-            chiTietKhuyenMaiService.save(ctkm);
-        }
 
         KhuyenMai khuyenMai = khuyenMaiService.findId(km.getId());
         khuyenMai.setTrangThai(km.getTrangThai());
         khuyenMaiService.save(khuyenMai);
-        List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
-        for (ChiTietKhuyenMai ctkm : chiTietKhuyenMai) {
-            ctkm.setTrangThai(km.getTrangThai());
-            chiTietKhuyenMaiService.save(ctkm);
-        }
 
+        if (km.getTrangThai() == 1) {
+            List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
+            for (ChiTietKhuyenMai ctkm : chiTietKhuyenMai) {
+                ctkm.setTrangThai(km.getTrangThai());
+                chiTietKhuyenMaiService.save(ctkm);
+            }
+        } else {
+            List<ChiTietKhuyenMai> listCTKmByIdKM = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
+            List<ChiTietKhuyenMai> listCTKMByTrangThai0 = chiTietKhuyenMaiRepository.ctkmByTrangThai0();
+
+
+            for (ChiTietKhuyenMai ctkm1 : listCTKmByIdKM) {
+                System.out.println("aa " + ctkm1.getCtsp().getId());
+            }
+
+            List<ChiTietKhuyenMai> listRemove = new ArrayList<>();
+
+            for (ChiTietKhuyenMai ctkm1 : listCTKmByIdKM) {
+                for (ChiTietKhuyenMai ctkm2 : listCTKMByTrangThai0) {
+                    if (ctkm1.getCtsp().getId().equals(ctkm2.getCtsp().getId())) {
+                        listRemove.add(ctkm1);
+                    }
+                }
+            }
+
+            for (ChiTietKhuyenMai chiTietKhuyenMai : listRemove) {
+                listCTKmByIdKM.remove(chiTietKhuyenMai);
+            }
+
+            for (ChiTietKhuyenMai ctkm : listCTKmByIdKM) {
+                ctkm.setTrangThai(km.getTrangThai());
+                chiTietKhuyenMaiService.save(ctkm);
+            }
+
+        }
         return "redirect:/bumblebee/khuyen-mai/list";
     }
 
