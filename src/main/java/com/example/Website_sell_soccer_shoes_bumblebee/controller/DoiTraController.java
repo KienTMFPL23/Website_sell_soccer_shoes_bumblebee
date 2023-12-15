@@ -216,7 +216,7 @@ public class DoiTraController {
             doiTraChiTiet.setSoLuong(listSoLuong.get(h));
             doiTraChiTiet.setDoiTra(doiTra);
             doiTraChiTiet.setLyDoDoiTra(lydo.get(h));
-            doiTraChiTiet.setDonGia(listCTSP.get(h).getGiaBan());
+            doiTraChiTiet.setDonGia(hoaDonChiTiet.getDonGia());
             doiTraChiTiet.setTrangThai(2);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
         }
