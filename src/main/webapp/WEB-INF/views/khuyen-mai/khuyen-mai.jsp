@@ -154,28 +154,33 @@
                 </a>
             </div>
         </div>
-        <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
-            <div class="row" style="margin-bottom: 20px;">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-2">
-                    <form:select path="donVi">
-                        <option value="">-- Lọc đơn vị --</option>
-                        <form:option value="VNĐ">VNĐ</form:option>
-                        <form:option value="%">%</form:option>
-                    </form:select>
-                </div>
-                <div class="col-lg-2">
-                    <form:select path="trangThai">
-                        <option value="">-- Lọc trạng thái --</option>
-                        <form:option value="0">Hoạt động</form:option>
-                        <form:option value="1">Không hoạt động</form:option>
-                    </form:select>
-                </div>
-                <div class="col-lg-1">
-                    <button type="submit" class="btnSearch">Tìm</button>
-                </div>
-            </div>
-        </form:form>
+                <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-2">
+                            <form:select path="donVi">
+                                <option value="">-- Lọc đơn vị --</option>
+                                <form:option value="VNĐ">VNĐ</form:option>
+                                <form:option value="%">%</form:option>
+                            </form:select>
+                        </div>
+                        <div class="col-lg-2">
+                            <form:select path="trangThai">
+                                <option value="">-- Lọc trạng thái --</option>
+                                <form:option value="0">Hoạt động</form:option>
+                                <form:option value="1">Không hoạt động</form:option>
+                            </form:select>
+<%--    <form:select type="text" path="trangThai">--%>
+<%--        <form:option value="">-- Lọc trạng thái --</form:option>--%>
+<%--        <form:options items="${dsTrangThai}"/>--%>
+<%--    </form:select>--%>
+                        </div>
+                        <div class="col-lg-1">
+                            <button type="submit" class="btnSearch">Tìm</button>
+                        </div>
+                    </div>
+                </form:form>
+
 
         <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>

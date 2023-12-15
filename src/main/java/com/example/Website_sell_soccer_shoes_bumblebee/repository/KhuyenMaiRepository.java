@@ -37,6 +37,8 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
 
     @Query("select  km from KhuyenMai  km where (?1 is null or km.donVi=?1) and (?2 is null or km.trangThai=?2) ")
     List<KhuyenMai> searchHDByDonViAndTrangThai(String donVi, Integer trangThai);
+    @Query("select  km from KhuyenMai  km where (?1  is null or km.trangThai=?1) ")
+    List<KhuyenMai> searchHDByTrangThai(Integer trangThai);
 
 
 
