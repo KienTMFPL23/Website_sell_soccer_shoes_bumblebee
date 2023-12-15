@@ -44,22 +44,6 @@
 <main class="ps-main">
     <div class="container">
         <form class="ps-checkout__form" method="post">
-            <%--            <div class="row" style="padding-top: 20px;">--%>
-            <%--                <div class="col-lg-12">--%>
-            <%--                    <div class="ps-checkout__order">--%>
-            <%--                        <div class="row" style="padding: 20px">--%>
-            <%--                            <h2 style="color: crimson;">--%>
-            <%--                                <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="25px"--%>
-            <%--                                     height="25px"/>Thông tin--%>
-            <%--                                nhận hàng:--%>
-            <%--                            </h2>--%>
-            <%--                            <p style="font-size: 18px; color: black; font-weight: 600; margin-left: 10px;">${listKH.ho} ${listKH.tenDem} ${listKH.ten}--%>
-            <%--                                - ${listKH.soDienThoai} - ${listKH.diaChi}</p>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
-
             <div class="row" style="padding-top: 20px;">
                 <div class="col-lg-12">
                     <div class="ps-checkout__order">
@@ -135,7 +119,7 @@
                                             <c:if test="${not empty sp.ctsp.ctkm}">
                                                 <c:set var="allTrangThai1" value="false"/>
                                                 <c:forEach var="km" items="${sp.ctsp.ctkm}">
-                                                    <c:if test="${km.khuyenMai.trangThai == 0}">
+                                                    <c:if test="${km.trangThai == 0}">
                                                         <c:set var="allTrangThai1" value="true"/>
                                                         <c:if test="${km.khuyenMai.donVi == '%'}">
                                                             <label id="thanhTien_${sp.id}"
@@ -205,8 +189,7 @@
                             <div class="ps-checkout__order">
                                 <footer>
                                     <h3>Phương thức thanh toán</h3>
-                                    <div style="height: 250px;">
-
+                                    <div style="height: 300px;">
                                         <div class="form-group cheque">
                                             <div class="ps-radio">
                                                 <input class="form-control" type="radio" id="rdo01" name="payment"
@@ -231,12 +214,72 @@
                                             </ul>
                                         </div>
 
-                                        <div class="row">
+                                        <div style="padding: 10px 30px">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="width: 10px">
+                                            <label class="form-check-label" for="flexCheckDefault" style="padding-left: 30px;font-size: 14px">
+                                               Tôi đồng ý với chính sách của cửa hàng
+                                            </label>
+                                            <a style="cursor: pointer; font-size: 14px;margin-left: 30px;text-decoration: underline" type="button" data-toggle="modal" data-target="#exampleModalLong">
+                                               chính sách
+                                              </a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                <div class="modal-dialog " role="document" style="max-width: 1200px">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600;font-size: 20px">Chính sách cửa hàng</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="container" style="margin-top: 70px">
+                                                                <h2 style="text-align: center;font-size: 30px">Chính sách đổi sản phẩm khi mua hàng</h2>
+                                                                <div>
+                                                                    <strong style="font-size: 20px">I.Nội dung chính sách :</strong>
+                                                                </div>
+                                                                <div>
+                                                                    <strong style="font-size: 15px">1. Các quy định</strong>
+                                                                </div>
+                                                                <p>Khi khách hàng mua sản phẩm, cửa hàng chỉ áp dụng đổi sản phẩm tương tự hoặc cùng giá với sản phẩm muốn đổi
+                                                                    .Không áp dụng trả sản phẩm, hoàn tiền và đổi sản phẩm với giá thấp hoặc cao hơn với giá sản phẩm
+                                                                    mua ban đầu</p>
+                                                                <div>
+                                                                    <strong style="font-size: 15px">2. Thời gian đổi hàng</strong>
+                                                                </div>
+                                                                <p> Thời gian áp dụng đổi hàng khi khách mua tại cửa hàng là 7 ngày</p>
+                                                                <p> Đối với khách hàng mua online trên website thì thời gian đổi hàng là 7 ngày kể từ khi nhận được hàng </p>
+                                                                <strong style="font-size: 20px">II. Điều kiện áp dụng</strong>
+                                                                <p>* Cửa hàng gửi sai hàng khách đặt</p>
+                                                                <p>* Hàng gửi không đủ số lượng</p>
+                                                                <p>* Hàng có dấu hiệu cũ, đã qua sử dụng</p>
+                                                                <p>* Khi đổi hàng cần còn nguyên tem, không được làm hỏng hoặc bẩn sản phẩm khi đổi</p>
+                                                                <div>
+                                                                    <strong style="font-size: 15px">III. Hướng dẫn đổi hàng</strong>
+                                                                    <p>Bước 1: Kiểm tra điều kiện đổi hàng</p>
+                                                                    <p>Khách hàng vui lòng tham khảo quy định và thời gian đổi hàng của chúng tôi ở trong mục I, II. Nhằm đảm bảo sản phẩm
+                                                                        thỏa mãn điều kiện được đổi</p>
+                                                                    <p>Bước 2: Đăng ký đổi sản phẩm</p>
+                                                                    <p>Khách hàng cần nhập đầy đủ thông tin nhận hàng:</p>
+                                                                    <p> + Họ tên người đặt hàng</p>
+                                                                    <p> + Số điện thoại người đặt hàng</p>
+                                                                    <p> + Họ tên người đặt hàng</p>
+                                                                    <p> + Họ tên người đặt hàng</p>
+                                                                    <p> + Họ tên người đặt hàng</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="margin-top: 20px">
                                             <div class="col-lg-4"></div>
                                             <div class="col-lg-4">
                                                 <button class="ps-btn" formaction="/bumblebee/dat-hang" type="submit"
                                                         onclick="return checkTrongThongTinNhanHang()">Đặt hàng<i
-                                                        class="ps-icon-next"></i>
+                                                        class="ps-icon-next" id="btnDatHang"></i>
                                                 </button>
                                             </div>
                                             <div class="col-lg-4"></div>
@@ -281,6 +324,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
+
+    // Gọi hàm khi checkbox thay đổi trạng thái
+    document.getElementById('flexCheckDefault').addEventListener('change', updateBtnDatHang);
     var citis = document.getElementById("city");
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
@@ -366,6 +412,13 @@
     var province = document.getElementById("province");
 
     function checkTrongThongTinNhanHang(){
+        var checkbox = document.getElementById("flexCheckDefault");
+        if (!checkbox.checked) {
+            alert("Vui lòng đồng ý với chính sách của cửa hàng trước khi đặt hàng.");
+            return false; // Ngăn chặn hành động tiếp theo nếu checkbox không được chọn
+        }
+        // Nếu checkbox được chọn, cho phép hành động tiếp theo
+        return true;
         if (ten.value === "" || sdt.value === ""){
             var toastElement = document.getElementById("toast_warring_login");
             toastElement.style.display = "block";

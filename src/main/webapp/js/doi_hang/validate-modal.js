@@ -12,6 +12,7 @@ checkedAllCheckbox.addEventListener('click', function () {
     });
 });
 function taoDoiTra(idSP) {
+
     var isChecked = false;
     var isValidQuantity = true;
     var isValidLyDo = true;
@@ -23,6 +24,7 @@ function taoDoiTra(idSP) {
             var lydoId = checkboxes[i].id.replace('checkBoxSP','lyDoTra');
             var quantityInput = document.getElementById(inputId);
             var lyDoSelect = document.getElementById(lydoId);
+
 
             // Kiểm tra nếu ô input không có giá trị hoặc giá trị không hợp lệ
             if (quantityInput.value.trim() === '' || parseInt(quantityInput.value) < 1) {

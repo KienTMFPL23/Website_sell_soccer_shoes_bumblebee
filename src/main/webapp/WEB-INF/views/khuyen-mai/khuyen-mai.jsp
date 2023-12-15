@@ -205,7 +205,7 @@
                     <td>${km.maKhuyenMai}</td>
                     <td>${km.tenKhuyenMai}</td>
                     <td>
-                        <c:if test="${km.donVi == 'VNĐ'}">
+                        <c:if test="${km.donVi == 'VNÐ'}">
                             <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
                         </c:if>
                         <c:if test="${km.donVi == '%'}">
@@ -248,8 +248,6 @@
                                                         <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
                                                     </div>
                                                 </div>
-
-
                                                 <span id="spnError" class="error" style="display: none"
                                                 >Please select at-least one Fruit.</span
                                                 >
@@ -269,7 +267,6 @@
                                                             <th scope="col">Kích cỡ</th>
                                                         </tr>
                                                         </thead>
-
                                                         <tbody id="myTable3">
                                                         <c:forEach items="${listCTSP}" var="sp" varStatus="i">
                                                             <tr>
@@ -284,11 +281,27 @@
                                                                             </c:if>
                                                                         </c:forEach>
                                                                         <c:if test="${allTrangThai1 eq false}">
+                                                                            <c:if test="${sp.giaBan < ctkm.khuyenMai.giaTri}">
+                                                                                Giá SP nhỏ hơn khuyến mại
+                                                                            </c:if>
+                                                                            <c:if test="${sp.giaBan > ctkm.khuyenMai.giaTri}">
+                                                                                <input
+                                                                                        class="checkCart" type="checkbox"
+                                                                                        name="idListCartDetail"
+                                                                                        value="${sp.id}">
+                                                                                <c:set var="allTrangThai1" value="true"/>
+                                                                            </c:if>
+                                                                        </c:if>
+                                                                    </c:if>
+                                                                    <c:if test="${empty sp.ctkm}">
+                                                                        <c:if test="${sp.giaBan < ctkm.khuyenMai.giaTri}">
+                                                                            Giá SP nhỏ hơn khuyến mại
+                                                                        </c:if>
+                                                                        <c:if test="${sp.giaBan > ctkm.khuyenMai.giaTri}">
                                                                             <input
                                                                                     class="checkCart" type="checkbox"
                                                                                     name="idListCartDetail"
                                                                                     value="${sp.id}">
-                                                                            <c:set var="allTrangThai1" value="true"/>
                                                                         </c:if>
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
@@ -299,15 +312,13 @@
                                                                                 name="idListCartDetail"
                                                                                 value="${sp.id}">
                                                                     </c:if>
-
-
                                                                 </td>
                                                                 <td><img src="../../../uploads/${sp.hinhAnhs.tenanh}"
                                                                          width="50px" height="50px"></td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
+                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber> đ</td>
                                                                 <td>${sp.mauSac.ten}</td>
                                                                 <td>${sp.kichCo.size}</td>
                                                             </tr>

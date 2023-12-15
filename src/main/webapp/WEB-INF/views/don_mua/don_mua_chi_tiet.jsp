@@ -551,7 +551,7 @@
                                 <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
                                     <c:set var="allTrangThai1" value="false"/>
                                     <c:forEach var="ctkm" items="${hdct.chiTietSanPham.ctkm}">
-                                        <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                        <c:if test="${ctkm.trangThai == 0}">
                                             <c:set var="allTrangThai1" value="true"/>
                                             <fmt:formatNumber value="${hdct.donGiaKhiGiam * hdct.soLuong}"
                                                               type="number"/> đ

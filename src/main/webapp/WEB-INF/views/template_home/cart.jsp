@@ -68,7 +68,7 @@
                                                     <c:forEach var="km" items="${item.ctsp.ctkm}">
 
                                                         <c:set var="allTrangThai1" value="false"/>
-                                                        <c:if test="${km.khuyenMai.trangThai == 0}">
+                                                        <c:if test="${km.trangThai == 0}">
                                                             <c:if test="${km.khuyenMai.donVi == '%'}">
                                                                 <input id="donGia_${item.id}" type="hidden"
                                                                        value="${item.ctsp.giaBan - (item.ctsp.giaBan * km.khuyenMai.giaTri/100)}">
@@ -118,7 +118,7 @@
                                                 <c:if test="${not empty item.ctsp.ctkm}">
                                                     <c:set var="allTrangThai1" value="false"/>
                                                     <c:forEach var="km" items="${item.ctsp.ctkm}">
-                                                        <c:if test="${km.khuyenMai.trangThai == 0}">
+                                                        <c:if test="${km.trangThai == 0}">
                                                             <c:if test="${km.khuyenMai.donVi == '%'}">
                                                                 <label id="thanhTien_${item.id}"
                                                                        class="thanhTien"><fmt:formatNumber
@@ -231,9 +231,9 @@
 <script>
     function chonSoLuong(itemId) {
         const newValue = event.target.value;
-        if (newValue > 5) {
-            document.getElementById("soLuongCTSP_" + itemId).value = 5;
-            alert("Tối đa 5 sản phẩm");
+        if (newValue > 30) {
+            document.getElementById("soLuongCTSP_" + itemId).value = 30;
+            alert("Tối đa 30 sản phẩm");
             capNhatTongTien()
         }
         if (newValue < 0) {
@@ -336,8 +336,8 @@
 
     function themSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
-        if (soLuongHienTai > 4) {
-            alert("Tối đa 5 sản phẩm");
+        if (soLuongHienTai > 29) {
+            alert("Tối đa 30 sản phẩm");
             return;
         }
         var soLuongMoi = soLuongHienTai + 1;

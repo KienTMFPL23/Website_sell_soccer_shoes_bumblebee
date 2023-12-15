@@ -127,7 +127,7 @@ public class HomeController {
         if (ctsp.getCtkm().size() > 0) {
             Boolean allTranhThai1 = false;
             for (ChiTietKhuyenMai chiTietKhuyenMai : ctsp.getCtkm()) {
-                if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0){
+                if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0) {
                     if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
                         allTranhThai1 = true;
                         giaBan = ctsp.getGiaBan() - ctsp.getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100;
@@ -137,7 +137,7 @@ public class HomeController {
                     }
                 }
             }
-            if (allTranhThai1 == false){
+            if (allTranhThai1 == false) {
                 giaBan = ctsp.getGiaBan();
             }
         } else {
@@ -234,7 +234,6 @@ public class HomeController {
     }
 
 
-
     @GetMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
@@ -265,31 +264,31 @@ public class HomeController {
         int soLuongCTSP = ctsp.getSoLuong();
         GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
         List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+
         for (GioHangChiTiet gioHangChiTiet : listGHCT) {
             if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
                 int soLuongHienTai = gioHangChiTiet.getSoLuong();
                 int slThem = Integer.parseInt(soLuong);
                 int slUpdate = soLuongHienTai + slThem;
-//                if (slUpdate > soLuongCTSP) {
-//                    model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
-//                    return ResponseEntity.ok().build();
-//                }
+                if (slUpdate > 30) {
+                    return ResponseEntity.ok("Bạn đang có " + soLuongHienTai + " trong giỏ hàng, tối đa mua 30 sản phẩm");
+                }
                 gioHangChiTiet.setSoLuong(slUpdate);
                 gioHangChiTietRepo.save(gioHangChiTiet);
                 return ResponseEntity.ok().build();
             }
         }
         int sl = Integer.parseInt(soLuong);
-//        if (sl > soLuongCTSP) {
-//            model.addAttribute("errorSL", " Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.");
-//        }
+        if (sl > 30) {
+            return ResponseEntity.ok("Tối đa mua 30 sản phẩm");
+        }
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         gioHangChiTiet.setCtsp(ctsp);
         gioHangChiTiet.setGioHang(gioHang);
         if (ctsp.getCtkm() != null) {
             double donGiaKhiGiam = 0;
             for (ChiTietKhuyenMai ctkm : ctsp.getCtkm()) {
-                if (ctkm.getKhuyenMai().getTrangThai() == 0){
+                if (ctkm.getTrangThai() == 0) {
                     if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
                         donGiaKhiGiam = ctsp.getGiaBan() - (ctsp.getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
                         gioHangChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
@@ -307,7 +306,6 @@ public class HomeController {
         List<ChiTietSanPham> listCTSP = chiTietSanPhamService.getList();
         model.addAttribute("listGHCT", listGHCT);
         model.addAttribute("listCTSP", listCTSP);
-        model.addAttribute("view", "../template_home/cart.jsp");
         return ResponseEntity.ok().build();
     }
 
@@ -331,7 +329,7 @@ public class HomeController {
                 double donGiaKhiGiam = 0;
                 Boolean allTranhThai1 = false;
                 for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()) {
-                    if (ctkm.getKhuyenMai().getTrangThai() == 0){
+                    if (ctkm.getTrangThai() == 0) {
                         ghct.setDonGia(chiTietSanPham.getGiaBan());
                         if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
                             donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
@@ -346,10 +344,10 @@ public class HomeController {
                     }
 
                 }
-                if (allTranhThai1 == false){
+                if (allTranhThai1 == false) {
                     ghct.setDonGia(chiTietSanPham.getGiaBan());
                 }
-            }else{
+            } else {
                 ghct.setDonGia(chiTietSanPham.getGiaBan());
             }
             listGHCT.add(ghct);
@@ -433,9 +431,9 @@ public class HomeController {
         hoaDon.setNgayThanhToan(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(format));
         hoaDon.setTenNguoiNhan(tenNguoiNhan);
         hoaDon.setSdt(sdt);
-        if (diaChiShip.equals(kh.getDiaChi())){
+        if (diaChiShip.equals(kh.getDiaChi())) {
             hoaDon.setDiaChiShip(kh.getDiaChi());
-        } else{
+        } else {
             hoaDon.setDiaChiShip(xa + " - " + huyen + " - " + thanhPho);
         }
         hoaDon.setGhiChu(ghiChu);
@@ -455,26 +453,26 @@ public class HomeController {
             hdct.setChiTietSanPham(ghct.getCtsp());
             hdct.setSoLuong(ghct.getSoLuong());
             if (ghct.getCtsp().getCtkm() != null) {
-                    double donGiaKhiGiam = 0;
-                    Boolean allTrangThai1 = false;
-                    for(ChiTietKhuyenMai chiTietKhuyenMai : ghct.getCtsp().getCtkm()){
-                        if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0){
-                            allTrangThai1 = true;
-                            hdct.setDonGia(ghct.getDonGia());
-                            if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
-                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100);
-                                hdct.setDonGiaKhiGiam(donGiaKhiGiam);
-                            }
-                            if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNÐ")) {
-                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
-                                hdct.setDonGiaKhiGiam(donGiaKhiGiam);
-                            }
-                        }
-                }
-                    if (allTrangThai1 == false){
+                double donGiaKhiGiam = 0;
+                Boolean allTrangThai1 = false;
+                for (ChiTietKhuyenMai chiTietKhuyenMai : ghct.getCtsp().getCtkm()) {
+                    if (chiTietKhuyenMai.getTrangThai() == 0) {
+                        allTrangThai1 = true;
                         hdct.setDonGia(ghct.getDonGia());
+                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
+                            donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100);
+                            hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                        }
+                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                            donGiaKhiGiam = ghct.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
+                            hdct.setDonGiaKhiGiam(donGiaKhiGiam);
+                        }
                     }
-            }else{
+                }
+                if (allTrangThai1 == false) {
+                    hdct.setDonGia(ghct.getDonGia());
+                }
+            } else {
                 hdct.setDonGia(ghct.getDonGia());
             }
             hdct.setTrangThai(3);
@@ -527,24 +525,26 @@ public class HomeController {
                 hdct.setHoaDon(hoaDon);
                 hdct.setChiTietSanPham(ghct.getCtsp());
                 hdct.setSoLuong(ghct.getSoLuong());
-                if (ghct.getCtsp().getCtkm() != null){
+                if (ghct.getCtsp().getCtkm() != null) {
                     Boolean allTranhThai1 = false;
                     Double donGiaKhiGiam = 0.0;
-                    for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()){
-                        if (ctkm.getKhuyenMai().getTrangThai() == 0){
+                    for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()) {
+                        if (ctkm.getTrangThai() == 0) {
                             allTranhThai1 = true;
-                            hdct.setDonGia(ghct.getCtsp().getGiaBan());
+                            hdct.setDonGia(ghct.getDonGia());
                             if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
                                 donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
                                 hdct.setDonGiaKhiGiam(donGiaKhiGiam);
-                            }
-                            else  {
+                            } else {
                                 donGiaKhiGiam = ghct.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
                                 hdct.setDonGiaKhiGiam(donGiaKhiGiam);
                             }
                         }
                     }
-                }else {
+                    if (allTranhThai1 == false) {
+                        hdct.setDonGia(ghct.getDonGia());
+                    }
+                } else {
                     hdct.setDonGia(ghct.getDonGia());
                 }
                 hdct.setTrangThai(3);
@@ -590,10 +590,7 @@ public class HomeController {
 
     @RequestMapping("/bumblebee/don-mua/{id}")
     public String donMuaChiTet(Model model, HttpSession session, @PathVariable(name = "id") UUID id) {
-
         List<HoaDonChiTiet> list = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-        Double sumMoney = hoaDonChiTietService.getTotalMoney(list);
-        model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("id", id);
         model.addAttribute("hoaDon", hoaDonService.getOne(id));
         model.addAttribute("listHoaDonChiTiet", hoaDonChiTietService.getHoaDonById(id));

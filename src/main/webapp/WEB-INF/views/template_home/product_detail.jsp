@@ -82,22 +82,12 @@
                                 <c:if test="${not empty ctsp.ctkm}">
                                     <c:set var="allTrangThai1" value="false"/>
                                     <c:forEach var="km" items="${ctsp.ctkm}">
-                                        <c:if test="${km.khuyenMai.trangThai == 0}">
-                                            <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                <label style="font-weight: 500" id="donGiaKhuyenMai">
-                                                    <fmt:formatNumber
-                                                            value="${ctsp.giaBan - (ctsp.giaBan * km.khuyenMai.giaTri/100)}"
-                                                            type="number"/> đ
-                                                </label>
-                                                <c:set var="allTrangThai1" value="true"/>
-                                            </c:if>
-                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                <label style="font-weight: 500" id="donGiaKhuyenMai">
-                                                    <fmt:formatNumber value="${ctsp.giaBan - km.khuyenMai.giaTri}"
-                                                                      type="number"/> đ
-                                                </label>
-                                                <c:set var="allTrangThai1" value="true"/>
-                                            </c:if>
+                                        <c:if test="${km.trangThai == 0}">
+                                            <label style="font-weight: 500" id="donGiaKhuyenMai">
+                                                <fmt:formatNumber value="${km.giaKhuyenMai}"
+                                                                  type="number"/> đ
+                                            </label>
+                                            <c:set var="allTrangThai1" value="true"/>
                                             <label style="font-weight: 500" id="giaSP"></label>
                                             <span id="donGiaChuaGiam"><fmt:formatNumber value="${ctsp.giaBan}"
                                                                                         type="number"/> đ</span>
@@ -236,21 +226,22 @@
                                                         <a
                                                                 class="ps-shoe__overlay"
                                                                 href="/bumblebee/detail?idSP=${item.sanPham.id}&idCTSP=${item.id}&idMS=${item.mauSac.id}"><img
-                                                                src="../../../uploads/${item.hinhAnhs.tenanh}"
-                                                                alt=""></a>
+                                                                src="../../../uploads/${item.hinhAnhs.tenanh}" alt="" width="221px"
+                                                                height="221px"></a>
                                                     </div>
                                                     <div class="favorite favorite_left"></div>
                                                     <c:forEach var="km" items="${item.ctkm}">
-                                                        <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                            <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
-                                                                <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span>
-                                                            </div>
-                                                        </c:if>
-                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                            <div class="product_bubble product_bubble_left product_bubble_green ">
+                                                        <c:if test="${km.khuyenMai.trangThai == 0}">
+                                                            <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                                <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
+                                                                    <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
+                                                            </c:if>
+                                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                                <div class="product_bubble product_bubble_left product_bubble_green ">
                                                 <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
                                                                           type="number"/>đ</span>
-                                                            </div>
+                                                                </div>
+                                                            </c:if>
                                                         </c:if>
                                                     </c:forEach>
                                                     <div class="product_info">
@@ -259,28 +250,29 @@
                                                             - ${item.mauSac.ten}</a>
                                                         </h6>
                                                         <div class="product_price">
+
                                                             <c:if test="${not empty item.ctkm}">
+                                                                <c:set var="allTrangThai1" value="false"/>
                                                                 <c:forEach var="km" items="${item.ctkm}">
-                                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
+                                                                    <c:if test="${km.trangThai == 0}">
+                                                                        <c:set var="allTrangThai1" value="true"/>
                                                                         <label style="color: crimson;font-size: 15px"><fmt:formatNumber
-                                                                                value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
-                                                                                type="number"/> đ</label>
-                                                                        <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                                type="number"/> đ</span>
-                                                                    </c:if>
-                                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
-                                                                                value="${item.giaBan - km.khuyenMai.giaTri}"
+                                                                                value="${km.giaKhuyenMai}"
                                                                                 type="number"/> đ</label>
                                                                         <span><fmt:formatNumber value="${item.giaBan}"
                                                                                                 type="number"/> đ</span>
                                                                     </c:if>
                                                                 </c:forEach>
+                                                                <c:if test="${allTrangThai1 eq false}">
+                                                                    <label>
+                                                                        <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                                    </label>
+                                                                </c:if>
                                                             </c:if>
                                                             <c:if test="${empty item.ctkm}">
-
-                                                                <label><fmt:formatNumber value="${item.giaBan}"
-                                                                                         type="number"/> đ</label>
+                                                                <label>
+                                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                                </label>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -344,6 +336,23 @@
             </div>
         </div>
     </div>
+    <div id="toast_warring_so_luong" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Sản phẩm đã hết hàng</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
     <div id="toast_warring_login" style="display:none;">
         <div class="toast toast__warring">
             <div class="toast__icon">
@@ -361,9 +370,24 @@
             </div>
         </div>
     </div>
-
+    <div id="errorModal" class="modal" style="width: 400px;margin: 0 auto;top:40%;padding: 1.25rem">
+        <div class="modal-content">
+            <div class="bumblebee-alert-popup__message" bis_skin_checked="1" style="font-size: 16px">
+                <p id="errolSL"></p>
+            </div>
+            <div class="bumblebee-alert-popup__button-horizontal-layout" bis_skin_checked="1">
+                <button style="width: 80px;font-size: 16px" type="button" onclick="closeErrorModal()"
+                        class="btn btn-solid-primary btn--m btn--inline bumblebee-alert-popup__btn">OK
+                </button>
+            </div>
+        </div>
+    </div>
 </main>
 <script>
+    function closeErrorModal(){
+        var modal = document.getElementById("errorModal");
+        modal.style.display = "none";
+    }
     function toast() {
         var toastElement = document.getElementById("toast");
         toastElement.style.display = "block";
@@ -372,28 +396,11 @@
         }, 1500);
     }
 </script>
-<div id="errorModal" class="modal" style="width: 400px;margin: 0 auto;top:50%;padding: 1.25rem">
-    <div class="modal-content">
-        <div class="bumblebee-alert-popup__message" bis_skin_checked="1" style="font-size: 16px">
-            ${errorSL}
-        </div>
-        <div class="bumblebee-alert-popup__button-horizontal-layout" bis_skin_checked="1">
-            <button style="width: 80px;font-size: 16px" type="button" onclick="closeErrorModal()"
-                    class="btn btn-solid-primary btn--m btn--inline bumblebee-alert-popup__btn">OK
-            </button>
-        </div>
-    </div>
-</div>
+
 <script src="../../../js_template/single_custom.js"></script>
 <script>
 
-    var error = "${errorSL}";
-    if (error) {
-        var main = document.getElementById("main");
-        var modal = document.getElementById("errorModal");
-        modal.style.display = "block";
-        main.style.opacity = "0,5";
-    }
+
     var selectedOption = null;
     document.addEventListener("DOMContentLoaded", function () {
         var siteOptions = document.querySelectorAll(".site-option");
@@ -413,19 +420,18 @@
             });
         });
     });
-
     function formatGiaSP(number) {
         var formattedString = String(number).split('.')[0];
         formattedString = formattedString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         return formattedString;
     }
-
     var response = null;
     var response2 = null;
+    var slctsp = 0;
 
     function selectSize(kichCo) {
         document.getElementById("kichCoInput").value = kichCo;
-        console.log(kichCo)
+        console.log(kichCo);
         var idMS = "${ctsp.mauSac.id}";
         var idSP = "${ctsp.sanPham.id}";
         var idCTSP = "${ctsp.id}"
@@ -438,6 +444,7 @@
                 response = xhr.responseText;
                 if (selectedOption !== null) {
                     document.getElementById("spcosan").innerHTML = "Sản phẩm có sẵn: " + response;
+                    slctsp = response;
                 } else {
                     document.getElementById("spcosan").innerHTML = "";
                 }
@@ -465,7 +472,6 @@
         };
         xhr2.send();
 
-
     }
 
     function muaNgay() {
@@ -484,9 +490,18 @@
                 toastElement1.style.display = "none";
             }, 1500);
             return false;
-        } else {
+        }
+        if (Number(slctsp) === 0){
+            var toastElement = document.getElementById("toast_warring_so_luong");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1500);
+            return false;
+        }else {
             return true;
         }
+
     }
 
 
@@ -506,6 +521,14 @@
                 toastElement1.style.display = "none";
             }, 1500);
             return false;
+        }
+        if (Number(slctsp) === 0){
+            var toastElement = document.getElementById("toast_warring_so_luong");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1500);
+            return false;
         } else {
             var idMS = "${ctsp.mauSac.id}";
             var idSP = "${ctsp.sanPham.id}";
@@ -522,6 +545,17 @@
                 processData: false,
                 success: function (response) {
                     console.log("Success: " + response);
+                    if(response !== ""){
+                        var error = response;
+                        if (error) {
+                            var main = document.getElementById("main");
+                            var modal = document.getElementById("errorModal");
+                            document.getElementById("errolSL").innerText = error;
+                            modal.style.display = "block";
+                            main.style.opacity = "0,5";
+                        }
+                        return;
+                    }
                     var toastElement = document.getElementById("toast");
                     toastElement.style.display = "block";
                     setTimeout(function () {
