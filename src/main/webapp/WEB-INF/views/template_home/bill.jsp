@@ -16,13 +16,12 @@
                                 <div class="col-lg-6">
                                     <h3 style="margin-bottom: 20px;">Đơn hàng của bạn</h3>
                                 </div>
-
                                 <div class="col-lg-6">
-                                    <c:if test="${hd.trangThai == 3}">
-                                        <p style="color: crimson; float: right">CHỜ THANH TOÁN</p>
+                                    <c:if test="${hd.phuongThucThanhToan == 1}">
+                                        <p style="color: crimson; float: right">CHỜ XÁC NHẬN</p>
                                     </c:if>
-                                    <c:if test="${hd.trangThai == 1}">
-                                        <p style="color: crimson; float: right">ĐÃ THANH TOÁN</p>
+                                    <c:if test="${hd.phuongThucThanhToan == 2}">
+                                        <p style="color: crimson; float: right">ĐANG CHUẨN BỊ</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -99,9 +98,19 @@
 
                                         </td>
                                         <td style="padding-top: 25px; text-align: center">${hdct.soLuong}</td>
-                                        <td style="text-align: center;padding-top: 25px;"><fmt:formatNumber
-                                                value="${hdct.chiTietSanPham.giaBan}"
-                                                type="currency"/>
+                                        <td style="text-align: center;padding-top: 25px;">
+                                            <c:choose>
+                                                <c:when test="${hdct.donGiaKhiGiam == 0 || hdct.donGiaKhiGiam == null}">
+                                                    <fmt:formatNumber>${hdct.donGia * hdct.soLuong}</fmt:formatNumber>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <fmt:formatNumber>${hdct.donGiaKhiGiam*hdct.soLuong}</fmt:formatNumber>
+                                                    <del style="color: crimson">
+                                                        <fmt:formatNumber>${hdct.donGia*hdct.soLuong}</fmt:formatNumber>
+                                                    </del>
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </td>
                                     </tr>
                                 </c:forEach>

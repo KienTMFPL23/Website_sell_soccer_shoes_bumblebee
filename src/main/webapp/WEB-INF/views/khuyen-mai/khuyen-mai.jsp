@@ -279,7 +279,7 @@
                     <td>${km.maKhuyenMai}</td>
                     <td>${km.tenKhuyenMai}</td>
                     <td>
-                        <c:if test="${km.donVi == 'VNĐ'}">
+                        <c:if test="${km.donVi == 'VNÐ'}">
                             <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
                         </c:if>
                         <c:if test="${km.donVi == '%'}">
@@ -322,19 +322,6 @@
                                                         <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
                                                     </div>
                                                 </div>
-
-                                                    <%-- Ngày tạo--%>
-                                                    <%--                                    <div class="row">--%>
-                                                    <%--                                        <div class="col-lg-4" style="padding-bottom: 15px;">--%>
-                                                    <%--                                            <span>Ngày bắt đầu:</span>--%>
-                                                    <%--                                            <input class="date" type="datetime-local" id="ngayBatDau_${km.id}" name="ngayBatDau" >--%>
-                                                    <%--                                        </div>--%>
-                                                    <%--                                        <div class="col-lg-4">--%>
-                                                    <%--                                            <span>Ngày kết thúc:</span>--%>
-                                                    <%--                                            <input class="date" type="datetime-local" id="ngayKetThuc_${km.id}" name="ngayKetThuc" >--%>
-                                                    <%--                                        </div>--%>
-                                                    <%--                                    </div>--%>
-
                                                 <span id="spnError" class="error" style="display: none"
                                                 >Please select at-least one Fruit.</span
                                                 >
@@ -351,47 +338,49 @@
                                                             <th scope="col">Kích cỡ</th>
                                                         </tr>
                                                         </thead>
-
                                                         <tbody id="myTable3">
                                                         <c:forEach items="${listCTSP}" var="sp" varStatus="i">
                                                             <tr>
                                                                 <td>
                                                                     <c:if test="${not empty sp.ctkm}">
-
+                                                                        <c:set var="allTrangThai1" value="false"/>
                                                                         <c:forEach var="ctkm" items="${sp.ctkm}">
-                                                                            <c:set var="allTrangThai1" value="false"/>
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                                            <c:if test="${ctkm.trangThai == 0}">
                                                                                 <input disabled checked type="checkbox">
                                                                                 <c:set var="allTrangThai1" value="true"/>
                                                                             </c:if>
                                                                         </c:forEach>
                                                                         <c:if test="${allTrangThai1 eq false}">
+                                                                            <c:if test="${sp.giaBan < ctkm.khuyenMai.giaTri}">
+                                                                                Giá SP nhỏ hơn khuyến mại
+                                                                            </c:if>
+                                                                            <c:if test="${sp.giaBan > ctkm.khuyenMai.giaTri}">
+                                                                                <input
+                                                                                        class="checkCart" type="checkbox"
+                                                                                        name="idListCartDetail"
+                                                                                        value="${sp.id}">
+                                                                                <c:set var="allTrangThai1" value="true"/>
+                                                                            </c:if>
+                                                                        </c:if>
+                                                                    </c:if>
+                                                                    <c:if test="${empty sp.ctkm}">
+                                                                        <c:if test="${sp.giaBan < ctkm.khuyenMai.giaTri}">
+                                                                            Giá SP nhỏ hơn khuyến mại
+                                                                        </c:if>
+                                                                        <c:if test="${sp.giaBan > ctkm.khuyenMai.giaTri}">
                                                                             <input
                                                                                     class="checkCart" type="checkbox"
                                                                                     name="idListCartDetail"
                                                                                     value="${sp.id}">
-                                                                            <c:set var="allTrangThai1" value="true"/>
                                                                         </c:if>
-
                                                                     </c:if>
-                                                                    <c:if test="${empty sp.ctkm}">
-
-                                                                        <input
-                                                                                class="checkCart"
-                                                                                type="checkbox"
-                                                                                name="idListCartDetail"
-                                                                                value="${sp.id}">
-
-                                                                    </c:if>
-
-
                                                                 </td>
                                                                 <td><img src="../../../uploads/${sp.hinhAnhs.tenanh}"
                                                                          width="50px" height="50px"></td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber></td>
+                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber> đ</td>
                                                                 <td>${sp.mauSac.ten}</td>
                                                                 <td>${sp.kichCo.size}</td>
                                                             </tr>

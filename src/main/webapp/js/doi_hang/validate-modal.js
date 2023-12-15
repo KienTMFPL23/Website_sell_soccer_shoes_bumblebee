@@ -13,12 +13,19 @@ checkedAllCheckbox.addEventListener('click', function () {
 });
 function taoDoiTra(idSP) {
     var checkSoLuong = document.querySelectorAll('.soLuongtra');
-    checkSoLuong.forEach(function (checkbox) {
-        if (checkSoLuong.value === "") {
-            alert('Nhap so luong');
-            return false;
-        }
-    });
+    for (var i = 0; i < checkSoLuong.length; i++) {
+        var checkbox = checkSoLuong[i];
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                var soLuongInput = this.value;
+                if (soLuongInput === "") {
+                    alert("Nhập số lượng");
+                     return false;
+                }
+            }
+        });
+    }
+
 
     var numberOfCheckedCheckboxes = 0;
     checkboxes.forEach(function (checkbox) {

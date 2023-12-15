@@ -43,7 +43,7 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
             } else {
                 Boolean allTrangThai1 = false;
                 for (ChiTietKhuyenMai chiTietKhuyenMai : hdct.getCtsp().getCtkm()) {
-                    if (chiTietKhuyenMai.getKhuyenMai().getTrangThai() == 0) {
+                    if (chiTietKhuyenMai.getTrangThai() == 0) {
                         if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")){
                             sumKhuyenMai += (chiTietKhuyenMai.getCtsp().getGiaBan() - (chiTietKhuyenMai.getCtsp().getGiaBan()
                                    * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100)) * hdct.getSoLuong();

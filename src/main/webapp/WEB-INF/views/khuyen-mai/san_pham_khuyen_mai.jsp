@@ -212,23 +212,6 @@
         <div>
             <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>
         </div>
-
-        <%--    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">--%>
-        <%--        <div class="row">--%>
-        <%--            <div class="col-lg-2">--%>
-        <%--                Từ ngày: <input type="date" class="filterDate" name="ngayBatDau">--%>
-        <%--            </div>--%>
-        <%--            <div class="col-lg-2">--%>
-        <%--                Đến ngày: <input type="date" class="filterDate" name="ngayKetThuc">--%>
-        <%--            </div>--%>
-        <%--            <div class="col-lg-1">--%>
-        <%--                <button class="btnSearch" onclick="filterTable()">Tìm</button>--%>
-        <%--            </div>--%>
-
-        <%--        </div>--%>
-        <%--    </form>--%>
-
-
         <table id="tableChiTietKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
             <tr>
@@ -250,7 +233,7 @@
                     <td>${ctkm.ctsp.sanPham.tenSanPham}</td>
                     <td>${ctkm.khuyenMai.maKhuyenMai}</td>
                     <td>
-                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
+                        <c:if test="${ctkm.khuyenMai.donVi == 'VNÐ'}">
                             <fmt:formatNumber>${ctkm.khuyenMai.giaTri}</fmt:formatNumber>
                         </c:if>
                         <c:if test="${ctkm.khuyenMai.donVi == '%'}">
@@ -259,25 +242,12 @@
                     </td>
                     <td><fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></td>
                     <td>
-                            <%--                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
-                            <%--                            <fmt:formatNumber> ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}</fmt:formatNumber>--%>
-                            <%--                        </c:if>--%>
-                            <%--                        <c:if test="${ctkm.khuyenMai.donVi == '%'}">--%>
-                            <%--                            <fmt:formatNumber> ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>--%>
-                            <%--                        </c:if>--%>
                         <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
                     </td>
-
                     <td>
                         <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
                         <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
                     </td>
-                        <%--                                            <td>--%>
-                        <%--                                                <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
-                        <%--                                                    <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
-                        <%--                                                </a>--%>
-                        <%--                                            </td>--%>
-
                 </tr>
             </c:forEach>
             </tbody>

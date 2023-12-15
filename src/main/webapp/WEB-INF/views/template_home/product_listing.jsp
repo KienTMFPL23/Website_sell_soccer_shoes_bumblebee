@@ -2,6 +2,27 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="utf-8" %>
+<style>
+    .modal-content {
+        padding: 1.25rem;
+        overflow: visible;
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+</style>
 <main class="ps-main">
     <div class="container-fluid">
         <div class="ps-products-wrap pt-80 pb-80">
@@ -63,29 +84,22 @@
                                     </h6>
                                     <div class="product_price">
                                         <c:if test="${not empty item.ctkm}">
+                                            <c:set var="allTrangThai1" value="false"/>
                                             <c:forEach var="km" items="${item.ctkm}">
-                                                <c:if test="${km.khuyenMai.trangThai == 0}">
-                                                    <c:if test="${km.khuyenMai.donVi == '%'}">
-                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
-                                                                value="${item.giaBan - (item.giaBan * km.khuyenMai.giaTri/100)}"
-                                                                type="number"/> đ</label>
-                                                        <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                type="number"/> đ</span>
-                                                    </c:if>
-                                                    <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
-                                                        <label style="color: crimson;font-size: 15px"><fmt:formatNumber
-                                                                value="${item.giaBan - km.khuyenMai.giaTri}"
-                                                                type="number"/> đ</label>
-                                                        <span><fmt:formatNumber value="${item.giaBan}"
-                                                                                type="number"/> đ</span>
-                                                    </c:if>
-                                                </c:if>
-                                                <c:if test="${km.khuyenMai.trangThai == 1}">
-                                                    <label>
-                                                        <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
-                                                    </label>
+                                                <c:if test="${km.trangThai == 0}">
+                                                    <c:set var="allTrangThai1" value="true"/>
+                                                    <label style="color: crimson;font-size: 15px"><fmt:formatNumber
+                                                            value="${km.giaKhuyenMai}"
+                                                            type="number"/> đ</label>
+                                                    <span><fmt:formatNumber value="${item.giaBan}"
+                                                                            type="number"/> đ</span>
                                                 </c:if>
                                             </c:forEach>
+                                            <c:if test="${allTrangThai1 eq false}">
+                                                <label>
+                                                    <fmt:formatNumber value="${item.giaBan}" type="number"/> đ
+                                                </label>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${empty item.ctkm}">
                                             <label>
@@ -265,6 +279,23 @@
             </div>
         </div>
     </div>
+    <div id="toast_warring_so_luong" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Sản phẩm đã hết hàng</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
     <div id="toast" style="display:none;">
         <div class="toast toast__succes">
             <div class="toast__icon">
@@ -279,6 +310,18 @@
                      viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
+            </div>
+        </div>
+    </div>
+    <div id="errorModal" class="modal" style="width: 400px;margin: 0 auto;top:40%;padding: 1.25rem">
+        <div class="modal-content">
+            <div class="bumblebee-alert-popup__message" bis_skin_checked="1" style="font-size: 16px">
+                <p id="errolSL"></p>
+            </div>
+            <div class="bumblebee-alert-popup__button-horizontal-layout" bis_skin_checked="1">
+                <button style="width: 80px;font-size: 16px" type="button" onclick="closeErrorModal()"
+                        class="btn btn-solid-primary btn--m btn--inline bumblebee-alert-popup__btn">OK
+                </button>
             </div>
         </div>
     </div>
@@ -305,6 +348,10 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    function closeErrorModal(){
+        var modal = document.getElementById("errorModal");
+        modal.style.display = "none";
+    }
     $(document).ready(function () {
         $(document).on('hidden.bs.modal', '[id^="kichCoModal_"]', function () {
             // Xử lý khi modal được đóng
@@ -324,6 +371,15 @@
         </c:if>
         var kichCo = document.getElementById("kichCoSelect_" + idsp + "_" + idms).value;
         var soLuong = document.getElementById("slchon_" + idsp + "_" + idms).value;
+        var slsp = document.getElementById("slsp_" + idsp + "_" + idms).innerText;
+        if (Number(slsp) === 0){
+            var toastElement = document.getElementById("toast_warring_so_luong");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 1500);
+            return false;
+        }
         var formData = new FormData();
         formData.append("kichCo", kichCo);
         formData.append("soLuong", soLuong);
@@ -335,6 +391,17 @@
             processData: false,
             success: function (response) {
                 console.log("Success: " + response);
+                if(response !== ""){
+                    var error = response;
+                    if (error) {
+                        var main = document.getElementById("main");
+                        var modal = document.getElementById("errorModal");
+                        document.getElementById("errolSL").innerText = error;
+                        modal.style.display = "block";
+                        main.style.opacity = "0,5";
+                    }
+                    return;
+                }
                 var toastElement = document.getElementById("toast");
                 toastElement.style.display = "block";
                 setTimeout(function () {

@@ -147,12 +147,12 @@
             <div class="col-lg-2">
                 <label>Trạng thái:</label>
             </div>
-            <div class="col-lg-8">
-                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton" name="trangThai"/>
+            <div class="col-lg-8" style="margin-left: -20px">
+                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton" name="trangThai" cssStyle="margin-left: 20px;margin-right: 5px"/>
                 <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
-        <div class="buttonSubmit">
+        <div class="buttonSubmit" style="margin-top: 20px">
             <button class="button" type="submit" onclick="thanhCong()">SUBMIT</button>
         </div>
 
