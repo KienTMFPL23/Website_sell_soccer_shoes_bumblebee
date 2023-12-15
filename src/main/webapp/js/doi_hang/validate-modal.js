@@ -12,14 +12,37 @@ checkedAllCheckbox.addEventListener('click', function () {
     });
 });
 function taoDoiTra(idSP) {
-    var checkSoLuong = document.querySelectorAll('.soLuongtra');
-    checkSoLuong.forEach(function (checkbox) {
-        if (checkSoLuong.value === "") {
-            alert('Nhap so luong');
-            return false;
-        }
-    });
+    var isChecked = false;
+    var isValidQuantity = true;
+    var isValidLyDo = true;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            isChecked = true;
+            // Lấy ô input số lượng tương ứng với ô checkbox
+            var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra');
+            var lydoId = checkboxes[i].id.replace('checkBoxSP','lyDoTra');
+            var quantityInput = document.getElementById(inputId);
+            var lyDoSelect = document.getElementById(lydoId);
 
+            // Kiểm tra nếu ô input không có giá trị hoặc giá trị không hợp lệ
+            if (quantityInput.value.trim() === '' || parseInt(quantityInput.value) < 1) {
+                isValidQuantity = false;
+                break;
+            }
+            if (lyDoSelect.value === ''){
+                isValidLyDo = false;
+                break;
+            }
+        }
+    }
+    if (!isValidLyDo){
+        alert('Vui lòng chọn lý do đổi trả.');
+        return false;
+    }
+    if (!isChecked || !isValidQuantity) {
+        alert('Vui lòng chọn ít nhất một sản phẩm và nhập số lượng hợp lệ.');
+        return false;
+    }
     var numberOfCheckedCheckboxes = 0;
     checkboxes.forEach(function (checkbox) {
         if (checkbox.checked) {
@@ -32,22 +55,17 @@ function taoDoiTra(idSP) {
         logEror.innerText = 'Vui lòng chọn sản phẩm cần trả';
         return false;
     }
-    if (textLydo === '') {
-        var erorText = document.getElementById('erorText');
-        erorText.innerText = 'Vui lòng nhập lý do đổi trả';
-        return false;
-    }
     else {
         Swal.fire({
             position: "center",
             icon: "success",
-            title: "Thanh toán thành công",
+            title: "Thành công",
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
         });
         setTimeout(function () {
             return true;
-        },1500);
+        },2000);
     }
 }
 function changeSoLuong(soLuongMax,id) {
@@ -56,5 +74,20 @@ function changeSoLuong(soLuongMax,id) {
         slTra.value = 1;
     }else if(slTra.value > soLuongMax ){
         slTra.value = soLuongMax;
+    }
+}
+
+function confirmDoiHang() {
+    var result = confirm('Bạn có muốn đổi hàng không ?');
+    var lyDo = document.getElementById('lyDo').value;
+    var error = document.getElementById('errorLyDo');
+    if (result){
+        if (lyDo === ""){
+            error.innerText = 'Vui lòng chọn lý do!';
+            return false;
+        }
+        return  true;
+    }else {
+        return  false;
     }
 }
