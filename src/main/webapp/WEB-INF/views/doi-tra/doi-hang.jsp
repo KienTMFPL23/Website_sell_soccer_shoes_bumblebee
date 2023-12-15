@@ -101,18 +101,19 @@
                                    min="1"
                                    name="soLuong"
                                    value="${dtct.soLuong}"
-                                   onchange="this.form.submit()"
+                                   onblur="this.form.submit()"
                                    style="width:100px;">
                         </form>
                     </td>
                     <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
                     <td>
                         <form action="/bumblebee/don-hang/update-ly-do/${dtct.id}">
-                            <select  class="form-control" style="width: 200px" name="lyDoDoiTra" onchange="this.form.submit()">
+                            <select value="${dtct.lyDoDoiTra}" class="form-control" id="lyDo"  name="lyDoDoiTra" onchange="this.form.submit()">
                                 <option value="">-----</option>
-                                <option value="Mẫu giao sai">Mẫu giao sai</option>
-                                <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
-                                <option value="Giao thiếu hàng">Giao thiếu hàng</option>
+                                <option value="Mẫu giao sai" <c:if test="${dtct.lyDoDoiTra eq 'Mẫu giao sai'}">selected</c:if>>Mẫu giao sai</option>
+                                <option value="Sản phẩm lỗi" <c:if test="${dtct.lyDoDoiTra eq 'Sản phẩm lỗi'}">selected</c:if>>Sản phẩm lỗi</option>
+                                <option value="Giao thiếu hàng" <c:if test="${dtct.lyDoDoiTra eq 'Giao thiếu hàng'}">selected</c:if>>Giao thiếu hàng</option>
+                                <option value="Đổi sản phẩm khác" <c:if test="${dtct.lyDoDoiTra eq 'Đổi sản phẩm khác'}">selected</c:if>>Đổi sản phẩm khác</option>
                             </select>
                         </form>
                     </td>
@@ -123,6 +124,9 @@
             </c:forEach>
             </tbody>
         </table>
-        <a href="/bumblebee/don-hang/xac-nhan-doi" class="btn btn-success">Đổi hàng</a>
-        <a href="/bumblebee/don-hang/huy/${idDoiTra}" type="submit" class="btn btn-danger">Hủy</a>
+        <div>
+            <strong><p style="color: red; text-align: right;font-size: 15px"  id="errorLyDo"></p></strong>
+        </div>
+        <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Đổi hàng</a>
+        <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
 </div>

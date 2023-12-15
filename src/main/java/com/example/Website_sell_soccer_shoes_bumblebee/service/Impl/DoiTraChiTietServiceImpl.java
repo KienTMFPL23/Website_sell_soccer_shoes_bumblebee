@@ -85,4 +85,13 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
             doiTraCTRepo.delete(doiTraChiTiet);
         }
     }
+
+    @Override
+    public Double getToTalDoiTra(List<DoiTraChiTiet> lstDoiTraCT) {
+        Double sum = 0.0;
+        for (DoiTraChiTiet doiTraChiTiet : lstDoiTraCT){
+            sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+        }
+        return sum;
+    }
 }

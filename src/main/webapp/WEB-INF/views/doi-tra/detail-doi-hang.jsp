@@ -44,7 +44,7 @@
         </table>
     </div>
     <hr>
-    <c:if test="${listDoiTraCT.size() != 0}">
+    <c:if test="${listSanPhamDoi.size() != 0}">
         <div class="infor-san-pham-mua">
             <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG TRẢ</h4>
             <table class="table table-bordered" style="margin-top: 10px">
@@ -61,26 +61,61 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="traHang" items="${listDoiTraCT}" varStatus="i">
+                <c:forEach var="spTra" items="${listSanPhamDoi}" varStatus="i">
                     <tr>
                         <td>${i.count}</td>
-                        <td>${traHang.chiTietSanPham.sanPham.tenSanPham}</td>
-                        <td>${traHang.chiTietSanPham.mauSac.ten}</td>
-                        <td>${traHang.chiTietSanPham.kichCo.size}</td>
-                        <td>${traHang.soLuong}</td>
-                        <td><fmt:formatNumber value="${traHang.donGia}" type="number"/></td>
-                        <td>${traHang.doiTra.nhanVien.ho} ${traHang.doiTra.nhanVien.tenDem} ${traHang.doiTra.nhanVien.ten}</td>
-                        <td>${traHang.lyDoDoiTra}</td>
+                        <td>${spTra.hoaDonChiTiet.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${spTra.hoaDonChiTiet.chiTietSanPham.mauSac.ten}</td>
+                        <td>${spTra.hoaDonChiTiet.chiTietSanPham.kichCo.size}</td>
+                        <td>${spTra.soLuong}</td>
+                        <td><fmt:formatNumber value="${spTra.donGia}" type="number"/></td>
+                        <td>${spTra.doiTra.nhanVien.ho} ${spTra.doiTra.nhanVien.tenDem} ${spTra.doiTra.nhanVien.ten}</td>
+                        <td>${spTra.lyDoDoiTra}</td>
                     </tr>
                 </c:forEach>
                 <tr>
-                    <td colspan="5"><strong>Hoàn tiền :</strong></td>
-                    <td colspan="3"><strong><fmt:formatNumber value="${sumDoiTra}" /></strong></td>
+                    <td colspan="5"><strong>Tổng tiền : </strong></td>
+                    <td colspan="2"><strong><fmt:formatNumber type="number" value="${sumSanPhamDoi}"/> </strong></td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <hr>
+    </c:if>
+    <c:if test="${listSanPhamDoi.size() != 0}">
+        <div class="infor-san-pham-doi">
+            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
+            <table class="table table-bordered" style="margin-top: 10px">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Màu sắc</th>
+                    <th scope="col">Kích cỡ</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Nhân viên thực hiện</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="hangDoi" items="${listSanPhamDoi}" varStatus="i">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${hangDoi.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${hangDoi.chiTietSanPham.mauSac.ten}</td>
+                        <td>${hangDoi.chiTietSanPham.kichCo.size}</td>
+                        <td>${hangDoi.soLuong}</td>
+                        <td><fmt:formatNumber value="${hangDoi.donGia}" type="number"/></td>
+                        <td>${hangDoi.doiTra.nhanVien.ho} ${hangDoi.doiTra.nhanVien.tenDem} ${hangDoi.doiTra.nhanVien.ten}</td>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td colspan="5"><strong>Tổng tiền :</strong></td>
+                    <td colspan="2"><strong><fmt:formatNumber type="number" value="${sumSanPhamDoi}"/> </strong></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </c:if>
 </div>
 

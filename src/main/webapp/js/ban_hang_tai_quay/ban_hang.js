@@ -27,16 +27,27 @@ function startScan() {
         // event.preventDefault();
         // Chuyển người dùng đến trang controller khi quét thành công
         window.location.href = `/bumblebee/ban-hang-tai-quay/add-gio-hang/${qrCode}`;
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Thêm thành công",
-            showConfirmButton: false,
-            timer: 1500
-        });
-        setTimeout(function () {
-            return true;
-        }, 1500);
+        var data = eval('('+'${erorSP}'+')');
+        if (data === "Không có sản phẩm nào!!!"){
+            event.preventDefault();
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thaast bai",
+                showConfirmButton: true,
+            });
+        }else {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thêm thành công",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            setTimeout(function () {
+                return true;
+            }, 1500);
+        }
     });
 }
 

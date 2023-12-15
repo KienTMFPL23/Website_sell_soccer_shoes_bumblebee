@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -120,7 +121,7 @@ public class BanHangTaiQuayController {
     public String banHang(Model model) {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
-        this.idHoaDon = null;
+        this.idHoaDon = idHoaDon;
         this.sumMoney = 0.0;
         getTaiKhoan(model);
         model.addAttribute("idHoaDon", idHoaDon);
@@ -256,7 +257,7 @@ public class BanHangTaiQuayController {
                         ctkmNull = ctkm;
                     }
                 }
-                if (ctkmNull != null){
+                if (ctkmNull != null) {
                     hoaDonChiTiet.setDonGiaKhiGiam(ctkmNull.getGiaKhuyenMai());
                 } else {
                     hoaDonChiTiet.setDonGiaKhiGiam(0.0);
@@ -352,7 +353,7 @@ public class BanHangTaiQuayController {
             hoaDonThanhToan.setGhiChu(hoaDon.getGhiChu());
             hoaDonService.saveHoaDon(hoaDonThanhToan);
             this.sumMoney = 0.0;
-//            this.idHoaDon = null;
+            this.idHoaDon = id;
 
             model.addAttribute("successThanhToan", "Thanh toán thất bại");
 //            System.out.println("thất bại");
@@ -372,7 +373,7 @@ public class BanHangTaiQuayController {
         PdfWriter.getInstance(document, baos);
         document.open();
         // Sử dụng font mặc định của iText với bảng mã Unicode
-        Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+        Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 16, Font.BOLD, BaseColor.BLACK);
 
 
         HoaDon hoaDonThanhToan = hoaDonService.getOne(idHoaDon);
@@ -383,7 +384,7 @@ public class BanHangTaiQuayController {
         BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
         com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-        qrCodeImage.setAbsolutePosition(400, 150);
+        qrCodeImage.setAbsolutePosition(400, 590);
 
         document.add(qrCodeImage);
 
@@ -400,20 +401,30 @@ public class BanHangTaiQuayController {
         Font chutable = new Font(Font.FontFamily.TIMES_ROMAN, 18f);
         //// Table
         Paragraph MaHoaDon = new Paragraph("Mã hoá đơn      :    " + hoaDonThanhToan.getMaHoaDon(), titleFont);
-        Paragraph ma = new Paragraph();
 
         Paragraph Ngay = new Paragraph("Ngày Mua    :    " + hoaDonThanhToan.getNgayTao(), titleFont);
 
-        document.add(MaHoaDon);
-        document.add(Ngay);
+
 
 
         Paragraph tennhanvien = new Paragraph("Nhân viên    :    " + nameNhanVien, titleFont);
+
+        if (hoaDonThanhToan.getTenNguoiNhan().equals("Khách vãng lai")) {
+            Paragraph tenKhach = new Paragraph("Khách hàng    :    Khách vãng lai", titleFont);
+            document.add(tenKhach);
+        } else {
+            Paragraph tenKhach = new Paragraph("Khách hàng    :    "
+                    + hoaDonThanhToan.getKhachHang().getHo() + hoaDonThanhToan.getKhachHang().getTenDem() + hoaDonThanhToan.getKhachHang().getTen(), titleFont);
+
+        document.add(MaHoaDon);
+        document.add(Ngay);
         document.add(tennhanvien);
-
-        Paragraph tenKhach = new Paragraph("Khách hàng    :    " + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
-
         document.add(tenKhach);
+
+
+            document.add(tenKhach);
+        }
+
 
 
 
@@ -428,7 +439,8 @@ public class BanHangTaiQuayController {
         ////
         PdfPTable productTable = new PdfPTable(6);
         productTable.setWidthPercentage(100);
-        float[] columnWidths = {3f, 3f, 1f, 1f, 2f, 2f};
+        productTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        float[] columnWidths = {3f, 2f, 1f, 2f, 2f, 2f};
         productTable.setWidths(columnWidths);
 
         productTable.addCell(createTableCell("Tên sản phẩm", titleFont));
@@ -444,8 +456,31 @@ public class BanHangTaiQuayController {
             productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont));
             productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
-            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
-            productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));
+
+            String pattern = "###,###.##";
+            DecimalFormat decimalFormat1 = new DecimalFormat(pattern);
+            String formattedNumberDonGia = decimalFormat1.format(hoaDonChiTiet.getDonGia());
+            String formattedNumberDonGiaKhiGiam = decimalFormat1.format(hoaDonChiTiet.getDonGiaKhiGiam());
+
+            if (hoaDonChiTiet.getDonGiaKhiGiam() == 0 || hoaDonChiTiet.getDonGiaKhiGiam() == null){
+                productTable.addCell(createTableCell(formattedNumberDonGia, titleFont));
+            } else {
+                productTable.addCell(createTableCell(formattedNumberDonGiaKhiGiam, titleFont));
+            }
+
+
+
+            if (hoaDonChiTiet.getDonGiaKhiGiam() == 0 || hoaDonChiTiet.getDonGiaKhiGiam() == null){
+                DecimalFormat decimalFormat2 = new DecimalFormat(pattern);
+                String formattedNumberThanhTien = decimalFormat2.format(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong());
+                productTable.addCell(createTableCell(formattedNumberThanhTien, titleFont));
+            } else {
+                DecimalFormat decimalFormat2 = new DecimalFormat(pattern);
+                String formattedNumberThanhTien = decimalFormat2.format(hoaDonChiTiet.getDonGiaKhiGiam() * hoaDonChiTiet.getSoLuong());
+                productTable.addCell(createTableCell(formattedNumberThanhTien, titleFont));
+            }
+
+
         }
 
         document.add(productTable);
@@ -463,7 +498,10 @@ public class BanHangTaiQuayController {
 //
 //
 //            }
-        Paragraph TongCong = new Paragraph("Tổng Cộng       :    " + sumMoney, titleFont);
+        String pattern = "###,###.##";
+        DecimalFormat decimalFormat1 = new DecimalFormat(pattern);
+        String formattedNumberSumMoney = decimalFormat1.format(sumMoney);
+        Paragraph TongCong = new Paragraph("Tổng Cộng       :    " + formattedNumberSumMoney, titleFont);
 
         document.add(TongCong);
 
