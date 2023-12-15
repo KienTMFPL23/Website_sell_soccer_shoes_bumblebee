@@ -810,7 +810,7 @@ public class DonHangController {
             BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
             com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-            qrCodeImage.setAbsolutePosition(400, 190);
+            qrCodeImage.setAbsolutePosition(400, 490);
 
             document.add(qrCodeImage);
             Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
@@ -887,10 +887,18 @@ public class DonHangController {
                 productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont));
-                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
-                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));
-                double giaTriSanPham = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong();
-                tongTien += giaTriSanPham;
+                if(hoaDonChiTiet.getDonGiaKhiGiam() == null || hoaDonChiTiet.getDonGiaKhiGiam() == 0){
+                    productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont));
+                    productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont));
+                    double giaTriSanPham = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong();
+                    tongTien += giaTriSanPham;
+                }else if(hoaDonChiTiet.getDonGiaKhiGiam() != 0){
+                    productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGiaKhiGiam()), titleFont));
+                    productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGiaKhiGiam() * hoaDonChiTiet.getSoLuong()), titleFont));
+                    double giaTriSanPham = hoaDonChiTiet.getDonGiaKhiGiam() * hoaDonChiTiet.getSoLuong();
+                    tongTien += giaTriSanPham;
+                }
+
             }
 
             document.add(productTable);
