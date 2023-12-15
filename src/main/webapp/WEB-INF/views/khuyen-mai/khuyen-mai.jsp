@@ -4,8 +4,6 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-
 <style>
 
     /* Style the tab */
@@ -94,13 +92,6 @@
         margin: 0px 0px 20px 10px;
     }
 
-    .date {
-        height: 30px;
-        border: 2px solid #37517E;
-        border-radius: 20px;
-        margin-left: 10px;
-        margin-bottom: 10px;
-    }
 
 
     .ui.form input[type=search] {
@@ -118,20 +109,6 @@
         font-size: 16px;
     }
 
-    #tableDanhSachSanPham_length {
-        display: none;
-    }
-
-    #filterDonVi {
-        margin-bottom: 15px;
-        border-radius: 10px;
-        border: 1px solid #37517E;
-    }
-
-    /*.filterDate {*/
-    /*    border-radius: 5px;*/
-    /*    border: 1px solid #37517E;*/
-    /*}*/
 
     .btnSearch {
         background-color: #37517E;
@@ -147,58 +124,11 @@
         color: crimson;
     }
 
-    .bg-gradient-light {
-        background-image: linear-gradient(180deg, #D9D9D9 10%, #D9D9D9 100%);
-        background-size: cover;
-        border-radius: 5px;
-        width: 25%;
-    }
 
-    .nav {
-        --bs-nav-link-padding-x: 1rem;
-        --bs-nav-link-padding-y: 0.5rem;
-        --bs-nav-link-color: #767676;
-        --bs-nav-link-hover-color: black;
-        --bs-nav-link-disabled-color: rgba(33, 37, 41, 0.75);
-        display: flex;
-        flex-wrap: wrap;
-        padding-left: 0;
-        margin-bottom: 0;
-        list-style: none;
-    }
 
-    .nav-pills {
-        --bs-nav-pills-link-active-bg: #37517E;
-    }
-
-    .menu-nav {
-        background-color: #fff;
-    }
-
-    <%--.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.${donHang == 'khuyen-mai' ? 'active' : ''} {--%>
-    <%--     color: #fff;--%>
-    <%--    background-color: #2185d0;--%>
-    <%--    border-color: #2185d0 #2185d0 #2185d0;--%>
-    <%--}--%>
 </style>
 <body>
 <div class="container">
-    <div class="menu-nav">
-        <div class="status text-center">
-            <ul class="nav justify-content-center bg-gradient-light nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
-                       href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại
-                        <span class="badge text-bg-secondary">${countHD}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'san-pham-khuyen-mai' ? 'active' : ''}"
-                       href="/bumblebee/san-pham-khuyen-mai/list">Sản phẩm khuyến mại<span
-                            class="badge text-bg-secondary">${countHDCho}</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -212,16 +142,7 @@
     </ul>
 
 
-
-
-    <%--<div class="tab">--%>
-    <%--    <button class="tablinks active" onclick="openCity(event, 'London')">Quản lý khuyến mại</button>--%>
-    <%--    <button class="tablinks" onclick="openCity(event, 'Paris')">Sản phẩm khuyến mại</button>--%>
-    <%--</div>--%>
-
-    <%--<div id="London" class="tabcontent" style="display: block;">--%>
     <div>
-        ${error}
         <div>
             <h1 style="text-align: center; font-family: Nunito;">Quản lý khuyến mại</h1>
         </div>
@@ -233,28 +154,28 @@
                 </a>
             </div>
         </div>
-                <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
-                    <div class="row" style="margin-bottom: 20px;">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-2">
-                            <form:select path="donVi">
-                                <option value="">-- Lọc đơn vị --</option>
-                                <form:option value="VNĐ">VNĐ</form:option>
-                                <form:option value="%">%</form:option>
-                            </form:select>
-                        </div>
-                        <div class="col-lg-2">
-                            <form:select path="trangThai">
-                                <option value="">-- Lọc trạng thái --</option>
-                                <form:option value="0">Hoạt động</form:option>
-                                <form:option value="1">Không hoạt động</form:option>
-                            </form:select>
-                        </div>
-                        <div class="col-lg-1">
-                            <button type="submit" class="btnSearch">Tìm</button>
-                        </div>
-                    </div>
-                </form:form>
+        <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-2">
+                    <form:select path="donVi">
+                        <option value="">-- Lọc đơn vị --</option>
+                        <form:option value="VNĐ">VNĐ</form:option>
+                        <form:option value="%">%</form:option>
+                    </form:select>
+                </div>
+                <div class="col-lg-2">
+                    <form:select path="trangThai">
+                        <option value="">-- Lọc trạng thái --</option>
+                        <form:option value="0">Hoạt động</form:option>
+                        <form:option value="1">Không hoạt động</form:option>
+                    </form:select>
+                </div>
+                <div class="col-lg-1">
+                    <button type="submit" class="btnSearch">Tìm</button>
+                </div>
+            </div>
+        </form:form>
 
         <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
             <thead>
@@ -323,17 +244,6 @@
                                                     </div>
                                                 </div>
 
-                                                    <%-- Ngày tạo--%>
-                                                    <%--                                    <div class="row">--%>
-                                                    <%--                                        <div class="col-lg-4" style="padding-bottom: 15px;">--%>
-                                                    <%--                                            <span>Ngày bắt đầu:</span>--%>
-                                                    <%--                                            <input class="date" type="datetime-local" id="ngayBatDau_${km.id}" name="ngayBatDau" >--%>
-                                                    <%--                                        </div>--%>
-                                                    <%--                                        <div class="col-lg-4">--%>
-                                                    <%--                                            <span>Ngày kết thúc:</span>--%>
-                                                    <%--                                            <input class="date" type="datetime-local" id="ngayKetThuc_${km.id}" name="ngayKetThuc" >--%>
-                                                    <%--                                        </div>--%>
-                                                    <%--                                    </div>--%>
 
                                                 <span id="spnError" class="error" style="display: none"
                                                 >Please select at-least one Fruit.</span
@@ -342,7 +252,10 @@
                                                     <table id="tableCTSP">
                                                         <thead>
                                                         <tr>
-                                                            <th></th>
+                                                            <th class="col-md-1">
+                                                                <input class="checkCart" style="width: 10px;" id="checkedAll"
+                                                                       type="checkbox">
+                                                            </th>
                                                             <th></th>
                                                             <th scope="col">Tên sản phẩm</th>
                                                             <th scope="col">Số lượng</th>
@@ -357,12 +270,12 @@
                                                             <tr>
                                                                 <td>
                                                                     <c:if test="${not empty sp.ctkm}">
-
+                                                                        <c:set var="allTrangThai1" value="false"/>
                                                                         <c:forEach var="ctkm" items="${sp.ctkm}">
-                                                                            <c:set var="allTrangThai1" value="false"/>
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                                            <c:if test="${ctkm.trangThai == 0}">
                                                                                 <input disabled checked type="checkbox">
-                                                                                <c:set var="allTrangThai1" value="true"/>
+                                                                                <c:set var="allTrangThai1"
+                                                                                       value="true"/>
                                                                             </c:if>
                                                                         </c:forEach>
                                                                         <c:if test="${allTrangThai1 eq false}">
@@ -372,16 +285,14 @@
                                                                                     value="${sp.id}">
                                                                             <c:set var="allTrangThai1" value="true"/>
                                                                         </c:if>
-
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
-
                                                                         <input
+                                                                                id="checkBoxSP"
                                                                                 class="checkCart"
                                                                                 type="checkbox"
                                                                                 name="idListCartDetail"
                                                                                 value="${sp.id}">
-
                                                                     </c:if>
 
 
@@ -424,84 +335,18 @@
     </div>
 </div>
 
-<%--<div id="Paris" class="tabcontent">--%>
-<%--<div>--%>
-<%--    <div>--%>
-<%--        <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>--%>
-<%--    </div>--%>
-
-<%--    <form method="post" action="/bumblebee/khuyen-mai/search-khoang-ngay">--%>
-<%--        <div class="row">--%>
-<%--            <div class="col-lg-2">--%>
-<%--                Từ ngày: <input type="date" class="filterDate" name="ngayBatDau">--%>
-<%--            </div>--%>
-<%--            <div class="col-lg-2">--%>
-<%--                Đến ngày: <input type="date" class="filterDate" name="ngayKetThuc">--%>
-<%--            </div>--%>
-<%--            <div class="col-lg-1">--%>
-<%--                <button class="btnSearch" onclick="filterTable()">Tìm</button>--%>
-<%--            </div>--%>
-
-<%--        </div>--%>
-<%--    </form>--%>
-
-<%--    <table id="tableChiTietKhuyenMai" class="ui celled table" width="100%" cellspacing="0">--%>
-<%--        <thead>--%>
-<%--        <tr>--%>
-<%--            <th>STT</th>--%>
-<%--            <th>Tên sản phẩm</th>--%>
-<%--            <th>Mã khuyến mại</th>--%>
-<%--            <th>Giá trị khuyến mại</th>--%>
-<%--            <th>Giá bán</th>--%>
-<%--            <th>Giá khuyến mại</th>--%>
-<%--            <th>Trạng thái</th>--%>
-<%--            <th></th>--%>
-<%--        </tr>--%>
-<%--        </thead>--%>
-
-<%--        <tbody id="myTable2">--%>
-<%--        <c:forEach items="${listCTKM}" var="ctkm" varStatus="i">--%>
-<%--            <tr>--%>
-<%--                <td>${i.index + 1}</td>--%>
-<%--                <td>${ctkm.ctsp.sanPham.tenSanPham}</td>--%>
-<%--                <td>${ctkm.khuyenMai.maKhuyenMai}</td>--%>
-<%--                <td>--%>
-<%--                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
-<%--                        <fmt:formatNumber>${ctkm.khuyenMai.giaTri}</fmt:formatNumber>--%>
-<%--                    </c:if>--%>
-<%--                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">--%>
-<%--                        ${ctkm.khuyenMai.giaTri}%--%>
-<%--                    </c:if>--%>
-<%--                </td>--%>
-<%--                <td><fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></td>--%>
-<%--                <td>--%>
-<%--                    <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
-<%--                        <fmt:formatNumber> ${ctkm.ctsp.giaBan - ctkm.khuyenMai.giaTri}</fmt:formatNumber>--%>
-<%--                    </c:if>--%>
-<%--                    <c:if test="${ctkm.khuyenMai.donVi == '%'}">--%>
-<%--                        <fmt:formatNumber> ${ctkm.ctsp.giaBan - ((ctkm.khuyenMai.giaTri / 100) * ctkm.ctsp.giaBan)}</fmt:formatNumber>--%>
-<%--                    </c:if>--%>
-
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>--%>
-<%--                    <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <a href="/bumblebee/khuyen-mai/view-update-ctkm/${ctkm.id}">--%>
-<%--                        <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
-<%--                    </a>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--        </tbody>--%>
-<%--    </table>--%>
-
-
-<%--</div>--%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
 <script>
+
+    const checkbox = document.getElementById('checkBoxSP');
+    var checkedAllCheckbox = document.getElementById('checkedAll');
+
+    checkedAllCheckbox.addEventListener('click', function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = checkedAllCheckbox.checked;
+        });
+    });
 
     var checkboxes = document.querySelectorAll('.checkCart');
 
@@ -561,16 +406,6 @@
         });
     });
 
-    // $("#filterDonVi").change(function () {
-    //     var value = $(this).val().toLowerCase();
-    //     $("#myTable1 tr").filter(function () {
-    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //     });
-    //
-    //     if ("all" == value) {
-    //         $("#myTable1 tr").show();
-    //     }
-    // });
 
     function filterTable() {
         // Get the start and end date values
@@ -595,9 +430,9 @@
 </script>
 <script>
     // Initialization for ES Users
-    import { Tab, initMDB } from "mdb-ui-kit";
+    import {Tab, initMDB} from "mdb-ui-kit";
 
-    initMDB({ Tab });
+    initMDB({Tab});
 </script>
 </body>
 

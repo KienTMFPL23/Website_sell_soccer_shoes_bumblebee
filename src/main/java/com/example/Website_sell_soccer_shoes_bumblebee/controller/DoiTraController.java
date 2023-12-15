@@ -219,12 +219,14 @@ public class DoiTraController {
             doiTraChiTiet.setSoLuong(listSoLuong.get(h));
             doiTraChiTiet.setDoiTra(doiTra);
             doiTraChiTiet.setLyDoDoiTra(lydo.get(h));
+
             if (hoaDonChiTiet.getDonGiaKhiGiam() == 0) {
                 hoaDonChiTiet.getDonGia();
                 doiTraChiTiet.setDonGia(hoaDonChiTiet.getDonGia());
             } else {
                 doiTraChiTiet.setDonGia(hoaDonChiTiet.getDonGiaKhiGiam());
             }
+
             doiTraChiTiet.setTrangThai(2);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
         }
@@ -576,8 +578,7 @@ public class DoiTraController {
                 tongTien += giaTriSanPham;
             }
             document.add(productTable);
-            Paragraph TongCong = new Paragraph("Tổng Hoá Đơn       :    " + tongTien + "VNĐ", titleFont2);
-            document.add(TongCong);
+
 //
             Paragraph KhoangTrang1 = new Paragraph("                                                         ");
             document.add(KhoangTrang1);
@@ -599,19 +600,33 @@ public class DoiTraController {
             productTable1.addCell(createTableCell("Thành tiền", titleFont1));
             productTable1.addCell(createTableCell("Nhân viên thực hiện", titleFont1));
             productTable1.addCell(createTableCell("Lí do", titleFont1));
-//            double tongTienTra = 0.0;
+            double tongTienTra = 0.0;
+
             for (DoiTraChiTiet doiTraChiTiet : listDoiTra) {
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont1));
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getSoLuong()), titleFont1));
-                productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()), titleFont1));
-                productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong()), titleFont1));
+                if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() ==null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == 0 ){
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()), titleFont1));
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()* doiTraChiTiet.getSoLuong()), titleFont1));
+                    double giaTriSanPham = doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+                    tongTienTra += giaTriSanPham;
+                }else if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != null  || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0){
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam()), titleFont1));
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong()), titleFont1));
+                    double giaTriSanPham = doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong();
+                    tongTienTra += giaTriSanPham;
+                }
+
                 productTable1.addCell(createTableCell(doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getHo() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTenDem() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(doiTraChiTiet.getLyDoDoiTra(), titleFont1));
 
             }
+
             document.add(productTable1);
+            Paragraph TongCong = new Paragraph("Số tiền hoàn       :    " + tongTienTra + "VNĐ", titleFont2);
+            document.add(TongCong);
             document.close();
 //
 //

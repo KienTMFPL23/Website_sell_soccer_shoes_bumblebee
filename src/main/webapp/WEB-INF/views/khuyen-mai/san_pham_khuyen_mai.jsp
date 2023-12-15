@@ -208,7 +208,6 @@
         </li>
     </ul>
 
-
     <div>
         <div>
             <h1 style="text-align: center; font-family: Nunito; margin-bottom: 50px;">Sản phẩm khuyến mại</h1>
@@ -235,13 +234,14 @@
             <tr>
                 <th>STT</th>
                 <th>Tên sản phẩm</th>
+                <th>Màu sắc</th>
+                <th>Kích cỡ</th>
                 <th>Mã khuyến mại</th>
                 <th>Giá trị khuyến mại</th>
                 <th>Giá bán</th>
                 <th>Giá khuyến mại</th>
-                <th>Trạng thái KM</th>
                 <th>Trạng thái CTKM</th>
-                <th></th>
+
             </tr>
             </thead>
 
@@ -250,6 +250,8 @@
                 <tr>
                     <td>${i.index + 1}</td>
                     <td>${ctkm.ctsp.sanPham.tenSanPham}</td>
+                    <td>${ctkm.ctsp.mauSac.ten}</td>
+                    <td>${ctkm.ctsp.kichCo.size}</td>
                     <td>${ctkm.khuyenMai.maKhuyenMai}</td>
                     <td>
                         <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
@@ -269,10 +271,7 @@
                             <%--                        </c:if>--%>
                         <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
                     </td>
-                    <td>
-                        <c:if test="${ctkm.khuyenMai.trangThai == 0}">Hoạt động</c:if>
-                        <c:if test="${ctkm.khuyenMai.trangThai == 1}">Không hoạt động</c:if>
-                    </td>
+
                     <td>
                         <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
                         <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
@@ -282,30 +281,7 @@
                         <%--                                                    <img src="../../img/Edit_Notepad_Icon.svg" style="width: 30px; height: 30px;"/>--%>
                         <%--                                                </a>--%>
                         <%--                                            </td>--%>
-                    <td>
-                        <c:if test="${ctkm.trangThai == 0}">
-                            <div class="form-check form-switch">
-                                <form action="/bumblebee/khuyen-mai/update-ctkm-khong-hoat-dong/${ctkm.id}"
-                                      method="post">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckChecked"
-                                           oninput="this.form.submit()"
-                                           checked>
-                                </form>
-                            </div>
-                        </c:if>
-                        <c:if test="${ctkm.trangThai == 1}">
-                            <div class="form-check form-switch">
-                                <form action="/bumblebee/khuyen-mai/update-ctkm-hoat-dong/${ctkm.id}" method="post">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckNoChecked"
-                                           oninput="this.form.submit()"
-                                    >
-                                </form>
-                            </div>
-                        </c:if>
 
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>
