@@ -234,6 +234,8 @@
             <tr>
                 <th>STT</th>
                 <th>Tên sản phẩm</th>
+                <th>Màu sắc</th>
+                <th>Kích cỡ</th>
                 <th>Mã khuyến mại</th>
                 <th>Giá trị khuyến mại</th>
                 <th>Giá bán</th>
@@ -248,6 +250,8 @@
                 <tr>
                     <td>${i.index + 1}</td>
                     <td>${ctkm.ctsp.sanPham.tenSanPham}</td>
+                    <td>${ctkm.ctsp.mauSac.ten}</td>
+                    <td>${ctkm.ctsp.kichCo.size}</td>
                     <td>${ctkm.khuyenMai.maKhuyenMai}</td>
                     <td>
                         <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">

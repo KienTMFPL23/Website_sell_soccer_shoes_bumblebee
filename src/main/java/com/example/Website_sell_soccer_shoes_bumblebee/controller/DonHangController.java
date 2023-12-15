@@ -729,11 +729,21 @@ public class DonHangController {
             hoaDonChiTiet.setSoLuong(1);
             hoaDonChiTiet.setDonGia(sp.getGiaBan());
             hoaDonChiTiet.setTrangThai(2);
-            if (sp.getCtkm() != null) {
-                Double donGiaKhiGiam = hoaDonChiTietService.getDonGiaKhiGiam(sp.getCtkm());
-                hoaDonChiTiet.setDonGiaKhiGiam(donGiaKhiGiam);
-            } else {
+            if (sp.getCtkm().isEmpty()) {
                 hoaDonChiTiet.setDonGiaKhiGiam(0.0);
+            } else {
+                ChiTietKhuyenMai ctkmNull = null;
+                for (ChiTietKhuyenMai ctkm : sp.getCtkm()) {
+                    System.out.println("CTKM: " + ctkm.getId());
+                    if (ctkm.getTrangThai() == 0) {
+                        ctkmNull = ctkm;
+                    }
+                }
+                if (ctkmNull != null) {
+                    hoaDonChiTiet.setDonGiaKhiGiam(ctkmNull.getGiaKhuyenMai());
+                } else {
+                    hoaDonChiTiet.setDonGiaKhiGiam(0.0);
+                }
             }
             Integer soLuong = sp.getSoLuong() - 1;
             chiTietSanPhamService.updateSoLuongTon(id, soLuong);
