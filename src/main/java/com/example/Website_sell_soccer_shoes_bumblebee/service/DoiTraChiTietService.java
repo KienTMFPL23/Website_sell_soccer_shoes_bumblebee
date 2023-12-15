@@ -31,4 +31,6 @@ public interface DoiTraChiTietService {
     DoiTraChiTiet getOneDoiTraCT(UUID idDoiTraCT);
 
     void deleteDoiTraCT(UUID idDoiTra);
+
+    Double getToTalDoiTra(List<DoiTraChiTiet> lstDoiTraCT);
 }

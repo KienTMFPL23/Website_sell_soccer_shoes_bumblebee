@@ -81,7 +81,7 @@
                                     <td>${hd.chiTietSanPham.kichCo.size}</td>
                                     <td>
                                         <div>
-                                            <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}" class="soLuongtra"
+                                            <input type="number" id="soLuongTra" class="soLuongtra"
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
@@ -91,7 +91,6 @@
                                     </td>
                                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                                     <td>
-                                        <strong>Lý do trả hàng</strong>
                                         <select id="lyDoTra" class="form-control" style="width: 200px"
                                                 name="lyDoDoiTra">
                                             <option value="">-----</option>
