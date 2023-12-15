@@ -249,6 +249,10 @@
                                 <form:option value="0">Hoạt động</form:option>
                                 <form:option value="1">Không hoạt động</form:option>
                             </form:select>
+<%--    <form:select type="text" path="trangThai">--%>
+<%--        <form:option value="">-- Lọc trạng thái --</form:option>--%>
+<%--        <form:options items="${dsTrangThai}"/>--%>
+<%--    </form:select>--%>
                         </div>
                         <div class="col-lg-1">
                             <button type="submit" class="btnSearch">Tìm</button>
@@ -360,7 +364,7 @@
 
                                                                         <c:forEach var="ctkm" items="${sp.ctkm}">
                                                                             <c:set var="allTrangThai1" value="false"/>
-                                                                            <c:if test="${ctkm.khuyenMai.trangThai == 0}">
+                                                                            <c:if test="${ctkm.trangThai == 0}">
                                                                                 <input disabled checked type="checkbox">
                                                                                 <c:set var="allTrangThai1" value="true"/>
                                                                             </c:if>

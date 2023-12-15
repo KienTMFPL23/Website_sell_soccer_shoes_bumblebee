@@ -75,7 +75,7 @@
                 <label>Mã:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="maKhuyenMai" name="maKhuyenMai" />
+                <form:input type="text" class="form-control" path="maKhuyenMai" />
                 <form:errors path="maKhuyenMai" cssStyle="color: crimson"></form:errors>
                 <span style="color: crimson">${mess_Ma}</span>
             </div>
@@ -87,7 +87,7 @@
                 <label>Tên:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="tenKhuyenMai" name="tenKhuyenMai"/>
+                <form:input type="text" class="form-control" path="tenKhuyenMai" />
                 <form:errors path="tenKhuyenMai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>
@@ -98,7 +98,7 @@
                 <label>Đơn vị:</label>
             </div>
             <div class="col-lg-8">
-                <form:select type="text" class="form-select" aria-label="Default select example" path="donVi" name="donVi">
+                <form:select type="text" class="form-select" aria-label="Default select example" path="donVi">
                     <form:option value="VNĐ">VNĐ</form:option>
                     <form:option value="%">%</form:option>
                 </form:select>
@@ -148,7 +148,7 @@
                 <label>Trạng thái:</label>
             </div>
             <div class="col-lg-8">
-                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton" name="trangThai"/>
+                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton" />
                 <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>

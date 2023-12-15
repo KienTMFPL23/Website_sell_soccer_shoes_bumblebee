@@ -231,7 +231,7 @@ public class KhuyenMaiController {
 //            @RequestParam(name = "ngayBatDau") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayBatDau,
 //            @RequestParam(name = "ngayKetThuc") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayKetThuc
     ) throws ParseException {
-
+        boolean hassE = result.hasErrors();;
         if (result.hasErrors()) {
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
             return "admin/index";
@@ -244,32 +244,32 @@ public class KhuyenMaiController {
         }
 
         if (km.getDonVi().equals("%")) {
-            if (km.getGiaTri() > 70 && 5 > km.getGiaTri()) {
+            if (km.getGiaTri() > 70 || 5 > km.getGiaTri()) {
                 model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 5% và tối đa 70 %");
-                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
-                return "admin/index";
+              hassE=true;
             }
             if (km.getGiaTri() <= 0) {
                 model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
-                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
-                return "admin/index";
+                hassE=true;
             }
         }
 
         if (km.getDonVi().equals("VNĐ")) {
-            if (km.getGiaTri() > 500000 && km.getGiaTri() < 10000) {
+            if (km.getGiaTri() > 500000 || km.getGiaTri() < 10000) {
                 model.addAttribute("errorGiaTri", "Giá trị tối đa 500.000");
-                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
-                return "admin/index";
+               hassE=true;
             }
 
             if (km.getGiaTri() <= 0) {
                 model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
-                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
-                return "admin/index";
+                hassE=true;
             }
         }
 
+        if (hassE) {
+            model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+            return "admin/index";
+        }
         if (km.getNgayBatDau().isAfter(km.getNgayKetThuc())) {
             model.addAttribute("mess_Ngay", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
@@ -284,7 +284,7 @@ public class KhuyenMaiController {
 
     //    private Date ngayTao = null;
     @GetMapping("/bumblebee/khuyen-mai/view-update/{id}")
-    public String viewUpdate(Model model, @PathVariable(name = "id") UUID id, @ModelAttribute("km") KhuyenMai km) {
+    public String viewUpdate(Model model, @PathVariable(name = "id") UUID id) {
 
         KhuyenMai khuyenMai = khuyenMaiService.findId(id);
 //        ngayTao = khuyenMai.getNgayTao();
@@ -452,7 +452,16 @@ public class KhuyenMaiController {
             Model model,
             @ModelAttribute("searchForm") KhuyenMaiController.SearchForm searchForm
     ) {
-        List<KhuyenMai> km = khuyenMaiRepository.searchHDByDonViAndTrangThai(searchForm.donVi, searchForm.trangThai);
+        List<KhuyenMai> km = null;
+        if (searchForm.donVi.equals("")) {
+
+            km = khuyenMaiRepository.searchHDByTrangThai(searchForm.trangThai);
+
+        } else {
+
+            km = khuyenMaiRepository.searchHDByDonViAndTrangThai(searchForm.donVi, searchForm.trangThai);
+
+        }
         model.addAttribute("page", km);
 
 //        return "redirect:/bumblebee/khuyen-mai/list";
