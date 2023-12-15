@@ -135,32 +135,6 @@ public class KhuyenMaiController {
         for (ChiTietSanPham ctsp : listCTKM) {
             ChiTietKhuyenMai chiTietKhuyenMai = chiTietKhuyenMaiService.findCtkmByIdKmAndCtsp(ctsp.getId(), idKM);
 
-//            ChiTietKhuyenMai chiTietKhuyenMai1 = chiTietKhuyenMaiService.findIdCTSP(ctsp.getId());
-
-//            // Tổng giá trị khuyến mại đã có
-//            for (ChiTietKhuyenMai ctKhuyenMai : chiTietKhuyenMaiService.findIdCTSP(ctsp.getId())) {
-//                tongKhuyenMai += ctKhuyenMai.getKhuyenMai().getGiaTri();
-//            }
-//
-//            for (ChiTietKhuyenMai ctKhuyenMai : chiTietKhuyenMaiService.findIdCTSP(ctsp.getId())) {
-//                Long count = chiTietKhuyenMaiService.findIdCTSP(ctsp.getId())
-//                        .stream()
-//                        .filter(ChiTietKhuyenMai -> ChiTietKhuyenMai.equals(ctKhuyenMai.getKhuyenMai().getMaKhuyenMai()))
-//                        .count();
-//                System.out.println(count);
-//            }
-//
-//
-//            tongKhuyenMai = tongKhuyenMai + km.getGiaTri();
-//            System.out.println("Tổng khuyến mại: " + tongKhuyenMai);
-
-//            if (ngayBatDau == null && ngayKetThuc == null) {
-//                model.addAttribute("error_ngayBatDau", "Ngày bắt đầu không được trống");
-//                model.addAttribute("error_ngayKetThuc", "Ngày kết thúc không được trống");
-//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
-//                return "admin/index";
-//            }
-
             // Validate Một sản phẩm chỉ đc một khuyến mại
 //            if (chiTietKhuyenMai1 != null) {
 //                model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
@@ -176,21 +150,11 @@ public class KhuyenMaiController {
                 return "admin/index";
             }
 
-
-            // Validate Một sản phẩm chỉ đc một khuyến mại
-//            if (chiTietKhuyenMai1 != null) {
-//                model.addAttribute("error", "Một sản phẩm chỉ đc một khuyến mại");
-//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
-//                return "admin/index";
-//            }
-
-//            // Validate tổng giá trị khuyến mại < 40%
-//            else if (tongKhuyenMai > 0.4) {
-//                model.addAttribute("error", "Khuyến mại quá 40% rồiii");
-//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
-//                return "admin/index";
-
-//            }
+            if (km.getGiaTri() > ctsp.getGiaBan()){
+                model.addAttribute("error", "Không thêm được");
+                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+                return "admin/index";
+            }
 
             else {
                 ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
@@ -243,7 +207,8 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-        if (km.getDonVi().equals("%")) {
+
+        if (km.getDonVi().contains("%")) {
             if (km.getGiaTri() > 70 || 5 > km.getGiaTri()) {
                 model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 5% và tối đa 70 %");
               hassE=true;
@@ -254,10 +219,11 @@ public class KhuyenMaiController {
             }
         }
 
-        if (km.getDonVi().equals("VNĐ")) {
+        if (km.getDonVi().contains("VNĐ")) {
             if (km.getGiaTri() > 500000 || km.getGiaTri() < 10000) {
-                model.addAttribute("errorGiaTri", "Giá trị tối đa 500.000");
-               hassE=true;
+                model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 10.000 và tối đa 500.000");
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
             }
 
             if (km.getGiaTri() <= 0) {
@@ -277,8 +243,8 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-
         khuyenMaiService.save(km);
+
         return "redirect:/bumblebee/khuyen-mai/list";
     }
 
@@ -303,8 +269,8 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-        if (km.getDonVi().equals("%")) {
-            if (km.getGiaTri() > 70 && 5 > km.getGiaTri()) {
+        if (km.getDonVi().contains("%")) {
+            if (km.getGiaTri() > 70 || 5 > km.getGiaTri()) {
                 model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 5% và tối đa 70 %");
                 model.addAttribute("view", "../khuyen-mai/add_update.jsp");
                 return "admin/index";
@@ -316,9 +282,9 @@ public class KhuyenMaiController {
             }
         }
 
-        if (km.getDonVi().equals("VNĐ")) {
-            if (km.getGiaTri() > 500000 && km.getGiaTri() < 10000) {
-                model.addAttribute("errorGiaTri", "Giá trị tối đa 500.000");
+        if (km.getDonVi().contains("VNĐ")) {
+            if (km.getGiaTri() > 500000 || km.getGiaTri() < 10000) {
+                model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 10.000 và tối đa 500.000");
                 model.addAttribute("view", "../khuyen-mai/add_update.jsp");
                 return "admin/index";
             }
@@ -333,6 +299,7 @@ public class KhuyenMaiController {
         if (km.getNgayBatDau().isAfter(km.getNgayKetThuc())) {
             model.addAttribute("mess_Ngay", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+            System.out.println("date");
             return "admin/index";
         }
 
@@ -345,6 +312,12 @@ public class KhuyenMaiController {
 
         KhuyenMai khuyenMai = khuyenMaiService.findId(km.getId());
         khuyenMai.setTrangThai(km.getTrangThai());
+        khuyenMai.setNgayKetThuc(km.getNgayKetThuc());
+        khuyenMai.setMaKhuyenMai(km.getMaKhuyenMai());
+        khuyenMai.setTenKhuyenMai(km.getTenKhuyenMai());
+        khuyenMai.setDonVi(km.getDonVi());
+        khuyenMai.setGiaTri(km.getGiaTri());
+        khuyenMai.setNgayBatDau(km.getNgayBatDau());
         khuyenMaiService.save(khuyenMai);
 
         if (km.getTrangThai() == 1) {

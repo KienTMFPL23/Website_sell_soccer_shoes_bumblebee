@@ -91,22 +91,15 @@
 
 <div>
 
-    <div class="menu-nav">
-        <div class="status text-center">
-            <ul class="nav justify-content-center bg-gradient-light nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'tai-khoan-nhan-vien' ? 'active' : ''}"
-                       href="/nhan-vien/tai-khoan">Tài khoản nhân viên<span
-                            class="badge text-bg-secondary">${countHDCho}</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  ${donHang == 'thong-tin-nhan-vien' ? 'active' : ''}" aria-current="page"
-                       href="/nhan-vien/thong-tin">Thông tin nhân viên
-                        <span class="badge text-bg-secondary">${countHD}</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link ${donHang == 'tai-khoan-nhan-vien' ? 'active' : ''}" aria-current="page"
+               href="/nhan-vien/tai-khoan">Tài khoản nhân viên</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link ${donHang == 'thong-tin-nhan-vien' ? 'active' : ''}" href="/nhan-vien/thong-tin">Thông tin nhân viên</a>
+        </li>
+    </ul>
 
     <h1 style="text-align: center; font-family: Nunito; padding-top: 20px;">Quản Lý Thông Tin Nhân Viên</h1>
 

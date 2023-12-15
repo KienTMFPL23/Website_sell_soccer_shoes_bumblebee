@@ -220,8 +220,8 @@
                                     <c:set var="giaKhuyenMai" value="0"/>
                                 </c:forEach>
                                 <fmt:formatNumber value="${total}" type="number"/>
-<%--                                <fmt:formatNumber value="${giaKhuyenMai}" type="number"/>--%>
-<%--                                <fmt:formatNumber value="${giaGoc}" type="number"/>--%>
+                                    <%--                                <fmt:formatNumber value="${giaKhuyenMai}" type="number"/>--%>
+                                    <%--                                <fmt:formatNumber value="${giaGoc}" type="number"/>--%>
 
                             </td>
                             <td>
@@ -330,51 +330,29 @@
                                                                     <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
                                                                     <td>${hdct.soLuong}</td>
                                                                     <td>
-                                                                        <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
-                                                                            <c:set var="allTrangThai1" value="false"/>
-                                                                            <c:forEach
-                                                                                    items="${hdct.chiTietSanPham.ctkm}"
-                                                                                    var="ctkm">
-                                                                                <c:if test="${ctkm.trangThai == 0}">
-                                                                                    <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
-                                                                                    <del style="color: crimson">
-                                                                                        <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></del>
-                                                                                    <c:set var="allTrangThai1"
-                                                                                           value="true"/>
-                                                                                </c:if>
+                                                                        <c:choose>
+                                                                            <c:when test="${hdct.donGiaKhiGiam == 0 || hdct.donGiaKhiGiam == null}">
 
-                                                                            </c:forEach>
-                                                                            <c:if test="${allTrangThai1 eq false}">
-                                                                                <fmt:formatNumber>${hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
-                                                                                <c:set var="allTrangThai1"
-                                                                                       value="true"/>
-                                                                            </c:if>
-                                                                        </c:if>
-                                                                        <c:if test="${empty hdct.chiTietSanPham.ctkm}">
-                                                                            <fmt:formatNumber>${hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
-                                                                        </c:if>
+                                                                                <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <fmt:formatNumber>${hdct.donGiaKhiGiam}</fmt:formatNumber>
+                                                                                <del style="color: crimson">
+                                                                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                                                                </del>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </td>
                                                                     <td>
-                                                                        <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
-                                                                            <c:set var="allTrangThai1" value="false"/>
-                                                                            <c:forEach
-                                                                                    items="${hdct.chiTietSanPham.ctkm}"
-                                                                                    var="ctkm">
-                                                                                <c:if test="${ctkm.trangThai == 0}">
-                                                                                    <fmt:formatNumber>${hdct.soLuong * ctkm.giaKhuyenMai}</fmt:formatNumber>
-                                                                                    <c:set var="allTrangThai1"
-                                                                                           value="true"/>
-                                                                                </c:if>
-                                                                            </c:forEach>
-                                                                            <c:if test="${allTrangThai1 eq false}">
-                                                                                <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
-                                                                                <c:set var="allTrangThai1"
-                                                                                       value="true"/>
-                                                                            </c:if>
-                                                                        </c:if>
-                                                                        <c:if test="${empty hdct.chiTietSanPham.ctkm}">
-                                                                            <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
-                                                                        </c:if>
+                                                                        <c:choose>
+                                                                            <c:when test="${hdct.donGiaKhiGiam == 0 || hdct.donGiaKhiGiam == null}">
+
+                                                                                <fmt:formatNumber>${hdct.soLuong * hdct.donGia}</fmt:formatNumber>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <fmt:formatNumber>${hdct.soLuong * hdct.donGiaKhiGiam}</fmt:formatNumber>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </td>
                                                                 </tr>
                                                             </c:forEach>

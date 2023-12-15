@@ -241,16 +241,16 @@
                     <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
                         <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Chờ xác nhận</h4>
-<%--                        <p><%= formattedDate %>--%>
-<%--                        </p>--%>
+                            <%--                        <p><%= formattedDate %>--%>
+                            <%--                        </p>--%>
                     </div>
                     <div class="col-lg-2 status-item" id="status" data-status-id="2"
                          data-status="Đã xác nhận thanh toán">
                         <img src="../../../img/payment.jpg" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Đang chuẩn bị</h4>
                             <%--                        <p>14:27 20/10/2023</p>--%>
-<%--                        <p><%= formattedDate %>--%>
-<%--                        </p>--%>
+                            <%--                        <p><%= formattedDate %>--%>
+                            <%--                        </p>--%>
                     </div>
                         <%--                    <div class="col-lg-2 status-item" id="status" data-status-id="3" data-status="Đã nhận được hàng">--%>
                         <%--                        <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;" class="trang-thai">--%>
@@ -262,23 +262,23 @@
                          data-status="Đơn hàng đang được giao">
                         <img src="../../../img/truck.jpg" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Đơn hàng đang được giao</h4>
-<%--                        <p><%= formattedDate %>--%>
-<%--                        </p>--%>
+                            <%--                        <p><%= formattedDate %>--%>
+                            <%--                        </p>--%>
                     </div>
                     <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
                         <h4>Hoàn thành</h4>
-<%--                        <p><%= formattedDate %>--%>
-<%--                        </p>--%>
+                            <%--                        <p><%= formattedDate %>--%>
+                            <%--                        </p>--%>
                     </div>
-<%--                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">--%>
-<%--                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;"--%>
-<%--                             class="trang-thai">--%>
-<%--                        <h4>Đã huỷ</h4>--%>
-<%--&lt;%&ndash;                        <p><%= formattedDate %>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        </p>&ndash;%&gt;--%>
-<%--                    </div>--%>
+                        <%--                    <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">--%>
+                        <%--                        <img src="../../../img/cancel-order.jpg" style="width: 60px; height: 60px;"--%>
+                        <%--                             class="trang-thai">--%>
+                        <%--                        <h4>Đã huỷ</h4>--%>
+                        <%--&lt;%&ndash;                        <p><%= formattedDate %>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;                        </p>&ndash;%&gt;--%>
+                        <%--                    </div>--%>
                     <div class="inline"></div>
                     <div class="stepper__line">
                         <div class="stepper__line-background"></div>
@@ -294,16 +294,16 @@
                     <div class="col-lg-2 status-item" id="status" data-status-id="1" data-status="Chờ xác nhận">
                         <img src="../../../img/order.png" style="width: 60px; height: 60px;" class="trang-thai">
                         <h4>Chờ xác nhận</h4>
-<%--                        <p><%= formattedDate %>--%>
-<%--                        </p>--%>
+                            <%--                        <p><%= formattedDate %>--%>
+                            <%--                        </p>--%>
                     </div>
 
                     <div class="col-lg-2 status-item" id="status" data-status-id="5" data-status="Đã nhận được hàng">
                         <img src="../../../img/receive-order.jpg" style="width: 60px; height: 60px;"
                              class="trang-thai">
                         <h4>Hoàn thành</h4>
-<%--                        <p><%= formattedDate %>--%>
-<%--                        </p>--%>
+                            <%--                        <p><%= formattedDate %>--%>
+                            <%--                        </p>--%>
                     </div>
 
                     <div class="inline"></div>
@@ -682,6 +682,7 @@
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Kích cỡ</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Đơn Giá</th>
@@ -696,26 +697,27 @@
                     <tr>
                         <th scope="row">${stt.index + 1}</th>
                         <td>${hdct.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${hdct.chiTietSanPham.kichCo.size}</td>
                             <%--                        <td>--%>
                             <%--                            <fmt:formatNumber value="${hdct.donGia}"--%>
                             <%--                                              type="number"/>--%>
                             <%--                        </td>--%>
                         <td>
                             <c:choose>
-                            <c:when test="${hoaDon.loaiHoaDon==0 &&  hoaDon.phuongThucThanhToan ==1  && hoaDon.trangThai<4 }">
-                                <form:form action="/don-hang/update-cart/${hdct.id}" method="post">
-                                    <input type="number" class="form-control"
-                                           min="1"
-                                           name="soLuong"
-                                           value="${hdct.soLuong}"
-                                           onblur="this.form.submit()"
-                                           style="width:100px;">
-                                </form:form>
-                            </c:when>
+                                <c:when test="${hoaDon.loaiHoaDon==0 &&  hoaDon.phuongThucThanhToan ==1  && hoaDon.trangThai<4 }">
+                                    <form:form action="/don-hang/update-cart/${hdct.id}" method="post">
+                                        <input type="number" class="form-control"
+                                               min="1"
+                                               name="soLuong"
+                                               value="${hdct.soLuong}"
+                                               onblur="this.form.submit()"
+                                               style="width:100px;">
+                                    </form:form>
+                                </c:when>
 
-                            <c:otherwise>
-                                ${hdct.soLuong}
-                            </c:otherwise>
+                                <c:otherwise>
+                                    ${hdct.soLuong}
+                                </c:otherwise>
                             </c:choose>
                         </td>
                         <td>
@@ -724,43 +726,29 @@
 
                         </td>
                         <td>
-                            <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
-                                <c:set var="allTrangThai1" value="false"/>
-                                <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                    <c:if test="${ctkm.trangThai == 0}">
-                                        <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
-                                        <del style="color: crimson">
-                                            <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></del>
-                                        <c:set var="allTrangThai1" value="true"/>
-                                    </c:if>
+                            <c:choose>
+                                <c:when test="${hdct.donGiaKhiGiam == 0 || hdct.donGiaKhiGiam == null}">
 
-                                </c:forEach>
-                                <c:if test="${allTrangThai1 eq false}">
-                                    <fmt:formatNumber>${hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
-                                    <c:set var="allTrangThai1" value="true"/>
-                                </c:if>
-                            </c:if>
-                            <c:if test="${empty hdct.chiTietSanPham.ctkm}">
-                                <fmt:formatNumber>${hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
-                            </c:if>
+                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                </c:when>
+                                <c:otherwise>
+                                    <fmt:formatNumber>${hdct.donGiaKhiGiam}</fmt:formatNumber>
+                                    <del style="color: crimson">
+                                        <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
+                                    </del>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <td>
-                            <c:if test="${not empty hdct.chiTietSanPham.ctkm}">
-                                <c:set var="allTrangThai1" value="false"/>
-                                <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">
-                                    <c:if test="${ctkm.trangThai == 0}">
-                                        <fmt:formatNumber>${hdct.soLuong * ctkm.giaKhuyenMai}</fmt:formatNumber>
-                                        <c:set var="allTrangThai1" value="true"/>
-                                    </c:if>
-                                </c:forEach>
-                                <c:if test="${allTrangThai1 eq false}">
-                                    <fmt:formatNumber>${hdct.donGia}</fmt:formatNumber>
-                                    <c:set var="allTrangThai1" value="true"/>
-                                </c:if>
-                            </c:if>
-                            <c:if test="${empty hdct.chiTietSanPham.ctkm}">
-                                <fmt:formatNumber>${hdct.soLuong * hdct.chiTietSanPham.giaBan}</fmt:formatNumber>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${hdct.donGiaKhiGiam == 0 || hdct.donGiaKhiGiam == null}">
+
+                                    <fmt:formatNumber>${hdct.soLuong * hdct.donGia}</fmt:formatNumber>
+                                </c:when>
+                                <c:otherwise>
+                                    <fmt:formatNumber>${hdct.soLuong * hdct.donGiaKhiGiam}</fmt:formatNumber>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
                             <td>
@@ -768,7 +756,6 @@
                                    onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">
                                     <img src="../../../img/delete.png">
                                 </a>
-
                             </td>
                         </c:if>
                     </tr>
@@ -779,39 +766,24 @@
         <c:set var="hoaDonId" value="${hoaDon.id}"/>
         <div class="text-right">
             <td>
-<%--                <c:set var="total" value="0"/>--%>
-<%--                <c:forEach items="${hoaDon.hoaDons}" var="hdct">--%>
-<%--                    <c:if test="${hdct.chiTietSanPham.ctkm != null}">--%>
-<%--                        <c:forEach items="${hdct.chiTietSanPham.ctkm}" var="ctkm">--%>
-<%--                            <c:choose>--%>
-<%--                                <c:when test="${ctkm.khuyenMai.donVi == '%'}">--%>
-<%--                                    <!-- Percentage discount calculation -->--%>
-<%--                                    <c:set var="discountAmount"--%>
-<%--                                           value="${(ctkm.ctsp.giaBan * ctkm.khuyenMai.giaTri / 100)}"/>--%>
-<%--                                </c:when>--%>
-<%--                                <c:when test="${ctkm.khuyenMai.donVi == 'VNĐ'}">--%>
-<%--                                    <!-- Fixed amount discount calculation -->--%>
-<%--                                    <c:set var="discountAmount" value="${ctkm.khuyenMai.giaTri}"/>--%>
-<%--                                </c:when>--%>
-<%--                                <c:otherwise>--%>
-<%--                                    <!-- Handle other types of discounts if needed -->--%>
-<%--                                    <c:set var="discountAmount" value="0"/>--%>
-<%--                                </c:otherwise>--%>
-<%--                            </c:choose>--%>
+                <h3><b>
 
-<%--                            <!-- Calculate the total with the discount applied -->--%>
-<%--                            <c:set var="total"--%>
-<%--                                   value="${total + (hdct.soLuong * (ctkm.ctsp.giaBan - discountAmount))}"/>--%>
-<%--                        </c:forEach>--%>
-<%--                    </c:if>--%>
-
-<%--                    <c:if test="${empty hdct.chiTietSanPham.ctkm}">--%>
-<%--                        <!-- If no promotion, add the original price to the total -->--%>
-<%--                        <c:set var="total" value="${total + (hdct.soLuong * hdct.donGia)}"/>--%>
-<%--                    </c:if>--%>
-<%--                </c:forEach>--%>
-
-                <h3><b>Tổng hoá đơn: <fmt:formatNumber value="${sumMoney}" type="number"/> ₫</b></h3>
+                    <c:set var="total" value="0"/>
+                    <c:set var="giaGoc" value="0"/>
+                    <c:set var="giaKhuyenMai" value="0"/>
+                    <c:forEach items="${hoaDon.hoaDons}" var="hdct">
+                        <c:if test="${hdct.donGiaKhiGiam != null || hdct.donGiaKhiGiam != 0}">
+                            <c:set var="giaKhuyenMai" value="${hdct.donGiaKhiGiam * hdct.soLuong}"/>
+                        </c:if>
+                        <c:if test="${hdct.donGiaKhiGiam == null || hdct.donGiaKhiGiam == 0}">
+                            <c:set var="giaGoc" value="${hdct.soLuong * hdct.donGia}"/>
+                        </c:if>
+                        <c:set var="total" value="${total + giaKhuyenMai + giaGoc}"/>
+                        <c:set var="giaGoc" value="0"/>
+                        <c:set var="giaKhuyenMai" value="0"/>
+                    </c:forEach>
+                    Tổng tiền: <fmt:formatNumber value="${total}" type="number"/> đ
+                </b></h3>
 
             </td>
         </div>
