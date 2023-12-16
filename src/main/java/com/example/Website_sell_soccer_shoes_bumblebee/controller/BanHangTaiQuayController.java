@@ -408,21 +408,22 @@ public class BanHangTaiQuayController {
 
 
         Paragraph tennhanvien = new Paragraph("Nhân viên    :    " + nameNhanVien, titleFont);
+        document.add(MaHoaDon);
+        document.add(Ngay);
+        document.add(tennhanvien);
 
-        if (hoaDonThanhToan.getTenNguoiNhan().equals("Khách vãng lai")) {
+        if (hoaDonThanhToan.getTenNguoiNhan()==null) {
             Paragraph tenKhach = new Paragraph("Khách hàng    :    Khách vãng lai", titleFont);
             document.add(tenKhach);
         } else {
             Paragraph tenKhach = new Paragraph("Khách hàng    :    "
                     + hoaDonThanhToan.getKhachHang().getHo() + hoaDonThanhToan.getKhachHang().getTenDem() + hoaDonThanhToan.getKhachHang().getTen(), titleFont);
 
-        document.add(MaHoaDon);
-        document.add(Ngay);
-        document.add(tennhanvien);
+
         document.add(tenKhach);
 
 
-            document.add(tenKhach);
+
         }
 
 

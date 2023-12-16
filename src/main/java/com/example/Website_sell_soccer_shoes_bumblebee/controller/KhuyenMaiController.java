@@ -161,7 +161,7 @@ public class KhuyenMaiController {
                 ctkm.setCtsp(ctsp);
                 ctkm.setKhuyenMai(km);
 
-                if (km.getDonVi().equals("VNĐ")) {
+                if (km.getDonVi().equals("VNÐ")) {
                     Double giaKhuyenMai = ctsp.getGiaBan() - km.getGiaTri();
                     ctkm.setGiaKhuyenMai(giaKhuyenMai);
                 }
