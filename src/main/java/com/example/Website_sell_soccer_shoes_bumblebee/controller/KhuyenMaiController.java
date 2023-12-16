@@ -117,7 +117,9 @@ public class KhuyenMaiController {
 //        model.addAttribute("ngayBatDau", ngayBatDau);
 //        model.addAttribute("ngayKetThuc", ngayKetThuc);
         model.addAttribute("idListCartDetail", idListCartDetail);
-        model.addAttribute("searchForm", new SearchForm());        // Lấy list idctsp
+
+        model.addAttribute("searchForm", new SearchForm());
+        // Lấy list idctsp
         List<UUID> idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
                 .stream()
                 .map(UUID::fromString)
@@ -160,7 +162,7 @@ public class KhuyenMaiController {
                 ctkm.setCtsp(ctsp);
                 ctkm.setKhuyenMai(km);
 
-                if (km.getDonVi().equals("VNĐ")) {
+                if (km.getDonVi().equals("VNÐ")) {
                     Double giaKhuyenMai = ctsp.getGiaBan() - km.getGiaTri();
                     ctkm.setGiaKhuyenMai(giaKhuyenMai);
                 }
@@ -194,7 +196,7 @@ public class KhuyenMaiController {
 //            @RequestParam(name = "ngayBatDau") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayBatDau,
 //            @RequestParam(name = "ngayKetThuc") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayKetThuc
     ) throws ParseException {
-        boolean hassE = result.hasErrors();;
+
         if (result.hasErrors()) {
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
             return "admin/index";
@@ -206,15 +208,16 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-
         if (km.getDonVi().contains("%")) {
             if (km.getGiaTri() > 70 || 5 > km.getGiaTri()) {
                 model.addAttribute("errorGiaTri", "Giá trị tối thiểu là 5% và tối đa 70 %");
-              hassE=true;
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
             }
             if (km.getGiaTri() <= 0) {
                 model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
-                hassE=true;
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
             }
         }
 
@@ -227,14 +230,12 @@ public class KhuyenMaiController {
 
             if (km.getGiaTri() <= 0) {
                 model.addAttribute("errorGiaTri", "Giá trị phải lớn hơn 0");
-                hassE=true;
+                model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+                return "admin/index";
             }
         }
 
-        if (hassE) {
-            model.addAttribute("view", "../khuyen-mai/add_update.jsp");
-            return "admin/index";
-        }
+
         if (km.getNgayBatDau().isAfter(km.getNgayKetThuc())) {
             model.addAttribute("mess_Ngay", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
@@ -401,19 +402,6 @@ public class KhuyenMaiController {
 //            @RequestParam(name = "ngayKetThuc") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayKetThuc
     ) {
         ChiTietKhuyenMai ctkm = chiTietKhuyenMaiService.findID(id);
-//        LocalDateTime localDateTimeNgayBatDau = ngayBatDau;
-//        Instant instant1 = localDateTimeNgayBatDau.atZone(ZoneId.systemDefault()).toInstant();
-//        Date date1 = Date.from(instant1);
-//        ctkm.setNgayBatDau(date1);
-//        LocalDateTime localDateTimeNgayKetThuc = ngayKetThuc;
-//        Instant instant2 = localDateTimeNgayKetThuc.atZone(ZoneId.systemDefault()).toInstant();
-//        Date date2 = Date.from(instant2);
-//        ctkm.setNgayKetThuc(date2);
-//        if (ngayKetThuc.isAfter(LocalDateTime.now())) {
-//            ctkm.setTrangThai(0);
-//        } else {
-//            ctkm.setTrangThai(1);
-//        }
         ctkm.setTrangThai(1);
         chiTietKhuyenMaiService.save(ctkm);
         return "redirect:/bumblebee/san-pham-khuyen-mai/list";
@@ -435,8 +423,7 @@ public class KhuyenMaiController {
 
         }
         model.addAttribute("page", km);
-
-//        return "redirect:/bumblebee/khuyen-mai/list";
+        model.addAttribute("listCTSP", chiTietSanPhamService.getList());
         model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
         return "admin/index";
     }

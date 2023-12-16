@@ -73,7 +73,7 @@
                             <c:forEach var="hd" items="${listHDCT}">
                                 <tr>
                                     <td><input class="checkCart" type="checkbox"
-                                               id="checkBoxSP"
+                                               id="checkBoxSP_${hd.id}"
                                                name="idListCartDetail"
                                                value="${hd.chiTietSanPham.id}"></td>
                                     <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>

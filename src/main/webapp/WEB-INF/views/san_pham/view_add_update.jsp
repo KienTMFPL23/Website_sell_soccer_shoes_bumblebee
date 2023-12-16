@@ -18,6 +18,7 @@
     }
 
     .button {
+        line-height: 40px;
         background-color: #FFFFFF;
         color: black;
         font-weight: bold;
@@ -76,8 +77,8 @@
             <div class="col-lg-2">
                 <label>Trạng thái:</label>
             </div>
-            <div class="col-lg-8">
-                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton"/>
+            <div class="col-lg-8" style="margin-left: -20px">
+                <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="radioButton" cssStyle="margin-left: 20px;margin-right: 8px"/>
                 <form:errors path="trangThai" cssStyle="color: crimson"></form:errors>
             </div>
         </div>

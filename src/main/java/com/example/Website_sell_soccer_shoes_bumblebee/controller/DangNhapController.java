@@ -97,7 +97,7 @@ public class DangNhapController {
             return "dang_nhap/dang_ky";
         }
 
-        if (!confirmpassword.equalsIgnoreCase(taikhoan.getPassword())) {
+        if (!taikhoan.getPassword().equalsIgnoreCase(confirmpassword)) {
             model.addAttribute("messageConfirmPass", "Mật khẩu không trùng khớp");
             return "/dang_nhap/dang_ky";
         }
