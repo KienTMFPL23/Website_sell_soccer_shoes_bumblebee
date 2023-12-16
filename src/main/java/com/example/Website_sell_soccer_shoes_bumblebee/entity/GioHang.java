@@ -43,4 +43,8 @@ public class GioHang {
     @JoinColumn(name = "IdKH", referencedColumnName = "id")
     private KhachHang khachHang;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "IdNV", referencedColumnName = "id")
+    private NhanVien nhanVien;
+
 }
