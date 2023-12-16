@@ -70,7 +70,7 @@
                                                 <div class="product_bubble product_bubble_right product_bubble_red d-flex ">
                                                     <span>- ${km.khuyenMai.giaTri}${km.khuyenMai.donVi}</span></div>
                                             </c:if>
-                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                            <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
                                                 <div class="product_bubble product_bubble_left product_bubble_green ">
                                                 <span>- <fmt:formatNumber value="${km.khuyenMai.giaTri}"
                                                                           type="number"/>đ</span>

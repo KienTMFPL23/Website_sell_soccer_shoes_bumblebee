@@ -1,8 +1,10 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
 
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.GioHang;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.NhanVien;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.TaiKhoan;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.GioHangRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.TaiKhoanRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.NhanVienService;
 import com.itextpdf.forms.xfdf.Mode;
@@ -14,10 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class NhanVienController {
@@ -27,6 +26,9 @@ public class NhanVienController {
 
     @Autowired
     private TaiKhoanRepository taiKhoanRepository;
+
+    @Autowired
+    private GioHangRepository gioHangRepository;
 
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
@@ -144,6 +146,7 @@ public class NhanVienController {
 
 //        nv.setNgaySinh(nv.getNgaySinh());
         taiKhoanRepository.save(tk);
+
         return "redirect:/nhan-vien/tai-khoan";
     }
 
@@ -186,6 +189,11 @@ public class NhanVienController {
         TaiKhoan taiKhoan = taiKhoanRepository.getById(idNV);
         nv.setTaiKhoanNV(taiKhoan);
         nhanVienService.save(nv);
+        GioHang gioHang = new GioHang();
+        gioHang.setNhanVien(nv);
+        gioHang.setNgayTao(new Date());
+        gioHang.setTrangThai(0);
+        gioHangRepository.save(gioHang);
         return "redirect:/nhan-vien/thong-tin";
     }
 }

@@ -404,7 +404,6 @@
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-
     var idKM = null;
     var inPut = null;
 
@@ -423,6 +422,7 @@
 
         }
     }
+
 
 
     function filterTable() {

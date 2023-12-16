@@ -54,10 +54,11 @@
             class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
             id="accordionSidebar"
     >
+
         <!-- Sidebar - Brand -->
         <a
                 class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="index.html"
+                href="/bumblebee/home"
         >
             <div class="sidebar-brand-icon">
                 <img src="../../../img/logoBumblebee.png" width="60" height="60">
@@ -80,6 +81,7 @@
                     <b>Bán hàng tại quầy</b></a
                 >
             </li>
+
             <!-- Nav Item - Quản lý khuyến mãi -->
             <li class="nav-item">
                 <a class="nav-link" href="/bumblebee/khuyen-mai/list">
@@ -105,7 +107,7 @@
                     <b>Trang chủ</b></a
                 >
             </li>
-        </c:if>
+
             <!-- Nav Item - Quản lý sản phẩm -->
             <li class="nav-item">
                 <a
@@ -201,6 +203,7 @@
                     <b>Quản lý đổi trả</b></a
                 >
             </li>
+        </c:if>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block"/>
 
