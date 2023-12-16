@@ -121,7 +121,7 @@ public class BanHangTaiQuayController {
     public String banHang(Model model) {
         model.addAttribute("view", "../ban_hang_tai_quay/index.jsp");
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
-        this.idHoaDon = idHoaDon;
+        this.idHoaDon = null;
         this.sumMoney = 0.0;
         getTaiKhoan(model);
         model.addAttribute("idHoaDon", idHoaDon);
@@ -223,6 +223,7 @@ public class BanHangTaiQuayController {
 
     @RequestMapping("/add-gio-hang/{id}")
     public String themSanPham(Model model, @PathVariable("id") UUID id) {
+        try {
         HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
 //        if (idHoaDon == null) {
@@ -231,10 +232,12 @@ public class BanHangTaiQuayController {
         this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
         if (sp == null) {
-            model.addAttribute("erorSP", "Không có sản phẩm nào!!!");
-            return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
+            model.addAttribute("erorSP", "Lỗi! Vui lòng quét lại !");
+            System.out.println("Không có sản phẩm nào!!!");
+            return "forward:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
         }
         HoaDonChiTiet sanPhamInHDCT = hoaDonChiTietService.getAndUpdateSanPhamInHDCT(this.idHoaDon, id);
+
         if (sanPhamInHDCT != null) {
             Integer soLuong = sp.getSoLuong() - 1;
             chiTietSanPhamService.updateSoLuongTon(id, soLuong);
@@ -267,8 +270,15 @@ public class BanHangTaiQuayController {
             Integer soLuong = sp.getSoLuong() - 1;
             chiTietSanPhamService.updateSoLuongTon(id, soLuong);
             hoaDonChiTietService.saveHoaDonCT(hoaDonChiTiet);
+
         }
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
+
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erorSP", "Lỗi! Vui lòng quét lại !");
+            return "forward:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
+        }
+//        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
     }
 
     @RequestMapping("/delete-hdct/{id}")

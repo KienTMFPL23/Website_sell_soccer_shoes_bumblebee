@@ -117,8 +117,7 @@ public class KhuyenMaiController {
 //        model.addAttribute("ngayBatDau", ngayBatDau);
 //        model.addAttribute("ngayKetThuc", ngayKetThuc);
         model.addAttribute("idListCartDetail", idListCartDetail);
-
-        // Lấy list idctsp
+        model.addAttribute("searchForm", new SearchForm());        // Lấy list idctsp
         List<UUID> idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
                 .stream()
                 .map(UUID::fromString)

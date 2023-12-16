@@ -16,31 +16,31 @@ function openWebcam() {
         // event.preventDefault();
         // Chuyển người dùng đến trang controller khi quét thành công
         window.location.href = `/bumblebee/don-hang/${qrCode}`;
-        var data = eval('('+'${notFound}'+')');
-        if (data === 'Khong tim thay'){
-            event.preventDefault();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Hóa đơn không đủ điều kiện đổi trả",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            setTimeout(function () {
-                return true;
-            }, 1500);
-        }else {
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Thành công",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            setTimeout(function () {
-                return true;
-            }, 1500);
-        }
+        // var data = eval('('+'${notFound}'+')');
+        // if (data === 'Khong tim thay'){
+        //     event.preventDefault();
+        //     Swal.fire({
+        //         position: "center",
+        //         icon: "success",
+        //         title: "Hóa đơn không đủ điều kiện đổi trả",
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     });
+        //     setTimeout(function () {
+        //         return true;
+        //     }, 1500);
+        // }else {
+        //     Swal.fire({
+        //         position: "center",
+        //         icon: "success",
+        //         title: "Thành công",
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     });
+        //     setTimeout(function () {
+        //         return true;
+        //     }, 1500);
+        // }
     });
 }
 

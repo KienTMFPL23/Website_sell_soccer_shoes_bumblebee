@@ -45,6 +45,8 @@
         </div>
     </div>
     <br>
+    <h5 style="color: red">${error}</h5>
+
     <div class="status">
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
             <li class="nav-item">
