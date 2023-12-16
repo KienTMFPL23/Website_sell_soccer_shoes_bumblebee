@@ -124,7 +124,7 @@
                             <div class="col-lg-6" style="padding-bottom: 20px;">
                                 <span style="font-size: 18px; font-weight: 600;">Số tiền phải trả: </span>
                                 <span style="font-size: 18px; "><fmt:formatNumber value="${totalPrice}"
-                                                                                  type="currency"/></span>
+                                                                                  type="number"/> đ</span>
                             </div>
                         </div>
                     </c:forEach>

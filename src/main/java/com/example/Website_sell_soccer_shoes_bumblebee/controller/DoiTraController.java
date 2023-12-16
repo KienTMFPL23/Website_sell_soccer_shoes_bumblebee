@@ -220,7 +220,7 @@ public class DoiTraController {
             doiTraChiTiet.setDoiTra(doiTra);
             doiTraChiTiet.setLyDoDoiTra(lydo.get(h));
 
-            if (hoaDonChiTiet.getDonGiaKhiGiam() == 0) {
+            if (hoaDonChiTiet.getDonGiaKhiGiam() == 0 || hoaDonChiTiet.getDonGiaKhiGiam() == null) {
                 hoaDonChiTiet.getDonGia();
                 doiTraChiTiet.setDonGia(hoaDonChiTiet.getDonGia());
             } else {
@@ -544,8 +544,16 @@ public class DoiTraController {
             Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 15, Font.NORMAL, BaseColor.BLACK);
             Paragraph nhanVien = new Paragraph("Nhân Viên bán hàng : " + hoaDonDoiTra.getNhanVien().getHo() + " " + hoaDonDoiTra.getNhanVien().getTenDem() + " " + hoaDonDoiTra.getNhanVien().getTen(), titleFont1);
             document.add(nhanVien);
-            Paragraph khachHang = new Paragraph("Khách hàng : " + hoaDonDoiTra.getKhachHang().getTen(), titleFont1);
-            document.add(khachHang);
+
+            if (hoaDonDoiTra.getKhachHang() != null && hoaDonDoiTra.getKhachHang().getTen() != null) {
+                Paragraph khachHang = new Paragraph("Khách hàng : " + hoaDonDoiTra.getKhachHang().getTen(), titleFont1);
+                document.add(khachHang);
+            } else {
+                Paragraph khachHang = new Paragraph("Khách hàng : khách vãn lai", titleFont1);
+                document.add(khachHang);
+            }
+
+
             Paragraph sdt = new Paragraph("Số điện thoại : " + hoaDonDoiTra.getSdt(), titleFont1);
             document.add(sdt);
             Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
@@ -582,6 +590,7 @@ public class DoiTraController {
 //
             Paragraph KhoangTrang1 = new Paragraph("                                                         ");
             document.add(KhoangTrang1);
+
 //            Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
             Paragraph danhSachTra = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH TRẢ", titleFont2);
             danhSachTra.setAlignment(Paragraph.ALIGN_CENTER);
@@ -603,6 +612,7 @@ public class DoiTraController {
             double tongTienTra = 0.0;
 
             for (DoiTraChiTiet doiTraChiTiet : listDoiTra) {
+
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont1));
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
@@ -627,6 +637,8 @@ public class DoiTraController {
             document.add(productTable1);
             Paragraph TongCong = new Paragraph("Số tiền hoàn       :    " + tongTienTra + "VNĐ", titleFont2);
             document.add(TongCong);
+//
+
             document.close();
 //
 //
