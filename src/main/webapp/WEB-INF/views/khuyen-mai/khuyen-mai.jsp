@@ -225,7 +225,8 @@
                             <!-- Modal -->
                             <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post"
                                   id="themSanPhamKhuyenMai">
-                                <div class="modal fade" id="Modal_${i.index}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                <div class="modal fade" id="Modal_${i.index}" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                         <div class="modal-content">
@@ -238,7 +239,9 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-lg-4">
-                                                        <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
+                                                        <input id="myInput3_${km.id}"
+                                                               onclick="timKiemSanPham('${km.id}')"
+                                                               placeholder="Tìm kiếm sản phẩm">
                                                     </div>
                                                 </div>
                                                 <span id="spnError" class="error" style="display: none"
@@ -252,7 +255,7 @@
                                                                 <input class="checkCart" style="width: 10px;"
                                                                        id="checkAll_${km.id}"
                                                                        type="checkbox"
-                                                                onclick="chkAll('${km.id}')">
+                                                                       onclick="chkAll('${km.id}')">
                                                             </th>
                                                             <th></th>
                                                             <th scope="col">Tên sản phẩm</th>
@@ -343,7 +346,7 @@
 
 
     function chkAll(idKM) {
-        var checkedAllCheckbox = document.getElementById('checkAll_'+idKM);
+        var checkedAllCheckbox = document.getElementById('checkAll_' + idKM);
         checkboxes.forEach(function (checkbox) {
             checkbox.checked = checkedAllCheckbox.checked;
         });
@@ -401,14 +404,25 @@
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
     }
+    var idKM = null;
+    var inPut = null;
 
+    function timKiemSanPham(idkm) {
+        idKM = idkm;
+        console.log("click" + idKM)
+        inPut = document.getElementById("myInput3_" + idKM);
+        if (inPut){
+            inPut.addEventListener("keyup", function () {
+                console.log("search")
+                var value = this.value.toLowerCase();
+                $("#myTable3 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
 
-    $("#myInput3").keyup(function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable3 tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
+        }
+    }
+
 
 
     function filterTable() {

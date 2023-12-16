@@ -262,9 +262,6 @@
                     console.log("Error: " + error);
                 }
             });
-            $("#formGioHang").submit(function (event) {
-                event.preventDefault();
-            });
         } else {
         }
     }
