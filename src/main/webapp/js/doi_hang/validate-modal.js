@@ -11,8 +11,7 @@ checkedAllCheckbox.addEventListener('click', function () {
         checkbox.checked = checkedAllCheckbox.checked;
     });
 });
-function taoDoiTra(idSP) {
-
+function taoDoiTra(idHD) {
     var isChecked = false;
     var isValidQuantity = true;
     var isValidLyDo = true;
@@ -22,18 +21,16 @@ function taoDoiTra(idSP) {
             // Lấy ô input số lượng tương ứng với ô checkbox
             var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra');
             var lydoId = checkboxes[i].id.replace('checkBoxSP','lyDoTra');
+            console.log("inputId:", inputId); // In giá trị để kiểm tra
+            console.log("lydoId:", lydoId); //
             var quantityInput = document.getElementById(inputId);
             var lyDoSelect = document.getElementById(lydoId);
-
-
             // Kiểm tra nếu ô input không có giá trị hoặc giá trị không hợp lệ
             if (quantityInput.value.trim() === '' || parseInt(quantityInput.value) < 1) {
                 isValidQuantity = false;
-                break;
             }
             if (lyDoSelect.value === ''){
                 isValidLyDo = false;
-                break;
             }
         }
     }
@@ -45,6 +42,7 @@ function taoDoiTra(idSP) {
         alert('Vui lòng chọn ít nhất một sản phẩm và nhập số lượng hợp lệ.');
         return false;
     }
+    return false;
     var numberOfCheckedCheckboxes = 0;
     checkboxes.forEach(function (checkbox) {
         if (checkbox.checked) {

@@ -93,7 +93,6 @@
     }
 
 
-
     .ui.form input[type=search] {
         background: #fff;
         border: 2px solid #37517E;
@@ -125,7 +124,6 @@
     }
 
 
-
 </style>
 <body>
 <div class="container">
@@ -154,32 +152,32 @@
                 </a>
             </div>
         </div>
-                <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
-                    <div class="row" style="margin-bottom: 20px;">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-2">
-                            <form:select path="donVi">
-                                <option value="">-- Lọc đơn vị --</option>
-                                <form:option value="VNĐ">VNĐ</form:option>
-                                <form:option value="%">%</form:option>
-                            </form:select>
-                        </div>
-                        <div class="col-lg-2">
-                            <form:select path="trangThai">
-                                <option value="">-- Lọc trạng thái --</option>
-                                <form:option value="0">Hoạt động</form:option>
-                                <form:option value="1">Không hoạt động</form:option>
-                            </form:select>
-<%--    <form:select type="text" path="trangThai">--%>
-<%--        <form:option value="">-- Lọc trạng thái --</form:option>--%>
-<%--        <form:options items="${dsTrangThai}"/>--%>
-<%--    </form:select>--%>
-                        </div>
-                        <div class="col-lg-1">
-                            <button type="submit" class="btnSearch">Tìm</button>
-                        </div>
-                    </div>
-                </form:form>
+        <form:form action="/bumblebee/khuyen-mai/search" method="post" modelAttribute="searchForm">
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-2">
+                    <form:select path="donVi">
+                        <option value="">-- Lọc đơn vị --</option>
+                        <form:option value="VNĐ">VNĐ</form:option>
+                        <form:option value="%">%</form:option>
+                    </form:select>
+                </div>
+                <div class="col-lg-2">
+                    <form:select path="trangThai">
+                        <option value="">-- Lọc trạng thái --</option>
+                        <form:option value="0">Hoạt động</form:option>
+                        <form:option value="1">Không hoạt động</form:option>
+                    </form:select>
+                        <%--    <form:select type="text" path="trangThai">--%>
+                        <%--        <form:option value="">-- Lọc trạng thái --</form:option>--%>
+                        <%--        <form:options items="${dsTrangThai}"/>--%>
+                        <%--    </form:select>--%>
+                </div>
+                <div class="col-lg-1">
+                    <button type="submit" class="btnSearch">Tìm</button>
+                </div>
+            </div>
+        </form:form>
 
 
         <table id="tableKhuyenMai" class="ui celled table" width="100%" cellspacing="0">
@@ -205,12 +203,7 @@
                     <td>${km.maKhuyenMai}</td>
                     <td>${km.tenKhuyenMai}</td>
                     <td>
-                        <c:if test="${km.donVi == 'VNÐ'}">
-                            <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
-                        </c:if>
-                        <c:if test="${km.donVi == '%'}">
-                            <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
-                        </c:if>
+                        <fmt:formatNumber>${km.giaTri}</fmt:formatNumber>
                     </td>
                     <td>${km.donVi}</td>
                     <td>${km.ngayBatDau}</td>
@@ -226,13 +219,14 @@
                     </td>
                     <td>
                         <c:if test="${km.trangThai == 0}">
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${km.id}"
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal_${i.index}"
                                     style="border-radius: 20px;">Chọn
                             </button>
                             <!-- Modal -->
                             <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post"
                                   id="themSanPhamKhuyenMai">
-                                <div class="modal fade" id="${km.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                <div class="modal fade" id="Modal_${i.index}" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                         <div class="modal-content">
@@ -245,7 +239,9 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-lg-4">
-                                                        <input id="myInput3" placeholder="Tìm kiếm sản phẩm">
+                                                        <input id="myInput3_${km.id}"
+                                                               onclick="timKiemSanPham('${km.id}')"
+                                                               placeholder="Tìm kiếm sản phẩm">
                                                     </div>
                                                 </div>
                                                 <span id="spnError" class="error" style="display: none"
@@ -256,8 +252,10 @@
                                                         <thead>
                                                         <tr>
                                                             <th class="col-md-1">
-                                                                <input class="checkCart" style="width: 10px;" id="checkedAll"
-                                                                       type="checkbox">
+                                                                <input class="checkCart" style="width: 10px;"
+                                                                       id="checkAll_${km.id}"
+                                                                       type="checkbox"
+                                                                       onclick="chkAll('${km.id}')">
                                                             </th>
                                                             <th></th>
                                                             <th scope="col">Tên sản phẩm</th>
@@ -281,27 +279,14 @@
                                                                             </c:if>
                                                                         </c:forEach>
                                                                         <c:if test="${allTrangThai1 eq false}">
-                                                                            <c:if test="${sp.giaBan < ctkm.khuyenMai.giaTri}">
-                                                                                Giá SP nhỏ hơn khuyến mại
-                                                                            </c:if>
-                                                                            <c:if test="${sp.giaBan > ctkm.khuyenMai.giaTri}">
-                                                                                <input
-                                                                                        class="checkCart" type="checkbox"
-                                                                                        name="idListCartDetail"
-                                                                                        value="${sp.id}">
-                                                                                <c:set var="allTrangThai1" value="true"/>
-                                                                            </c:if>
-                                                                        </c:if>
-                                                                    </c:if>
-                                                                    <c:if test="${empty sp.ctkm}">
-                                                                        <c:if test="${sp.giaBan < ctkm.khuyenMai.giaTri}">
-                                                                            Giá SP nhỏ hơn khuyến mại
-                                                                        </c:if>
-                                                                        <c:if test="${sp.giaBan > ctkm.khuyenMai.giaTri}">
                                                                             <input
-                                                                                    class="checkCart" type="checkbox"
+                                                                                    id="checkBoxSP"
+                                                                                    class="checkCart"
+                                                                                    type="checkbox"
                                                                                     name="idListCartDetail"
                                                                                     value="${sp.id}">
+                                                                            <c:set var="allTrangThai1"
+                                                                                   value="true"/>
                                                                         </c:if>
                                                                     </c:if>
                                                                     <c:if test="${empty sp.ctkm}">
@@ -318,7 +303,8 @@
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber> đ</td>
+                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber> đ
+                                                                </td>
                                                                 <td>${sp.mauSac.ten}</td>
                                                                 <td>${sp.kichCo.size}</td>
                                                             </tr>
@@ -356,15 +342,19 @@
 <script>
 
     const checkbox = document.getElementById('checkBoxSP');
-    var checkedAllCheckbox = document.getElementById('checkedAll');
+    var checkboxes = document.querySelectorAll('.checkCart');
 
-    checkedAllCheckbox.addEventListener('click', function () {
+
+    function chkAll(idKM) {
+        var checkedAllCheckbox = document.getElementById('checkAll_' + idKM);
         checkboxes.forEach(function (checkbox) {
             checkbox.checked = checkedAllCheckbox.checked;
         });
-    });
+    }
 
-    var checkboxes = document.querySelectorAll('.checkCart');
+    // checkedAllCheckbox.addEventListener('click', function () {
+    //
+    // });
 
     function themKhuyenMai() {
         var numberOfCheckedCheckboxes = 0;
@@ -415,12 +405,24 @@
         evt.currentTarget.className += " active";
     }
 
-    $("#myInput3").keyup(function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable3 tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
+    var idKM = null;
+    var inPut = null;
+
+    function timKiemSanPham(idkm) {
+        idKM = idkm;
+        console.log("click" + idKM)
+        inPut = document.getElementById("myInput3_" + idKM);
+        if (inPut){
+            inPut.addEventListener("keyup", function () {
+                console.log("search")
+                var value = this.value.toLowerCase();
+                $("#myTable3 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        }
+    }
 
 
     function filterTable() {
