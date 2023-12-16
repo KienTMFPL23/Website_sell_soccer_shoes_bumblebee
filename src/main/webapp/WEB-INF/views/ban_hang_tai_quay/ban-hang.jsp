@@ -257,7 +257,7 @@
                                         Quét QR
                                     </button>
                                 </c:if>
-
+                                <h5 style="color: red">${erorSP}</h5>
                                 <!-- Modal -->
                                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
                                      data-bs-keyboard="false" tabindex="-1"
@@ -471,6 +471,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="erorSP" value="${erorSP}" />
 <script>
     function submitFormKhachHang() {
         var formData = $("#sendKhachHang").serialize();

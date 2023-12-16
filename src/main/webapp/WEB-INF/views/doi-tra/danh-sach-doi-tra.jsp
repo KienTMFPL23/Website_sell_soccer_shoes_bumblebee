@@ -42,26 +42,29 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="input-group">
-                <form:form action="/bumblebee/doi-hang/search-tra-hang" modelAttribute="searchDT">
+    <h5 style="color: red">${error}</h5>
+
+    <form:form action="/bumblebee/doi-hang/search-tra-hang" modelAttribute="searchDT">
+        <div class="row">
+            <div class="col-lg-4">
                 <form:input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
-                       aria-label="Search" aria-describedby="basic-addon2" path="keyword" />
-<%--                <div class="input-group-append">--%>
-                    <span><button class="btn btn-primary" type="submit">
+                            aria-label="Search" aria-describedby="basic-addon2" path="keyword"/>
+            </div>
+            <div class="col-lg-4">
+                <div class="input-group-append">
+                <span><button class="btn btn-primary" type="submit">
                         <i class="fas fa-search fa-sm"></i>
-                    </button></span>
-<%--                </div>--%>
-                </form:form>
+                </button></span>
+                </div>
             </div>
         </div>
-    </div>
+    </form:form>
+
     <br>
     <div class="status">
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'list-san-pham-loi' ? 'active' : ''}" aria-current="page"
+                <a class="nav-link active" aria-current="page"
                    href="/bumblebee/doi-hang/list-tra-hang">Danh sách trả hàng
                     <span class="badge text-bg-secondary">${countHD}</span></a>
             </li>
@@ -108,16 +111,19 @@
     </div>
     <div>
         <nav aria-label="Page navigation example">
-                        <ul class="pagination" style="justify-content: center">
-                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=0">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link"
-                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number-1}"><<</a></li>
-                            <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number+1}">>></a></li>
-                            <li class="page-item"><a class="page-link"
-                                                     href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.totalPages - 1}">Next</a>
-                            </li>
-                        </ul>
+            <ul class="pagination" style="justify-content: center">
+                <li class="page-item"><a class="page-link" href="/bumblebee/doi-hang/list-tra-hang?p=0">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number-1}"><<</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.number+1}">>></a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="/bumblebee/doi-hang/list-tra-hang?p=${listDoiTra.totalPages - 1}">Next</a>
+                </li>
+            </ul>
 
         </nav>
     </div>

@@ -42,21 +42,22 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="input-group">
-                <form:form action="/bumblebee/doi-hang/search-san-pham-loi" modelAttribute="searchDT">
-                    <form:input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả"
-                                aria-label="Search" aria-describedby="basic-addon2" path="keyword" />
-<%--                    <div class="input-group-append">--%>
+    <h5 style="color: red">${error}</h5>
+
+    <form:form action="/bumblebee/doi-hang/search-san-pham-loi" modelAttribute="searchDT">
+        <div class="row">
+            <div class="col-lg-4">
+                <form:input type="text" class="form-control border-0 small" placeholder="Tìm kiếm hóa đơn đổi trả" aria-label="Search" aria-describedby="basic-addon2" path="keyword"/>
+            </div>
+            <div class="col-lg-4">
+                <div class="input-group-append">
                         <span><button class="btn btn-primary" type="submit">
                             <i class="fas fa-search fa-sm"></i>
                         </button></span>
-<%--                    </div>--%>
-                </form:form>
+                </div>
             </div>
         </div>
-    </div>
+    </form:form>
     <br>
     <div class="status">
         <ul class="nav justify-content-center bg-gradient-light nav-pills">
@@ -71,7 +72,7 @@
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  ${donHang == 'list-san-pham-loi' ? 'active' : ''}"
+                <a class="nav-link active"
                    href="/bumblebee/doi-hang/list-san-pham-loi">Danh sách sản phẩm lỗi<span
                         class="badge text-bg-secondary">${countHDCho}</span></a>
             </li>
