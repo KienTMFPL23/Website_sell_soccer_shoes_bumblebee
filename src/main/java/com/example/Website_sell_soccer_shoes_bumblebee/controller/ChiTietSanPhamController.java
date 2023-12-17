@@ -893,7 +893,6 @@ public class ChiTietSanPhamController {
     ) {
         HinhAnh hinhAnh = new HinhAnh();
         hinhAnh.setCtsp(ctsp);
-
         try {
             // Lấy đường dẫn tới thư mục lưu trữ tệp tin ảnh từ cấu hình
             String uploadPath = hinhAnhService.getImageUploadPath();
@@ -941,6 +940,8 @@ public class ChiTietSanPhamController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            model.addAttribute("view", "../hinh-anh/add_update.jsp");
+            return "/admin/index";
         }
         hinhAnhRepository.save(hinhAnh);
         return "redirect:/chi-tiet-san-pham/hien-thi";
