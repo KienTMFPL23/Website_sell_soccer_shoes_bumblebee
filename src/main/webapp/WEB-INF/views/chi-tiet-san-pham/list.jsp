@@ -21,12 +21,18 @@
 <div class="container">
     <div class="row">
         <h3 class="text-center">Danh sách chi tiết sản phẩm </h3>
+
         <br>
         <br>
     </div>
     <div class="row">
         <div class="col-6 col-md-6 col-sm-6">
-            <h3> <a class="btn btn-primary" href="/san-pham/hien-thi">Danh sách sản phẩm</a></h3>
+            <h3>
+                <a class="btn btn-primary" href="/san-pham/hien-thi">Danh sách sản phẩm</a>
+                <a href="/chi-tiet-san-pham/hien-thi" class=" btn btn-secondary">
+                    <i class="bi bi-arrow-clockwise"></i></i>
+                </a>
+            </h3>
         </div>
         <div class="col-6 col-md-6 col-sm-6">
             <input class="form-control" placeholder="Tìm kiếm...." id="myInput"/>

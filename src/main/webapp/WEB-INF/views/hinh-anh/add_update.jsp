@@ -24,7 +24,7 @@
                         <input type="hidden" class="form-control" name="id" value="${listHinhAnh.id}"/>
                     </div>
                 </div>
-
+                ${errorAnh}
                 <%--   Row 1     --%>
                 <div class="row" style="margin-bottom: 30px;">
                     <div class="col-lg-5">
