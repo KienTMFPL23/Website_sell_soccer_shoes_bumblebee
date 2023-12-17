@@ -64,7 +64,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label"></label>
-                                <input type="text" class="form-control" name="diaChiShip" id="diaChiShip" value="${listKH.diaChi}"
+                                <input type="text" class="form-control" name="diaChiShip" id="diaChiShip"
+                                       value="${listKH.diaChi}"
                                 />
                             </div>
                             <div class="mb-3" id="province">
@@ -215,52 +216,75 @@
                                         </div>
 
                                         <div style="padding: 10px 30px">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="width: 10px">
-                                            <label class="form-check-label" for="flexCheckDefault" style="padding-left: 30px;font-size: 14px">
-                                               Tôi đồng ý với chính sách của cửa hàng
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                   id="flexCheckDefault" style="width: 10px">
+                                            <label class="form-check-label" for="flexCheckDefault"
+                                                   style="padding-left: 30px;font-size: 14px">
+                                                Tôi đồng ý với chính sách của cửa hàng
                                             </label>
-                                            <a style="cursor: pointer; font-size: 14px;margin-left: 30px;text-decoration: underline" type="button" data-toggle="modal" data-target="#exampleModalLong">
-                                               chính sách
-                                              </a>
+                                            <a style="cursor: pointer; font-size: 14px;margin-left: 30px;text-decoration: underline"
+                                               type="button" data-toggle="modal" data-target="#exampleModalLong">
+                                                chính sách
+                                            </a>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                 <div class="modal-dialog " role="document" style="max-width: 1200px">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600;font-size: 20px">Chính sách cửa hàng</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle"
+                                                                style="font-weight: 600;font-size: 20px">Chính sách cửa
+                                                                hàng</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="container" style="margin-top: 70px">
-                                                                <h2 style="text-align: center;font-size: 30px">Chính sách đổi sản phẩm khi mua hàng</h2>
+                                                                <h2 style="text-align: center;font-size: 30px">Chính
+                                                                    sách đổi sản phẩm khi mua hàng</h2>
                                                                 <div>
-                                                                    <strong style="font-size: 20px">I.Nội dung chính sách :</strong>
+                                                                    <strong style="font-size: 20px">I.Nội dung chính
+                                                                        sách :</strong>
                                                                 </div>
                                                                 <div>
-                                                                    <strong style="font-size: 15px">1. Các quy định</strong>
+                                                                    <strong style="font-size: 15px">1. Các quy
+                                                                        định</strong>
                                                                 </div>
-                                                                <p>Khi khách hàng mua sản phẩm, cửa hàng chỉ áp dụng đổi sản phẩm tương tự hoặc cùng giá với sản phẩm muốn đổi
-                                                                    .Không áp dụng trả sản phẩm, hoàn tiền và đổi sản phẩm với giá thấp hoặc cao hơn với giá sản phẩm
+                                                                <p>Khi khách hàng mua sản phẩm, cửa hàng chỉ áp dụng đổi
+                                                                    sản phẩm tương tự hoặc cùng giá với sản phẩm muốn
+                                                                    đổi
+                                                                    .Không áp dụng trả sản phẩm, hoàn tiền và đổi sản
+                                                                    phẩm với giá thấp hoặc cao hơn với giá sản phẩm
                                                                     mua ban đầu</p>
                                                                 <div>
-                                                                    <strong style="font-size: 15px">2. Thời gian đổi hàng</strong>
+                                                                    <strong style="font-size: 15px">2. Thời gian đổi
+                                                                        hàng</strong>
                                                                 </div>
-                                                                <p> Thời gian áp dụng đổi hàng khi khách mua tại cửa hàng là 7 ngày</p>
-                                                                <p> Đối với khách hàng mua online trên website thì thời gian đổi hàng là 7 ngày kể từ khi nhận được hàng </p>
-                                                                <strong style="font-size: 20px">II. Điều kiện áp dụng</strong>
+                                                                <p> Thời gian áp dụng đổi hàng khi khách mua tại cửa
+                                                                    hàng là 7 ngày</p>
+                                                                <p> Đối với khách hàng mua online trên website thì thời
+                                                                    gian đổi hàng là 7 ngày kể từ khi nhận được
+                                                                    hàng </p>
+                                                                <strong style="font-size: 20px">II. Điều kiện áp
+                                                                    dụng</strong>
                                                                 <p>* Cửa hàng gửi sai hàng khách đặt</p>
                                                                 <p>* Hàng gửi không đủ số lượng</p>
                                                                 <p>* Hàng có dấu hiệu cũ, đã qua sử dụng</p>
-                                                                <p>* Khi đổi hàng cần còn nguyên tem, không được làm hỏng hoặc bẩn sản phẩm khi đổi</p>
+                                                                <p>* Khi đổi hàng cần còn nguyên tem, không được làm
+                                                                    hỏng hoặc bẩn sản phẩm khi đổi</p>
                                                                 <div>
-                                                                    <strong style="font-size: 15px">III. Hướng dẫn đổi hàng</strong>
+                                                                    <strong style="font-size: 15px">III. Hướng dẫn đổi
+                                                                        hàng</strong>
                                                                     <p>Bước 1: Kiểm tra điều kiện đổi hàng</p>
-                                                                    <p>Khách hàng vui lòng tham khảo quy định và thời gian đổi hàng của chúng tôi ở trong mục I, II. Nhằm đảm bảo sản phẩm
+                                                                    <p>Khách hàng vui lòng tham khảo quy định và thời
+                                                                        gian đổi hàng của chúng tôi ở trong mục I, II.
+                                                                        Nhằm đảm bảo sản phẩm
                                                                         thỏa mãn điều kiện được đổi</p>
                                                                     <p>Bước 2: Đăng ký đổi sản phẩm</p>
-                                                                    <p>Khách hàng cần nhập đầy đủ thông tin nhận hàng:</p>
+                                                                    <p>Khách hàng cần nhập đầy đủ thông tin nhận
+                                                                        hàng:</p>
                                                                     <p> + Họ tên người đặt hàng</p>
                                                                     <p> + Số điện thoại người đặt hàng</p>
                                                                     <p> + Họ tên người đặt hàng</p>
@@ -311,6 +335,24 @@
             </div>
         </div>
     </div>
+
+    <div id="messeage_diaChiShip" style="display:none;">
+        <div class="toast toast__warring">
+            <div class="toast__icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #ffc021;"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Thất bại</h3>
+                <p class="toast__msg">Shop chỉ giao hàng trên địa phận thành phố Hà Nội</p>
+            </div>
+            <div class="toast__close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                     viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
 </main>
 
 </select>
@@ -322,11 +364,7 @@
         referrerpolicy="no-referrer"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-
-    // Gọi hàm khi checkbox thay đổi trạng thái
-    document.getElementById('flexCheckDefault').addEventListener('change', updateBtnDatHang);
     var citis = document.getElementById("city");
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
@@ -411,15 +449,15 @@
     var xa = document.getElementById("ward");
     var province = document.getElementById("province");
 
-    function checkTrongThongTinNhanHang(){
+    function checkTrongThongTinNhanHang() {
         var checkbox = document.getElementById("flexCheckDefault");
         if (!checkbox.checked) {
             alert("Vui lòng đồng ý với chính sách của cửa hàng trước khi đặt hàng.");
             return false; // Ngăn chặn hành động tiếp theo nếu checkbox không được chọn
         }
         // Nếu checkbox được chọn, cho phép hành động tiếp theo
-        return true;
-        if (ten.value === "" || sdt.value === ""){
+
+        if (ten.value === "" || sdt.value === "" || diaChiShip.value === "") {
             var toastElement = document.getElementById("toast_warring_login");
             toastElement.style.display = "block";
             setTimeout(function () {
@@ -428,7 +466,18 @@
             return false;
         }
 
-        if(thanhPho.value !== "" && (xa.value === "" || huyen.value === "")){
+        if (thanhPho.value === "") {
+            return true;
+        } else if (thanhPho.value !== "Thành phố Hà Nội") {
+            var toastElement = document.getElementById("messeage_diaChiShip");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 10000);
+            return false;
+        }
+
+        if (thanhPho.value !== "" && (xa.value === "" || huyen.value === "")) {
             var toastElement = document.getElementById("toast_warring_login");
             toastElement.style.display = "block";
             setTimeout(function () {

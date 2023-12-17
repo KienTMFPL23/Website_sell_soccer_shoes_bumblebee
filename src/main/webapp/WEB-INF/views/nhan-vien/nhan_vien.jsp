@@ -102,15 +102,7 @@
     </ul>
 
     <h1 style="text-align: center; font-family: Nunito; padding-top: 20px;">Quản Lý Thông Tin Nhân Viên</h1>
-
-    <div class="row">
-        <div class="col-lg-6">
-            <a href="/nhan-vien/view-add" class="btnAdd">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="30px" height="30px"/>
-                <p>Thêm mới</p>
-            </a>
-        </div>
-    </div>
+    
 
     <div class="container">
         <table id="tableKhachHang" class="ui celled table" width="100%" cellspacing="0">
