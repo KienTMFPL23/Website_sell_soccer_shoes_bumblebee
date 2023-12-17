@@ -102,6 +102,8 @@
                                    name="soLuong"
                                    value="${dtct.soLuong}"
                                    onblur="this.form.submit()"
+                                   id="soLuongCTSP_${dtct.id}"
+                                   oninput="chonSoLuong('${dtct.id}',event)"
                                    style="width:100px;">
                         </form>
                     </td>
@@ -127,6 +129,6 @@
         <div>
             <strong><p style="color: red; text-align: right;font-size: 15px"  id="errorLyDo"></p></strong>
         </div>
-        <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Đổi hàng</a>
+        <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Xác nhận</a>
         <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
 </div>

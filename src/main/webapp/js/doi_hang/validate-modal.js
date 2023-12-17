@@ -11,7 +11,7 @@ checkedAllCheckbox.addEventListener('click', function () {
         checkbox.checked = checkedAllCheckbox.checked;
     });
 });
-function taoDoiTra(idHD) {
+function taoDoiTra() {
     var isChecked = false;
     var isValidQuantity = true;
     var isValidLyDo = true;
@@ -34,12 +34,12 @@ function taoDoiTra(idHD) {
             }
         }
     }
-    if (!isValidLyDo){
-        alert('Vui lòng chọn lý do đổi trả.');
-        return false;
-    }
     if (!isChecked || !isValidQuantity) {
         alert('Vui lòng chọn ít nhất một sản phẩm và nhập số lượng hợp lệ.');
+        return false;
+    }
+    if (!isValidLyDo){
+        alert('Vui lòng chọn lý do đổi trả.');
         return false;
     }
     return false;
@@ -89,5 +89,12 @@ function confirmDoiHang() {
         return  true;
     }else {
         return  false;
+    }
+}
+function chonSoLuong(itemId) {
+    const newValue = event.target.value;
+    if (newValue == ""){
+        document.getElementById("soLuongCTSP_" + itemId).value = 1;
+        alert("Số lượng sản phẩm không được để trống");
     }
 }

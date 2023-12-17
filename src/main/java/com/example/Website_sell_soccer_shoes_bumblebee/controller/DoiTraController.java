@@ -175,12 +175,12 @@ public class DoiTraController {
                 }
             }
             model.addAttribute("notFound", "Khong tim thay");
-            model.addAttribute("error", "Không tìm thấy hoá đơn! Vui lòng quét lại!");
+            model.addAttribute("error", "Hóa đơn không đủ điều kiện đổi trả!");
             return "forward:/bumblebee/doi-hang/list-tra-hang";
         } else {
-            model.addAttribute("error", "Khong tim thay");
+            model.addAttribute("error", "Hóa đơn không đủ điều kiện đổi trả!");
 
-            model.addAttribute("notFound", "Không tìm thấy hoá đơn! Vui lòng quét lại!");
+            model.addAttribute("notFound", "Hóa đơn không đủ điều kiện đổi trả!");
             return "forward:/bumblebee/doi-hang/list-tra-hang";
         }
     }

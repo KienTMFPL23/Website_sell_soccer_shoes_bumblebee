@@ -313,8 +313,10 @@
                                             <input type="number" class="form-control"
                                                    min="1"
                                                    name="soLuong"
+                                                   id="soLuongCTSP_${hdct.id}"
                                                    value="${hdct.soLuong}"
                                                    onblur="this.form.submit()"
+                                                   oninput="chonSoLuong('${hdct.id}',event)"
                                                    style="width:100px;">
                                         </td>
                                         <td>
@@ -848,7 +850,15 @@
 
     }
 </script>
-
+<script>
+    function chonSoLuong(itemId) {
+        const newValue = event.target.value;
+        if (newValue == ""){
+            document.getElementById("soLuongCTSP_" + itemId).value = 1;
+            alert("Số lượng sản phẩm không được để trống");
+        }
+    }
+</script>
 
 <script>
     function changeColor(id) {
