@@ -73,7 +73,7 @@
                             <c:forEach var="hd" items="${listHDCT}">
                                 <tr>
                                     <td><input class="checkCart" type="checkbox"
-                                               id="checkBoxSP_${hd.id}"
+                                               id="checkBoxSP"
                                                name="idListCartDetail"
                                                value="${hd.chiTietSanPham.id}"></td>
                                     <td>${hd.chiTietSanPham.sanPham.tenSanPham}</td>
@@ -85,7 +85,7 @@
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
-                                                   style="width:50px;" onclick="chonSoLuong('${hd.id}')"> /${hd.soLuong}
+                                                   style="width:50px;"> /${hd.soLuong}
                                             <strong><p style="color: red" id="erorSluong"></p></strong>
                                         </div>
                                     </td>
@@ -112,7 +112,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" onclick="return taoDoiTra('${hd.id}')" id="xacNhanTra"
+                        <button type="submit" onclick="return taoDoiTra()" id="xacNhanTra"
                                 class="btn btn-primary">Xác
                             nhận
                         </button>

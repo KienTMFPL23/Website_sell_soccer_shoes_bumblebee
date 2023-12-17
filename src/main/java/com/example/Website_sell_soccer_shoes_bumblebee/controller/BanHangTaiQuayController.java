@@ -232,7 +232,7 @@ public class BanHangTaiQuayController {
         this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
         if (sp == null) {
-            model.addAttribute("erorSP", "Lỗi! Vui lòng quét lại !");
+            model.addAttribute("erorSP", "Không tồn tại sản phẩm!");
             System.out.println("Không có sản phẩm nào!!!");
             return "forward:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
         }
@@ -275,7 +275,7 @@ public class BanHangTaiQuayController {
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
 
         } catch (IllegalArgumentException e) {
-            model.addAttribute("erorSP", "Lỗi! Vui lòng quét lại !");
+            model.addAttribute("erorSP", "Không tồn tại sản phẩm");
             return "forward:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
         }
 //        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDonCT;
@@ -427,7 +427,7 @@ public class BanHangTaiQuayController {
             document.add(tenKhach);
         } else {
             Paragraph tenKhach = new Paragraph("Khách hàng    :    "
-                    + hoaDonThanhToan.getKhachHang().getHo() + hoaDonThanhToan.getKhachHang().getTenDem() + hoaDonThanhToan.getKhachHang().getTen(), titleFont);
+                    + hoaDonThanhToan.getTenNguoiNhan(), titleFont);
 
 
         document.add(tenKhach);

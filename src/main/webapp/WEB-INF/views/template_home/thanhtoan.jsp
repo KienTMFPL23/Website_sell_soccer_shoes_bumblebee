@@ -234,16 +234,20 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="container" style="margin-top: 70px">
-                                                                <h2 style="text-align: center;font-size: 30px">Chính sách đổi sản phẩm khi mua hàng</h2>
+                                                                <h2 style="text-align: center;font-size: 30px">Chính sách đổi - trả sản phẩm khi mua hàng</h2>
                                                                 <div>
                                                                     <strong style="font-size: 20px">I.Nội dung chính sách :</strong>
                                                                 </div>
                                                                 <div>
                                                                     <strong style="font-size: 15px">1. Các quy định</strong>
                                                                 </div>
-                                                                <p>Khi khách hàng mua sản phẩm, cửa hàng chỉ áp dụng đổi sản phẩm tương tự hoặc cùng giá với sản phẩm muốn đổi
-                                                                    .Không áp dụng trả sản phẩm, hoàn tiền và đổi sản phẩm với giá thấp hoặc cao hơn với giá sản phẩm
-                                                                    mua ban đầu</p>
+                                                                <p>Khi khách hàng mua sản phẩm, cửa hàng sẽ áp dụng đổi hoặc trả hàng với điều kiện mà cửa hàng quy định:</p>
+                                                                <p> + Đối với trả hàng: khách hàng chỉ được trả nếu như sản phẩm nhận được bị lỗi, sai kích cỡ,.. thì phía bên cửa hàng
+                                                                    sẽ chấp nhận trả hàng và hoàn tiền cho khách. Nếu sản phẩm không phải lỗi phía bên cửa hàng thì khách hàng sẽ không được trả hàng</p>
+                                                                <p> + Đối với đổi hàng: cửa hàng chỉ áp dụng đổi sản phẩm cũng giá với sản phẩm khách hàng đã mua, không áp dụng đổi sản phẩm hơn giá hoặc giá thấp hơn.
+                                                                    Đối với những sản phẩm khuyến mại, khi đổi khách hàng chỉ được đổi đúng sản phẩm mà khách hàng mua, cửa hàng sẽ vẫn lấy giá khuyến mại cho khách </p>
+                                                                <p> Cửa hàng chỉ áp dụng đổi hoặc trả 1 lần duy nhất trên mỗi hóa đơn của khách hàng đã mua</p>
+                                                                <p> Cửa hàng chỉ áp dụng giao hàng quanh khu vực Hà Nội.</p>
                                                                 <div>
                                                                     <strong style="font-size: 15px">2. Thời gian đổi hàng</strong>
                                                                 </div>
@@ -256,16 +260,10 @@
                                                                 <p>* Khi đổi hàng cần còn nguyên tem, không được làm hỏng hoặc bẩn sản phẩm khi đổi</p>
                                                                 <div>
                                                                     <strong style="font-size: 15px">III. Hướng dẫn đổi hàng</strong>
-                                                                    <p>Bước 1: Kiểm tra điều kiện đổi hàng</p>
                                                                     <p>Khách hàng vui lòng tham khảo quy định và thời gian đổi hàng của chúng tôi ở trong mục I, II. Nhằm đảm bảo sản phẩm
                                                                         thỏa mãn điều kiện được đổi</p>
-                                                                    <p>Bước 2: Đăng ký đổi sản phẩm</p>
-                                                                    <p>Khách hàng cần nhập đầy đủ thông tin nhận hàng:</p>
-                                                                    <p> + Họ tên người đặt hàng</p>
-                                                                    <p> + Số điện thoại người đặt hàng</p>
-                                                                    <p> + Họ tên người đặt hàng</p>
-                                                                    <p> + Họ tên người đặt hàng</p>
-                                                                    <p> + Họ tên người đặt hàng</p>
+                                                                    <p>Khi muốn đổi hoặc trả sản phẩm, khách hàng cần mang hóa đơn đã mua đến trực tiếp tại cửa hàng để đổi,trả sản phẩm.
+                                                                        Cửa hàng không áp dụng việc đổi trả online. Mong quý khách hàng thông cảm</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -322,11 +320,64 @@
         referrerpolicy="no-referrer"
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
+<%--<script>--%>
 
-    // Gọi hàm khi checkbox thay đổi trạng thái
-    document.getElementById('flexCheckDefault').addEventListener('change', updateBtnDatHang);
+<%--    // Gọi hàm khi checkbox thay đổi trạng thái--%>
+<%--    document.getElementById('flexCheckDefault').addEventListener('change', updateBtnDatHang);--%>
+<%--    var citis = document.getElementById("city");--%>
+<%--    var districts = document.getElementById("district");--%>
+<%--    var wards = document.getElementById("ward");--%>
+<%--    var Parameter = {--%>
+<%--        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",--%>
+<%--        method: "GET",--%>
+<%--        responseType: "application/json",--%>
+<%--    };--%>
+<%--    var promise = axios(Parameter);--%>
+<%--    promise.then(function (result) {--%>
+<%--        renderCity(result.data);--%>
+<%--    });--%>
+
+<%--    function renderCity(data) {--%>
+<%--        for (const x of data) {--%>
+<%--            var opt = document.createElement('option');--%>
+<%--            opt.value = x.Name;--%>
+<%--            opt.text = x.Name;--%>
+<%--            opt.setAttribute('data-id', x.Id);--%>
+<%--            citis.options.add(opt);--%>
+<%--        }--%>
+<%--        citis.onchange = function () {--%>
+<%--            district.length = 1;--%>
+<%--            ward.length = 1;--%>
+<%--            if (this.options[this.selectedIndex].dataset.id != "") {--%>
+<%--                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);--%>
+
+<%--                for (const k of result[0].Districts) {--%>
+<%--                    var opt = document.createElement('option');--%>
+<%--                    opt.value = k.Name;--%>
+<%--                    opt.text = k.Name;--%>
+<%--                    opt.setAttribute('data-id', k.Id);--%>
+<%--                    district.options.add(opt);--%>
+<%--                }--%>
+<%--            }--%>
+<%--        };--%>
+<%--        district.onchange = function () {--%>
+<%--            ward.length = 1;--%>
+<%--            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);--%>
+<%--            if (this.options[this.selectedIndex].dataset.id != "") {--%>
+<%--                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;--%>
+
+<%--                for (const w of dataWards) {--%>
+<%--                    var opt = document.createElement('option');--%>
+<%--                    opt.value = w.Name;--%>
+<%--                    opt.text = w.Name;--%>
+<%--                    opt.setAttribute('data-id', w.Id);--%>
+<%--                    wards.options.add(opt);--%>
+<%--                }--%>
+<%--            }--%>
+<%--        };--%>
+<%--    }--%>
+<%--</script>--%>
+<script>
     var citis = document.getElementById("city");
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
@@ -351,7 +402,7 @@
         citis.onchange = function () {
             district.length = 1;
             ward.length = 1;
-            if (this.options[this.selectedIndex].dataset.id != "") {
+            if(this.options[this.selectedIndex].dataset.id != ""){
                 const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
                 for (const k of result[0].Districts) {
@@ -380,7 +431,6 @@
         };
     }
 </script>
-
 
 <script>
     function conFirm() {

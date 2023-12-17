@@ -241,6 +241,11 @@
             alert("Số lượng sản phẩm phải lớn hơn 0");
             capNhatTongTien()
         }
+        if (newValue == ""){
+            document.getElementById("soLuongCTSP_" + itemId).value = 1;
+            alert("Số lượng sản phẩm không được để trống");
+            capNhatTongTien()
+        }
     }
 
     function xoaGioHang(idGHCT) {
