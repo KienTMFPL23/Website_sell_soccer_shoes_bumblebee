@@ -964,3 +964,10 @@ ul {
     width: 136.25px;
     height: 136.25px;
 }
+
+#messeage_diaChiShip{
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 10000;
+}

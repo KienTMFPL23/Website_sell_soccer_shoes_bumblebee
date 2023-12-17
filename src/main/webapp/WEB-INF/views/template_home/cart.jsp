@@ -126,7 +126,7 @@
                                                                         type="number"/> đ</label>
                                                                 <c:set var="allTrangThai1" value="true"/>
                                                             </c:if>
-                                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                            <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
                                                                 <label id="thanhTien_${item.id}"
                                                                        class="thanhTien"><fmt:formatNumber
                                                                         value="${(item.ctsp.giaBan - km.khuyenMai.giaTri)*item.soLuong}"
