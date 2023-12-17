@@ -97,6 +97,14 @@
                 </form:select>
 
             </form:form>
+
+        </div>
+        <div class="col-2 col-md-2 col-sm-2">
+
+            <br>
+            <a href="/chi-tiet-san-pham/list-san-pham/${idsp}" class=" btn btn-secondary">
+                <i class="bi bi-arrow-clockwise"></i>
+            </a>
         </div>
     </div>
     </br>
