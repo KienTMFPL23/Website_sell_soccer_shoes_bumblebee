@@ -158,7 +158,7 @@
                 <div class="col-lg-2">
                     <form:select path="donVi">
                         <option value="">-- Lọc đơn vị --</option>
-                        <form:option value="VNĐ">VNĐ</form:option>
+                        <form:option value="VNÐ">VNĐ</form:option>
                         <form:option value="%">%</form:option>
                     </form:select>
                 </div>

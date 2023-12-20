@@ -38,8 +38,8 @@ public class MauSacController {
     @ModelAttribute("dsTrangThai")
     public Map<Integer, String> getDsTrangThai() {
         Map<Integer, String> dsTrangThai = new HashMap<>();
-        dsTrangThai.put(0, "K còn hoạt động");
-        dsTrangThai.put(1, "Hoạt động");
+        dsTrangThai.put(0, " hoạt động");
+        dsTrangThai.put(1, " không Hoạt động");
         return dsTrangThai;
     }
 
@@ -92,7 +92,7 @@ public class MauSacController {
         Boolean hasError = result.hasErrors();
         if (hasError) {
             // Báo lỗi
-            model.addAttribute("view", "../chat_lieu/add_update.jsp");
+            model.addAttribute("view", "../mau_sac/update.jsp");
 
         }
 

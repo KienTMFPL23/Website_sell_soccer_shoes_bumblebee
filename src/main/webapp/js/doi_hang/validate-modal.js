@@ -42,7 +42,6 @@ function taoDoiTra() {
         alert('Vui lòng chọn lý do đổi trả.');
         return false;
     }
-    return false;
     var numberOfCheckedCheckboxes = 0;
     checkboxes.forEach(function (checkbox) {
         if (checkbox.checked) {

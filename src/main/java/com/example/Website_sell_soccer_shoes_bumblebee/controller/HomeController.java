@@ -193,7 +193,7 @@ public class HomeController {
                                @ModelAttribute("searchFormByGiaban") SearchFormByGiaBan searchFormByGiaBan,
                                HttpSession session) {
         int page = p;
-        int pageSize = 12;
+        int pageSize = 15;
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ChiTietSanPham> listSP = chiTietSanPhamRepo.get1CTSPByMauSac(pageable);
         List<LoaiGiay> listLG = loaiGiayService.findAll();
@@ -564,7 +564,7 @@ public class HomeController {
         model.addAttribute("paymentTime", date);
         model.addAttribute("transactionId", transactionId);
 
-        return paymentStatus == 1 ? "/VnPay/success" : "redirect:/bumblebee/thanh-toan";
+        return paymentStatus == 1 ? "/VnPay/success" : "redirect:/bumblebee/cart";
     }
 
 

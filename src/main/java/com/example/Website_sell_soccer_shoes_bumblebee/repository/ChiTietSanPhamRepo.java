@@ -220,6 +220,22 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
     );
 
+    @Query("SELECT cts FROM ChiTietSanPham cts " +
+            "WHERE cts.sanPham = :sanPham " +
+            "AND (:mauSac IS NULL OR cts.mauSac = :mauSac) " +
+            "AND (:kichCo IS NULL OR cts.kichCo = :kichCo) " +
+            "AND (:chatLieu IS NULL OR cts.chatLieu = :chatLieu) " +
+            "AND (:deGiay IS NULL OR cts.deGiay = :deGiay) " +
+            "AND (:loaiGiay IS NULL OR cts.loaiGiay = :loaiGiay)")
+    List<ChiTietSanPham> findBySanPhamAndMauSacAndKichCoAndChatLieuAndDeGiayAndLoaiGiay(
+            @Param("sanPham") SanPham sanPham,
+            @Param("mauSac") MauSac mauSac,
+            @Param("kichCo") KichCo kichCo,
+            @Param("chatLieu") ChatLieu chatLieu,
+            @Param("deGiay") DeGiay deGiay,
+            @Param("loaiGiay") LoaiGiay loaiGiay);
+
+
 
 
 
