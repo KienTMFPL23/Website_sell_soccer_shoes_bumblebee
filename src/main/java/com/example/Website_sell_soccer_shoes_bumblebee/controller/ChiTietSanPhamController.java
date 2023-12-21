@@ -1017,7 +1017,6 @@ public class ChiTietSanPhamController {
     @PostMapping("/chi-tiet-san-pham/upload")
     public String uploadExcelFile(@RequestParam("file") MultipartFile file, Model model) {
         try {
-            // Kiểm tra loại tệp Excel
             if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
                 model.addAttribute("error", "Vui lòng chọn một tệp Excel (.xls hoặc .xlsx).");
                 return "redirect:/chi-tiet-san-pham/hien-thi";
@@ -1028,10 +1027,11 @@ public class ChiTietSanPhamController {
             model.addAttribute("success", "Dữ liệu đã được chèn thành công.");
             return "redirect:/chi-tiet-san-pham/hien-thi";
         } catch (IOException e) {
-            e.printStackTrace();
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
+            // Ghi log hoặc xử lý ngoại lệ tại đây
             return "forward:/chi-tiet-san-pham/hien-thi";
         }
     }
+
 
 }

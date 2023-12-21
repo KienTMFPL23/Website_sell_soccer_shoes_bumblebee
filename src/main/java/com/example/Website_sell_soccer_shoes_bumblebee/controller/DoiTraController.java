@@ -664,6 +664,163 @@ public class DoiTraController {
         }
     }
 
+    @RequestMapping("/bumblebee/doi-hang-doi-tra/print/{id}")
+    public void printDoiHang(HttpServletResponse response, @PathVariable("id") UUID id, Model model) throws ParseException {
+
+        HoaDon hoaDonDoiTra = hoaDonService.getOne(id);
+        model.addAttribute("searchDT", new SearchDoiTra());
+
+        List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
+        List<DoiTraChiTiet> lstSanPhamDoi = doiTraChiTietService.listSanPhamDoi(id);
+        try {
+            Document document = new Document();
+            document.setPageSize(PageSize.A4);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PdfWriter writer = PdfWriter.getInstance(document, baos);
+            PdfWriter.getInstance(document, baos);
+            ////
+            document.open();
+            String qrCodeData = hoaDonDoiTra.getMaHoaDon();
+            BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
+            com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
+//
+            qrCodeImage.setAbsolutePosition(400, 80);
+            document.add(qrCodeImage);
+            Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
+            ////////////// hoá đơn
+            Paragraph HoaDon = new Paragraph(" BUMBLEBEE SHOES" + "\n", largeFont);
+
+            HoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(HoaDon);
+//
+            Paragraph maHoaDon = new Paragraph(hoaDonDoiTra.getMaHoaDon());
+            maHoaDon.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(maHoaDon);
+            Font titleFont = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph tieuDeThongTin = new Paragraph("HOÁ ĐƠN BÁN HÀNG  ", titleFont);
+            document.add(tieuDeThongTin);
+
+//            Thông tin hoá dơn
+            Font titleFont1 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 15, Font.NORMAL, BaseColor.BLACK);
+            Paragraph nhanVien = new Paragraph("Nhân Viên bán hàng : " + hoaDonDoiTra.getNhanVien().getHo() + " " + hoaDonDoiTra.getNhanVien().getTenDem() + " " + hoaDonDoiTra.getNhanVien().getTen(), titleFont1);
+            document.add(nhanVien);
+
+            if (hoaDonDoiTra.getKhachHang() != null && hoaDonDoiTra.getKhachHang().getTen() != null) {
+                Paragraph khachHang = new Paragraph("Khách hàng : " + hoaDonDoiTra.getKhachHang().getTen(), titleFont1);
+                document.add(khachHang);
+            } else {
+                Paragraph khachHang = new Paragraph("Khách hàng : khách vãn lai", titleFont1);
+                document.add(khachHang);
+            }
+
+
+            Paragraph sdt = new Paragraph("Số điện thoại : " + hoaDonDoiTra.getSdt(), titleFont1);
+            document.add(sdt);
+            Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph danhSachMua = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH MUA", titleFont2);
+            danhSachMua.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(danhSachMua);
+            Paragraph KhoangTrang = new Paragraph("                                                         ");
+            document.add(KhoangTrang);
+            PdfPTable productTable = new PdfPTable(6);
+            productTable.setWidthPercentage(100);
+            float[] columnWidths = {3f, 3f, 2f, 2f, 2f, 2f};
+            productTable.setWidths(columnWidths);
+
+            productTable.addCell(createTableCell("Tên sản phẩm", titleFont1));
+            productTable.addCell(createTableCell("Màu sắc", titleFont1));
+            productTable.addCell(createTableCell("Kích cỡ", titleFont1));
+            productTable.addCell(createTableCell("Số lượng", titleFont1));
+            productTable.addCell(createTableCell("Giá tiền", titleFont1));
+            productTable.addCell(createTableCell("Thành tiền", titleFont1));
+            double tongTien = 0.0;
+            List<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
+            for (HoaDonChiTiet hoaDonChiTiet : listHoaDonChiTiet) {
+                productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont1));
+                productTable.addCell(createTableCell(hoaDonChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont1));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont1));
+                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont1));
+                double giaTriSanPham = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong();
+                tongTien += giaTriSanPham;
+            }
+            document.add(productTable);
+
+//
+            Paragraph KhoangTrang1 = new Paragraph("                                                         ");
+            document.add(KhoangTrang1);
+
+//            Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
+            Paragraph danhSachTra = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH ĐỔI", titleFont2);
+            danhSachTra.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(danhSachTra);
+            Paragraph KhoangTrang2 = new Paragraph("                                                         ");
+            document.add(KhoangTrang2);
+            PdfPTable productTable1 = new PdfPTable(8);
+            productTable1.setWidthPercentage(100);
+            float[] columnWidths2 = {4f, 2f, 2f, 2f, 2f, 2f, 4f, 2f}; // Adjusted for 8 columns
+            productTable1.setWidths(columnWidths2);
+            productTable1.addCell(createTableCell("Tên sản phẩm", titleFont1));
+            productTable1.addCell(createTableCell("Màu sắc", titleFont1));
+            productTable1.addCell(createTableCell("Kích cỡ", titleFont1));
+            productTable1.addCell(createTableCell("Số lượng", titleFont1));
+            productTable1.addCell(createTableCell(" Đơn giá ", titleFont1));
+            productTable1.addCell(createTableCell("Thành tiền", titleFont1));
+            productTable1.addCell(createTableCell("Nhân viên thực hiện", titleFont1));
+            productTable1.addCell(createTableCell("Lí do", titleFont1));
+            double tongTienTra = 0.0;
+
+            for (DoiTraChiTiet doiTraChiTiet : lstSanPhamDoi) {
+
+                productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getSanPham().getTenSanPham(), titleFont1));
+                productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
+                productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
+                productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getSoLuong()), titleFont1));
+                if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() ==null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == 0 ){
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()), titleFont1));
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()* doiTraChiTiet.getSoLuong()), titleFont1));
+                    double giaTriSanPham = doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+                    tongTienTra += giaTriSanPham;
+                }else if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != null  || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0){
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam()), titleFont1));
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong()), titleFont1));
+                    double giaTriSanPham = doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong();
+                    tongTienTra += giaTriSanPham;
+                }
+
+                productTable1.addCell(createTableCell(doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getHo() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTenDem() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTen(), titleFont1));
+                productTable1.addCell(createTableCell(doiTraChiTiet.getLyDoDoiTra(), titleFont1));
+
+            }
+
+            document.add(productTable1);
+//            Paragraph TongCong = new Paragraph("Số tiền hoàn       :    " + tongTienTra + "VNĐ", titleFont2);
+//            document.add(TongCong);
+//
+
+            document.close();
+//
+//
+
+            byte[] pdfBytes = baos.toByteArray();
+            response.setContentType("application/pdf");
+            response.setContentLength(pdfBytes.length);
+
+            // Thay đổi giá trị "inline" thành "attachment"
+            // Thay đổi giá trị "inline" thành "attachment"
+            response.setHeader("Content-Disposition", "attachment; filename=" + hoaDonDoiTra.getMaHoaDon() + ".pdf");
+
+
+            response.getOutputStream().write(pdfBytes);
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+//
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private PdfPCell createTableCell(String text, Font font) {
         PdfPCell cell = new PdfPCell(new Phrase(text, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);

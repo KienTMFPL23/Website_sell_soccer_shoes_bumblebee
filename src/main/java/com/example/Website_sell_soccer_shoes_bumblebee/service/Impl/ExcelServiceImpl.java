@@ -1,21 +1,23 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.Iterator;
+
 
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
-import org.apache.commons.lang3.StringUtils;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+import java.util.*;
 
 @Service
 public class ExcelServiceImpl {
-
     @Autowired
     SanPhamRepository spr;
     @Autowired
@@ -32,90 +34,192 @@ public class ExcelServiceImpl {
     ChiTietSanPhamRepo ctspr;
 
     public void saveDataFromExcel(MultipartFile file) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
-            Iterator<Row> rows = sheet.iterator();
-            rows.next(); // Bỏ qua dòng tiêu đề
+        Workbook workbook = new XSSFWorkbook(file.getInputStream());
+        Sheet sheet = workbook.getSheetAt(0);
+        Iterator<Row> rows = sheet.iterator();
+        rows.next();
+        while (rows.hasNext()) {
+            Row row = rows.next();
+            ChiTietSanPham ctsp = new ChiTietSanPham();
 
-            int expectedColumnCount = 11; // Thay đổi theo số lượng cột trong file Excel của bạn
-
-            while (rows.hasNext()) {
-                Row row = rows.next();
-
-                // Kiểm tra xem số lượng cột có đúng không
-                if (row.getLastCellNum() != expectedColumnCount) {
-                    throw new IOException("Lỗi: File Excel này còn thiếu 1 số trường nhớ bổ xung");
-                }
-
-                ChiTietSanPham ctsp = createChiTietSanPhamFromRow(row);
-                saveOrUpdateData(ctsp);
+            Row headerRow = sheet.getRow(0);
+            int expectedColumnCount = 11; // Số lượng cột mong đợi
+            if (headerRow.getPhysicalNumberOfCells() != expectedColumnCount) {
+                throw new IOException("Cấu trúc dữ liệu trong tệp Excel không đúng. Yêu cầu " + expectedColumnCount + " cột.");
             }
+            String spName = row.getCell(0).getStringCellValue();
+            if (spName.trim().isEmpty()) {
+                throw new IOException("Dữ liệu tên sản phẩm  nhập vào không hợp lệ");
+            }
+            SanPham sp = spr.findByTenSp(spName);
+            if (sp == null) {
+            sp = new SanPham();
+            String MaSp = "MSP"+generateRandomCodeSp();
+            sp.setMaSanPham(MaSp);
+            sp.setTenSanPham(spName);
+            sp.setTrangThai(1);
+            spr.save(sp);
+
+//                return;
+
+            }
+//            else if(sp !=null) {
+//                throw new IOException("chưa dc nhập đủ trường dữ liệu   ");
+//            }
+//            Tìm tên màu sắc dựa trên tên
+            String msName = row.getCell(1).getStringCellValue();
+            if (msName.trim().isEmpty()) {
+                throw new IOException("Dữ liệu màu sắc nhập vào không hợp lệ");
+            }
+            MauSac ms = msr.findByTen(msName);
+            if (ms == null) {
+                ms = new MauSac();
+                String MaMs = "MSP"+generateRandomCodeMs();
+                ms.setMa(MaMs);
+                ms.setTen(msName);
+                ms.setTt(1);
+                msr.save(ms);
+//                return;
+            }
+//            else if(ms != null){
+//                throw new IOException("màu sắc  chưa dc nhập  ");
+//            }
+//            Tìm tên thể loại dựa trên tên
+            String tlName = row.getCell(2).getStringCellValue();
+            if (tlName.trim().isEmpty()) {
+                throw new IOException("Dữ liệu thể loại nhập vào không hợp lệ");
+            }
+            LoaiGiay lg = lgr.findbyten(tlName);
+            if (lg == null) {
+                lg = new LoaiGiay();
+                String MaLg = "MLG"+generateRandomCodeLg();
+                lg.setMa(MaLg);
+                lg.setTentheloai(tlName);
+                lg.setTrangthai(1);
+                lgr.save(lg);
+//                return;
+            }
+//            else if(lg != null){
+//                throw  new IOException("Loài giày để trống ");
+//            }
+//            Tìm tên kích cỡ dựa trên tên
+            int kcName = (int) row.getCell(3).getNumericCellValue();
+            if (kcName < 0) {
+                throw new IOException("Dữ liệu kichs cõw nhập vào không hợp lệ");
+            }
+            KichCo kc = kcr.findBySize(kcName);
+            if (kc == null) {
+                kc = new KichCo();
+                String MaKc = "MKC"+generateRandomCodeKc();
+                kc.setMaKichCo(MaKc);;
+                kc.setSize(kcName);
+                kc.setTrangThai(1);
+                kcr.save(kc);
+//                return;
+            }
+//            else if(kc != null){
+//                throw new IOException("size chưa dc nhập   ");
+//            }
+//           Tìm tên chất liệu dựa trên tên
+            String clName = row.getCell(4).getStringCellValue();
+            ChatLieu cl = clr.findByTen(clName);
+            if (cl == null) {
+                cl = new ChatLieu();
+                String MaCL = "MCL"+generateRandomCodeCl();
+                cl.setMa(MaCL);;
+                cl.setTen(clName);
+                cl.setTrangThai(1);
+                clr.save(cl);
+            }
+//            else if(cl != null ){
+//                throw new IOException("Chất liệu ch được nhập ");
+//            }
+//            Tìm đế giày dựa trên tên
+
+            String dgName = row.getCell(5).getStringCellValue();
+            if (dgName.trim().isEmpty()) {
+                throw new IOException("Dữ liệu đế giày nhập vào không hợp lệ");
+            }
+            DeGiay dg = dgr.findByLoaiDe(dgName);
+            if (dg == null) {
+                dg = new DeGiay();
+                String ma = "MDG"+generateRandomCodeDg();
+                dg.setMa(ma);;
+                dg.setLoaiDe(dgName);
+                dg.setTrangThai(1);
+                dgr.save(dg);
+//                return;
+            }
+
+//            else if(dg != null){
+//                throw  new IOException("đế giày chưa được nhập ");
+//            }
+////
+            ctsp.setSanPham(sp);
+            ctsp.setMauSac(ms);
+            ctsp.setLoaiGiay(lg);
+            ctsp.setKichCo(kc);
+            ctsp.setChatLieu(cl);
+            ctsp.setDeGiay(dg);
+            Double giaBan = row.getCell(6).getNumericCellValue();
+            int SoLuong = (int) row.getCell(7).getNumericCellValue();
+            String mota = row.getCell(8).getStringCellValue();
+            int tt = (int) row.getCell(9).getNumericCellValue();
+            Date ngayTao = row.getCell(10).getDateCellValue();
+            if (ngayTao.equals("")) {
+                throw new IOException("Ngày Tạo chưa được nhập ");
+            }
+            if (mota.trim().isEmpty()) {
+                throw new IOException("Mô tả chưa được nhập ");
+            }
+            ctsp.setGiaBan(giaBan);
+            ctsp.setSoLuong(SoLuong);
+            ctsp.setMoTaCT(mota);
+            ctsp.setTrangThai(tt);
+
+
+            if (isDuplicate(ctsp)) {
+                throw new IOException("trùng dữ liệu");
+            } else {
+                // Nếu không trùng lặp, thêm mới dữ liệu vào cơ sở dữ liệu
+                ctspr.save(ctsp);
+
+            }
+
+
         }
+        workbook.close();
     }
 
-    private ChiTietSanPham createChiTietSanPhamFromRow(Row row) throws IOException {
-        String spName = getCellValueAsString(row.getCell(0));
-        String msName = getCellValueAsString(row.getCell(1));
-        String tlName = getCellValueAsString(row.getCell(2));
-        int kcName = getCellValueAsInt(row.getCell(3));
-        String clName = getCellValueAsString(row.getCell(4));
-        String dgName = getCellValueAsString(row.getCell(5));
-        Double giaBan = getCellValueAsDouble(row.getCell(6));
-        int soLuong = getCellValueAsInt(row.getCell(7));
-        String mota = getCellValueAsString(row.getCell(8));
-        Date ngayTao = row.getCell(9).getDateCellValue();
-        int tt = getCellValueAsInt(row.getCell(10));
-
-        // Kiểm tra và báo lỗi nếu có trường dữ liệu trống
-        if (StringUtils.isAnyBlank(spName, msName, tlName, clName, dgName, mota)) {
-            throw new IOException("Lỗi: Dữ liệu không được để trống.");
-        }
-
-        ChiTietSanPham ctsp = new ChiTietSanPham();
-
-        // Lấy hoặc tạo các đối tượng liên qua
-        SanPham sp = spr.findByTenSp(spName);
-        MauSac ms = msr.findByTen(msName);
-        LoaiGiay lg = lgr.findbyten(tlName);
-        KichCo kc = kcr.findBySize(kcName);
-        ChatLieu cl = clr.findByTen(clName);
-        DeGiay dg = dgr.findByLoaiDe(dgName);
-
-        ctsp.setSanPham(sp);
-        ctsp.setMauSac(ms);
-        ctsp.setLoaiGiay(lg);
-        ctsp.setKichCo(kc);
-        ctsp.setChatLieu(cl);
-        ctsp.setDeGiay(dg);
-        ctsp.setGiaBan(giaBan);
-        ctsp.setSoLuong(soLuong);
-        ctsp.setMoTaCT(mota);
-        ctsp.setNgayTao(ngayTao);
-        ctsp.setTrangThai(tt);
-
-        return ctsp;
+    private boolean isDuplicate(ChiTietSanPham ctsp) {
+        // Kiểm tra sự trùng lặp dựa trên các tiêu chí, sử dụng phương thức từ repository
+        List<ChiTietSanPham> existingCTSP = ctspr.findBySanPhamAndMauSacAndKichCoAndChatLieuAndDeGiayAndLoaiGiay(
+                ctsp.getSanPham(), ctsp.getMauSac(), ctsp.getKichCo(), ctsp.getChatLieu(), ctsp.getDeGiay(), ctsp.getLoaiGiay()
+        );
+        return !existingCTSP.isEmpty();
     }
-
-    private void saveOrUpdateData(ChiTietSanPham ctsp) throws IOException {
-        // Kiểm tra và báo lỗi nếu dữ liệu đã tồn tại trong database
-        if (ctspr.existsBySanPhamAndMauSacAndLoaiGiayAndKichCoAndChatLieuAndDeGiay(
-                ctsp.getSanPham(), ctsp.getMauSac(), ctsp.getLoaiGiay(), ctsp.getKichCo(),
-                ctsp.getChatLieu(), ctsp.getDeGiay())) {
-            throw new IOException("Lỗi: Dữ liệu đã tồn tại.");
-        }
-
-        ctspr.save(ctsp);
+    private String generateRandomCodeSp() {
+        // Logic để tạo mã ngẫu nhiên, bạn có thể sử dụng Random hoặc một cách khác
+        return "MSP" + new Random().nextInt(10000);
     }
-
-    private String getCellValueAsString(Cell cell) {
-        return (cell != null && cell.getCellType() == CellType.STRING) ? cell.getStringCellValue() : "";
+    private String generateRandomCodeMs() {
+        // Logic để tạo mã ngẫu nhiên, bạn có thể sử dụng Random hoặc một cách khác
+        return "MMS" + new Random().nextInt(10000);
     }
-
-    private int getCellValueAsInt(Cell cell) {
-        return (cell != null && cell.getCellType() == CellType.NUMERIC) ? (int) cell.getNumericCellValue() : 0;
+    private String generateRandomCodeKc() {
+        // Logic để tạo mã ngẫu nhiên, bạn có thể sử dụng Random hoặc một cách khác
+        return "MKC" + new Random().nextInt(10000);
     }
-
-    private Double getCellValueAsDouble(Cell cell) {
-        return (cell != null && cell.getCellType() == CellType.NUMERIC) ? cell.getNumericCellValue() : 0.0;
+    private String generateRandomCodeCl() {
+        // Logic để tạo mã ngẫu nhiên, bạn có thể sử dụng Random hoặc một cách khác
+        return "MCL" + new Random().nextInt(10000);
+    }
+    private String generateRandomCodeDg() {
+        // Logic để tạo mã ngẫu nhiên, bạn có thể sử dụng Random hoặc một cách khác
+        return "MDG" + new Random().nextInt(10000);
+    }
+    private String generateRandomCodeLg() {
+        // Logic để tạo mã ngẫu nhiên, bạn có thể sử dụng Random hoặc một cách khác
+        return "MLG" + new Random().nextInt(10000);
     }
 }
