@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $('#searchName0').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search Loai Giay ....",
         ajax: {
             type: 'GET',
@@ -79,7 +79,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#searchName3').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search De Giay ....",
         ajax: {
             type: 'GET',
@@ -107,7 +107,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#searchName4').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search Chat Lieu ....",
         ajax: {
             type: 'GET',
@@ -134,7 +134,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 
   $('#searchName10').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search Loai Giay ....",
         ajax: {
             type: 'GET',
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
  $(document).ready(function () {
     $('#searchName11').select2({
-        width: 150,
+        width: 630,
         placeholder: "Search Size ....",
         ajax: {
             type: 'GET',
@@ -186,7 +186,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#searchName12').select2({
-        width: 150,
+        width: 630,
         placeholder: "Search Mau Sac ....",
         ajax: {
             type: 'GET',
@@ -212,7 +212,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#searchName13').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search De Giay ....",
         ajax: {
             type: 'GET',
@@ -240,7 +240,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#searchName14').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search Chat Lieu ....",
         ajax: {
             type: 'GET',
@@ -264,38 +264,3 @@ $(document).ready(function () {
         }
     });
 });
-// validate modal
-//
-//     $(document).ready(function () {
-//         $('#exampleModal2 form').submit(function (e) {
-//             e.preventDefault();
-//
-//             $.ajax({
-//                 type: 'POST',
-//                 url: '/san-pham/kich-co/add/' + sanpham.id,
-//                 data: $('#exampleModal2 form').serialize(),
-//                 success: function (response) {
-//                     if (response.success) {
-//                         // Đóng modal nếu thành công
-//                         $('#exampleModal2').modal('hide');
-//                         // Thực hiện các xử lý khác sau khi thêm thành công (nếu cần)
-//                     } else {
-//                         // Xử lý khi có lỗi
-//                         if (response.errorMessage) {
-//                             // Hiển thị lỗi chung (nếu có)
-//                             alert(response.errorMessage);
-//                         }
-//                         if (response.errors) {
-//                             for (var key in response.errors) {
-//                                 // Hiển thị lỗi cho từng trường dựa vào key
-//                                 $('#' + key + 'Error').text(response.errors[key]);
-//                             }
-//                         }
-//                     }
-//                 },
-//                 error: function () {
-//                     // Xử lý lỗi nếu cần
-//                 }
-//             });
-//         });
-//     });
