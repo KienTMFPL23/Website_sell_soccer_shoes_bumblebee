@@ -79,13 +79,13 @@ public class ChiTietSanPham {
     @NotNull(message = "* Mời chọn trạng thái !")
     Integer trangThai;
 
-    @OneToOne(mappedBy = "ctsp")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "ctsp")
     HinhAnh hinhAnhs;
 
-    @OneToMany(mappedBy = "ctsp")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ctsp")
     private List<GioHangChiTiet> gioHangChiTiet;
 
-    @OneToMany(mappedBy = "ctsp")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ctsp")
     private List<ChiTietKhuyenMai> ctkm;
 
     public void loadFromViewModel(QLSanPham vm) {

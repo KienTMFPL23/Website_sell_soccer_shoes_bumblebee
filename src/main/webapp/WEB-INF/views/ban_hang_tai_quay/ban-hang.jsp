@@ -223,7 +223,8 @@
                                                                                 <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
                                                                                 <del style="color: crimson">
                                                                                     <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></del>
-                                                                                <c:set var="allTrangThai1" value="true"/>
+                                                                                <c:set var="allTrangThai1"
+                                                                                       value="true"/>
                                                                             </c:if>
 
                                                                         </c:forEach>
@@ -422,14 +423,12 @@
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button id="btnThanhToan" type="submit" style="display: none" class="btn btn-primary"
-
-
-                                onclick="return alertThanhToan(event)">
-
+                                onclick="return alertThanhToan()">
                             Thanh toán
                         </button>
-                        <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
-                            Thanh toán</button>
+                        <button id="btnThanhToan_disable" type="button" class="btn btn-danger">
+                            Thanh toán
+                        </button>
                     </div>
                     </form:form>
                 </div>
@@ -472,7 +471,7 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="erorSP" value="${erorSP}" />
+<input type="hidden" id="erorSP" value="${erorSP}"/>
 <script>
     function submitFormKhachHang() {
         var formData = $("#sendKhachHang").serialize();
@@ -537,70 +536,8 @@
 <script>
 
 </script>
-<%--<script>--%>
-<%--    // Đặt giá trị idHoaDon--%>
-<%--    var idHoaDon = "${idHoaDon}";--%>
-<%--    function alertThanhToan(event) {--%>
-<%--        var result = confirm('Bạn có muốn thanh toán không ??');--%>
-<%--        if (result.valueOf()) {--%>
-<%--            Swal.fire({--%>
-<%--                position: "center",--%>
-<%--                icon: "success",--%>
-<%--                title: "Thanh toán thành công",--%>
-<%--                showConfirmButton: false,--%>
-<%--                timer: 2000--%>
-<%--            });--%>
-<%--            setTimeout(function () {--%>
-<%--                return true;--%>
-<%--            }, 2000);--%>
-<%--        } else {--%>
-<%--            return false;--%>
-<%--        }--%>
-<%--    }--%>
-<%--    function taivepdf() {--%>
-<%--        // alert(idHoaDon);--%>
-<%--        var link = document.createElement('a');--%>
-<%--        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;--%>
-<%--        link.target = '_blank';--%>
-<%--        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';--%>
-<%--        document.body.appendChild(link);--%>
-<%--        // Yêu cầu sự tương tác người dùng--%>
-<%--        link.click();--%>
-<%--        document.body.removeChild(link);--%>
-<%--    }--%>
-<%--    var ThanhToanButton = document.getElementById('btnThanhToan');--%>
-<%--    ThanhToanButton.onclick = function() {--%>
-<%--        alertThanhToan();--%>
-<%--        taivepdf();--%>
 
-<%--    };--%>
-<%--</script>--%>
 
-<%--<script>--%>
-<%--    function downloadHoaDon() {--%>
-<%--        // Thực hiện yêu cầu tải về sử dụng XMLHttpRequest--%>
-<%--        var xhr = new XMLHttpRequest();--%>
-<%--        var url_for_download = `/bumblebee/ban-hang-tai-quay/download-pdf/{idHoaDon}`; // Thay thế bằng URL thích hợp--%>
-
-<%--        xhr.open('GET', url_for_download, true);--%>
-<%--        xhr.responseType = 'blob';--%>
-
-<%--        xhr.onload = function () {--%>
-<%--            // Tạo một đường link ảo để tải về--%>
-<%--            var blob = new Blob([xhr.response], {type: 'application/pdf'});--%>
-<%--            var link = document.createElement('a');--%>
-
-<%--            link.href = window.URL.createObjectURL(blob);--%>
-<%--            link.download = 'hoadon_${idHoaDon}.pdf'; // Thay thế bằng tên file thích hợp--%>
-
-<%--            // Kích hoạt sự kiện click trên đường link ảo để tải về--%>
-<%--            link.click();--%>
-<%--        };--%>
-
-<%--        // Gửi yêu cầu--%>
-<%--        xhr.send();--%>
-<%--    }--%>
-<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
@@ -816,35 +753,25 @@
 </script>
 
 <script>
-    function alertThanhToan(event) {
+    function alertThanhToan() {
         var idHoaDon = "${idHoaDon}"
         var result = confirm('Bạn có muốn thanh toán không ??');
         if (result) {
-            // Thực hiện thanh toán
             Swal.fire({
                 position: "center",
                 icon: "success",
                 title: "Thanh toán thành công",
                 showConfirmButton: false,
-                timer: 3000
+                timer: 4000
             });
-            setTimeout(function () {
-                return true;
-            }, 3000);
-
             var link = document.createElement('a');
             link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
             link.target = '_blank';
-            link.download = 'hoadon_' + ${hdct.hoaDon.maHoaDon} + '.pdf';
+            link.download = 'hoadon_' + ${hdct.hoaDon.maHoaDon} +'.pdf';
             document.body.appendChild(link);
-
-            // Yêu cầu sự tương tác người dùng
             link.click();
             document.body.removeChild(link);
-            // Tạo và tải hóa đơn PDF
-
         } else {
-            // Người dùng đã hủy thanh toán
             return false;
         }
 
@@ -853,7 +780,7 @@
 <script>
     function chonSoLuong(itemId) {
         const newValue = event.target.value;
-        if (newValue == ""){
+        if (newValue == "") {
             document.getElementById("soLuongCTSP_" + itemId).value = 1;
             alert("Số lượng sản phẩm không được để trống");
         }

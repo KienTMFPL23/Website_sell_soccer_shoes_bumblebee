@@ -33,11 +33,11 @@ public class HoaDonChiTiet {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdHoaDon")
     private HoaDon hoaDon;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdChiTietSP")
     private ChiTietSanPham chiTietSanPham;
 
