@@ -10,13 +10,15 @@ import org.springframework.data.repository.query.Param;
 import java.util.UUID;
 
 public interface LoaiGiayRepository extends JpaRepository<LoaiGiay, UUID> {
-    @Query("select lg from LoaiGiay  lg where lg.tentheloai =:tentheloai")
+    @Query(value = "select * from LoaiGiay  lg where lg.tentheloai =:tentheloai",nativeQuery = true)
     LoaiGiay findbyten(@Param("tentheloai") String tentheloai);
-    @Query("select lg from LoaiGiay  lg where lg.ma =:ma")
-    LoaiGiay findByMa(@Param("ma") String tentheloai);
-    @Query("select l from LoaiGiay l where l.ma like ?1 or l.tentheloai like ?1 or ?1 is null")
-    public Page<LoaiGiay> searchByKeyWord(String keyword, Pageable pageable);
 
-    @Query("select l from LoaiGiay l")
-    public Page<LoaiGiay> getAll(Pageable pageable);
+    @Query(value = "select * from LoaiGiay  lg where lg.ma =:ma",nativeQuery = true)
+    LoaiGiay findByMa(@Param("ma") String tentheloai);
+
+    @Query(value = "select * from LoaiGiay l where l.ma like ?1 or l.tentheloai like ?1 or ?1 is null",nativeQuery = true)
+    Page<LoaiGiay> searchByKeyWord(String keyword, Pageable pageable);
+
+    @Query(value = "select * from LoaiGiay l",nativeQuery = true)
+    Page<LoaiGiay> getAll(Pageable pageable);
 }

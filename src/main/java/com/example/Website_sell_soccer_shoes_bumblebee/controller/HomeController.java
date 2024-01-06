@@ -237,8 +237,6 @@ public class HomeController {
     @GetMapping("/bumblebee/detail")
     public String detail(Model model, @RequestParam UUID idSP, @RequestParam UUID idCTSP, @RequestParam UUID idMS) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(idCTSP);
-//        ChiTietSanPham chiTietSanPham1 = chiTietSanPhamRepo.getCTSPByKichCo(idMS,idSP,kichCo);
-//        model.addAttribute("slctsp",chiTietSanPham1.getSoLuong());
         List<ChiTietSanPham> listCTSPBySP = chiTietSanPhamRepo.getCTSPByIdSP(idSP);
         List<Integer> listKCBySP = chiTietSanPhamService.getKichCoByMauSacAndSanPham(idMS, idSP);
         HinhAnh hinhAnh = chiTietSanPhamRepo.getHADetail(idCTSP);
@@ -264,7 +262,9 @@ public class HomeController {
         int soLuongCTSP = ctsp.getSoLuong();
         GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
         List<GioHangChiTiet> listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
-
+        if(soLuongCTSP == 0){
+            return ResponseEntity.ok("Sản phẩm đã hết hàng");
+        }
         for (GioHangChiTiet gioHangChiTiet : listGHCT) {
             if (gioHangChiTiet.getCtsp().getId().equals(ctsp.getId())) {
                 int soLuongHienTai = gioHangChiTiet.getSoLuong();
@@ -484,8 +484,6 @@ public class HomeController {
                 gioHangChiTietService.deleteGHCT(ghct.getId());
             }
         }
-
-        //return "redirect:/bumblebee/don-mua/cho-xac-nhan";
         return "redirect:/bumblebee/bill/" + hoaDon.getId();
     }
 

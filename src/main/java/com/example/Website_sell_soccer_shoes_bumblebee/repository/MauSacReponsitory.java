@@ -9,15 +9,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
+
 @Repository
-public interface MauSacReponsitory  extends JpaRepository<MauSac, UUID> {
+public interface MauSacReponsitory extends JpaRepository<MauSac, UUID> {
     @Query("select ms from MauSac  ms where ms .ten=:ten")
-    MauSac findByTen(@Param("ten")String ten);
+    MauSac findByTen(@Param("ten") String ten);
+
     @Query("select ms from MauSac  ms where ms .ma=:ma")
-    MauSac findByMa(@Param("ma")String ma);
+    MauSac findByMa(@Param("ma") String ma);
+
     @Query("SELECT ms FROM MauSac ms where ms.ten LIKE %?1% or ms.ma like %?1%")
-    Page<MauSac> search(String key,Pageable pageable);
-    Page<MauSac> findAll(Pageable pageable );
+    Page<MauSac> search(String key, Pageable pageable);
+
+    Page<MauSac> findAll(Pageable pageable);
+
     @Query(value = "select ms from MauSac ms order by ms.ma asc ")
     Page<MauSac> sort(Pageable pageable);
 }
