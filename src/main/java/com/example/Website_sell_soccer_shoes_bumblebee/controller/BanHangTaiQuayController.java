@@ -123,19 +123,12 @@ public class BanHangTaiQuayController {
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         this.idHoaDon = null;
         this.sumMoney = 0.0;
-        getTaiKhoan(model);
+//        getTaiKhoan(model);
         model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("khachHang", new KhachHang());
-
-        Integer soLuongHDCho = hoaDonService.listHoaDonCho().size();
-        model.addAttribute("soLuongHD", soLuongHDCho);
-
-        model.addAttribute("searchForm", new SearchForm());
-//        model.addAttribute("sumMoney", sumMoney);
-
+        model.addAttribute("soLuongHD", hoaDonService.listHoaDonCho().size());
         model.addAttribute("hoaDon", new HoaDon());
-
         return "ban_hang_tai_quay/ban-hang";
     }
 
@@ -178,13 +171,13 @@ public class BanHangTaiQuayController {
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
 
-    @GetMapping("/searchSanPham")
-    public String searchSanPham(Model model, @ModelAttribute("searchForm") SearchForm searchForm) {
-        model.addAttribute("view", "../ban_hang_tai_quay/ban-hang.jsp");
-        List<SanPham> danhSachSPSearch = sanPhamService.searchSanPham("" + searchForm.keyword + "");
-        model.addAttribute("listSearch", danhSachSPSearch);
-        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
-    }
+//    @GetMapping("/searchSanPham")
+//    public String searchSanPham(Model model, @ModelAttribute("searchForm") SearchForm searchForm) {
+//        model.addAttribute("view", "../ban_hang_tai_quay/ban-hang.jsp");
+//        List<SanPham> danhSachSPSearch = sanPhamService.searchSanPham("" + searchForm.keyword + "");
+//        model.addAttribute("listSearch", danhSachSPSearch);
+//        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
+//    }
 
     @GetMapping("/hoa-don-chi-tiet/{id}")
     public String hoaDonChiTiet(Model model, @PathVariable("id") UUID id) {
@@ -192,10 +185,7 @@ public class BanHangTaiQuayController {
         model.addAttribute("khachHang", new KhachHang());
         idHoaDon = id;
         model.addAttribute("idHDCT", id);
-        model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
-        model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
-        model.addAttribute("listSanPham", chiTietSanPhamService.getList());
         model.addAttribute("listHDCT", hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id));
         model.addAttribute("idHoaDon", this.idHoaDon);
         model.addAttribute("listKhachHang", khachHangService.getAllKHOderBy());
@@ -226,9 +216,6 @@ public class BanHangTaiQuayController {
         try {
         HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
         HoaDon hoaDon = hoaDonService.getOne(idHoaDon);
-//        if (idHoaDon == null) {
-//            return "redirect:/bumblebee/ban-hang-tai-quay/sell";
-//        }
         this.idCTSP = id;
         ChiTietSanPham sp = chiTietSanPhamService.getOne(id);
         if (sp == null) {
@@ -284,14 +271,7 @@ public class BanHangTaiQuayController {
     @RequestMapping("/delete-hdct/{id}")
     public String deleteHoaDonCT(Model model, @PathVariable("id") UUID id) {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getOneHoaDon(id);
-//        Integer soLuong = hoaDonChiTiet.getSoLuong();
-//        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
-//        Integer soLuongTon = chiTietSanPham.getSoLuong();
-//        chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon + soLuong);
-//        hoaDonChiTietService.deleteHoaDonCT(id);
-//        Integer soLuong = hoaDonChiTiet.getSoLuong();
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(hoaDonChiTiet.getChiTietSanPham().getId());
-//        Integer soLuongTon = chiTietSanPham.getSoLuong();
         chiTietSanPhamService.updateDelete(chiTietSanPham.getId(), hoaDonChiTiet.getSoLuong());
         hoaDonChiTietService.deleteHoaDonCT(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;

@@ -8,7 +8,7 @@
         <strong style="font-size: 15px">1. Các quy định</strong>
     </div>
     <p>Khi khách hàng mua sản phẩm, cửa hàng sẽ áp dụng đổi hoặc trả hàng với điều kiện mà cửa hàng quy định:</p>
-    <p> + Đối với trả hàng: khách hàng chỉ được trả nếu như sản phẩm nhận được bị lỗi, sai kích cỡ,.. thì phía bên cửa hàng
+    <p> + Đối với trả hàng: Chỉ áp dụng trả hàng với khách mua online, không áp dụng cho khách mua tại quầy, khách hàng chỉ được trả nếu như sản phẩm nhận được bị lỗi, sai kích cỡ,.. thì phía bên cửa hàng
     sẽ chấp nhận trả hàng và hoàn tiền cho khách. Nếu sản phẩm không phải lỗi phía bên cửa hàng thì khách hàng sẽ không được trả hàng</p>
     <p> + Đối với đổi hàng: cửa hàng chỉ áp dụng đổi sản phẩm cũng giá với sản phẩm khách hàng đã mua, không áp dụng đổi sản phẩm hơn giá hoặc giá thấp hơn.
     Đối với những sản phẩm khuyến mại, khi đổi khách hàng chỉ được đổi đúng sản phẩm mà khách hàng mua, cửa hàng sẽ vẫn lấy giá khuyến mại cho khách </p>

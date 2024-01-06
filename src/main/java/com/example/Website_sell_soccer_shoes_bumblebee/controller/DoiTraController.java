@@ -233,18 +233,6 @@ public class DoiTraController {
             doiTraChiTiet.setTrangThai(2);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
         }
-//        for (ChiTietSanPham ctsp : listCTSP) {
-//            DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
-//            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, ctsp.getId());
-//            doiTraChiTiet.setChiTietSanPham(ctsp);
-//            doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
-//            doiTraChiTiet.setSoLuong(ctsp.getSoLuong());
-//            doiTraChiTiet.setDoiTra(doiTra);
-//            doiTraChiTiet.setLyDoDoiTra(lydo.get());
-//            doiTraChiTiet.setDonGia(ctsp.getGiaBan());
-//            doiTraChiTiet.setTrangThai(2);
-//            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-//        }
         this.idDoiTra = doiTra.getId();
     }
 
@@ -265,18 +253,25 @@ public class DoiTraController {
         DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), this.idCTSP);
         ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
-        doiTraChiTiet.setChiTietSanPham(ctsp);
-        doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
-        doiTraChiTiet.setSoLuong(1);
-        doiTraChiTiet.setDoiTra(doiTra);
-        doiTraChiTiet.setDonGia(ctsp.getGiaBan());
-        doiTraChiTiet.setTrangThai(1);
-        doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-        this.idDoiTra = doiTra.getId();
-//        if (idCTSP != idSanPham){
-//            chiTietSanPhamService.updateDelete(idCTSP,1);
-//            chiTietSanPhamService.updateSoLuongTon(idSanPham, ctsp.getSoLuong() - 1);
-//        }
+        DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(),idSanPham);
+        if (getSPInDoiTra != null){
+            if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()){
+                if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet){
+                    getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
+                    doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
+                    this.idDoiTra = doiTra.getId();
+                }
+            }
+        }else {
+            doiTraChiTiet.setChiTietSanPham(ctsp);
+            doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
+            doiTraChiTiet.setSoLuong(1);
+            doiTraChiTiet.setDoiTra(doiTra);
+            doiTraChiTiet.setDonGia(ctsp.getGiaBan());
+            doiTraChiTiet.setTrangThai(1);
+            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+            this.idDoiTra = doiTra.getId();
+        }
     }
 
 

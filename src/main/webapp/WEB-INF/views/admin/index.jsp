@@ -22,10 +22,10 @@
             rel="stylesheet"
             type="text/css"
     />
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet"
-    />
+<%--    <link--%>
+<%--            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"--%>
+<%--            rel="stylesheet"--%>
+<%--    />--%>
 
     <!-- Custom styles for this template-->
     <link href="../../../css/sb-admin-2.min.css" rel="stylesheet"/>
@@ -199,7 +199,7 @@
             <!-- Nav Item - Quản lý đổi trả -->
             <li class="nav-item">
                 <a class="nav-link" href="/bumblebee/doi-hang/list-tra-hang">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="bx bx-archive"></i>
                     <b>Quản lý đổi trả</b></a
                 >
             </li>
@@ -328,7 +328,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2021</span>
+                    <span>Copyright &copy; Your Website 2023</span>
                 </div>
             </div>
         </footer>
@@ -392,7 +392,7 @@
 <%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/doi-hang.js"></script>
+
 <script src="../../../js/doi_hang/san-pham-doi.js"></script>
 <script src="../../../js/doi_hang/validate-modal.js"></script>
 <script src="../../../js/doi_hang/web-cam-doi-tra.js"></script>
@@ -408,13 +408,11 @@
 <script src="../../../js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="../../../vendor/chart.js/Chart.min.js"></script>
+
 
 <!-- Page level custom scripts -->
-<script src="../../../js/demo/chart-area-demo.js"></script>
-<script src="../../../js/demo/chart-pie-demo.js"></script>
-<script src="../../../js/demo/chart-bar-demo.js"></script>
-<script src="../../../js/demo/chart_don_hang_da_ban.js"></script>
+
+
 <script src="../../../js/de_giay/de_giay.js"></script>
 <script src="../../../js/mau_sac/mau_sac.js"></script>
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>
@@ -426,15 +424,18 @@
 <script src="../../../js/hinh_anh/hinh_anh.js"></script>
 <script src="../../../js/hinh_anh/select2.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
 
+<script
+        src="../../../template_bootstrap/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"
+></script>
+<script src="../../../template_bootstrap/js/bootstrap.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </body>
 </html>
