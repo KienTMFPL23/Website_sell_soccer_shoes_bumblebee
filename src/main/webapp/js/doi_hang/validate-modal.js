@@ -18,11 +18,10 @@ function taoDoiTra() {
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             isChecked = true;
+            console.log(checkboxes[i].value);
             // Lấy ô input số lượng tương ứng với ô checkbox
-            var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra');
-            var lydoId = checkboxes[i].id.replace('checkBoxSP','lyDoTra');
-            console.log("inputId:", inputId); // In giá trị để kiểm tra
-            console.log("lydoId:", lydoId); //
+            var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra_'+checkboxes[i].value);
+            var lydoId = checkboxes[i].id.replace('checkBoxSP','lyDoTra_'+checkboxes[i].value);
             var quantityInput = document.getElementById(inputId);
             var lyDoSelect = document.getElementById(lydoId);
             // Kiểm tra nếu ô input không có giá trị hoặc giá trị không hợp lệ
@@ -67,12 +66,18 @@ function taoDoiTra() {
         },2000);
     }
 }
-function changeSoLuong(soLuongMax,id) {
-    var slTra = document.getElementById('soLuongTra_'+ id);
-    if (slTra.value === 0 || slTra.value < 0 || slTra.value === ''){
-        slTra.value = 1;
-    }else if(slTra.value > soLuongMax ){
-        slTra.value = soLuongMax;
+function validSoLuong(maxSL,idValid) {
+    var newValue = event.target.value;
+    if (newValue > maxSL){
+        document.getElementById('soLuongtra').value = 1;
+        alert('Số lượng không hợp lệ!!');
+        return false;
+    }else if(newValue < 1){
+        alert('Số lượng phải lớn hơn 0!!');
+        document.getElementById('soLuongtra').value = 1;
+        return false;
+    }else {
+        return true;
     }
 }
 

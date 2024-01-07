@@ -22,32 +22,32 @@ public class ChiTietSanPham {
     @Column(name = "Id")
     UUID id;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idsp")
     SanPham sanPham;
 
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idmausac")
     @NotNull(message = "* Mời chọn màu sắc")
     MauSac mauSac;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idtheloai")
     @NotNull(message = "* Mời chọn loại giầy")
     LoaiGiay loaiGiay;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idkichco")
     @NotNull(message = "* Mời chọn kích cỡ")
     KichCo kichCo;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idchatlieu")
     @NotNull(message = "* Mời chọn chất liệu")
     ChatLieu chatLieu;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Iddegiay")
     @NotNull(message = "* Mời chọn đế giầy")
     DeGiay deGiay;

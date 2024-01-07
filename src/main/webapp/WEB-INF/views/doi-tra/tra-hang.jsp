@@ -40,9 +40,11 @@
         <strong>Tổng tiền <fmt:formatNumber value="${sumMoney}" type="number"/></strong>
     </div>
     <hr>
-    <button data-bs-toggle="modal" type="button"
-            data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
-    </button>
+    <c:if test="${hoaDonMua.loaiHoaDon == 0}">
+        <button data-bs-toggle="modal" type="button"
+                data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
+        </button>
+    </c:if>
     <a href="/bumblebee/don-hang/doi-san-pham" class="btn btn-primary">Đổi hàng
     </a>
     <form method="post" action="/bumblebee/don-hang/create-tra-hang">
@@ -81,17 +83,18 @@
                                     <td>${hd.chiTietSanPham.kichCo.size}</td>
                                     <td>
                                         <div>
-                                            <input type="number" id="soLuongTra" class="soLuongtra"
+                                            <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}" class="soLuongtra"
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
+                                                   oninput="return validSoLuong('${hd.soLuong}','${hd.id}',event)"
                                                    style="width:50px;"> /${hd.soLuong}
                                             <strong><p style="color: red" id="erorSluong"></p></strong>
                                         </div>
                                     </td>
                                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                                     <td>
-                                        <select id="lyDoTra" class="form-control" style="width: 200px"
+                                        <select id="lyDoTra_${hd.chiTietSanPham.id}" class="form-control" style="width: 200px"
                                                 name="lyDoDoiTra">
                                             <option value="">-----</option>
                                             <option value="Mẫu giao sai">Mẫu giao sai</option>

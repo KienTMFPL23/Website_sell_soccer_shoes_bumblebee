@@ -94,4 +94,9 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
         }
         return sum;
     }
+
+    @Override
+    public DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP) {
+        return doiTraCTRepo.getSanPhamInDoiTra(idDoiTra,idCTSP);
+    }
 }
