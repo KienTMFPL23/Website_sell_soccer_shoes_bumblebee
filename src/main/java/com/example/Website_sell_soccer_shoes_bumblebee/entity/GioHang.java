@@ -36,14 +36,14 @@ public class GioHang {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @OneToMany(mappedBy = "gioHang")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "gioHang")
     private List<GioHangChiTiet> gioHangChiTiet;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "IdKH", referencedColumnName = "id")
     private KhachHang khachHang;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "IdNV", referencedColumnName = "id")
     private NhanVien nhanVien;
 

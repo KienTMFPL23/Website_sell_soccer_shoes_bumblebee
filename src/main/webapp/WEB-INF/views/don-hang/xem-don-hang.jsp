@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ page language="java" pageEncoding="UTF-8" %>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -674,7 +676,6 @@
             </div>
         </div>
 
-
         <br>
         <div class="row text-center">
             <table class="table table-striped">
@@ -750,7 +751,8 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
+                        <c:set var="totalProducts" value="${fn:length(hoaDon.hoaDons)}" />
+                        <c:if test="${ totalProducts > 1 && hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
                             <td>
                                 <a href="/don-hang/delete-hdct/${hdct.id}"
                                    onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">

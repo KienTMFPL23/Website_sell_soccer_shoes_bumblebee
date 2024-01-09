@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -37,4 +38,7 @@ public class SanPham {
     @NotNull(message = "Vui lòng chọn trạng thái")
     @Column(name = "TrangThai")
     private Integer trangThai;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sanPham")
+    private List<ChiTietSanPham> chiTietSanPhams;
 }

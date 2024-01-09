@@ -90,4 +90,6 @@ public interface ChiTietSanPhamService {
     List<KichCo> search22KC(Integer size, Integer trangThai);
 
     List<ChiTietSanPhamCustom> listSPCungLoai (Double giaSP);
+
+    void addBienThe(ChiTietSanPhamDto chiTietSanPham, String mauSac, String kichCo, Double giaBan, Integer soLuong, Boolean trangThai);
 }

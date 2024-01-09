@@ -16,19 +16,19 @@ import java.util.UUID;
 
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
-    @Query("select hd from HoaDon  hd where hd.trangThai = 1 and hd.loaiHoaDon=1 order by hd.ngayThanhToan")
+    @Query(value = "select * from HoaDon  hd where hd.trangThai = 1 and hd.loaiHoaDon=1 order by hd.ngayThanhToan",nativeQuery = true)
     List<HoaDon> getListByTrangThai();
 
-    @Query(value = "SELECT hd FROM HoaDon hd where hd.maHoaDon like %?1% or hd.sdt like %?1%  or hd.tenNguoiNhan like %?1% ")
+    @Query(value = "SELECT * FROM HoaDon hd where hd.MaHD like %?1% or hd.SoDienThoai like %?1%  or hd.TenNguoiNhan like %?1%", nativeQuery = true)
         //or hd.nhanVien.ten like %?1%
     Page<HoaDon> search(String keyword, Pageable pageable);
 
     //    @Query("select hd from HoaDon hd where (?1 IS NULL OR hd.ngayTao >= ?1) AND (?2 IS NULL OR hd.ngayTao < ?2)")
 //    Page<HoaDon> searchALlBetweenDates(Date fromDate, Date toDate, Pageable pageable);
-    @Query("SELECT hd FROM HoaDon hd WHERE hd.ngayTao >= ?1 AND hd.ngayTao < ?2")
+    @Query(value = "SELECT * FROM HoaDon hd WHERE hd.NgayTao >= ?1 AND hd.NgayTao < ?2",nativeQuery = true)
     Page<HoaDon> searchALlBetweenDates(Date startDate, Date endDate, Pageable pageable);
 // 20.11
-    @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and not (h.trangThai = 1 AND h.loaiHoaDon = 1) order by h.ngayTao desc ")
+    @Query(value = "select  * from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and not (h.trangThai = 1 AND h.loaiHoaDon = 1) order by h.ngayTao desc ",nativeQuery = true)
     Page<HoaDon> searchHDByNgayTaoAndLoaiDon(Date fromDate, Date toDate, Integer key, Pageable pageable);
 
     @Query("select  h from HoaDon  h where (?1 is null or h.ngayTao>=?1) and (?2 is null or h.ngayTao<=?2) and (?3 is null or h.loaiHoaDon=?3) and (?4 is null or h.trangThai=?4) and not (h.trangThai = 1 AND h.loaiHoaDon = 1)   order by h.ngayTao desc ")

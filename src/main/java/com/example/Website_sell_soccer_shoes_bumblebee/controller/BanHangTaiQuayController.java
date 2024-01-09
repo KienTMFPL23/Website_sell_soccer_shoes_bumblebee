@@ -91,11 +91,6 @@ public class BanHangTaiQuayController {
     ChiTietKhuyenMaiRepository chiTietKhuyenMaiRepository;
 
 
-    @Getter
-    @Setter
-    public static class SearchForm {
-        String keyword = "";
-    }
 
     private NhanVien nhanVien = null;
 
@@ -131,8 +126,6 @@ public class BanHangTaiQuayController {
         Integer soLuongHDCho = hoaDonService.listHoaDonCho().size();
         model.addAttribute("soLuongHD", soLuongHDCho);
 
-        model.addAttribute("searchForm", new SearchForm());
-//        model.addAttribute("sumMoney", sumMoney);
 
         model.addAttribute("hoaDon", new HoaDon());
 
@@ -178,13 +171,6 @@ public class BanHangTaiQuayController {
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
 
-    @GetMapping("/searchSanPham")
-    public String searchSanPham(Model model, @ModelAttribute("searchForm") SearchForm searchForm) {
-        model.addAttribute("view", "../ban_hang_tai_quay/ban-hang.jsp");
-        List<SanPham> danhSachSPSearch = sanPhamService.searchSanPham("" + searchForm.keyword + "");
-        model.addAttribute("listSearch", danhSachSPSearch);
-        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
-    }
 
     @GetMapping("/hoa-don-chi-tiet/{id}")
     public String hoaDonChiTiet(Model model, @PathVariable("id") UUID id) {
@@ -192,7 +178,6 @@ public class BanHangTaiQuayController {
         model.addAttribute("khachHang", new KhachHang());
         idHoaDon = id;
         model.addAttribute("idHDCT", id);
-        model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("listHoaDonCho", hoaDonService.listHoaDonCho());
         model.addAttribute("listSanPham", chiTietSanPhamService.listCTSPSuDung());
         model.addAttribute("listSanPham", chiTietSanPhamService.getList());

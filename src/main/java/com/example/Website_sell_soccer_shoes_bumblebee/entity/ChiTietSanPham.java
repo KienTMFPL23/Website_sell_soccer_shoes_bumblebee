@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -22,32 +23,32 @@ public class ChiTietSanPham {
     @Column(name = "Id")
     UUID id;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idsp")
     SanPham sanPham;
 
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idmausac")
     @NotNull(message = "* Mời chọn màu sắc")
     MauSac mauSac;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idtheloai")
     @NotNull(message = "* Mời chọn loại giầy")
     LoaiGiay loaiGiay;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idkichco")
     @NotNull(message = "* Mời chọn kích cỡ")
     KichCo kichCo;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Idchatlieu")
     @NotNull(message = "* Mời chọn chất liệu")
     ChatLieu chatLieu;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Iddegiay")
     @NotNull(message = "* Mời chọn đế giầy")
     DeGiay deGiay;
@@ -79,16 +80,29 @@ public class ChiTietSanPham {
     @NotNull(message = "* Mời chọn trạng thái !")
     Integer trangThai;
 
-    @OneToOne(mappedBy = "ctsp")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "ctsp")
     HinhAnh hinhAnhs;
 
-    @OneToMany(mappedBy = "ctsp")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ctsp")
     private List<GioHangChiTiet> gioHangChiTiet;
 
-    @OneToMany(mappedBy = "ctsp")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "ctsp")
     private List<ChiTietKhuyenMai> ctkm;
 
     public void loadFromViewModel(QLSanPham vm) {
+        this.setChatLieu(vm.getChatLieu());
+        this.setDeGiay(vm.getDeGiay());
+        this.setGiaBan(vm.getGiaBan());
+        this.setKichCo(vm.getKichCo());
+        this.setSanPham(vm.getSanPham());
+        this.setTrangThai(vm.getTrangThai());
+        this.setMoTaCT(vm.getMoTaCT());
+        this.setSoLuong(vm.getSoLuong());
+        this.setNgayTao(vm.getNgayTao());
+        this.setLoaiGiay(vm.getLoaiGiay());
+        this.setMauSac(vm.getMauSac());
+    }
+    public void loadFromViewModelDTO(ChiTietSanPhamDto vm) {
         this.setChatLieu(vm.getChatLieu());
         this.setDeGiay(vm.getDeGiay());
         this.setGiaBan(vm.getGiaBan());
