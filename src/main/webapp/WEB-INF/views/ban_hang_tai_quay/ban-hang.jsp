@@ -12,32 +12,27 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
             rel="stylesheet"
     />
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <!-- Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link
             href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
             rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
+
+    <%--    Logo--%>
     <link rel="icon" href="../../../images_template/logo_bumblebee.png">
+    <%--    Css--%>
     <link href="/css/ban-hang/ban-hang.css" rel="stylesheet" type="text/css">
+    <%--    bootstrap 5--%>
+    <link
+            href="../../../template_bootstrap/css/plugin/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+            crossorigin="anonymous"
+    />
 
 </head>
 <style>
@@ -222,7 +217,8 @@
                                                                                 <fmt:formatNumber>${ctkm.giaKhuyenMai}</fmt:formatNumber>
                                                                                 <del style="color: crimson">
                                                                                     <fmt:formatNumber>${ctkm.ctsp.giaBan}</fmt:formatNumber></del>
-                                                                                <c:set var="allTrangThai1" value="true"/>
+                                                                                <c:set var="allTrangThai1"
+                                                                                       value="true"/>
                                                                             </c:if>
 
                                                                         </c:forEach>
@@ -421,14 +417,12 @@
                             <%--                        <a class="btn btn-primary" type="submit" href="/bumblebee/ban-hang-tai-quay/print/${idHoaDon}"--%>
                             <%--                           download="hoadon.pdf" onclick="return downloadComplete()">In hóa đơn</a>--%>
                         <button id="btnThanhToan" type="submit" style="display: none" class="btn btn-primary"
-
-
-                                onclick="return alertThanhToan(event)">
-
+                                onclick="return alertThanhToan()">
                             Thanh toán
                         </button>
-                        <button  id="btnThanhToan_disable" type="button"  class="btn btn-danger">
-                            Thanh toán</button>
+                        <button id="btnThanhToan_disable" type="button" class="btn btn-danger">
+                            Thanh toán
+                        </button>
                     </div>
                     </form:form>
                 </div>
@@ -471,7 +465,28 @@
         </div>
     </div>
 </div>
+
 <input type="hidden" id="erorSP" value="${erorSP}" />
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script
+        src="../../../template_bootstrap/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"
+></script>
+<script src="../../../template_bootstrap/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
+
 <script>
     function submitFormKhachHang() {
         var formData = $("#sendKhachHang").serialize();
@@ -534,7 +549,7 @@
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
@@ -721,41 +736,30 @@
             event.preventDefault();
             return false;
         }
-
     }
 
 </script>
 
 <script>
-    function alertThanhToan(event) {
+    function alertThanhToan() {
         var idHoaDon = "${idHoaDon}"
         var result = confirm('Bạn có muốn thanh toán không ??');
         if (result) {
-            // Thực hiện thanh toán
             Swal.fire({
                 position: "center",
                 icon: "success",
                 title: "Thanh toán thành công",
                 showConfirmButton: false,
-                timer: 3000
+                timer: 4000
             });
-            setTimeout(function () {
-                return true;
-            }, 3000);
-
             var link = document.createElement('a');
             link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
             link.target = '_blank';
-            link.download = 'hoadon_' + ${hdct.hoaDon.maHoaDon} + '.pdf';
+            link.download = 'hoadon_' + ${hdct.hoaDon.maHoaDon} +'.pdf';
             document.body.appendChild(link);
-
-            // Yêu cầu sự tương tác người dùng
             link.click();
             document.body.removeChild(link);
-            // Tạo và tải hóa đơn PDF
-
         } else {
-            // Người dùng đã hủy thanh toán
             return false;
         }
 
@@ -764,7 +768,7 @@
 <script>
     function chonSoLuong(itemId) {
         const newValue = event.target.value;
-        if (newValue == ""){
+        if (newValue == "") {
             document.getElementById("soLuongCTSP_" + itemId).value = 1;
             alert("Số lượng sản phẩm không được để trống");
         }

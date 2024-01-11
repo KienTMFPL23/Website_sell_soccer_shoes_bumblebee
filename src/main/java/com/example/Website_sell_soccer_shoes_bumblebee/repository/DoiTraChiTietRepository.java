@@ -19,7 +19,7 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.id = ?1")
     List<DoiTraChiTiet> listDoiTraCTByID(UUID idDoiTra);
 
-    @Query(value = "select   sp.TenSanPham,dtct.SoLuong,dtct.DonGia, ms.TenMau, kc.Size,dtct.LyDoDoiTra,dtct.TrangThai\n" +
+    @Query(value = "select sp.TenSanPham,dtct.SoLuong,dtct.DonGia, ms.TenMau, kc.Size,dtct.LyDoDoiTra,dtct.TrangThai\n" +
             "from DoiTraChiTiet dtct join DoiTra dt on dtct.IdDoiTra = dt.Id\n" +
             "                        join ChiTietSanPham ctsp on dtct.IdChiTietSP = ctsp.Id\n" +
             "                        join SanPham sp on ctsp.IdSP = sp.Id\n" +
@@ -47,5 +47,11 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
 
     @Query("select dt from DoiTraChiTiet dt  where dt.lyDoDoiTra like '%Sản phẩm lỗi%' and dt.chiTietSanPham.sanPham.tenSanPham like '%1%'")
     Page<DoiTraChiTiet> searchSanPhamLoi (String tenSP, Pageable pageable);
+
+    @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.chiTietSanPham.id = ?2")
+    DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP);
+
+    @Query(value = "select COUNT(idHDCT)  from doitrachitiet where  IdHDCT = ?1",nativeQuery = true)
+    Integer getSoLuongDoiTraMax(UUID idHoaDonCT);
 
 }

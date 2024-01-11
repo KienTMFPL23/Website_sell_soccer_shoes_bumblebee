@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTra;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.DoiTraChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.DoiTraChiTietService;
@@ -93,5 +94,25 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
             sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
         }
         return sum;
+    }
+
+    @Override
+    public DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP) {
+        return doiTraCTRepo.getSanPhamInDoiTra(idDoiTra,idCTSP);
+    }
+
+    @Override
+    public Integer getSoLuongDTMax(UUID idHoaDonCT) {
+        return doiTraCTRepo.getSoLuongDoiTraMax(idHoaDonCT);
+    }
+
+    @Override
+    public Integer getSoLuongDTMaxInSP(UUID idDoiTra) {
+        Integer soLuong = 0;
+        List<DoiTraChiTiet> listDTCT = doiTraCTRepo.listDoiTraCTByID(idDoiTra);
+        for (DoiTraChiTiet lst : listDTCT){
+            soLuong += lst.getSoLuong();
+        }
+        return soLuong;
     }
 }

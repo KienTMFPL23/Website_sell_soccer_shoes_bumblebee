@@ -85,7 +85,7 @@
 </div>
 
 
-<a href="/bumblebee/doi-hang/print/${hoaDon.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
+<a href="/bumblebee/doi-hang-doi-tra/print/${hoaDon.id}" style="border-radius: 20px; background-color: pink;" class="btn btn-primary">
     <i class="fas fa-print"></i> In hoá đơn
 </a>
 

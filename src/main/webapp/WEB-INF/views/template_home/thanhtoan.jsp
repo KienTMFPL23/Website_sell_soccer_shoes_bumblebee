@@ -127,7 +127,7 @@
                                                                     value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
                                                                     type="number"/> đ</label>
                                                         </c:if>
-                                                        <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
+                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
                                                             <label id="thanhTien_${sp.id}"
                                                                    class="thanhTien"><fmt:formatNumber
                                                                     value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"
@@ -433,7 +433,6 @@
         };
     }
 </script>
-
 <script>
     function conFirm() {
         alert("Đơn hàng của bạn được đặt thành công")
@@ -488,7 +487,14 @@
             }, 10000);
             return false;
         }
-
+        if (sdt.value.length > 10){
+            var toastElement = document.getElementById("messeage_sdt");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 10000);
+            return false;
+        }
         if (thanhPho.value === "") {
             return true;
         } else if (thanhPho.value !== "Thành phố Hà Nội") {

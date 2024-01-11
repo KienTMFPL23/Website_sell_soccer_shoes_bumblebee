@@ -33,4 +33,10 @@ public interface DoiTraChiTietService {
     void deleteDoiTraCT(UUID idDoiTra);
 
     Double getToTalDoiTra(List<DoiTraChiTiet> lstDoiTraCT);
+
+    DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP);
+
+    Integer getSoLuongDTMax(UUID idHoaDonCT);
+
+    Integer getSoLuongDTMaxInSP(UUID idDoiTra);
 }
