@@ -68,6 +68,7 @@
                                 <th scope="col">Kích cỡ</th>
                                 <th scope="col">Số lượng</th>
                                 <th scope="col">Đơn giá</th>
+                                <th scope="col">Đơn giá khi giảm</th>
                                 <th scope="col">Lý do</th>
                             </tr>
                             </thead>
@@ -93,6 +94,7 @@
                                         </div>
                                     </td>
                                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
+                                    <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
                                     <td>
                                         <select id="lyDoTra_${hd.chiTietSanPham.id}" class="form-control" style="width: 200px"
                                                 name="lyDoDoiTra">

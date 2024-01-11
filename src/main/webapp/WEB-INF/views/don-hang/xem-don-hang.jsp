@@ -788,7 +788,10 @@
             </td>
         </div>
     </form:form>
+    <c:if test="${hd.doiTra != null}">
+        <h2>Sản phẩm khách trả</h2>
 
+    </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

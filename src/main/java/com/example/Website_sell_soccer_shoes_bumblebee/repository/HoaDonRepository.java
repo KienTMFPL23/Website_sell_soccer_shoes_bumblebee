@@ -162,7 +162,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     Page<HoaDon> findAllDonHang(Pageable pageable);
 
 
-    @Query(value = "select * from HoaDon where TrangThai = 5 and (GETDATE() - NgayThanhToan) <=7",nativeQuery = true)
+    @Query(value = "select * from HoaDon where TrangThai = 5 and (GETDATE() - NgayThanhToan) <= 5",nativeQuery = true)
     List<HoaDon> danhSachHDDuDK();
 
     @Query("delete from HoaDon hd where hd.id = ?1")
