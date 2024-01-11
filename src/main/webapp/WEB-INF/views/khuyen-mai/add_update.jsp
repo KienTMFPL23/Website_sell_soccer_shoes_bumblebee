@@ -112,7 +112,7 @@
                 <label>Giá trị:</label>
             </div>
             <div class="col-lg-8">
-                <form:input type="text" class="form-control" path="giaTri"/>
+                <form:input type="number" class="form-control" path="giaTri"/>
                 <form:errors path="giaTri" cssStyle="color: crimson"></form:errors>
                 <span style="color: crimson">${errorGiaTri}</span>
             </div>

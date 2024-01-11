@@ -97,4 +97,6 @@ public interface HoaDonService {
     List<HoaDon> danhSachHDDuDK();
 
     void deleteHoaDonById(UUID idHoaDon);
+
+    void auToDeleteHoaDonCho();
 }

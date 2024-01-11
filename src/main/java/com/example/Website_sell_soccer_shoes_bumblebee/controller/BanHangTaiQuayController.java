@@ -30,6 +30,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,6 +59,7 @@ import java.util.*;
 import java.util.List;
 
 @Controller
+@EnableScheduling
 @RequestMapping("/bumblebee/ban-hang-tai-quay")
 public class BanHangTaiQuayController {
 
@@ -167,14 +171,7 @@ public class BanHangTaiQuayController {
 
     @RequestMapping("/delete-hoadon/{id}")
     public String deleteHoaDon(@PathVariable("id") UUID id) {
-        List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
-        if (listHoaDonCT.size() != 0) {
-            for (HoaDonChiTiet hdct : listHoaDonCT) {
-                hoaDonChiTietService.deleteHoaDonCT(hdct.getId());
-                chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
-            }
-        }
-        hoaDonService.deleteHoaDon(id);
+        hoaDonService.auToDeleteHoaDonCho();
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
 

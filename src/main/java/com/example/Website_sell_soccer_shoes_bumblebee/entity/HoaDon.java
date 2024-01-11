@@ -58,17 +58,17 @@ public class HoaDon {
     @Column(name="LoaiHoaDon")
     private Integer loaiHoaDon;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdNV")
     private NhanVien nhanVien;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdKH")
     private KhachHang khachHang;
 
-    @OneToMany(mappedBy = "hoaDon")
+    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.LAZY)
     private List<HoaDonChiTiet> hoaDons;
 
-    @OneToOne(mappedBy = "hoaDon")
+    @OneToOne(mappedBy = "hoaDon", fetch = FetchType.LAZY)
     DoiTra doiTra;
 }

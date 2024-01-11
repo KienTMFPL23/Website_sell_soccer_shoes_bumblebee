@@ -48,8 +48,6 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
         return repo.findMa(ma);
     }
 
-
-
     @Override
     public LocalDateTime convertDateToLocalDateTime(Date date) {
         return date.toInstant()
@@ -57,27 +55,5 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
                 .toLocalDateTime();
     }
 
-    @Override
-    public List<KhuyenMai> findByNgayKetThucBeforeAndTrangThai(LocalDateTime ngayKetThuc) {
-        return repo.findByNgayKetThucBeforeAndTrangThai(ngayKetThuc);
-    }
-
-    @Scheduled(cron = "0 2 * * * *") // Chạy mỗi ngày lúc 1 AM
-    @Override
-    public void updateKhuyenMaiStatus() {
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        List<KhuyenMai> khuyenMaiHetHan = repo.findByNgayKetThucBeforeAndTrangThai(currentDateTime);
-        for (KhuyenMai khuyenMai : khuyenMaiHetHan) {
-            khuyenMai.setTrangThai(1);
-            repo.save(khuyenMai);
-        }
-    }
-
-    @Override
-    public KhuyenMai getBestPromotion(List<KhuyenMai> promotions) {
-        return promotions.stream()
-                .max(Comparator.comparing(KhuyenMai::getTrangThai))
-                .orElse(null);
-    }
 
 }

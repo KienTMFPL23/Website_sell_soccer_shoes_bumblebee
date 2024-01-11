@@ -22,12 +22,6 @@ public interface KhuyenMaiService {
 
     KhuyenMai findMa(String ma);
 
-
     LocalDateTime convertDateToLocalDateTime(Date date);
 
-    List<KhuyenMai> findByNgayKetThucBeforeAndTrangThai(LocalDateTime ngayKetThuc);
-
-    void updateKhuyenMaiStatus();
-
-    KhuyenMai getBestPromotion(List<KhuyenMai> promotions);
 }

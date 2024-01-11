@@ -392,7 +392,6 @@
 <%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="../../../js/ban_hang_tai_quay/doi-hang.js"></script>
 <script src="../../../js/doi_hang/san-pham-doi.js"></script>
 <script src="../../../js/doi_hang/validate-modal.js"></script>
 <script src="../../../js/doi_hang/web-cam-doi-tra.js"></script>
@@ -407,14 +406,6 @@
 <!-- Custom scripts for all pages-->
 <script src="../../../js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="../../../vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="../../../js/demo/chart-area-demo.js"></script>
-<script src="../../../js/demo/chart-pie-demo.js"></script>
-<script src="../../../js/demo/chart-bar-demo.js"></script>
-<script src="../../../js/demo/chart_don_hang_da_ban.js"></script>
 <script src="../../../js/de_giay/de_giay.js"></script>
 <script src="../../../js/mau_sac/mau_sac.js"></script>
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>

@@ -12,7 +12,6 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
             rel="stylesheet"
     />
-    <link href="../../../lib/toastr.css" rel="stylesheet"/>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -534,73 +533,7 @@
         $("#phoneNumber").select2();
     });
 </script>
-<script>
 
-</script>
-<%--<script>--%>
-<%--    // Đặt giá trị idHoaDon--%>
-<%--    var idHoaDon = "${idHoaDon}";--%>
-<%--    function alertThanhToan(event) {--%>
-<%--        var result = confirm('Bạn có muốn thanh toán không ??');--%>
-<%--        if (result.valueOf()) {--%>
-<%--            Swal.fire({--%>
-<%--                position: "center",--%>
-<%--                icon: "success",--%>
-<%--                title: "Thanh toán thành công",--%>
-<%--                showConfirmButton: false,--%>
-<%--                timer: 2000--%>
-<%--            });--%>
-<%--            setTimeout(function () {--%>
-<%--                return true;--%>
-<%--            }, 2000);--%>
-<%--        } else {--%>
-<%--            return false;--%>
-<%--        }--%>
-<%--    }--%>
-<%--    function taivepdf() {--%>
-<%--        // alert(idHoaDon);--%>
-<%--        var link = document.createElement('a');--%>
-<%--        link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;--%>
-<%--        link.target = '_blank';--%>
-<%--        link.download = 'hoadon_'+ ${hdct.hoaDon.maHoaDon} + '.pdf';--%>
-<%--        document.body.appendChild(link);--%>
-<%--        // Yêu cầu sự tương tác người dùng--%>
-<%--        link.click();--%>
-<%--        document.body.removeChild(link);--%>
-<%--    }--%>
-<%--    var ThanhToanButton = document.getElementById('btnThanhToan');--%>
-<%--    ThanhToanButton.onclick = function() {--%>
-<%--        alertThanhToan();--%>
-<%--        taivepdf();--%>
-
-<%--    };--%>
-<%--</script>--%>
-
-<%--<script>--%>
-<%--    function downloadHoaDon() {--%>
-<%--        // Thực hiện yêu cầu tải về sử dụng XMLHttpRequest--%>
-<%--        var xhr = new XMLHttpRequest();--%>
-<%--        var url_for_download = `/bumblebee/ban-hang-tai-quay/download-pdf/{idHoaDon}`; // Thay thế bằng URL thích hợp--%>
-
-<%--        xhr.open('GET', url_for_download, true);--%>
-<%--        xhr.responseType = 'blob';--%>
-
-<%--        xhr.onload = function () {--%>
-<%--            // Tạo một đường link ảo để tải về--%>
-<%--            var blob = new Blob([xhr.response], {type: 'application/pdf'});--%>
-<%--            var link = document.createElement('a');--%>
-
-<%--            link.href = window.URL.createObjectURL(blob);--%>
-<%--            link.download = 'hoadon_${idHoaDon}.pdf'; // Thay thế bằng tên file thích hợp--%>
-
-<%--            // Kích hoạt sự kiện click trên đường link ảo để tải về--%>
-<%--            link.click();--%>
-<%--        };--%>
-
-<%--        // Gửi yêu cầu--%>
-<%--        xhr.send();--%>
-<%--    }--%>
-<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
@@ -724,32 +657,10 @@
 
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous">
-</script>
-<script src="../../../lib/toastr.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="../../../js/ban_hang_tai_quay/them-khach-hang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<%--<script>--%>
-<%--    function downloadComplete() {--%>
-
-<%--        window.onload = function () {--%>
-
-<%--            window.location.href = '/bumblebee/ban-hang-tai-quay/sell';--%>
-<%--        };--%>
-<%--        return true;--%>
-<%--    }--%>
-<%--</script>--%>
 <script>
     function getMoneyChange() {
         var change = document.getElementById('change').value;
@@ -859,20 +770,5 @@
         }
     }
 </script>
-
-<script>
-    function changeColor(id) {
-        if (id === ${idHDCT}) {
-            var hd = document.getElementById("hoaDonStatus_" + id);
-            hd.style.backgroundColor = "yellow";
-        }
-    }
-</script>
-<script>
-    var erorQr = ${erorSP};
-</script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
 </body>
 </html>
