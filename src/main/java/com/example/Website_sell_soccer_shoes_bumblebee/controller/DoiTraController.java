@@ -253,24 +253,28 @@ public class DoiTraController {
         DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), this.idCTSP);
         ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
-        DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(),idSanPham);
-        if (getSPInDoiTra != null){
-            if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()){
-                if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet){
-                    getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
-                    doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
-                    this.idDoiTra = doiTra.getId();
+        DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(), idSanPham);
+//        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMax(hoaDonChiTiet.getId());
+        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTra.getId());
+        if (soLuongDT < hoaDonChiTiet.getSoLuong()) {
+            if (getSPInDoiTra != null) {
+                if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()) {
+                    if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet) {
+                        getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
+                        doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
+                        this.idDoiTra = doiTra.getId();
+                    }
                 }
+            } else {
+                doiTraChiTiet.setChiTietSanPham(ctsp);
+                doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
+                doiTraChiTiet.setSoLuong(1);
+                doiTraChiTiet.setDoiTra(doiTra);
+                doiTraChiTiet.setDonGia(ctsp.getGiaBan());
+                doiTraChiTiet.setTrangThai(1);
+                doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+                this.idDoiTra = doiTra.getId();
             }
-        }else {
-            doiTraChiTiet.setChiTietSanPham(ctsp);
-            doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
-            doiTraChiTiet.setSoLuong(1);
-            doiTraChiTiet.setDoiTra(doiTra);
-            doiTraChiTiet.setDonGia(ctsp.getGiaBan());
-            doiTraChiTiet.setTrangThai(1);
-            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-            this.idDoiTra = doiTra.getId();
         }
     }
 
@@ -294,17 +298,26 @@ public class DoiTraController {
         Integer soLuongDaMua = doiTraChiTiet.getHoaDonChiTiet().getSoLuong();
 //        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(doiTraChiTiet.getChiTietSanPham().getId());
 //        Integer soLuongTon = chiTietSanPham.getSoLuong() + doiTraChiTiet.getSoLuong();
-        if (soLuong > soLuongDaMua) {
-            doiTraChiTiet.setSoLuong(soLuongDaMua);
-            doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-        } else if (soLuong <= 0) {
+        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTraChiTiet.getDoiTra().getId());
+        if (soLuong <= 0){
             doiTraChiTiet.setSoLuong(1);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-        } else {
+        }
+        else if (soLuongDT + soLuong - doiTraChiTiet.getSoLuong() <= soLuongDaMua) {
             doiTraChiTiet.setSoLuong(soLuong);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-//            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - soLuong);
         }
+//        if (soLuong > soLuongDaMua) {
+//                doiTraChiTiet.setSoLuong(soLuongDaMua);
+//                doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+//            } else if (soLuong <= 0) {
+//                doiTraChiTiet.setSoLuong(1);
+//                doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+//            } else {
+//                doiTraChiTiet.setSoLuong(soLuong);
+//                doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+////            chiTietSanPhamService.updateSoLuongTon(chiTietSanPham.getId(), soLuongTon - soLuong);
+//            }
         return "redirect:/bumblebee/don-hang/doi-san-pham";
     }
 
@@ -316,6 +329,55 @@ public class DoiTraController {
         return "redirect:/bumblebee/don-hang/doi-san-pham";
     }
 
+    private void createDoiSanPhamKM(UUID idSanPham, DoiTra doiTra, HoaDon hoaDon) {
+        DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), idSanPham);
+        ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
+        DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(), idSanPham);
+//        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMax(hoaDonChiTiet.getId());
+        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTra.getId());
+        if (soLuongDT < hoaDonChiTiet.getSoLuong()) {
+            if (getSPInDoiTra != null) {
+                if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()) {
+                    if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet) {
+                        getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
+                        doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
+                        this.idDoiTra = doiTra.getId();
+                    }
+                }
+            } else {
+                doiTraChiTiet.setChiTietSanPham(ctsp);
+                doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
+                doiTraChiTiet.setSoLuong(1);
+                doiTraChiTiet.setDoiTra(doiTra);
+                doiTraChiTiet.setDonGia(hoaDonChiTiet.getDonGiaKhiGiam());
+                doiTraChiTiet.setTrangThai(1);
+                doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
+                this.idDoiTra = doiTra.getId();
+            }
+        }
+    }
+
+    @RequestMapping("/bumblebee/don-hang/doi-san-pham-km/{idSanPham}")
+    public String doiSanPhamKhuyenMai(Model model,@PathVariable("idSanPham")UUID idSanPham){
+        model.addAttribute("searchDT", new SearchDoiTra());
+        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
+        DoiTra checkDoiTra = doiTraService.getOneDoiTra(this.maHoaDon);
+        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
+
+        if (checkDoiTra != null) {
+            this.idDoiTra = checkDoiTra.getId();
+            createDoiSanPhamKM(idSanPham, checkDoiTra, hoaDon);
+        } else {
+            DoiTra doiTra = new DoiTra();
+            doiTra.setHoaDon(hoaDon);
+            doiTra.setNhanVien(nhanVien);
+            doiTraService.saveDoiTra(doiTra);
+            createDoiSanPhamKM(idSanPham, doiTra, hoaDon);
+            this.idDoiTra = doiTra.getId();
+        }
+        return "redirect:/bumblebee/don-hang/doi-san-pham";
+    }
     @RequestMapping("/bumblebee/don-hang/create-doi-tra/{idSanPham}")
     public String createDoiTra(Model model, @PathVariable("idSanPham") UUID idSanPham
     ) {
@@ -371,8 +433,8 @@ public class DoiTraController {
                 if (doiTraChiTiet.getHoaDonChiTiet().getChiTietSanPham().getId() != doiTraChiTiet.getChiTietSanPham().getId()) {
                     ChiTietSanPham sanPhamTra = chiTietSanPhamService.getOne(doiTraChiTiet.getHoaDonChiTiet().getChiTietSanPham().getId());
                     ChiTietSanPham sanPhamDoi = chiTietSanPhamService.getOne(doiTraChiTiet.getChiTietSanPham().getId());
-                    chiTietSanPhamService.updateDelete(sanPhamTra.getId(),doiTraChiTiet.getSoLuong());
-                    chiTietSanPhamService.updateSoLuongTon(sanPhamDoi.getId(),sanPhamDoi.getSoLuong() - doiTraChiTiet.getSoLuong());
+                    chiTietSanPhamService.updateDelete(sanPhamTra.getId(), doiTraChiTiet.getSoLuong());
+                    chiTietSanPhamService.updateSoLuongTon(sanPhamDoi.getId(), sanPhamDoi.getSoLuong() - doiTraChiTiet.getSoLuong());
                 }
             }
         }
@@ -498,6 +560,8 @@ public class DoiTraController {
         model.addAttribute("idDoiTra", this.idDoiTra);
         List<HoaDonChiTiet> lstHoaDonCT = hoaDonChiTietService.listHDCTByMaHD(this.maHoaDon);
         model.addAttribute("listHDCT", lstHoaDonCT);
+        Double sumMoney = hoaDonChiTietService.getTotalMoney(lstHoaDonCT);
+        model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("listDoiTraCT", doiTraChiTietService.listDoiTraCTByHoaDon(this.maHoaDon));
         return "/admin/index";
     }
@@ -615,12 +679,12 @@ public class DoiTraController {
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getSoLuong()), titleFont1));
-                if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() ==null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == 0 ){
+                if (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == 0) {
                     productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()), titleFont1));
-                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()* doiTraChiTiet.getSoLuong()), titleFont1));
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong()), titleFont1));
                     double giaTriSanPham = doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
                     tongTienTra += giaTriSanPham;
-                }else if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != null  || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0){
+                } else if (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0) {
                     productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam()), titleFont1));
                     productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong()), titleFont1));
                     double giaTriSanPham = doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong();
@@ -772,12 +836,12 @@ public class DoiTraController {
                 productTable1.addCell(createTableCell(doiTraChiTiet.getChiTietSanPham().getMauSac().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
                 productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getSoLuong()), titleFont1));
-                if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() ==null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == 0 ){
+                if (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() == 0) {
                     productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()), titleFont1));
-                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia()* doiTraChiTiet.getSoLuong()), titleFont1));
+                    productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong()), titleFont1));
                     double giaTriSanPham = doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
                     tongTienTra += giaTriSanPham;
-                }else if(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != null  || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0){
+                } else if (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != null || doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0) {
                     productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam()), titleFont1));
                     productTable1.addCell(createTableCell(String.valueOf(doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong()), titleFont1));
                     double giaTriSanPham = doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() * doiTraChiTiet.getSoLuong();

@@ -51,6 +51,7 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.chiTietSanPham.id = ?2")
     DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP);
 
-    @Query(value = " select count(idHDCT) from DoiTraChiTiet where IdDoiTra = ?1",nativeQuery = true)
-    Integer getSoLuongDoiTra(UUID idDoiTra);
+    @Query(value = "select COUNT(idHDCT)  from doitrachitiet where  IdHDCT = ?1",nativeQuery = true)
+    Integer getSoLuongDoiTraMax(UUID idHoaDonCT);
+
 }

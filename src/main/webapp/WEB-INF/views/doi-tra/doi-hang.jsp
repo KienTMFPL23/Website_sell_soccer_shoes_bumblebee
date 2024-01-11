@@ -27,15 +27,25 @@
                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                     <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
                     <td>
-                        </a>
-                        <a id="openModalSanPham"
-                           onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
-                           class="btn btn-primary"
-                           type="submit"
-                           data-bs-toggle="modal"
-                           data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px;"
-                        >Chọn
-                        </a>
+                        <c:if test="${hd.donGiaKhiGiam != 0}">
+                            <c:if test="${hd.chiTietSanPham.soLuong != 0}">
+                                <a href="/bumblebee/don-hang/doi-san-pham-km/${hd.chiTietSanPham.id}"
+                                   class="btn btn-primary" style="border-radius: 20px; margin-top: 5px;">Chọn</a>
+                            </c:if>
+                            <c:if test="${hd.chiTietSanPham.soLuong == 0}">
+                                <strong>Hết hàng</strong>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${hd.donGiaKhiGiam == 0}">
+                            <a id="openModalSanPham"
+                               onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
+                               class="btn btn-primary"
+                               type="submit"
+                               data-bs-toggle="modal"
+                               data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px;"
+                            >Chọn
+                            </a>
+                        </c:if>
                         <div class="modal fade" id="modalSanPham" tabindex="-1"
                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -77,58 +87,64 @@
     </div>
     <hr>
     <h2 style="text-align: center">Sản phẩm khách hàng đổi</h2>
-        <table class="table table-bordered" style="margin-top: 10px">
-            <thead>
+    <table class="table table-bordered" style="margin-top: 10px">
+        <thead>
+        <tr>
+            <th scope="col"> Tên sản phẩm</th>
+            <th scope="col"> Màu sắc</th>
+            <th scope="col"> Kích cỡ</th>
+            <th scope="col"> Số lượng</th>
+            <th scope="col"> Đơn giá</th>
+            <th scope="col"> Lý do đổi trả</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="dtct" items="${listDoiTraCT}">
             <tr>
-                <th scope="col"> Tên sản phẩm</th>
-                <th scope="col"> Màu sắc</th>
-                <th scope="col"> Kích cỡ</th>
-                <th scope="col"> Số lượng</th>
-                <th scope="col"> Đơn giá</th>
-                <th scope="col"> Lý do đổi trả</th>
-                <th scope="col"></th>
+                <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
+                <td>${dtct.chiTietSanPham.mauSac.ten}</td>
+                <td>${dtct.chiTietSanPham.kichCo.size}</td>
+                <td>
+                    <form action="/bumblebee/don-hang/update-so-Luong/${dtct.id}">
+                        <input type="number" class="form-control"
+                               min="1"
+                               name="soLuong"
+                               value="${dtct.soLuong}"
+                               onblur="this.form.submit()"
+                               id="soLuongCTSP_${dtct.id}"
+                               oninput="chonSoLuong('${dtct.id}',event)"
+                               style="width:100px;">
+                    </form>
+                </td>
+                <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
+                <td>
+                    <form action="/bumblebee/don-hang/update-ly-do/${dtct.id}">
+                        <select value="${dtct.lyDoDoiTra}" class="form-control" id="lyDo" name="lyDoDoiTra"
+                                onchange="this.form.submit()">
+                            <option value="">-----</option>
+                            <option value="Mẫu giao sai"
+                                    <c:if test="${dtct.lyDoDoiTra eq 'Mẫu giao sai'}">selected</c:if>>Mẫu giao sai
+                            </option>
+                            <option value="Sản phẩm lỗi"
+                                    <c:if test="${dtct.lyDoDoiTra eq 'Sản phẩm lỗi'}">selected</c:if>>Sản phẩm lỗi
+                            </option>
+                            <option value="Giao thiếu hàng"
+                                    <c:if test="${dtct.lyDoDoiTra eq 'Giao thiếu hàng'}">selected</c:if>>Giao thiếu hàng
+                            </option>
+                        </select>
+                    </form>
+                </td>
+                <td>
+                    <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="dtct" items="${listDoiTraCT}">
-                <tr>
-                    <td>${dtct.chiTietSanPham.sanPham.tenSanPham}</td>
-                    <td>${dtct.chiTietSanPham.mauSac.ten}</td>
-                    <td>${dtct.chiTietSanPham.kichCo.size}</td>
-                    <td>
-                        <form action="/bumblebee/don-hang/update-so-Luong/${dtct.id}">
-                            <input type="number" class="form-control"
-                                   min="1"
-                                   name="soLuong"
-                                   value="${dtct.soLuong}"
-                                   onblur="this.form.submit()"
-                                   id="soLuongCTSP_${dtct.id}"
-                                   oninput="chonSoLuong('${dtct.id}',event)"
-                                   style="width:100px;">
-                        </form>
-                    </td>
-                    <td><fmt:formatNumber value="${dtct.donGia}" type="number"/></td>
-                    <td>
-                        <form action="/bumblebee/don-hang/update-ly-do/${dtct.id}">
-                            <select value="${dtct.lyDoDoiTra}" class="form-control" id="lyDo"  name="lyDoDoiTra" onchange="this.form.submit()">
-                                <option value="">-----</option>
-                                <option value="Mẫu giao sai" <c:if test="${dtct.lyDoDoiTra eq 'Mẫu giao sai'}">selected</c:if>>Mẫu giao sai</option>
-                                <option value="Sản phẩm lỗi" <c:if test="${dtct.lyDoDoiTra eq 'Sản phẩm lỗi'}">selected</c:if>>Sản phẩm lỗi</option>
-                                <option value="Giao thiếu hàng" <c:if test="${dtct.lyDoDoiTra eq 'Giao thiếu hàng'}">selected</c:if>>Giao thiếu hàng</option>
-                                <option value="Đổi sản phẩm khác" <c:if test="${dtct.lyDoDoiTra eq 'Đổi sản phẩm khác'}">selected</c:if>>Đổi sản phẩm khác</option>
-                            </select>
-                        </form>
-                    </td>
-                    <td>
-                        <a href="/bumblebee/don-hang/remove-doi-tra/${dtct.id}"> <img src="../../../img/delete.png"></a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <div>
-            <strong><p style="color: red; text-align: right;font-size: 15px"  id="errorLyDo"></p></strong>
-        </div>
-        <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Xác nhận</a>
-        <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
+        </c:forEach>
+        </tbody>
+    </table>
+    <div>
+        <strong><p style="color: red; text-align: right;font-size: 15px" id="errorLyDo"></p></strong>
+    </div>
+    <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Xác nhận</a>
+    <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
 </div>
