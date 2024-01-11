@@ -52,6 +52,7 @@ public class KhuyenMaiController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
+
     private UUID idKhuyenMai = null;
 
     @ModelAttribute("dsTrangThai")
@@ -82,7 +83,7 @@ public class KhuyenMaiController {
         String donHang = "khuyen-mai";
         model.addAttribute("donHang", donHang);
 
-        model.addAttribute("listCTSP", chiTietSanPhamService.getList());
+        model.addAttribute("listCTSP", chiTietSanPhamRepo.ctspConHang());
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
@@ -204,6 +205,12 @@ public class KhuyenMaiController {
 
         if (khuyenMaiService.findMa(km.getMaKhuyenMai()) != null) {
             model.addAttribute("mess_Ma", "Mã không được trùng");
+            model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+            return "admin/index";
+        }
+
+        if (LocalDateTime.now().isAfter(km.getNgayKetThuc())) {
+            model.addAttribute("mess_Ngay", "Ngày kết thúc phải lớn hơn ngày hiện tại");
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
             return "admin/index";
         }

@@ -79,7 +79,7 @@ public class QLSanPham {
     @Column(name = "Trangthai")
     @NotNull(message = "* Mời chọn trạng thái !")
     Integer trangThai;
-    @OneToOne(mappedBy = "ctsp")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "ctsp")
     HinhAnh hinhAnhs;
 
     @Override

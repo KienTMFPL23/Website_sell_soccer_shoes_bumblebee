@@ -524,22 +524,23 @@ public class HomeController {
                 hdct.setChiTietSanPham(ghct.getCtsp());
                 hdct.setSoLuong(ghct.getSoLuong());
                 if (ghct.getCtsp().getCtkm() != null) {
-                    Boolean allTranhThai1 = false;
-                    Double donGiaKhiGiam = 0.0;
-                    for (ChiTietKhuyenMai ctkm : ghct.getCtsp().getCtkm()) {
-                        if (ctkm.getTrangThai() == 0) {
-                            allTranhThai1 = true;
+                    double donGiaKhiGiam = 0;
+                    Boolean allTrangThai1 = false;
+                    for (ChiTietKhuyenMai chiTietKhuyenMai : ghct.getCtsp().getCtkm()) {
+                        if (chiTietKhuyenMai.getTrangThai() == 0) {
+                            allTrangThai1 = true;
                             hdct.setDonGia(ghct.getDonGia());
-                            if (ctkm.getKhuyenMai().getDonVi().contains("%")) {
-                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * ctkm.getKhuyenMai().getGiaTri() / 100);
+                            if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("%")) {
+                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100);
                                 hdct.setDonGiaKhiGiam(donGiaKhiGiam);
-                            } else {
-                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - ctkm.getKhuyenMai().getGiaTri();
+                            }
+                            if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                                donGiaKhiGiam = ghct.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
                                 hdct.setDonGiaKhiGiam(donGiaKhiGiam);
                             }
                         }
                     }
-                    if (allTranhThai1 == false) {
+                    if (allTrangThai1 == false) {
                         hdct.setDonGia(ghct.getDonGia());
                     }
                 } else {
@@ -547,7 +548,12 @@ public class HomeController {
                 }
                 hdct.setTrangThai(3);
                 hoaDonChiTietService.save(hdct);
-                gioHangChiTietService.deleteGHCT(ghct.getId());
+                ChiTietSanPham ctsp = chiTietSanPhamService.getOne(ghct.getCtsp().getId());
+                ctsp.setSoLuong(ghct.getCtsp().getSoLuong() - ghct.getSoLuong());
+                chiTietSanPhamRepo.save(ctsp);
+                if (ghct.getId() != null) {
+                    gioHangChiTietService.deleteGHCT(ghct.getId());
+                }
             }
         }
         String orderInfo = request.getParameter("vnp_OrderInfo");

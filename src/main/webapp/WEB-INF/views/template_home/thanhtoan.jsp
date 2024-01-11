@@ -65,8 +65,7 @@
                             <div class="mb-3">
                                 <label class="form-label"></label>
                                 <input type="text" class="form-control" name="diaChiShip" id="diaChiShip"
-                                       value="${listKH.diaChi}"
-                                />
+                                       value="${listKH.diaChi}"/>
                             </div>
                             <div class="mb-3" id="province">
                                 <select id="city" name="thanhPho" class="filterSelect">
@@ -349,6 +348,7 @@
             </div>
         </div>
     </div>
+
     <div id="messeage_sdt" style="display:none;">
         <div class="toast toast__warring">
             <div class="toast__icon">
@@ -378,63 +378,6 @@
 ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
-<%--<script>--%>
-
-<%--    // Gọi hàm khi checkbox thay đổi trạng thái--%>
-<%--    document.getElementById('flexCheckDefault').addEventListener('change', updateBtnDatHang);--%>
-<%--    var citis = document.getElementById("city");--%>
-<%--    var districts = document.getElementById("district");--%>
-<%--    var wards = document.getElementById("ward");--%>
-<%--    var Parameter = {--%>
-<%--        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",--%>
-<%--        method: "GET",--%>
-<%--        responseType: "application/json",--%>
-<%--    };--%>
-<%--    var promise = axios(Parameter);--%>
-<%--    promise.then(function (result) {--%>
-<%--        renderCity(result.data);--%>
-<%--    });--%>
-
-<%--    function renderCity(data) {--%>
-<%--        for (const x of data) {--%>
-<%--            var opt = document.createElement('option');--%>
-<%--            opt.value = x.Name;--%>
-<%--            opt.text = x.Name;--%>
-<%--            opt.setAttribute('data-id', x.Id);--%>
-<%--            citis.options.add(opt);--%>
-<%--        }--%>
-<%--        citis.onchange = function () {--%>
-<%--            district.length = 1;--%>
-<%--            ward.length = 1;--%>
-<%--            if (this.options[this.selectedIndex].dataset.id != "") {--%>
-<%--                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);--%>
-
-<%--                for (const k of result[0].Districts) {--%>
-<%--                    var opt = document.createElement('option');--%>
-<%--                    opt.value = k.Name;--%>
-<%--                    opt.text = k.Name;--%>
-<%--                    opt.setAttribute('data-id', k.Id);--%>
-<%--                    district.options.add(opt);--%>
-<%--                }--%>
-<%--            }--%>
-<%--        };--%>
-<%--        district.onchange = function () {--%>
-<%--            ward.length = 1;--%>
-<%--            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);--%>
-<%--            if (this.options[this.selectedIndex].dataset.id != "") {--%>
-<%--                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;--%>
-
-<%--                for (const w of dataWards) {--%>
-<%--                    var opt = document.createElement('option');--%>
-<%--                    opt.value = w.Name;--%>
-<%--                    opt.text = w.Name;--%>
-<%--                    opt.setAttribute('data-id', w.Id);--%>
-<%--                    wards.options.add(opt);--%>
-<%--                }--%>
-<%--            }--%>
-<%--        };--%>
-<%--    }--%>
-<%--</script>--%>
 
 <script>
     var citis = document.getElementById("city");
@@ -532,7 +475,16 @@
             toastElement.style.display = "block";
             setTimeout(function () {
                 toastElement.style.display = "none";
-            }, 1500);
+            }, 10000);
+            return false;
+        }
+
+        if (sdt.value.length > 10){
+            var toastElement = document.getElementById("messeage_sdt");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 10000);
             return false;
         }
         if (sdt.value.length > 10){
@@ -559,7 +511,7 @@
             toastElement.style.display = "block";
             setTimeout(function () {
                 toastElement.style.display = "none";
-            }, 1500);
+            }, 10000);
             return false;
         }
         return true;

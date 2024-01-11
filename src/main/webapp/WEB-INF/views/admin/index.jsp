@@ -407,11 +407,6 @@
 <!-- Custom scripts for all pages-->
 <script src="../../../js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-
-
-<!-- Page level custom scripts -->
-
 
 <script src="../../../js/de_giay/de_giay.js"></script>
 <script src="../../../js/mau_sac/mau_sac.js"></script>

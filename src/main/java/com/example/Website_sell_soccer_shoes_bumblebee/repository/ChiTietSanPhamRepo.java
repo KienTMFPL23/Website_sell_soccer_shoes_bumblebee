@@ -235,7 +235,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             @Param("deGiay") DeGiay deGiay,
             @Param("loaiGiay") LoaiGiay loaiGiay);
 
-
+    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.soLuong > 0")
+    List<ChiTietSanPham> ctspConHang();
 
 
 
