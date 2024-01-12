@@ -229,6 +229,12 @@
     </div>
 </main>
 <script>
+
+    var errolSL = "${errolSL}";
+    if (errolSL !== "") {
+        alert(errolSL)
+    }
+
     function chonSoLuong(itemId) {
         const newValue = event.target.value;
         if (newValue > 30) {

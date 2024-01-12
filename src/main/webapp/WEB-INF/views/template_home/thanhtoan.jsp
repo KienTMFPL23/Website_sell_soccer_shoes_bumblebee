@@ -521,6 +521,12 @@
 </script>
 
 <script>
+
+    var errolSL = "${errolSL}";
+    if (errolSL !== "") {
+        alert(errolSL)
+    }
+    
     var filterSelects = document.getElementsByClassName("filterSelect");
 
     for (var i = 0; i < filterSelects.length; i++) {

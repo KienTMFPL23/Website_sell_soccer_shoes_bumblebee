@@ -510,21 +510,6 @@ public class HoaDonServiceImpl implements HoaDonService {
         hoaDonRepository.deletHoaDonById(idHoaDon);
     }
 
-    @Scheduled(fixedDelay = 7200000) // Định kỳ 1 phút
-    @Override
-    public void auToDeleteHoaDonCho() {
-        // Xóa danh sách hóa đơn
-        List<HoaDon> listHDC = hoaDonRepository.getListByTrangThai();
-        for (HoaDon hd : listHDC) {
-            List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(hd.getId());
-            if (listHoaDonCT.size() != 0) {
-                for (HoaDonChiTiet hdct : listHoaDonCT) {
-                    hoaDonChiTietService.deleteHoaDonCT(hdct.getId());
-                    chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
-                }
-            }
-            hoaDonRepository.delete(hd);
-        }
-    }
+
 
 }
