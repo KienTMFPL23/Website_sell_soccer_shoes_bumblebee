@@ -31,7 +31,6 @@ public class TaiKhoan {
     private String password;
 
     @Column(name = "Role")
-    @NotNull(message = "Role không được để trống")
     private Integer role;
 
     @OneToOne(mappedBy = "taiKhoanKH")

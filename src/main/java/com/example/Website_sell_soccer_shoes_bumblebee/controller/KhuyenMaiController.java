@@ -316,7 +316,6 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-
         KhuyenMai khuyenMai = khuyenMaiService.findId(km.getId());
         khuyenMai.setTrangThai(km.getTrangThai());
         khuyenMai.setNgayKetThuc(km.getNgayKetThuc());
@@ -327,6 +326,12 @@ public class KhuyenMaiController {
         khuyenMai.setNgayBatDau(km.getNgayBatDau());
         khuyenMaiService.save(khuyenMai);
 
+
+        List<ChiTietKhuyenMai> listCTKM = chiTietKhuyenMaiRepository.findIdKhuyenMai(khuyenMai.getId());
+        for (ChiTietKhuyenMai ctkm : listCTKM) {
+            chiTietKhuyenMaiRepository.delete(ctkm);
+        }
+
         if (km.getTrangThai() == 1) {
             List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
             for (ChiTietKhuyenMai ctkm : chiTietKhuyenMai) {
@@ -336,7 +341,6 @@ public class KhuyenMaiController {
         } else {
             List<ChiTietKhuyenMai> listCTKmByIdKM = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
             List<ChiTietKhuyenMai> listCTKMByTrangThai0 = chiTietKhuyenMaiRepository.ctkmByTrangThai0();
-
 
             for (ChiTietKhuyenMai ctkm1 : listCTKmByIdKM) {
                 System.out.println("aa " + ctkm1.getCtsp().getId());

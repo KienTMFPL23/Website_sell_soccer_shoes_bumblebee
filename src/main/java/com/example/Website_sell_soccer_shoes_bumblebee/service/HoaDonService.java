@@ -98,5 +98,5 @@ public interface HoaDonService {
 
     void deleteHoaDonById(UUID idHoaDon);
 
-    void auToDeleteHoaDonCho();
+
 }

@@ -365,6 +365,7 @@ public class HomeController {
     ) {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         model.addAttribute("listKH", taiKhoan.getKhachHangKH());
+
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
@@ -379,13 +380,28 @@ public class HomeController {
                 GioHangChiTiet ghct = gioHangChiTietService.findId(id, taiKhoan.getKhachHangKH().getId());
                 listGHCT.add(ghct);
             }
+            int checkSoLuong = 0;
+            for (GioHangChiTiet gioHangChiTiet : listGHCT) {
+                if (gioHangChiTiet.getCtsp().getSoLuong() == 0) {
+                    checkSoLuong++;
+                }
+            }
+            if (checkSoLuong > 0) {
+                GioHang gioHang = gioHangRepo.getGioHang(taiKhoan.getKhachHangKH().getId());
+                List<GioHangChiTiet> listGHCT;
+                listGHCT = gioHangRepo.getGioHangChiTiet(gioHang.getId());
+                model.addAttribute("listGHCT", listGHCT);
+                model.addAttribute("errolSL","sản phẩm bạn chọn đã hết hàng, vui lòng chọn sản phẩm khác.");
+                model.addAttribute("view", "../template_home/cart.jsp");
+                return "template_home/index";
+            }
             model.addAttribute("listKH", taiKhoan.getKhachHangKH());
-            //totalPrice = gioHangChiTietService.getTotalMoney(listGHCT);
             model.addAttribute("listGHCT", listGHCT);
             model.addAttribute("view", "../template_home/thanhtoan.jsp");
             return "template_home/index";
         }
     }
+
 
 
     private HoaDon hoaDon;
@@ -408,6 +424,19 @@ public class HomeController {
     ) throws ParseException {
         TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("userLogged");
         KhachHang kh = khachHangService.findId(taiKhoan.getKhachHangKH().getId());
+
+        int checkSoLuong = 0;
+        for (GioHangChiTiet gioHangChiTiet : listGHCT) {
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamRepo.getOne(gioHangChiTiet.getCtsp().getId());
+            if (chiTietSanPham.getSoLuong() == 0) {
+                checkSoLuong++;
+            }
+        }
+        if (checkSoLuong > 0) {
+            model.addAttribute("view", "../template_home/cart.jsp");
+            model.addAttribute("errolSL","sản phẩm bạn chọn đã hết hàng, vui lòng chọn sản phẩm khác.");
+            return "template_home/index";
+        }
 
         // Tạo hóa đơn
         hoaDon = new HoaDon();

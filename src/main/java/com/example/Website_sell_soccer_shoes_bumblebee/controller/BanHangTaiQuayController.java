@@ -164,8 +164,14 @@ public class BanHangTaiQuayController {
 
     @RequestMapping("/delete-hoadon/{id}")
     public String deleteHoaDon(@PathVariable("id") UUID id) {
-        hoaDonService.auToDeleteHoaDonCho();
+        List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
+        if (listHoaDonCT.size() != 0) {
+            hoaDonChiTietService.removeHDCT(id);
+            hoaDonChiTietService.deleteByHoaDon(id);
+        }
+        hoaDonService.deleteHoaDon(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
+
     }
 
 //    @GetMapping("/searchSanPham")
