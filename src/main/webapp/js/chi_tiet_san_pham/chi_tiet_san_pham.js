@@ -27,7 +27,7 @@ $(document).ready(function () {
 
  $(document).ready(function () {
     $('#searchName1').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search Size ....",
         ajax: {
             type: 'GET',
@@ -53,7 +53,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#searchName2').select2({
-        width: 150,
+        width: 413,
         placeholder: "Search Mau Sac ....",
         ajax: {
             type: 'GET',
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
  $(document).ready(function () {
     $('#searchName11').select2({
-        width: 630,
+        width: 350,
         placeholder: "Search Size ....",
         ajax: {
             type: 'GET',
@@ -186,7 +186,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#searchName12').select2({
-        width: 630,
+        width: 413,
         placeholder: "Search Mau Sac ....",
         ajax: {
             type: 'GET',

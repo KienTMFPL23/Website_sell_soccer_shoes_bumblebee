@@ -476,7 +476,7 @@ public class DoiTraController {
         checkDoiTra.setTrangThai(2);
         doiTraService.saveDoiTra(checkDoiTra);
         createDoiTraCT(checkDoiTra, listlyDo);
-        hoaDon.setTrangThai(7);
+        hoaDon.setTrangThai(6);
         hoaDonService.saveHoaDon(hoaDon);
         for (int j = 0; j < listCTSP.size(); j++) {
             HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(this.idHoaDon, listCTSP.get(j).getId());

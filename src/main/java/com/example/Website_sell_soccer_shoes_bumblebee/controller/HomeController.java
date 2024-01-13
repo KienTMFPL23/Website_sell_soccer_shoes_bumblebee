@@ -492,7 +492,7 @@ public class HomeController {
                             donGiaKhiGiam = ghct.getCtsp().getGiaBan() - (ghct.getCtsp().getGiaBan() * chiTietKhuyenMai.getKhuyenMai().getGiaTri() / 100);
                             hdct.setDonGiaKhiGiam(donGiaKhiGiam);
                         }
-                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNÐ")) {
+                        if (chiTietKhuyenMai.getKhuyenMai().getDonVi().equals("VNĐ")) {
                             donGiaKhiGiam = ghct.getCtsp().getGiaBan() - chiTietKhuyenMai.getKhuyenMai().getGiaTri();
                             hdct.setDonGiaKhiGiam(donGiaKhiGiam);
                         }
@@ -500,9 +500,11 @@ public class HomeController {
                 }
                 if (allTrangThai1 == false) {
                     hdct.setDonGia(ghct.getDonGia());
+                    hdct.setDonGiaKhiGiam(0.0);
                 }
             } else {
                 hdct.setDonGia(ghct.getDonGia());
+                hdct.setDonGiaKhiGiam(0.0);
             }
             hdct.setTrangThai(3);
             hoaDonChiTietService.save(hdct);
@@ -571,9 +573,11 @@ public class HomeController {
                     }
                     if (allTrangThai1 == false) {
                         hdct.setDonGia(ghct.getDonGia());
+                        hdct.setDonGiaKhiGiam(0.0);
                     }
                 } else {
                     hdct.setDonGia(ghct.getDonGia());
+                    hdct.setDonGiaKhiGiam(0.0);
                 }
                 hdct.setTrangThai(3);
                 hoaDonChiTietService.save(hdct);

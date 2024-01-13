@@ -741,29 +741,40 @@
 </script>
 
 <script>
-    function alertThanhToan() {
+    function alertThanhToan(event) {
         var idHoaDon = "${idHoaDon}"
         var result = confirm('Bạn có muốn thanh toán không ??');
         if (result) {
+            // Thực hiện thanh toán
             Swal.fire({
                 position: "center",
                 icon: "success",
                 title: "Thanh toán thành công",
                 showConfirmButton: false,
-                timer: 4000
+                timer: 3000
             });
+            setTimeout(function () {
+                return true;
+            }, 3000);
+
             var link = document.createElement('a');
             link.href = '/bumblebee/ban-hang-tai-quay/download-pdf/' + idHoaDon;
             link.target = '_blank';
-            link.download = 'hoadon_' + ${hdct.hoaDon.maHoaDon} +'.pdf';
+            link.download = 'hoadon_' + ${hdct.hoaDon.maHoaDon} + '.pdf';
             document.body.appendChild(link);
+
+            // Yêu cầu sự tương tác người dùng
             link.click();
             document.body.removeChild(link);
+            // Tạo và tải hóa đơn PDF
+
         } else {
+            // Người dùng đã hủy thanh toán
             return false;
         }
 
     }
+
 </script>
 <script>
     function chonSoLuong(itemId) {

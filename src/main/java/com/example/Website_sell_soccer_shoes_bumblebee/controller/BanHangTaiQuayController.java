@@ -171,7 +171,6 @@ public class BanHangTaiQuayController {
         }
         hoaDonService.deleteHoaDon(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
-
     }
 
 //    @GetMapping("/searchSanPham")
@@ -409,10 +408,10 @@ public class BanHangTaiQuayController {
             Paragraph tenKhach = new Paragraph("Khách hàng    :    Khách vãng lai", titleFont);
             document.add(tenKhach);
         } else {
-            Paragraph tenKhach = new Paragraph("Khách hàng    :    "+hoaDonThanhToan.getMaHoaDon()+"      "+ hoaDonThanhToan.getTenNguoiNhan(), titleFont);
+            Paragraph tenKhach = new Paragraph("Khách hàng    :    "+ hoaDonThanhToan.getTenNguoiNhan(), titleFont);
 
 
-        document.add(tenKhach);
+            document.add(tenKhach);
 
 
 

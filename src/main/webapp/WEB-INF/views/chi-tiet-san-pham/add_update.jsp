@@ -8,11 +8,11 @@
 
 </br>
 <style>
-    .container-sm {
+    .container-lg {
         margin: 0;
         padding: 0;
         background-color: #D9D9D9;
-
+        padding-left: 20px;
     }
 
     .item-right {
@@ -32,6 +32,9 @@
         padding-left: 20px;
     }
 
+    .item {
+        float: left;
+    }
 
     .inp input {
         border: none;
@@ -49,19 +52,15 @@
         background-color: white;
     }
 
-
-    input {
-        outline: none;
+    .item input {
+        margin-top: 20px;
     }
 
-    .item, .item-right {
-        text-align: left;
-    }
 
     .col-lg-6 select {
         height: 30px;
         margin-top: 20px;
-        width: 150px;
+        width: 550px;
         border: none
 
     }
@@ -69,193 +68,185 @@
     .form-label {
         padding-left: 30px;
     }
-
-    .remove-button {
-        background: red;
-        border: none;
-        border-radius: 100%;
-        color: white;
-        font-size: 8px;
-        width: 10px;
-        height: 12px;
-        justify-content: center;
-        display: flex;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-    .selected-size, .selected-mau {
-        background: white;
-        width: 45px;
-        position: relative;
-        border-radius: 5px;
-        height: 25px;
-    }
-
-    .selected-mau {
-        width: 50px;
-    }
-
-    .selected-size:first-child, .selected-mau:first-child {
-        margin-left: 10px;
-    }
 </style>
-<div class="container-sm">
+<div class="container-lg">
 
-    <h2 style="text-align: center;padding-top: 20px;margin-bottom: 20px">Thêm/Sửa Chi Tiết Sản Phẩm</h2>
-    <form:form action="${action}" modelAttribute="sanpham" cssClass="text-center" enctype="multipart/form-data"
+    <h2 class="h3 text-gray-900 mb-4">Thêm/Sửa Chi Tiết Sản Phẩm</h2>
+    <form:form action="${action}" modelAttribute="sanpham" enctype="multipart/form-data"
                id="sanPhamForm">
         <form:input path="id" class="form-control" type="hidden"/>
+        <div class="row ">
+            <div class="col-lg-6 ">
+                <div class="item inp">
+                    <label class="form-label">Tên sản phẩm <span style="color: red">*</span> : </label>
+                    <form:input path="sanPham" class="form-control form-control-user" cssStyle="margin-left: 12px"
+                                type="hidden"/>
 
-        <div class="col-md-12">
-            <div class="row">
-                <div class="item inp col-md-4">
-                    <label>Tên sản phẩm <span style="color: red">*</span> : </label>
-                    <div>
-                        <form:input path="sanPham" class="form-control" cssStyle="margin-left: 12px" type="hidden"/>
-                        <form:input path="sanPham.tenSanPham" value="${tensp}"
-                                    cssStyle="width: 100%;border-radius: 3px;height: 40px"
-                                    readonly="true"/>
-                    </div>
+                    <form:input path="sanPham.tenSanPham" value="${tensp}" cssStyle="margin-left: 12px"
+                                readonly="true"/>
                 </div>
-                <div class="item col-md-8">
-                    <label>Mô tả <span style="color: red">*</span> : </label>
-                    <div>
-                        <form:textarea cols="50" rows="5" path="moTaCT"
-                                       cssStyle="border: none; width: 100%;height: 40px"/>
-                        <p><form:errors path="moTaCT" cssStyle="color: crimson"/></p>
-                    </div>
+                <div class="item inp">
+                    <label class="form-label">Giá Bán <span style="color: red">*</span> : </label>
+                    <form:input path="giaBan" type="number" min="1" cssStyle="margin-left: 50px"/>
+                    <p><form:errors path="giaBan" cssStyle="color: crimson"/></p>
+                </div>
 
+                <c:if test="${act eq 'update'}">
+
+                    <div class="item inp">
+                        <label class="form-label">Số lượng <span style="color: red">*</span> : </label>
+                        <form:input path="soLuong" type="number" min="1" cssStyle="margin-left: 44px"/>
+                        <p><form:errors path="soLuong" cssStyle="color: crimson"/></p>
+                    </div>
+                </c:if>
+                <div class="item">
+                    <label class="form-label">Mô tả <span style="color: red">*</span> : </label>
+                    <form:textarea cols="50" rows="5" path="moTaCT"
+                                   cssStyle="border: none; width: 280px;height: 100px;border-radius: 15px;margin-left: 65px;margin-top: 20px"/>
+                    <p><form:errors path="moTaCT" cssStyle="color: crimson"/></p>
+                </div>
+
+                <div class="item form-check-inline">
+                    <br>
+                    <label class="form-label">Trạng Thái <span style="color: red">*</span> :</label>
+                    <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"
+                                       cssStyle="margin-right: 15px;margin-left: 35px;"/>
+                    <p><form:errors path="trangThai" cssStyle="color: crimson"/></p>
                 </div>
             </div>
-                <%--                <div class="item inp">--%>
-                <%--                    <label class="form-label">Giá Bán <span style="color: red">*</span> : </label>--%>
-                <%--                    <form:input path="giaBan" type="number" min="1" cssStyle="margin-left: 50px"/>--%>
-                <%--                    <p><form:errors path="giaBan" cssStyle="color: crimson"/></p>--%>
-                <%--                </div>--%>
-
-                <%--                <div class="item inp">--%>
-                <%--                    <label class="form-label">Số lượng <span style="color: red">*</span> : </label>--%>
-                <%--                    <form:input path="soLuong" type="number" min="1" cssStyle="margin-left: 44px"/>--%>
-                <%--                    <p><form:errors path="soLuong" cssStyle="color: crimson"/></p>--%>
-                <%--                </div>--%>
-                <%--                <div class="item form-check-inline">--%>
-                <%--                    <br>--%>
-                <%--                    <label class="form-label">Trạng Thái <span style="color: red">*</span> :</label>--%>
-                <%--                    <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"--%>
-                <%--                                       cssStyle="margin-right: 15px;margin-left: 35px;"/>--%>
-                <%--                    <p><form:errors path="trangThai" cssStyle="color: crimson"/></p>--%>
-                <%--                </div>--%>
-        </div>
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="item-right col-md-4">
-                    <div style="display:flex;justify-content: space-between">
-                        <label>Loại giầy <span
-                                style="color: red">*</span> : </label>
-                        <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                class="bi bi-plus-circle-fill"></i></a>
-                    </div>
-
+            <div class="col-lg-6 ">
+                <div class="item-right">
+                    <label class="form-label" cssStyle="margin-right: 15px;margin-left: 35px;">Loại giầy <span
+                            style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName10" path="loaiGiay">
                         <form:option value="">Chọn loại giầy</form:option>
                         <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
                     </form:select>
 
-
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                            class="bi bi-plus-circle-fill"></i></a>
                     <div><form:errors path="loaiGiay" cssStyle="color: crimson"/></div>
                 </div>
-                <div class="item-right col-md-4">
-                    <div style="display:flex;justify-content: space-between">
-                        <label>Chất liệu <span
-                                style="color: red">*</span> : </label>
-                        <a data-bs-toggle="modal" data-bs-target="#exampleModal4"><i
-                                class="bi bi-plus-circle-fill"></i></a>
-                    </div>
+                <div class="item-right">
+                    <label class="form-label">Chất liệu <span style="color: red">*</span> : </label>
                     <form:select type="text" id="searchName14" path="chatLieu">
                         <form:option value="">Chọn chất liệu</form:option>
                         <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
                     </form:select>
 
-
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal4"><i
+                            class="bi bi-plus-circle-fill"></i></a>
                     <div><form:errors path="chatLieu" cssStyle="color: crimson"/></div>
                 </div>
-                <div class="item-right col-md-4">
-                    <div style="display:flex;justify-content: space-between">
-                        <label>Đế giầy <span style="color: red">*</span> : </label>
-                        <a data-bs-toggle="modal" data-bs-target="#exampleModal5"><i
-                                class="bi bi-plus-circle-fill"></i></a>
-                    </div>
-
-                    <form:select type="text" id="searchName13" path="deGiay" cssClass=".searchName4">
+                <div class="item-right">
+                    <label class="form-label" cssStyle="margin-right: 15px;margin-left: 35px;">Đế giầy <span
+                            style="color: red">*</span> : </label>
+                    <form:select type="text" id="searchName13" path="deGiay">
                         <form:option value="">Chọn đế giầy</form:option>
                         <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
                     </form:select>
 
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal5"><i
+                            class="bi bi-plus-circle-fill"></i></a>
                     <div><form:errors path="deGiay" cssStyle="color: crimson"/></div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
+        <br>
+        <c:if test="${act eq 'add'}">
+            <h1 class="h4 text-gray-900 mb-4">Biến thể của sản phẩm: </h1>
             <div class="row">
-                <div class="item-right col-md-6">
-                    <div style="display:flex;justify-content: space-between">
-                        <label>Kích cỡ <span style="color: red">*</span> : </label>
+                <div class="col-6">
+                    <div class="input-group">
+                        <label class="form-label" style="margin-right: 50px;">Kích cỡ <span style="color: red">*</span> : </label>
+                        <form:select class="js-example-basic-multiple" name="states[]" multiple="multiple"
+                                     id="searchName11"
+                                     path="kichCo" cssClass=".searchName1" onChange="updateTable()">
+                            <form:option value="">Chọn kích cỡ</form:option>
+                            <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
+                        </form:select>
+
                         <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                class="bi bi-plus-circle-fill"></i></a>
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+                        <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
                     </div>
-                    <form:select type="text" id="searchName11" path="kichCo" cssClass=".searchName1">
-                        <form:option value="">Chọn kích cỡ</form:option>
-                        <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
-                    </form:select>
-                    <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
-                    <div id="selectedSizesContainer"
-                         style="width: 630px;margin-top: 10px; display: flex;gap: 10px;align-items: center;height: 40px;border: 1px solid black"></div>
                 </div>
-                <div class="item-right col-md-6">
-                    <div style="display:flex;justify-content: space-between">
-                        <label>Màu sắc <span style="color: red">*</span> : </label>
+
+                <div class="col-6">
+                    <div class="input-group">
+                        <label class="form-label" style="margin-right: 5px;">Màu sắc <span style="color: red">*</span> : </label>
+                        <form:select class="js-example-basic-multiple" name="states[]" multiple="multiple"
+                                     id="searchName12"
+                                     path="mauSac" cssClass=".searchName2" onChange="updateTable()">
+                            <form:option value="">Chọn màu sắc</form:option>
+                            <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
+                        </form:select>
+
                         <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
-                                class="bi bi-plus-circle-fill"></i></a>
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+                        <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
                     </div>
-                    <form:select type="text" id="searchName12" path="mauSac" cssClass=".searchName2">
-                        <form:option value="">Chọn màu sắc</form:option>
-                        <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
-                    </form:select>
-                    <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
-                    <div id="selectedMausContainer"
-                         style="width:630px;margin-top: 10px; display: flex;gap: 10px;align-items: center;height: 40px;border: 1px solid black"></div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12" style="margin-top: 20px">
-            <table class="table" id="selectedProductsTable">
-                <thead>
-                <tr>
-                    <th scope="col">Màu Sắc</th>
-                    <th scope="col">Kích Cỡ</th>
-                    <th scope="col">Số Lượng</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Trạng Thái</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody id="selectedProductsBody">
-                </tbody>
-            </table>
-        </div>
+        </c:if>
+        <c:if test="${act eq 'update'}">
+            <div class="row">
+                <div class="col-6">
+                    <div class="input-group">
+                        <label class="form-label" style="margin-right: 50px;">Kích cỡ <span style="color: red">*</span> : </label>
+                        <form:select type="text" id="searchName11" path="kichCo" cssClass=".searchName1">
+                            <form:option value="">Chọn kích cỡ</form:option>
+                            <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
+                        </form:select>
 
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+                        <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <label class="form-label" style="margin-right: 5px;">Màu sắc <span style="color: red">*</span> : </label>
+                        <form:select type="text" id="searchName12" path="mauSac" cssClass=".searchName2">
+                            <form:option value="">Chọn màu sắc</form:option>
+                            <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
+                        </form:select>
+
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+                        <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+        <br>
         <input type="hidden" id="submitStatus" name="submitStatus" value="${submitStatus}">
 
         <%--    22                onclick="return confirm('Bạn có chắc muốn thực hiện ?');"--%>
-        <div class="text-center" style="padding-bottom: 20px">
-            <button type="submit" id="but" class="btn btn-success"
-                    onclick=" submitForm()"
-            >
+        <div class="text-right" style="padding-bottom: 20px">
+            <button type="submit" id="but" class="btn btn-success" onclick=" submitForm()">
                 Submit
             </button>
         </div>
+        <c:if test="${not empty sanpham}">
+            <table class="table table-bordered">
+                <tr class="table-active">
+                    <th>STT</th>
+                    <th>Màu sắc</th>
+                    <th>Kích cỡ</th>
+                    <th>Số lượng</th>
+                    <th>Action</th>
+                </tr>
+
+                <tbody id="myTable">
+
+                </tbody>
+            </table>
+        </c:if>
+        <c:if test="${empty sanpham}">
+            <td colspan="8" class="text-center">Không có sản phẩm.</td>
+        </c:if>
+
     </form:form>
 
     <%--    modal--%>
@@ -331,11 +322,6 @@
                         <div id="maKichCo-error3" style="color: crimson;"></div>
                         <div id="duplicate3-error3-maKichCo" style="color: crimson;"></div>
                     </div>
-                        <%--                    <div class="mb-3 form-check-inline">--%>
-                        <%--                        <label class="form-label">Giới Tính</label>--%>
-                        <%--                        <form:radiobuttons items="${dsGioiTinh}" path="gioiTinh" class="form-check-input"/>--%>
-                        <%--                        <form:errors path="gioiTinh" cssStyle="color: crimson"/>--%>
-                        <%--                    </div>--%>
                     <div class="mb-3">
                         <label>Size</label>
                         <form:input path="size" class="form-control"/>
@@ -365,7 +351,6 @@
             </div>
         </div>
     </div>
-    <%--    modal3--%>
     <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -516,148 +501,44 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    var selectedSizesArray = [];
-    var selectedMausArray = [];
+    function updateTable() {
+        var selectedSizes = $("#searchName11").select2("data");
+        var selectedColors = $("#searchName12").select2("data");
+
+        var table = $('#myTable');
+        table.empty();
+
+        var stt = 1;
+
+        selectedSizes.forEach(function (selectedSize) {
+            selectedColors.forEach(function (selectedColor) {
+                var row = '<tr>';
+                row += '<td>' + stt + '</td>';
+                row += '<td>' + selectedColor.text + '</td>';
+                row += '<td>' + selectedSize.text + '</td>';
+                // row += '<td><input type="number" name="giaBan" required class="form-control"></td>';
+                row += '<td><input type="number" name="soLuong" required class="form-control"></td>';
+                row += '<td><a href="#" class="btn btn-danger btn-circle delete-row" onclick="deleteRow(this)"><i class="fas fa-trash"></i></a></td>';
+                row += '</tr>';
+                table.append(row);
+                stt++;
+            });
+        });
+    }
+
+    function deleteRow(button) {
+        var row = button.closest('tr');
+        row.remove();
+    }
+
     $(document).ready(function () {
-        $("#searchName11").change(function () {
-            var selectedSize = $("#searchName11 option:selected").text();
-            console.log("Selected Size:", $("#searchName11 option:selected").text());
-            if (selectedSizesArray.indexOf(selectedSize) === -1) {
-                selectedSizesArray.push(selectedSize);
-                var newDiv = $("<div>").text(selectedSize).addClass("selected-size");
-                $("#selectedSizesContainer").append(newDiv);
-                $("#searchName11").val("");
-                var removeButton = $("<button>").text("x").addClass("remove-button");
-                newDiv.append(removeButton);
-                removeButton.click(function () {
-                    selectedSizesArray.splice(selectedSizesArray.indexOf(selectedSize), 1);
-                    newDiv.remove();
-                });
-            } else {
-                alert("kích cỡ đã tồn tại");
-            }
+        updateTable();
+
+        $('#searchName11, #searchName12').on('change', function () {
+            updateTable();
         });
-        $("#searchName12").change(function () {
-            var selectedMau = $("#searchName12 option:selected").text();
-            console.log(selectedMau)
-            if (selectedMausArray.indexOf(selectedMau) === -1) {
-                // Nếu chưa tồn tại, thêm vào mảng và hiển thị
-                selectedMausArray.push(selectedMau);
-                // Tạo một thẻ div mới và thêm vào container
-                var newDiv = $("<div>").text(selectedMau).addClass("selected-mau");
-                $("#selectedMausContainer").append(newDiv);
-
-                // Xóa giá trị đã chọn trong dropdown
-                $("#searchName12").val("");
-
-                // Tạo nút để xóa kích cỡ đã chọn
-                var removeButton = $("<button>").text("x").addClass("remove-button");
-                newDiv.append(removeButton);
-
-                // Xử lý sự kiện khi nút xóa được nhấn
-                removeButton.click(function () {
-                    // Xóa khỏi mảng và cũng xóa khỏi giao diện
-                    selectedMausArray.splice(selectedMausArray.indexOf(selectedMau), 1);
-                    newDiv.remove();
-                });
-            } else {
-                // Nếu kích cỡ đã tồn tại, thông báo lỗi
-                alert("Màu sắc đã tồn tại");
-            }
-        });
-
     });
-
-
-
-    // $(document).ready(function () {
-    //     var selectedProductsArray = [];
-    //
-    //     function findProductIndex(value, type) {
-    //         for (var i = 0; i < selectedProductsArray.length; i++) {
-    //             if ((type === "mauSac" && selectedProductsArray[i].color === value) ||
-    //                 (type === "kichCo" && selectedProductsArray[i].size === value)) {
-    //                 return i;
-    //             }
-    //         }
-    //         return -1;
-    //     }
-    //
-    //     // Xử lý sự kiện khi giá trị của dropdown Kích cỡ thay đổi
-    //     $("#searchName11").change(updateSelectedProducts);
-    //
-    //     // Xử lý sự kiện khi giá trị của dropdown Màu sắc thay đổi
-    //     $("#searchName12").change(updateSelectedProducts);
-    //
-    //     function updateSelectedProducts() {
-    //         // Lấy giá trị của dropdown Kích cỡ và Màu sắc
-    //         var selectedSize = $("#searchName11 option:selected").text();
-    //         var selectedColor = $("#searchName12 option:selected").text();
-    //
-    //         // Kiểm tra xem đã chọn cả Kích cỡ và Màu sắc chưa
-    //         if (selectedSize && selectedColor) {
-    //             // Thêm sản phẩm vào mảng và cập nhật bảng4
-    //             addProduct(selectedSize, selectedColor);
-    //             updateTable();
-    //         }else{
-    //         }
-    //     }
-    //
-    //     function addProduct(selectedSize, selectedColor) {
-    //         var existingProductIndex = findProductIndex(selectedSize, selectedColor);
-    //         if (existingProductIndex === -1) {
-    //             var product = {
-    //                 color: selectedColor,
-    //                 size: selectedSize,
-    //                 quantity: 1,
-    //                 price: 0,
-    //                 status: "Chưa xác định"
-    //             };
-    //
-    //             selectedProductsArray.push(product);
-    //             addProductToContainer(selectedSize, "kichCo");
-    //             addProductToContainer(selectedColor, "mauSac");
-    //         } else {
-    //             selectedProductsArray[existingProductIndex].quantity++;
-    //         }
-    //     }
-    //
-    //     function updateTable() {
-    //         var tableBody = $("#selectedProductsBody");
-    //         tableBody.empty();
-    //
-    //         for (var i = 0; i < selectedProductsArray.length; i++) {
-    //             var product = selectedProductsArray[i];
-    //
-    //             var row = $("<tr>");
-    //             row.append($("<td>").text(product.color));
-    //             row.append($("<td>").text(product.size));
-    //             row.append($("<td>").text(product.quantity));
-    //             row.append($("<td>").text(product.price));
-    //             row.append($("<td>").text(product.status));
-    //
-    //             var removeButton = $("<button>").text("Xóa").addClass("remove-button");
-    //             removeButton.click((function (index) {
-    //                 return function () {
-    //                     selectedProductsArray.splice(index, 1);
-    //                     updateTable();
-    //                 };
-    //             })(i));
-    //
-    //             row.append($("<td>").append(removeButton));
-    //
-    //             tableBody.append(row);
-    //         }
-    //     }
-    //
-    //     function addProductToContainer(selectedValue, type) {
-    //         var selectedContainer = $("#selected" + type + "sContainer");
-    //         var newDiv = $("<div>").text(selectedValue).addClass("selected-" + type);
-    //         selectedContainer.append(newDiv);
-    //     }
-    // });
 </script>
-
 <script>
     function clearErrors() {
         $("#error-message").empty();
@@ -1044,40 +925,8 @@
 <!-- Include SweetAlert2 CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script>
-    <%--$(document).ready(function () {--%>
-    <%--    $('#but').click(function () {--%>
-    <%--        // Serialize the form data--%>
-    <%--        var formData = $('#sanPhamForm').serialize();--%>
 
-    <%--        // Send an AJAX request--%>
-    <%--        $.ajax({--%>
-    <%--            type: 'POST',--%>
-    <%--            ucrl: '${pageContext.request.contextPath}/chi-tiet-san-pham/ajax/add/${id}',--%>
-    <%--            data: formData,--%>
-    <%--            success: function (data) {--%>
-    <%--                if (data === 'Product added successfully') {--%>
-    <%--                    // Show SweetAlert2 success notification--%>
-    <%--                    Swal.fire({--%>
-    <%--                        position: 'top-center',--%>
-    <%--                        icon: 'success',--%>
-    <%--                        title: 'Your work has been saved',--%>
-    <%--                        showConfirmButton: false,--%>
-    <%--                        timer: 3500--%>
-    <%--                    });--%>
-
-    <%--                    // Optionally, you can redirect after showing the success notification--%>
-    <%--                    window.location.href = '${pageContext.request.contextPath}/chi-tiet-san-pham/list-san-pham/${id}';--%>
-    <%--                } else {--%>
-    <%--                    // Handle other responses or errors--%>
-    <%--                    console.log(data);--%>
-    <%--                }--%>
-    <%--            },--%>
-    <%--            error: function (xhr, status, error) {--%>
-    <%--                // Handle AJAX errors if needed--%>
-    <%--                console.error(xhr.responseText);--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    });--%>
-    <%--});--%>
-
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
 </script>

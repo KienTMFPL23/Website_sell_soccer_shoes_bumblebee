@@ -348,8 +348,27 @@
     function chkAll(idKM) {
         var checkedAllCheckbox = document.getElementById('checkAll_' + idKM);
         checkboxes.forEach(function (checkbox) {
-            checkbox.checked = checkedAllCheckbox.checked;
+            if (checkbox.classList.contains('checkCart') && checkbox.offsetParent !== null) {
+                checkbox.checked = checkedAllCheckbox.checked;
+            }
         });
+
+    }
+
+
+    function timKiemSanPham(idkm) {
+        idKM = idkm;
+        console.log("click" + idKM)
+        inPut = document.getElementById("myInput3_" + idKM);
+        if (inPut) {
+            inPut.addEventListener("keyup", function () {
+                var value = this.value.toLowerCase();
+                $("#myTable3 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        }
     }
 
     // checkedAllCheckbox.addEventListener('click', function () {
@@ -404,25 +423,9 @@
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
     }
+
     var idKM = null;
     var inPut = null;
-
-    function timKiemSanPham(idkm) {
-        idKM = idkm;
-        console.log("click" + idKM)
-        inPut = document.getElementById("myInput3_" + idKM);
-        if (inPut){
-            inPut.addEventListener("keyup", function () {
-                console.log("search")
-                var value = this.value.toLowerCase();
-                $("#myTable3 tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-
-        }
-    }
-
 
 
     function filterTable() {
