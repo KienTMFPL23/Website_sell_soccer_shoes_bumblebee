@@ -27,15 +27,6 @@
                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                     <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
                     <td>
-                        <c:if test="${hd.donGiaKhiGiam != 0}">
-                            <c:if test="${hd.chiTietSanPham.soLuong != 0}">
-                                <a href="/bumblebee/don-hang/doi-san-pham-km/${hd.chiTietSanPham.id}"
-                                   class="btn btn-primary" style="border-radius: 20px; margin-top: 5px;">Chọn</a>
-                            </c:if>
-                            <c:if test="${hd.chiTietSanPham.soLuong == 0}">
-                                <strong>Hết hàng</strong>
-                            </c:if>
-                        </c:if>
                         <c:if test="${hd.donGiaKhiGiam == 0}">
                             <a id="openModalSanPham"
                                onclick="showDataSP(`${hd.chiTietSanPham.id}`)"
@@ -45,6 +36,18 @@
                                data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px;"
                             >Chọn
                             </a>
+                        </c:if>
+                        <c:if test="${hd.donGiaKhiGiam != 0}">
+                            <c:if test="${ (100 - (hd.donGiaKhiGiam / hd.donGia * 100)) < 50}">
+                                <a id="openModalSanPham"
+                                   onclick="showDataSPKM(`${hd.chiTietSanPham.id}`)"
+                                   class="btn btn-primary"
+                                   type="submit"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#modalSanPham" style="border-radius: 20px; margin-top: 5px;"
+                                >Chọn
+                                </a>
+                            </c:if>
                         </c:if>
                         <div class="modal fade" id="modalSanPham" tabindex="-1"
                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -131,6 +134,9 @@
                             </option>
                             <option value="Giao thiếu hàng"
                                     <c:if test="${dtct.lyDoDoiTra eq 'Giao thiếu hàng'}">selected</c:if>>Giao thiếu hàng
+                            </option>
+                            <option value="Khách không ưng ý"
+                                    <c:if test="${dtct.lyDoDoiTra eq 'Khách không ưng ý'}">selected</c:if>>Khách không ưng ý
                             </option>
                         </select>
                     </form>

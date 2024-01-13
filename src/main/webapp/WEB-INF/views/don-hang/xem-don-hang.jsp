@@ -752,10 +752,13 @@
                         </td>
                         <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
                             <td>
-                                <a href="/don-hang/delete-hdct/${hdct.id}"
-                                   onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">
-                                    <img src="../../../img/delete.png">
-                                </a>
+                                <c:set var="totalProducts" value="${fn:length(hoaDon.hoaDons)}"/>
+                                <c:if test="${ totalProducts > 1 && hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
+                                    <a href="/don-hang/delete-hdct/${hdct.id}"
+                                       onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">
+                                        <img src="../../../img/delete.png">
+                                    </a>
+                                </c:if>
                             </td>
                         </c:if>
                     </tr>

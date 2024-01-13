@@ -207,8 +207,17 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
             "\t\t\t\t\t\t join ChatLieu cl on ctsp.IdChatLieu = cl.Id\n" +
             "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
-            "where ctsp.GiaBan = ?1 and ctsp.TrangThai = 1", nativeQuery = true)
+            "where ctsp.soLuong > 0 and ctsp.GiaBan = ?1 and ctsp.TrangThai = 1", nativeQuery = true)
     List<ChiTietSanPhamCustom> listSanPhamCungLoai(Double giaSP);
+
+    @Query(value = "select ctsp.id, sp.TenSanPham,ctsp.GiaBan,ctsp.SoLuong, ms.TenMau, kc.Size, cl.TenChatLieu, dg.LoaiDe\n" +
+            "from ChiTietSanPham ctsp join SanPham sp on ctsp.IdSP = sp.Id\n" +
+            "\t\t\t\t\t\t join MauSac ms on ctsp.IdMauSac = ms.Id\n" +
+            "\t\t\t\t\t\t join KichCo kc on ctsp.IdKichCo= kc.Id\n" +
+            "\t\t\t\t\t\t join ChatLieu cl on ctsp.IdChatLieu = cl.Id\n" +
+            "\t\t\t\t\t\t join DeGiay dg on ctsp.IdDeGiay = dg.Id\n" +
+            "where ctsp.soLuong > 0 and sp.Id = ?1 and ctsp.TrangThai = 1", nativeQuery = true)
+    List<ChiTietSanPhamCustom> listChiTietSanPhamKM(UUID idSanPham);
 
     @Query(value = "select ctsp from ChiTietSanPham ctsp where ctsp.trangThai = 1 and ctsp.soLuong > 1")
     List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
