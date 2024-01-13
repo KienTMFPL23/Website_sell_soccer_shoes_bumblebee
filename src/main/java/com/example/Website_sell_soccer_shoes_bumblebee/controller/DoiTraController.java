@@ -256,7 +256,7 @@ public class DoiTraController {
         DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(), idSanPham);
 //        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMax(hoaDonChiTiet.getId());
         Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTra.getId());
-        if (soLuongDT < hoaDonChiTiet.getSoLuong()) {
+        if (soLuongDT <= hoaDonChiTiet.getSoLuong()) {
             if (getSPInDoiTra != null) {
                 if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()) {
                     if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet) {
@@ -329,55 +329,6 @@ public class DoiTraController {
         return "redirect:/bumblebee/don-hang/doi-san-pham";
     }
 
-    private void createDoiSanPhamKM(UUID idSanPham, DoiTra doiTra, HoaDon hoaDon) {
-        DoiTraChiTiet doiTraChiTiet = new DoiTraChiTiet();
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), idSanPham);
-        ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
-        DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(), idSanPham);
-//        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMax(hoaDonChiTiet.getId());
-        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTra.getId());
-        if (soLuongDT < hoaDonChiTiet.getSoLuong()) {
-            if (getSPInDoiTra != null) {
-                if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()) {
-                    if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet) {
-                        getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
-                        doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
-                        this.idDoiTra = doiTra.getId();
-                    }
-                }
-            } else {
-                doiTraChiTiet.setChiTietSanPham(ctsp);
-                doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
-                doiTraChiTiet.setSoLuong(1);
-                doiTraChiTiet.setDoiTra(doiTra);
-                doiTraChiTiet.setDonGia(hoaDonChiTiet.getDonGiaKhiGiam());
-                doiTraChiTiet.setTrangThai(1);
-                doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-                this.idDoiTra = doiTra.getId();
-            }
-        }
-    }
-
-    @RequestMapping("/bumblebee/don-hang/doi-san-pham-km/{idSanPham}")
-    public String doiSanPhamKhuyenMai(Model model,@PathVariable("idSanPham")UUID idSanPham){
-        model.addAttribute("searchDT", new SearchDoiTra());
-        model.addAttribute("view", "../doi-tra/tra-hang.jsp");
-        DoiTra checkDoiTra = doiTraService.getOneDoiTra(this.maHoaDon);
-        HoaDon hoaDon = hoaDonService.searchHoaDon(this.maHoaDon);
-
-        if (checkDoiTra != null) {
-            this.idDoiTra = checkDoiTra.getId();
-            createDoiSanPhamKM(idSanPham, checkDoiTra, hoaDon);
-        } else {
-            DoiTra doiTra = new DoiTra();
-            doiTra.setHoaDon(hoaDon);
-            doiTra.setNhanVien(nhanVien);
-            doiTraService.saveDoiTra(doiTra);
-            createDoiSanPhamKM(idSanPham, doiTra, hoaDon);
-            this.idDoiTra = doiTra.getId();
-        }
-        return "redirect:/bumblebee/don-hang/doi-san-pham";
-    }
     @RequestMapping("/bumblebee/don-hang/create-doi-tra/{idSanPham}")
     public String createDoiTra(Model model, @PathVariable("idSanPham") UUID idSanPham
     ) {
@@ -887,4 +838,3 @@ public class DoiTraController {
         return cell;
     }
 }
-

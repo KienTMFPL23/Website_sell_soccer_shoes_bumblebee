@@ -91,7 +91,22 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
     public Double getToTalDoiTra(List<DoiTraChiTiet> lstDoiTraCT) {
         Double sum = 0.0;
         for (DoiTraChiTiet doiTraChiTiet : lstDoiTraCT){
-            sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+            if (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0){
+                Double phanTramGiam = 100 - (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() / doiTraChiTiet.getHoaDonChiTiet().getDonGia() * 100);
+                if (phanTramGiam < 50){
+                    if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ứng ý"))){
+                        sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong() * 0.9;
+                    }else {
+                        sum +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+                    }
+                }
+            }else {
+                if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ưng ý"))){
+                    sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong() * 0.9;
+                }else {
+                    sum +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+                }
+            }
         }
         return sum;
     }

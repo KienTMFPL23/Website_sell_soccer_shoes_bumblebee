@@ -41,7 +41,7 @@ public interface ChiTietSanPhamService {
 
     void deleteSP(UUID id);
 
-    boolean isChiTietSanPhamExists(QLSanPham sp);
+    boolean isChiTietSanPhamExists(ChiTietSanPham sp);
 
     //seacrchByMau
     Page<ChiTietSanPham> searchByMau(UUID idMau, Pageable pageable);
@@ -90,4 +90,6 @@ public interface ChiTietSanPhamService {
     List<KichCo> search22KC(Integer size, Integer trangThai);
 
     List<ChiTietSanPhamCustom> listSPCungLoai (Double giaSP);
+
+    List<ChiTietSanPhamCustom> listCTSPKhuyenMai (UUID idSanPham);
 }
