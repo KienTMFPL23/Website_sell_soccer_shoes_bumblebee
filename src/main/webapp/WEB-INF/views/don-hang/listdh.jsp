@@ -200,8 +200,8 @@
                                 <c:if test="${hd.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hd.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hd.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hd.trangThai== 6 }">Đổi trả hàng</c:if>
-                                <c:if test="${hd.trangThai== 7 }">Đã đổi trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hd.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>

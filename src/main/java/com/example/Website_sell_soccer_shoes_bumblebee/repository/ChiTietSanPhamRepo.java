@@ -166,15 +166,14 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             @Param("size") String size
     );
 
-    @Query(value = "SELECT *\n" +
-            "FROM ChiTietSanPham c1\n" +
-            "WHERE NOT EXISTS (\n" +
-            "    SELECT 1\n" +
-            "    FROM ChiTietSanPham c2\n" +
-            "    WHERE c1.idSP = c2.idSP\n" +
-            "        AND c1.idMauSac = c2.idMauSac\n" +
-            "        AND c1.id > c2.id\n" +
-            ");", nativeQuery = true)
+    @Query(value = "SELECT * FROM ChiTietSanPham c1 " +
+            "WHERE c1.trangThai = 1 AND NOT EXISTS (" +
+            "    SELECT 1 FROM ChiTietSanPham c2 " +
+            "    WHERE c1.idSP = c2.idSP " +
+            "        AND c1.idMauSac = c2.idMauSac " +
+            "        AND c1.id > c2.id" +
+            "        AND c2.trangThai = 1" +
+            ")", nativeQuery = true)
     Page<ChiTietSanPham> get1CTSPByMauSac(Pageable pageable);
 
     @Query(value = "select * from chitietsanpham where IdSP = ?1 \n" +
@@ -247,6 +246,10 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query("select ctsp from ChiTietSanPham ctsp where ctsp.soLuong > 0 and ctsp.trangThai = 1")
     List<ChiTietSanPham> ctspConHang();
 
+    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.sanPham.id = ?1")
+    List<ChiTietSanPham> listCTSPByIDSP(UUID id);
 
-
+    @Query(value = "select * from chitietsanpham where idMauSac = ?1 " +
+            "and idsp = ?2\n",nativeQuery = true)
+    List<ChiTietSanPham> getCTSPBYSPAndMauSac(UUID idMS, UUID idSP);
 }

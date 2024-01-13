@@ -237,7 +237,7 @@
                     <td>${ctkm.ctsp.kichCo.size}</td>
                     <td>${ctkm.khuyenMai.maKhuyenMai}</td>
                     <td>
-                        <c:if test="${ctkm.khuyenMai.donVi == 'VNÐ'}">
+                        <c:if test="${ctkm.khuyenMai.donVi == 'VNĐ'}">
                             <fmt:formatNumber>${ctkm.khuyenMai.giaTri}</fmt:formatNumber>
                         </c:if>
                         <c:if test="${ctkm.khuyenMai.donVi == '%'}">

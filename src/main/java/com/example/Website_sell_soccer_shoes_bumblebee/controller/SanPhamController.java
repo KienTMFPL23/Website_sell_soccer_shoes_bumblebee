@@ -49,6 +49,7 @@ public class SanPhamController {
     @Autowired
     SanPhamService sanPhamService;
 
+
     @ModelAttribute("listDeGiay")
     List<DeGiay> listDeGiay() {
         return deGiayRepo.findAll();
@@ -177,6 +178,12 @@ public class SanPhamController {
         sp.setTenSanPham(sanPham.getTenSanPham());
         sp.setTrangThai(sanPham.getTrangThai());
         sanPhamService.udpateSanPham(sp);
+
+        List<ChiTietSanPham> listCTSPByIDSP = service.listCTSPByIDSP(id);
+        for (ChiTietSanPham ctsp: listCTSPByIDSP) {
+            ctsp.setTrangThai(sanPham.getTrangThai());
+            service.addKC(ctsp);
+        }
         return "redirect:/san-pham/hien-thi";
     }
 
@@ -192,7 +199,7 @@ public class SanPhamController {
         model.addAttribute("action4", "/san-pham/loai-giay/add/" + id);
         model.addAttribute("action5", "/san-pham/de-giay/add/" + id);
         model.addAttribute("action6", "/san-pham/chat-lieu/add/" + id);
-
+        model.addAttribute("act", "add");
         SanPham sanPham1 = sanPhamService.getOne(id);
         model.addAttribute("tensp", sanPham1.getTenSanPham());
         model.addAttribute("action", "/chi-tiet-san-pham/add/" + sanPham1.getId());
@@ -203,15 +210,16 @@ public class SanPhamController {
     // add ctsp
     @PostMapping("/chi-tiet-san-pham/add/{id}")
     public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") ChiTietSanPham sp
-            , @RequestParam(value = "kichCo", required = false) List<String> kichCoList,
+            ,
+                             BindingResult result, RedirectAttributes redirectAttributes, @RequestParam(value = "kichCo", required = false) List<String> kichCoList,
                              @RequestParam(value = "mauSac", required = false) List<String> mauSacList,
-                             @RequestParam(name = "soLuong", required = false) List<String> listSoLuong
-            , BindingResult result, RedirectAttributes redirectAttributes) throws WriterException, IOException {
+                             @RequestParam(name = "soLuong", required = false) List<String> listSoLuong) throws WriterException, IOException {
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
+        model.addAttribute("act", "add");
         if (result.hasErrors()) {
             model.addAttribute("submitStatus", "error");
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
@@ -236,7 +244,9 @@ public class SanPhamController {
                         model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
                         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
                         return "/admin/index";
+
                     }else {
+
                         service.addKC(sp);
                     }
                 }
@@ -257,6 +267,7 @@ public class SanPhamController {
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }
 
+
     // New method to handle AJAX requests
 //    @PostMapping("/chi-tiet-san-pham/ajax/add/{id}")
 //    @ResponseBody
@@ -270,6 +281,7 @@ public class SanPhamController {
 //
 //        return ResponseEntity.ok("Product added successfully");
 //    }
+
     //add modal loai giay
     @RequestMapping("/san-pham/loai-giay/add/{id}")
     @ResponseBody

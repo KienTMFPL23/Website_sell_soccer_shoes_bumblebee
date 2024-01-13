@@ -91,5 +91,9 @@ public interface ChiTietSanPhamService {
 
     List<ChiTietSanPhamCustom> listSPCungLoai (Double giaSP);
 
+
+    List<ChiTietSanPham> listCTSPByIDSP(UUID id);
+
     List<ChiTietSanPhamCustom> listCTSPKhuyenMai (UUID idSanPham);
+
 }

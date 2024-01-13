@@ -158,7 +158,9 @@
             <div class="row">
                 <div class="col-6">
                     <div class="input-group">
-                        <label class="form-label">Kích cỡ <span style="color: red">*</span> : </label>
+
+                        <label class="form-label" style="margin-right: 50px;">Kích cỡ <span style="color: red">*</span> : </label>
+
                         <form:select class="js-example-basic-multiple" name="states[]" multiple="multiple"
                                      id="searchName11"
                                      path="kichCo" cssClass=".searchName1" onChange="updateTable()">
@@ -167,14 +169,18 @@
                         </form:select>
 
                         <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                class="bi bi-plus-circle-fill"></i></a>
+
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+
                         <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="input-group">
-                        <label class="form-label">Màu sắc <span style="color: red">*</span> : </label>
+
+                        <label class="form-label" style="margin-right: 5px;">Màu sắc <span style="color: red">*</span> : </label>
+
                         <form:select class="js-example-basic-multiple" name="states[]" multiple="multiple"
                                      id="searchName12"
                                      path="mauSac" cssClass=".searchName2" onChange="updateTable()">
@@ -183,7 +189,9 @@
                         </form:select>
 
                         <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
-                                class="bi bi-plus-circle-fill"></i></a>
+
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+
                         <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
                     </div>
                 </div>
@@ -193,27 +201,30 @@
             <div class="row">
                 <div class="col-6">
                     <div class="input-group">
-                        <label class="form-label">Kích cỡ <span style="color: red">*</span> : </label>
+
+                        <label class="form-label" style="margin-right: 50px;">Kích cỡ <span style="color: red">*</span> : </label>
+
                         <form:select type="text" id="searchName11" path="kichCo" cssClass=".searchName1">
                             <form:option value="">Chọn kích cỡ</form:option>
                             <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
                         </form:select>
 
                         <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                class="bi bi-plus-circle-fill"></i></a>
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
                         <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-group">
-                        <label class="form-label">Màu sắc <span style="color: red">*</span> : </label>
+                        <label class="form-label" style="margin-right: 5px;">Màu sắc <span style="color: red">*</span> : </label>
                         <form:select type="text" id="searchName12" path="mauSac" cssClass=".searchName2">
                             <form:option value="">Chọn màu sắc</form:option>
                             <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
                         </form:select>
 
                         <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
-                                class="bi bi-plus-circle-fill"></i></a>
+                                class="bi bi-plus-circle-fill" style="margin-left: 10px;"></i></a>
+
                         <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
                     </div>
                 </div>

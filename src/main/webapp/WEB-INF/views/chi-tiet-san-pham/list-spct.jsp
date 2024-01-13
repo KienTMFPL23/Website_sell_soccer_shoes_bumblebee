@@ -44,67 +44,72 @@
     </div>
     <br>
     <div class="row" style="padding-bottom: 30px">
-        <div class="col-2 col-md-2 col-sm-2">
-            <form:form modelAttribute="lg" action="/chi-tiet-san-pham/search-by-loaigiay">
-                <label class="form-label">Loại giầy: </label>
-                <form:select type="text" id="searchName0" path="idLG" onchange="submit()" cssClass="form-control">
-                    <form:option value="">Tất cả</form:option>
-                    <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
-                </form:select>
-            </form:form>
+        <div class="col-6">
+            <div class="col-2 col-md-2 col-sm-2">
+                <form:form action="/chi-tiet-san-pham/search-by-loaigiay" modelAttribute="lg">
+                    <label class="form-label">Loại giầy: </label>
+                    <form:select type="text" id="searchName0" path="idLG" onchange="submit()" cssClass="form-control">
+                        <form:option value="">Tất cả</form:option>
+                        <form:options items="${listLoaiGiay}" itemLabel="tentheloai" itemValue="id"/>
+                    </form:select>
+                </form:form>
+            </div>
+
+            <div class="col-2 col-md-2 col-sm-2">
+                <form:form action="/chi-tiet-san-pham/search-by-chatlieu" modelAttribute="searchChatLieu">
+                    <label class="form-label">Chất liệu: </label>
+                    <form:select type="text" id="searchName4" path="idChatLieu" onchange="submit()"
+                                 cssClass="form-control">
+                        <form:option value="">Tất cả</form:option>
+                        <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
+                    </form:select>
+
+                </form:form>
+            </div>
+
+            <div class="col-2 col-md-2 col-sm-2">
+                <form:form action="/chi-tiet-san-pham/search-by-degiay" modelAttribute="searchDG">
+                    <label class="form-label">Đế giày: </label>
+                    <form:select type="text" id="searchName3" path="idDe" onchange="submit()" cssClass="form-control">
+                        <form:option value="">Tất cả</form:option>
+                        <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
+                    </form:select>
+
+                </form:form>
+            </div>
         </div>
+        <div class="col-6">
+            <div class="col-2 col-md-2 col-sm-2">
+                <form:form action="/chi-tiet-san-pham/search-by-kichco" modelAttribute="searchKC">
 
-        <div class="col-2 col-md-2 col-sm-2">
-            <form:form modelAttribute="searchChatLieu" action="/chi-tiet-san-pham/search-by-chatlieu">
-                <label class="form-label">Chất liệu: </label>
-                <form:select type="text" id="searchName4" path="idChatLieu" onchange="submit()"
-                             cssClass="form-control">
-                    <form:option value="">Tất cả</form:option>
-                    <form:options items="${listChatLieu}" itemLabel="ten" itemValue="id"/>
-                </form:select>
+                    <label class="form-label">Kích cỡ: </label>
+                    <form:select type="text" id="searchName1" path="idKC" onchange="submit()" cssClass="form-control">
+                        <form:option value="">Tất cả</form:option>
+                        <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
+                    </form:select>
 
-            </form:form>
-        </div>
+                </form:form>
+            </div>
 
-        <div class="col-2 col-md-2 col-sm-2">
-            <form:form action="/chi-tiet-san-pham/search-by-degiay" modelAttribute="searchDG">
-                <label class="form-label">Đế giày: </label>
-                <form:select type="text" id="searchName3" path="idDe" onchange="submit()" cssClass="form-control">
-                    <form:option value="">Tất cả</form:option>
-                    <form:options items="${listDeGiay}" itemLabel="loaiDe" itemValue="id"/>
-                </form:select>
+            <div class="col-2 col-md-2 col-sm-2">
+                <form:form action="/chi-tiet-san-pham/search-by-mausac" modelAttribute="searchFormByMau">
 
-            </form:form>
-        </div>
-        <div class="col-2 col-md-2 col-sm-2">
-            <form:form action="/chi-tiet-san-pham/search-by-kichco" modelAttribute="searchKC">
+                    <label class="form-label">Màu sắc:</label>
+                    <form:select type="text" id="searchName2" path="idMau" onchange="submit()" cssClass="form-control">
+                        <form:option value="">Tất cả</form:option>
+                        <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
+                    </form:select>
 
-                <label class="form-label">Kích cỡ: </label>
-                <form:select type="text" id="searchName1" path="idKC" onchange="submit()" cssClass="form-control">
-                    <form:option value="">Tất cả</form:option>
-                    <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
-                </form:select>
+                </form:form>
 
-            </form:form>
-        </div>
-        <div class="col-2 col-md-2 col-sm-2">
-            <form:form action="/chi-tiet-san-pham/search-by-mausac" modelAttribute="searchFormByMau">
+            </div>
 
-                <label class="form-label">Màu sắc:</label>
-                <form:select type="text" id="searchName2" path="idMau" onchange="submit()" cssClass="form-control">
-                    <form:option value="">Tất cả</form:option>
-                    <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
-                </form:select>
-
-            </form:form>
-
-        </div>
-        <div class="col-2 col-md-2 col-sm-2">
-
-            <br>
-            <a href="/chi-tiet-san-pham/list-san-pham/${idsp}" class=" btn btn-secondary">
-                <i class="bi bi-arrow-clockwise"></i>
-            </a>
+            <div class="col-2 col-md-2 col-sm-2">
+                <br>
+                <a href="/chi-tiet-san-pham/list-san-pham/${idsp}" class=" btn btn-secondary">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </a>
+            </div>
         </div>
     </div>
     </br>
@@ -154,7 +159,7 @@
                     <td>
                         <a href="/chi-tiet-san-pham/view-update-ctsp/${sp.id}" class="btn btn-warning"><i
                                 class="bi bi-pencil-square"></i></a>
-                        <a href="/chi-tiet-san-pham/hinh-anh-sp/view-add/${sp.id}" class="btn btn-warning"><i
+                        <a href="/chi-tiet-san-pham/hinh-anh-sp/view-add/${sp.id}?idSP=${sp.sanPham.id}&idMS=${sp.mauSac.id}" class="btn btn-warning"><i
                                 class="bi bi-file-earmark-image"></i></a>
                     </td>
                 </tr>
