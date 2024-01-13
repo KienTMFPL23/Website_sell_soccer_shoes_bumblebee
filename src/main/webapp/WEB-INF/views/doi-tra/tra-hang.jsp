@@ -20,6 +20,7 @@
                 <th scope="col">Số lượng</th>
                 <th scope="col">Đơn giá</th>
                 <th scope="col">Đơn giá khi giảm</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +32,19 @@
                     <td>${hd.soLuong}</td>
                     <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                     <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
+                    <td>
+                        <c:if test="${hd.donGiaKhiGiam != 0}">
+                            <c:if test="${ ( 100 - (hd.donGiaKhiGiam / hd.donGia * 100) ) < 50}">
+                                Được đổi-trả
+                            </c:if>
+                            <c:if test="${ (100 - (hd.donGiaKhiGiam / hd.donGia * 100)) >= 50}">
+                                Không được đổi-trả
+                            </c:if>
+                        </c:if>
+                        <c:if test="${hd.donGiaKhiGiam == 0}">
+                            Được đổi-trả
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -40,11 +54,11 @@
         <strong>Tổng tiền <fmt:formatNumber value="${sumMoney}" type="number"/></strong>
     </div>
     <hr>
-    <c:if test="${hoaDonMua.loaiHoaDon == 0}">
-        <button data-bs-toggle="modal" type="button"
-                data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
-        </button>
-    </c:if>
+
+    <button data-bs-toggle="modal" type="button"
+            data-bs-target="#modalTraHang" class="btn btn-danger">Trả hàng
+    </button>
+
     <a href="/bumblebee/don-hang/doi-san-pham" class="btn btn-primary">Đổi hàng
     </a>
     <form method="post" action="/bumblebee/don-hang/create-tra-hang">
@@ -84,7 +98,8 @@
                                     <td>${hd.chiTietSanPham.kichCo.size}</td>
                                     <td>
                                         <div>
-                                            <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}" class="soLuongtra"
+                                            <input type="number" id="soLuongTra_${hd.chiTietSanPham.id}"
+                                                   class="soLuongtra"
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
@@ -93,13 +108,15 @@
                                             <strong><p style="color: red" id="erorSluong"></p></strong>
                                         </div>
                                     </td>
-                                    <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
+                                    <td><fmt:formatNumber  value="${hd.donGia}" type="number"/></td>
                                     <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
                                     <td>
-                                        <select id="lyDoTra_${hd.chiTietSanPham.id}" class="form-control" style="width: 200px"
+                                        <select id="lyDoTra_${hd.chiTietSanPham.id}" class="form-control"
+                                                style="width: 200px"
                                                 name="lyDoDoiTra">
                                             <option value="">-----</option>
                                             <option value="Mẫu giao sai">Mẫu giao sai</option>
+                                            <option value="Khách không ứng ý">Khách không ứng ý</option>
                                             <option value="Sản phẩm lỗi">Sản phẩm lỗi</option>
                                             <option value="Giao thiếu hàng">Giao thiếu hàng</option>
                                         </select>
@@ -114,6 +131,9 @@
                             <%--                        <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>--%>
                             <strong><p style="color: red" id="erorText"></p></strong>
                         </div>
+                        <div class="hoan_tien">
+                            <strong id="totalAmount"></strong>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -127,3 +147,4 @@
         </div>
     </form>
 </div>
+

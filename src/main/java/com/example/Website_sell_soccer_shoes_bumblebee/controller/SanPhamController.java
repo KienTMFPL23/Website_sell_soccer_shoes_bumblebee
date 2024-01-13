@@ -244,7 +244,9 @@ public class SanPhamController {
                         model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
                         model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
                         return "/admin/index";
-                    } else {
+
+                    }else {
+
                         service.addKC(sp);
                     }
                 }
@@ -264,6 +266,21 @@ public class SanPhamController {
         redirectAttributes.addFlashAttribute("redirectUrl", "/chi-tiet-san-pham/list-san-pham/" + id);
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
     }
+
+
+    // New method to handle AJAX requests
+//    @PostMapping("/chi-tiet-san-pham/ajax/add/{id}")
+//    @ResponseBody
+//    public ResponseEntity<String> addSanPhamAjax(Model model,@PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return ResponseEntity.badRequest().body("Validation failed");
+//        }
+//        SanPham sanPham1 = sanPhamService.getOne(id);
+//        model.addAttribute("idsp", id);
+//        // Process the data and generate QR code if needed
+//
+//        return ResponseEntity.ok("Product added successfully");
+//    }
 
     //add modal loai giay
     @RequestMapping("/san-pham/loai-giay/add/{id}")
