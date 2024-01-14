@@ -112,6 +112,15 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
     }
 
     @Override
+    public Double getToTalDoi(List<DoiTraChiTiet> lstDoiTraCT) {
+        Double sumMoney = 0.0;
+        for (DoiTraChiTiet doiTraChiTiet : lstDoiTraCT){
+            sumMoney +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+        }
+        return sumMoney;
+    }
+
+    @Override
     public DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP) {
         return doiTraCTRepo.getSanPhamInDoiTra(idDoiTra,idCTSP);
     }

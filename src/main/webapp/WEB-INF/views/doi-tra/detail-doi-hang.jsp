@@ -45,44 +45,6 @@
     </div>
     <hr>
     <c:if test="${listSanPhamDoi.size() != 0}">
-        <div class="infor-san-pham-mua">
-            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG TRẢ</h4>
-            <table class="table table-bordered" style="margin-top: 10px">
-                <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên sản phẩm</th>
-                    <th scope="col">Màu sắc</th>
-                    <th scope="col">Kích cỡ</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Đơn giá</th>
-                    <th scope="col">Nhân viên thực hiện</th>
-                    <th scope="col">Lý do</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="spTra" items="${listSanPhamDoi}" varStatus="i">
-                    <tr>
-                        <td>${i.count}</td>
-                        <td>${spTra.hoaDonChiTiet.chiTietSanPham.sanPham.tenSanPham}</td>
-                        <td>${spTra.hoaDonChiTiet.chiTietSanPham.mauSac.ten}</td>
-                        <td>${spTra.hoaDonChiTiet.chiTietSanPham.kichCo.size}</td>
-                        <td>${spTra.soLuong}</td>
-                        <td><fmt:formatNumber value="${spTra.donGia}" type="number"/></td>
-                        <td>${spTra.doiTra.nhanVien.ho} ${spTra.doiTra.nhanVien.tenDem} ${spTra.doiTra.nhanVien.ten}</td>
-                        <td>${spTra.lyDoDoiTra}</td>
-                    </tr>
-                </c:forEach>
-                <tr>
-                    <td colspan="5"><strong>Tổng tiền : </strong></td>
-                    <td colspan="2"><strong><fmt:formatNumber type="number" value="${sumSanPhamDoi}"/> </strong></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <hr>
-    </c:if>
-    <c:if test="${listSanPhamDoi.size() != 0}">
         <div class="infor-san-pham-doi">
             <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
             <table class="table table-bordered" style="margin-top: 10px">

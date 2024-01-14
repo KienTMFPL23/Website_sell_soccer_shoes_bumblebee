@@ -101,7 +101,7 @@ function chonSoLuong(itemId) {
     const newValue = event.target.value;
     if (newValue == "") {
         document.getElementById("soLuongCTSP_" + itemId).value = 1;
-        alert("Số lượng sản phẩm không được để trống");
+        alert("Số lượng sản phẩm phải > 0");
     }
 }
 
