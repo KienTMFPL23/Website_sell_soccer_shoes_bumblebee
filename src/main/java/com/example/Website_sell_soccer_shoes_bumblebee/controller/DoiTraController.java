@@ -502,7 +502,7 @@ public class DoiTraController {
         List<DoiTraChiTiet> lstSanPhamTra = doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
 
         List<DoiTraChiTiet> lstSanPhamDoi = doiTraChiTietService.listSanPhamDoi(id);
-        Double sumSanPhamDoi = doiTraChiTietService.getToTalDoiTra(lstSanPhamDoi);
+        Double sumSanPhamDoi = doiTraChiTietService.getToTalDoi(lstSanPhamDoi);
         model.addAttribute("sumSanPhamDoi", sumSanPhamDoi);
         HoaDon hoaDon = hoaDonService.getOne(id);
         model.addAttribute("hoaDon", hoaDon);
