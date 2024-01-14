@@ -180,7 +180,7 @@ public class SanPhamController {
         sanPhamService.udpateSanPham(sp);
 
         List<ChiTietSanPham> listCTSPByIDSP = service.listCTSPByIDSP(id);
-        for (ChiTietSanPham ctsp: listCTSPByIDSP) {
+        for (ChiTietSanPham ctsp : listCTSPByIDSP) {
             ctsp.setTrangThai(sanPham.getTrangThai());
             service.addKC(ctsp);
         }
@@ -232,7 +232,7 @@ public class SanPhamController {
         ChiTietSanPham ctsp = new ChiTietSanPham();
         if (kichCoList != null && mauSacList != null && listSoLuong != null) {
             for (int i = 0; i < kichCoList.size(); i++) {
-                String kichCoID = kichCoList.get(i);
+                String kichCoID =kichCoList.get(i);
                 for (int j = 0; j < mauSacList.size(); j++) {
                     String mauSacID = mauSacList.get(j);
                     String soLuong = listSoLuong.get(i * mauSacList.size() + j);
@@ -240,12 +240,20 @@ public class SanPhamController {
                     sp.setKichCo(kichCoService.getOne(UUID.fromString(kichCoID)));
                     sp.setMauSac(mauSacReponsitories.getOne(UUID.fromString(mauSacID)));
                     if (service.isChiTietSanPhamExists(sp)) {
-                        model.addAttribute("submitStatus", "error1");
-                        model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
-                        model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-                        return "/admin/index";
+                        ChiTietSanPham ctspExit = service.findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(sp);
+//                        ctspExit.setSoLuong(Integer.valueOf(soLuong) + ctspExit.getSoLuong());
+//                        model.addAttribute("submitStatus", "error1");
+//                        model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
+//                        model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+//                        return "/admin/index";
 
-                    }else {
+
+                        ctspExit.setSoLuong(Integer.valueOf(soLuong) + ctspExit.getSoLuong());
+                        sp.setGiaBan(ctspExit.getGiaBan());
+                        service.addKC(ctspExit);
+//                        return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;
+
+                    } else {
 
                         service.addKC(sp);
                     }

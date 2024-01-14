@@ -3,6 +3,7 @@ package com.example.Website_sell_soccer_shoes_bumblebee.service;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamCustom;
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
+import com.example.Website_sell_soccer_shoes_bumblebee.repository.ChiTietSanPhamRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -29,7 +30,7 @@ public interface ChiTietSanPhamService {
 
     Page<ChiTietSanPham> getCTSPByKC(UUID idKC, Pageable pageable);
 
-    Page<ChiTietSanPham> getCTSPByMS(UUID idMS,Pageable pageable);
+    Page<ChiTietSanPham> getCTSPByMS(UUID idMS, Pageable pageable);
 
     Page<ChiTietSanPham> getCTSPByGiaBan(Double minPrice, Double maxPrice, Pageable pageable);
 
@@ -43,6 +44,8 @@ public interface ChiTietSanPhamService {
 
     boolean isChiTietSanPhamExists(ChiTietSanPham sp);
 
+    ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            ChiTietSanPham ctsp);
     //seacrchByMau
     Page<ChiTietSanPham> searchByMau(UUID idMau, Pageable pageable);
 
@@ -64,12 +67,13 @@ public interface ChiTietSanPhamService {
     List<KichCo> search2KC(Integer size);
 
     List<KichCo> getListKC();
-// v3 updatectsp modal
+
+    // v3 updatectsp modal
     UUID getOneToAddModal(UUID id);
 
-    ChiTietSanPham updateSoLuongTon(UUID id,int soLuong);
+    ChiTietSanPham updateSoLuongTon(UUID id, int soLuong);
 
-    ChiTietSanPham updateDelete(UUID id,int soLuong);
+    ChiTietSanPham updateDelete(UUID id, int soLuong);
 
 
     Page<ChiTietSanPham> listCTSP(UUID id, Pageable pageable);
@@ -79,21 +83,30 @@ public interface ChiTietSanPhamService {
 
     //13.11.2023
     List<LoaiGiay> listLG22(Integer trangThai);
+
     List<DeGiay> listDeGiay22(Integer trangThai);
+
     List<MauSac> listMauSac22(Integer trangThai);
+
     List<ChatLieu> listChatLieu22(Integer trangThai);
+
     List<KichCo> listKichCo22(Integer trangThai);
+
     List<LoaiGiay> search22LG(String keyword, Integer trangThai);
+
     List<DeGiay> search22DG(String keyword, Integer trangThai);
+
     List<MauSac> search22MS(String keyword, Integer trangThai);
+
     List<ChatLieu> search22CL(String keyword, Integer trangThai);
+
     List<KichCo> search22KC(Integer size, Integer trangThai);
 
-    List<ChiTietSanPhamCustom> listSPCungLoai (Double giaSP);
+    List<ChiTietSanPhamCustom> listSPCungLoai(Double giaSP);
 
 
     List<ChiTietSanPham> listCTSPByIDSP(UUID id);
 
-    List<ChiTietSanPhamCustom> listCTSPKhuyenMai (UUID idSanPham);
+    List<ChiTietSanPhamCustom> listCTSPKhuyenMai(UUID idSanPham);
 
 }

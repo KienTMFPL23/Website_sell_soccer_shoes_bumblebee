@@ -222,12 +222,15 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
 
     @Query(value = "select ctsp from ChiTietSanPham ctsp order by ctsp.ngayTao desc ")
-    Page<ChiTietSanPham>  getListSP(Pageable pageable);
+    Page<ChiTietSanPham> getListSP(Pageable pageable);
 
     boolean existsBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
             SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
     );
 
+    ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
+    );
     @Query("SELECT cts FROM ChiTietSanPham cts " +
             "WHERE cts.sanPham = :sanPham " +
             "AND (:mauSac IS NULL OR cts.mauSac = :mauSac) " +
@@ -250,6 +253,6 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<ChiTietSanPham> listCTSPByIDSP(UUID id);
 
     @Query(value = "select * from chitietsanpham where idMauSac = ?1 " +
-            "and idsp = ?2\n",nativeQuery = true)
+            "and idsp = ?2\n", nativeQuery = true)
     List<ChiTietSanPham> getCTSPBYSPAndMauSac(UUID idMS, UUID idSP);
 }

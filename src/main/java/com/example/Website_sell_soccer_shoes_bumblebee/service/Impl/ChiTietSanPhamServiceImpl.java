@@ -102,6 +102,14 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         );
     }
 
+    @Override
+    public  ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            ChiTietSanPham sp) {
+        return repo.findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+                sp.getSanPham(), sp.getChatLieu(), sp.getLoaiGiay(), sp.getMauSac(), sp.getDeGiay(), sp.getKichCo()
+        );
+    }
+
 
     @Override
     public Page<ChiTietSanPham> searchByMau(UUID idMau, Pageable pageable) {
@@ -213,6 +221,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     public List<ChiTietSanPham> listCTSPByIDSP(UUID id) {
         return repo.listCTSPByIDSP(id);
+    }
 
     public List<ChiTietSanPhamCustom> listCTSPKhuyenMai(UUID idSanPham) {
         return repo.listChiTietSanPhamKM(idSanPham);
