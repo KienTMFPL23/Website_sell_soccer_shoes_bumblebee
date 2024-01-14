@@ -163,13 +163,20 @@ public class KhuyenMaiController {
                 ctkm.setCtsp(ctsp);
                 ctkm.setKhuyenMai(km);
 
+<<<<<<< HEAD
                 if (km.getDonVi().equals("VNĐ")) {
                     Double giaKhuyenMai = ctsp.getGiaBan() - km.getGiaTri();
                     ctkm.setGiaKhuyenMai(giaKhuyenMai);
                 }
 
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
                 if (km.getDonVi().equals("%")) {
                     Double giaKhuyenMai = ctsp.getGiaBan() - ((Double.valueOf(km.getGiaTri()) / 100) * ctsp.getGiaBan());
+                    ctkm.setGiaKhuyenMai(giaKhuyenMai);
+                } else {
+
+                    Double giaKhuyenMai = ctsp.getGiaBan() - km.getGiaTri();
                     ctkm.setGiaKhuyenMai(giaKhuyenMai);
                 }
 

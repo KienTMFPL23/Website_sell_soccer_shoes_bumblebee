@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.entity;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -89,6 +90,19 @@ public class ChiTietSanPham {
     private List<ChiTietKhuyenMai> ctkm;
 
     public void loadFromViewModel(QLSanPham vm) {
+        this.setChatLieu(vm.getChatLieu());
+        this.setDeGiay(vm.getDeGiay());
+        this.setGiaBan(vm.getGiaBan());
+        this.setKichCo(vm.getKichCo());
+        this.setSanPham(vm.getSanPham());
+        this.setTrangThai(vm.getTrangThai());
+        this.setMoTaCT(vm.getMoTaCT());
+        this.setSoLuong(vm.getSoLuong());
+        this.setNgayTao(vm.getNgayTao());
+        this.setLoaiGiay(vm.getLoaiGiay());
+        this.setMauSac(vm.getMauSac());
+    }
+    public void loadFromViewModelDTO(ChiTietSanPhamDto vm) {
         this.setChatLieu(vm.getChatLieu());
         this.setDeGiay(vm.getDeGiay());
         this.setGiaBan(vm.getGiaBan());

@@ -85,12 +85,13 @@
                     <form:input path="sanPham.tenSanPham" value="${tensp}" cssStyle="margin-left: 12px"
                                 readonly="true"/>
                 </div>
-                <div class="item inp">
-                    <label class="form-label">Giá Bán <span style="color: red">*</span> : </label>
-                    <form:input path="giaBan" type="number" min="1" cssStyle="margin-left: 50px"/>
-                    <p><form:errors path="giaBan" cssStyle="color: crimson"/></p>
-                </div>
+                    <%--                <div class="item inp">--%>
+                    <%--                    <label class="form-label">Giá Bán <span style="color: red">*</span> : </label>--%>
+                    <%--                    <form:input path="giaBan" type="number" min="1" cssStyle="margin-left: 50px"/>--%>
+                    <%--                    <p><form:errors path="giaBan" cssStyle="color: crimson"/></p>--%>
+                    <%--                </div>--%>
 
+<<<<<<< HEAD
                 <c:if test="${act eq 'update'}">
 
                     <div class="item inp">
@@ -99,12 +100,20 @@
                         <p><form:errors path="soLuong" cssStyle="color: crimson"/></p>
                     </div>
                 </c:if>
+=======
+                    <%--                <div class="item inp">--%>
+                    <%--                    <label class="form-label">Số lượng <span style="color: red">*</span> : </label>--%>
+<%--                                        <form:input path="soLuong" type="number" min="1" cssStyle="margin-left: 44px"/>--%>
+<%--                                        <p><form:errors path="soLuong" cssStyle="color: crimson"/></p>--%>
+                    <%--                </div>--%>
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
                 <div class="item">
                     <label class="form-label">Mô tả <span style="color: red">*</span> : </label>
                     <form:textarea cols="50" rows="5" path="moTaCT"
                                    cssStyle="border: none; width: 280px;height: 100px;border-radius: 15px;margin-left: 65px;margin-top: 20px"/>
                     <p><form:errors path="moTaCT" cssStyle="color: crimson"/></p>
                 </div>
+<<<<<<< HEAD
 
                 <div class="item form-check-inline">
                     <br>
@@ -113,6 +122,16 @@
                                        cssStyle="margin-right: 15px;margin-left: 35px;"/>
                     <p><form:errors path="trangThai" cssStyle="color: crimson"/></p>
                 </div>
+=======
+                <br>
+                    <%--                <div class="item form-check-inline">--%>
+                    <%--                    <br>--%>
+                    <%--                    <label class="form-label">Trạng Thái <span style="color: red">*</span> :</label>--%>
+                    <%--                    <form:radiobuttons items="${dsTrangThai}" path="trangThai" class="form-check-input"--%>
+                    <%--                                       cssStyle="margin-right: 15px;margin-left: 35px;"/>--%>
+                    <%--                    <p><form:errors path="trangThai" cssStyle="color: crimson"/></p>--%>
+                    <%--                </div>--%>
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
             </div>
             <div class="col-lg-6 ">
                 <div class="item-right">
@@ -153,6 +172,7 @@
             </div>
         </div>
         <br>
+<<<<<<< HEAD
         <c:if test="${act eq 'add'}">
             <h1 class="h4 text-gray-900 mb-4">Biến thể của sản phẩm: </h1>
             <div class="row">
@@ -230,6 +250,37 @@
                 </div>
             </div>
         </c:if>
+=======
+        <h1 class="h4 text-gray-900 mb-4">Biến thể của sản phẩm: </h1>
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Kích cỡ <span style="color: red">*</span> : </label>
+                <form:select class="js-example-basic-multiple" name="states[]" multiple="multiple" id="searchName11"
+                             path="kichCo" cssClass=".searchName1" onChange="updateTable()">
+                    <form:option value="">Chọn kích cỡ</form:option>
+                    <form:options items="${listKichCo}" itemLabel="size" itemValue="id"/>
+                </form:select>
+
+                <a data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
+                        class="bi bi-plus-circle-fill"></i></a>
+                <div><form:errors path="kichCo" cssStyle="color: crimson"/></div>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label">Màu sắc <span style="color: red">*</span> : </label>
+                <form:select class="js-example-basic-multiple" name="states[]" multiple="multiple" id="searchName12"
+                             path="mauSac" cssClass=".searchName2" onChange="updateTable()">
+                    <form:option value="">Chọn màu sắc</form:option>
+                    <form:options items="${listMau}" itemLabel="ten" itemValue="id"/>
+                </form:select>
+
+                <a data-bs-toggle="modal" data-bs-target="#exampleModal3"><i
+                        class="bi bi-plus-circle-fill"></i></a>
+                <div><form:errors path="mauSac" cssStyle="color: crimson"/></div>
+
+            </div>
+        </div>
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
         <br>
         <input type="hidden" id="submitStatus" name="submitStatus" value="${submitStatus}">
 
@@ -240,12 +291,25 @@
             </button>
         </div>
         <c:if test="${not empty sanpham}">
+<<<<<<< HEAD
             <table class="table table-bordered">
+=======
+
+            <table class="table table-bordered">
+
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
                 <tr class="table-active">
                     <th>STT</th>
                     <th>Màu sắc</th>
                     <th>Kích cỡ</th>
+<<<<<<< HEAD
                     <th>Số lượng</th>
+=======
+                    <th>Giá Bán</th>
+                    <th>Số lượng</th>
+                    <th>Trạng Thái</th>
+<%--                    <th>Hình Ảnh</th>--%>
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
                     <th>Action</th>
                 </tr>
 
@@ -511,8 +575,33 @@
 <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<<<<<<< HEAD
 <script>
     function updateTable() {
+=======
+//sna
+<%--<div id="toast" style="display:none;">--%>
+<%--    <div class="toast toast__succes">--%>
+<%--        <div class="toast__icon">--%>
+<%--            <i class="fa-sharp fa-solid fa-circle-check" style="color: #47d864;"></i>--%>
+<%--        </div>--%>
+<%--        <div class="toast__body">--%>
+<%--            <h3 class="toast__title">Success</h3>--%>
+<%--            <p class="toast__msg">Thêm vào giỏ hàng thành công</p>--%>
+<%--        </div>--%>
+<%--        <div class="toast__close">--%>
+<%--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"--%>
+<%--                 viewBox="0 0 16 16">--%>
+<%--                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>--%>
+<%--            </svg>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<script>
+    function updateTable() {
+        // var selectedSizes = $('#searchName11').val() || [];
+        // var selectedColors = $('#searchName12').val() || [];
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
         var selectedSizes = $("#searchName11").select2("data");
         var selectedColors = $("#searchName12").select2("data");
 
@@ -523,12 +612,23 @@
 
         selectedSizes.forEach(function (selectedSize) {
             selectedColors.forEach(function (selectedColor) {
+<<<<<<< HEAD
+=======
+                console.log('selectedColor:', selectedColor);
+                console.log('selectedSize:', selectedSize);
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
                 var row = '<tr>';
                 row += '<td>' + stt + '</td>';
                 row += '<td>' + selectedColor.text + '</td>';
                 row += '<td>' + selectedSize.text + '</td>';
+<<<<<<< HEAD
                 // row += '<td><input type="number" name="giaBan" required class="form-control"></td>';
                 row += '<td><input type="number" name="soLuong" required class="form-control"></td>';
+=======
+                row += '<td><input type="number" name="giaBan" required class="form-control"></td>';
+                row += '<td><input type="number" name="soLuong" required class="form-control"></td>';
+                row += '<td><select class="js-example-basic-single form-control" name="trangThai"><option value="1">Hoạt động</option><option value="0">Không hoạt động</option></select></td>';
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
                 row += '<td><a href="#" class="btn btn-danger btn-circle delete-row" onclick="deleteRow(this)"><i class="fas fa-trash"></i></a></td>';
                 row += '</tr>';
                 table.append(row);
@@ -550,6 +650,10 @@
         });
     });
 </script>
+<<<<<<< HEAD
+=======
+//hdsk
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 <script>
     function clearErrors() {
         $("#error-message").empty();
@@ -940,4 +1044,8 @@
     $(document).ready(function () {
         $('.js-example-basic-multiple').select2();
     });
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c

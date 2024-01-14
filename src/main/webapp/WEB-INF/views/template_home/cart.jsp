@@ -316,7 +316,7 @@
         document.getElementById("tongTien").innerHTML = totalFormatted;
     }
 
-    capNhatTongTien();
+    capNhatTongTien()
 
     function truSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
@@ -450,7 +450,7 @@
     function formatCurrency(number) {
         return number.toLocaleString('vi-VN', {
             style: 'currency',
-            currency: 'VND'
+            currency: 'VNĐ'
         });
     }
 </script>

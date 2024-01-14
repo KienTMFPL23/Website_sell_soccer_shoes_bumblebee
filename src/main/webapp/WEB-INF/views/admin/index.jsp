@@ -391,7 +391,10 @@
 <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <%--<script src="../../../js/ban_hang_tai_quay/ban_hang.js"></script>--%>
 
+<<<<<<< HEAD
 <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 
 <script src="../../../js/doi_hang/san-pham-doi.js"></script>
 <script src="../../../js/doi_hang/validate-modal.js"></script>
@@ -408,6 +411,11 @@
 <script src="../../../js/sb-admin-2.min.js"></script>
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 <script src="../../../js/de_giay/de_giay.js"></script>
 <script src="../../../js/mau_sac/mau_sac.js"></script>
 <script src="../../../js/chat_lieu/chat_lieu.js"></script>

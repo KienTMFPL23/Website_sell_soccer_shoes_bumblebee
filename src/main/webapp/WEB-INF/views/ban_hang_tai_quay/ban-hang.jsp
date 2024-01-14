@@ -13,7 +13,10 @@
             rel="stylesheet"
     />
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
     <link
             href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
             rel="stylesheet"
@@ -486,7 +489,10 @@
 ></script>
 <script src="../../../template_bootstrap/js/bootstrap.min.js"
         crossorigin="anonymous"></script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 <script>
     function submitFormKhachHang() {
         var formData = $("#sendKhachHang").serialize();
@@ -549,7 +555,10 @@
     });
 </script>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>

@@ -95,11 +95,6 @@ public class BanHangTaiQuayController {
     ChiTietKhuyenMaiRepository chiTietKhuyenMaiRepository;
 
 
-    @Getter
-    @Setter
-    public static class SearchForm {
-        String keyword = "";
-    }
 
     private NhanVien nhanVien = null;
 
@@ -131,7 +126,15 @@ public class BanHangTaiQuayController {
         model.addAttribute("idHoaDon", idHoaDon);
         model.addAttribute("sumMoney", sumMoney);
         model.addAttribute("khachHang", new KhachHang());
+<<<<<<< HEAD
         model.addAttribute("soLuongHD", hoaDonService.listHoaDonCho().size());
+=======
+
+        Integer soLuongHDCho = hoaDonService.listHoaDonCho().size();
+        model.addAttribute("soLuongHD", soLuongHDCho);
+
+
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
         model.addAttribute("hoaDon", new HoaDon());
         return "ban_hang_tai_quay/ban-hang";
     }
@@ -173,6 +176,7 @@ public class BanHangTaiQuayController {
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";
     }
 
+<<<<<<< HEAD
 //    @GetMapping("/searchSanPham")
 //    public String searchSanPham(Model model, @ModelAttribute("searchForm") SearchForm searchForm) {
 //        model.addAttribute("view", "../ban_hang_tai_quay/ban-hang.jsp");
@@ -180,6 +184,8 @@ public class BanHangTaiQuayController {
 //        model.addAttribute("listSearch", danhSachSPSearch);
 //        return "redirect:/bumblebee/ban-hang-tai-quay/hoa-don-chi-tiet/" + this.idHoaDon;
 //    }
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 
     @GetMapping("/hoa-don-chi-tiet/{id}")
     public String hoaDonChiTiet(Model model, @PathVariable("id") UUID id) {

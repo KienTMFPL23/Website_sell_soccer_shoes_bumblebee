@@ -10,7 +10,9 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -101,4 +103,5 @@ public class QLSanPham {
         this.setLoaiGiay(domain.getLoaiGiay());
         this.setMauSac(domain.getMauSac());
     }
+
 }

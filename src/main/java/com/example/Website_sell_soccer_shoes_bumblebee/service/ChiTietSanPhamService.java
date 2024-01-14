@@ -102,6 +102,7 @@ public interface ChiTietSanPhamService {
 
     List<KichCo> search22KC(Integer size, Integer trangThai);
 
+<<<<<<< HEAD
     List<ChiTietSanPhamCustom> listSPCungLoai(Double giaSP);
 
 
@@ -109,4 +110,9 @@ public interface ChiTietSanPhamService {
 
     List<ChiTietSanPhamCustom> listCTSPKhuyenMai(UUID idSanPham);
 
+=======
+    List<ChiTietSanPhamCustom> listSPCungLoai (Double giaSP);
+
+    void addBienThe(ChiTietSanPhamDto chiTietSanPham, String mauSac, String kichCo, Double giaBan, Integer soLuong, Boolean trangThai);
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
 }

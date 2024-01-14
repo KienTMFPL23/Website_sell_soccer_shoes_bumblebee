@@ -66,11 +66,17 @@ public class HoaDon {
     @JoinColumn(name = "IdKH")
     private KhachHang khachHang;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "hoaDon")
     private List<HoaDonChiTiet> hoaDons;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "hoaDon")
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
     DoiTra doiTra;
 }

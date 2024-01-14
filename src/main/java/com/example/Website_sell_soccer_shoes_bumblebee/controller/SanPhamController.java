@@ -1,5 +1,6 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.controller;
 
+import com.example.Website_sell_soccer_shoes_bumblebee.dto.ChiTietSanPhamDto;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.ChatLieuService;
@@ -209,11 +210,18 @@ public class SanPhamController {
 
     // add ctsp
     @PostMapping("/chi-tiet-san-pham/add/{id}")
+<<<<<<< HEAD
     public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") ChiTietSanPham sp
             ,
                              BindingResult result, RedirectAttributes redirectAttributes, @RequestParam(value = "kichCo", required = false) List<String> kichCoList,
                              @RequestParam(value = "mauSac", required = false) List<String> mauSacList,
                              @RequestParam(name = "soLuong", required = false) List<String> listSoLuong) throws WriterException, IOException {
+=======
+    public String AddSanPham(Model model, @PathVariable("id") UUID id, @Valid @ModelAttribute("sanpham") QLSanPham sp
+             ,@RequestParam(value = "kichCo", required = false) List<String> kichCoList,
+                             @RequestParam(value = "mauSac", required = false) List<String> mauSacList
+            , BindingResult result, RedirectAttributes redirectAttributes) throws WriterException, IOException {
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("degiay", new DeGiay());
         model.addAttribute("vm", new ChatLieu());
@@ -230,6 +238,7 @@ public class SanPhamController {
         sp.setSanPham(sanPham1);
         sp.setNgayTao(Calendar.getInstance().getTime());
         ChiTietSanPham ctsp = new ChiTietSanPham();
+<<<<<<< HEAD
         if (kichCoList != null && mauSacList != null && listSoLuong != null) {
             for (int i = 0; i < kichCoList.size(); i++) {
                 String kichCoID =kichCoList.get(i);
@@ -261,6 +270,31 @@ public class SanPhamController {
             }
         }
 
+=======
+        //911
+        ChiTietSanPhamDto chiTietSanPhamDto = new ChiTietSanPhamDto();
+        chiTietSanPhamDto.loadFromViewModel(sp);
+        if (kichCoList != null && mauSacList != null) {
+            for (int i = 0; i < kichCoList.size(); i++) {
+                String kichCo = kichCoList.get(i);
+                String mauSac = mauSacList.get(i);
+
+                Double giaBan = chiTietSanPhamDto.getGiaBanList().get(i);
+            Integer soLuong = chiTietSanPhamDto.getSoLuongList().get(i);
+            Boolean trangThai = chiTietSanPhamDto.getTrangThaiList().get(i);
+
+            // Thực hiện lưu vào cơ sở dữ liệu
+            service.addBienThe(chiTietSanPhamDto, mauSac, kichCo, giaBan, soLuong, trangThai);
+        }}
+        if (service.isChiTietSanPhamExists(sp)) {
+            model.addAttribute("submitStatus", "error1");
+            model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
+            model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
+            return "/admin/index";
+        }
+        //911
+        ctsp.loadFromViewModel(sp);
+>>>>>>> e5051b62c7e149956cd7a359c00ad43acf60783c
         model.addAttribute("tensp", sanPham1.getTenSanPham());
 
         //generate code qr

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -268,4 +269,36 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         return repo.getOneToAddModal(id);
     }
 
+    //
+    @Override
+    public void addBienThe(ChiTietSanPhamDto chiTietSanPham, String mauSac, String kichCo, Double giaBan, Integer soLuong, Boolean trangThai) {
+        // Tạo một danh sách biến thể nếu nó chưa tồn tại
+        if (chiTietSanPham.getMauSacList() == null) {
+            chiTietSanPham.setMauSacList(new ArrayList<>());
+        }
+        if (chiTietSanPham.getKichCoList() == null) {
+            chiTietSanPham.setKichCoList(new ArrayList<>());
+        }
+        if (chiTietSanPham.getGiaBanList() == null) {
+            chiTietSanPham.setGiaBanList(new ArrayList<>());
+        }
+        if (chiTietSanPham.getSoLuongList() == null) {
+            chiTietSanPham.setSoLuongList(new ArrayList<>());
+        }
+        if (chiTietSanPham.getTrangThaiList() == null) {
+            chiTietSanPham.setTrangThaiList(new ArrayList<>());
+        }
+
+        // Thêm thông tin biến thể vào danh sách
+        chiTietSanPham.getMauSacList().add(mauSac);
+        chiTietSanPham.getKichCoList().add(kichCo);
+        chiTietSanPham.getGiaBanList().add(giaBan);
+        chiTietSanPham.getSoLuongList().add(soLuong);
+        chiTietSanPham.getTrangThaiList().add(trangThai);
+
+        ChiTietSanPham chiTietSanPham1=new ChiTietSanPham();
+        chiTietSanPham1.loadFromViewModelDTO(chiTietSanPham);
+        // Lưu cập nhật vào cơ sở dữ liệu
+        repo.save(chiTietSanPham1);
+    }
 }
