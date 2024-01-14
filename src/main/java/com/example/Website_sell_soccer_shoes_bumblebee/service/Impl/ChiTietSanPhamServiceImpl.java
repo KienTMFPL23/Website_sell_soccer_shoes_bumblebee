@@ -213,7 +213,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     public List<ChiTietSanPham> listCTSPByIDSP(UUID id) {
         return repo.listCTSPByIDSP(id);
-
+    }
     public List<ChiTietSanPhamCustom> listCTSPKhuyenMai(UUID idSanPham) {
         return repo.listChiTietSanPhamKM(idSanPham);
 
