@@ -169,8 +169,10 @@ public class BanHangTaiQuayController {
     public String deleteHoaDon(@PathVariable("id") UUID id) {
         List<HoaDonChiTiet> listHoaDonCT = hoaDonChiTietService.getListHoaDonCTByIdHoaDon(id);
         if (listHoaDonCT.size() != 0) {
-            hoaDonChiTietService.removeHDCT(id);
-            hoaDonChiTietService.deleteByHoaDon(id);
+            for (HoaDonChiTiet hdct : listHoaDonCT) {
+                hoaDonChiTietService.deleteHoaDonCT(hdct.getId());
+                chiTietSanPhamService.updateDelete(hdct.getChiTietSanPham().getId(), hdct.getSoLuong());
+            }
         }
         hoaDonService.deleteHoaDon(id);
         return "redirect:/bumblebee/ban-hang-tai-quay/sell";

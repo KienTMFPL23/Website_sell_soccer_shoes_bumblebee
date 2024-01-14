@@ -39,4 +39,6 @@ public interface DoiTraChiTietService {
     Integer getSoLuongDTMax(UUID idHoaDonCT);
 
     Integer getSoLuongDTMaxInSP(UUID idDoiTra);
+
+    Integer getMaxSLDoi(UUID idDoiTra, UUID idHDCT);
 }

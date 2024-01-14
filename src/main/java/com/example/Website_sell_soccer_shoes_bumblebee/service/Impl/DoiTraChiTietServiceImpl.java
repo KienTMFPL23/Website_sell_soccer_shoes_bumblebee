@@ -130,4 +130,14 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
         }
         return soLuong;
     }
+
+    @Override
+    public Integer getMaxSLDoi(UUID idDoiTra, UUID idHDCT) {
+        Integer soLuong = 0;
+        List<DoiTraChiTiet> listDTCT = doiTraCTRepo.listDoiTraCTByDoiTraAndHoaDon(idDoiTra,idHDCT);
+        for (DoiTraChiTiet lst : listDTCT){
+            soLuong += lst.getSoLuong();
+        }
+        return soLuong;
+    }
 }

@@ -194,6 +194,15 @@ public class DoiTraController {
         return ResponseEntity.ok(lstSanPham);
     }
 
+    @GetMapping("/bumblebee/don-hang/list-sp-km/{id}")
+    public ResponseEntity<?> getListByMaSPKM(Model model, @PathVariable("id") UUID id) {
+        ChiTietSanPham ctsp = chiTietSanPhamService.getOne(id);
+        model.addAttribute("searchDT", new SearchDoiTra());
+        this.idCTSP = id;
+        List<ChiTietSanPhamCustom> lstSanPham = chiTietSanPhamService.listCTSPKhuyenMai(ctsp.getSanPham().getId());
+        return ResponseEntity.ok(lstSanPham);
+    }
+
     @GetMapping("/bumblebee/don-hang/list-hoa-don-ct/{id}")
     public ResponseEntity<?> listHoaDonCTCustom(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("searchDT", new SearchDoiTra());
@@ -254,18 +263,18 @@ public class DoiTraController {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHDCTDoiTra(hoaDon.getId(), this.idCTSP);
         ChiTietSanPham ctsp = chiTietSanPhamService.getOne(idSanPham);
         DoiTraChiTiet getSPInDoiTra = doiTraChiTietService.getSanPhamInDoiTra(doiTra.getId(), idSanPham);
-//        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMax(hoaDonChiTiet.getId());
-        Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTra.getId());
-        if (soLuongDT <= hoaDonChiTiet.getSoLuong()) {
-            if (getSPInDoiTra != null) {
-                if (getSPInDoiTra.getSoLuong() < hoaDonChiTiet.getSoLuong()) {
-                    if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet) {
-                        getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
-                        doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
-                        this.idDoiTra = doiTra.getId();
-                    }
+        Integer soLuongDT = doiTraChiTietService.getMaxSLDoi(idDoiTra, hoaDonChiTiet.getId());
+        Integer soLuongHD = hoaDonChiTiet.getSoLuong();
+        if (getSPInDoiTra != null) {
+            if (getSPInDoiTra.getSoLuong() < soLuongHD) {
+                if (getSPInDoiTra.getHoaDonChiTiet() == hoaDonChiTiet) {
+                    getSPInDoiTra.setSoLuong(getSPInDoiTra.getSoLuong() + 1);
+                    doiTraChiTietService.saveDoiTraCT(getSPInDoiTra);
+                    this.idDoiTra = doiTra.getId();
                 }
-            } else {
+            }
+        } else {
+            if (soLuongDT < hoaDonChiTiet.getSoLuong()) {
                 doiTraChiTiet.setChiTietSanPham(ctsp);
                 doiTraChiTiet.setHoaDonChiTiet(hoaDonChiTiet);
                 doiTraChiTiet.setSoLuong(1);
@@ -299,11 +308,10 @@ public class DoiTraController {
 //        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getOne(doiTraChiTiet.getChiTietSanPham().getId());
 //        Integer soLuongTon = chiTietSanPham.getSoLuong() + doiTraChiTiet.getSoLuong();
         Integer soLuongDT = doiTraChiTietService.getSoLuongDTMaxInSP(doiTraChiTiet.getDoiTra().getId());
-        if (soLuong <= 0){
+        if (soLuong <= 0) {
             doiTraChiTiet.setSoLuong(1);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
-        }
-        else if (soLuongDT + soLuong - doiTraChiTiet.getSoLuong() <= soLuongDaMua) {
+        } else if (soLuongDT + soLuong - doiTraChiTiet.getSoLuong() <= soLuongDaMua) {
             doiTraChiTiet.setSoLuong(soLuong);
             doiTraChiTietService.saveDoiTraCT(doiTraChiTiet);
         }

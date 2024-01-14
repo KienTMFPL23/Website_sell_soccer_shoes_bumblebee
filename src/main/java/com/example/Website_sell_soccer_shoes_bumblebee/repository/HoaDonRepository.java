@@ -98,10 +98,10 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 8 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonDaHuy(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.doiTra.ngayDoiTra DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 6 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonTraHang(UUID idKH);
 
-    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.doiTra.ngayDoiTra DESC")
+    @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = 0 and hd.khachHang.id = ?1 and hd.trangThai = 7 order by hd.ngayThanhToan DESC")
     List<HoaDon> listHoaDonDaHoanTra(UUID idKH);
 
     @Query(value = "select hd from HoaDon hd where hd.loaiHoaDon = ?1")
