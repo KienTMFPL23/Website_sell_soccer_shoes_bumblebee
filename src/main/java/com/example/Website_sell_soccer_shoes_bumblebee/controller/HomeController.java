@@ -528,6 +528,7 @@ public class HomeController {
         Double price = gioHangChiTietService.getTotalMoney(listGHCT);
         Integer amount = price.intValue();
         model.addAttribute("amount", amount);
+        System.out.println("Tổng tiền" +amount);
         return "VnPay/index";
     }
 

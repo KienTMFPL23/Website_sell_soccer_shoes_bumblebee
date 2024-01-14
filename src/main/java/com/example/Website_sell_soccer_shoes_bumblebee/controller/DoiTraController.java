@@ -845,4 +845,13 @@ public class DoiTraController {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         return cell;
     }
+
+    @GetMapping("/bumblebee/don-hang/list-sp-km/{id}")
+    public ResponseEntity<?> getListByMaSPKM(Model model, @PathVariable("id") UUID id) {
+        ChiTietSanPham ctsp = chiTietSanPhamService.getOne(id);
+        model.addAttribute("searchDT", new SearchDoiTra());
+        this.idCTSP = id;
+        List<ChiTietSanPhamCustom> lstSanPham = chiTietSanPhamService.listCTSPKhuyenMai(ctsp.getSanPham().getId());
+        return ResponseEntity.ok(lstSanPham);
+    }
 }
