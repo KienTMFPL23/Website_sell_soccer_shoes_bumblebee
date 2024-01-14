@@ -793,7 +793,69 @@
             </td>
         </div>
     </form:form>
-
+    <hr>
+    <c:if test="${hoaDon.doiTra != null}">
+        <c:if test="${hoaDon.trangThai == 6}">
+            <h1 style="color: red">Sản phẩm trả</h1>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Kích cỡ</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${hoaDon.doiTra.doiTraChiTiets}" varStatus="i" var="dt">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${dt.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${dt.chiTietSanPham.kichCo.size}</td>
+                        <td>${dt.soLuong}</td>
+                        <td> <img src="../../uploads/${dt.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
+                                  height="100px"/></td>
+                        <td>${dt.donGia}</td>
+                        <td>${dt.donGia * dt.soLuong}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+        <c:if test="${hoaDon.trangThai == 7}">
+            <h1 style="color: red">Sản phẩm đổi</h1>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Kích cỡ</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${hoaDon.doiTra.doiTraChiTiets}" varStatus="i" var="dt">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${dt.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${dt.chiTietSanPham.kichCo.size}</td>
+                        <td>${dt.soLuong}</td>
+                        <td> <img src="../../uploads/${dt.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
+                                  height="100px"/></td>
+                        <td>${dt.donGia}</td>
+                        <td>${dt.donGia * dt.soLuong}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+    </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

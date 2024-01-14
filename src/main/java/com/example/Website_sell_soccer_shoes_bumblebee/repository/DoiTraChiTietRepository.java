@@ -19,6 +19,9 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     @Query("select dtct from DoiTraChiTiet  dtct where dtct.doiTra.id = ?1")
     List<DoiTraChiTiet> listDoiTraCTByID(UUID idDoiTra);
 
+    @Query(value = "select * from DoiTraChiTiet where IdDoiTra = ?1 and IdHDCT = ?2",nativeQuery = true)
+    List<DoiTraChiTiet> listDoiTraCTByDoiTraAndHoaDon(UUID idDoiTra,UUID idHDCT);
+
     @Query(value = "select sp.TenSanPham,dtct.SoLuong,dtct.DonGia, ms.TenMau, kc.Size,dtct.LyDoDoiTra,dtct.TrangThai\n" +
             "from DoiTraChiTiet dtct join DoiTra dt on dtct.IdDoiTra = dt.Id\n" +
             "                        join ChiTietSanPham ctsp on dtct.IdChiTietSP = ctsp.Id\n" +
