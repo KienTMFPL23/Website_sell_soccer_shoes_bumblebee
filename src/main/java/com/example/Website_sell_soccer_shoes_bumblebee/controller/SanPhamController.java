@@ -232,21 +232,39 @@ public class SanPhamController {
         ChiTietSanPham ctsp = new ChiTietSanPham();
         if (kichCoList != null && mauSacList != null && listSoLuong != null) {
             for (int i = 0; i < kichCoList.size(); i++) {
-                String kichCoID = kichCoList.get(i);
+                if (i >= kichCoList.size()) {
+                    System.out.println("Chỉ số vượt quá kích thước của kichCoList");
+                    // hoặc thực hiện hành động cụ thể tùy thuộc vào logic ứng dụng của bạn
+                    continue;
+                }
+                String kichCoID =kichCoList.get(i);
                 for (int j = 0; j < mauSacList.size(); j++) {
+                    if (j >= mauSacList.size()) {
+                        System.out.println("Chỉ số vượt quá kích thước của mauSacList");
+                        // hoặc thực hiện hành động cụ thể tùy thuộc vào logic ứng dụng của bạn
+                        continue;
+                    }
                     String mauSacID = mauSacList.get(j);
-                    String soLuong = listSoLuong.get(i * mauSacList.size() + j);
+                    //
+                    int index = i * mauSacList.size() + j;
+                    if (index >= listSoLuong.size()) {
+                        System.out.println("Chỉ số vượt quá kích thước của listSoLuong");
+                        // hoặc thực hiện hành động cụ thể tùy thuộc vào logic ứng dụng của bạn
+                        continue;
+                    }
+                    //
+                    String soLuong = listSoLuong.get(index);
                     sp.setSoLuong(Integer.valueOf(soLuong));
                     sp.setKichCo(kichCoService.getOne(UUID.fromString(kichCoID)));
                     sp.setMauSac(mauSacReponsitories.getOne(UUID.fromString(mauSacID)));
                     if (service.isChiTietSanPhamExists(sp)) {
-                        model.addAttribute("submitStatus", "error1");
-                        model.addAttribute("mess", "Lỗi! Sản phẩm đã tồn tại! Vui lòng nhập lại!");
-                        model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
-                        return "/admin/index";
+                        ChiTietSanPham ctspExit = service.findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(sp);
+//
+                        ctspExit.setSoLuong(Integer.valueOf(soLuong) + ctspExit.getSoLuong());
+                        sp.setGiaBan(ctspExit.getGiaBan());
+                        service.addKC(ctspExit);
 
-                    }else {
-
+                    } else {
                         service.addKC(sp);
                     }
                 }
@@ -261,7 +279,6 @@ public class SanPhamController {
         String qrCodeFolderPath = documentsPath + File.separator + "QRCode";
         new File(qrCodeFolderPath).mkdirs(); // Tạo thư mục "QRCode" nếu chưa tồn tại
 
-//        // Lưu QR code vào thư mục "QRCode" trong "Documents"
         QRCodeGenerator.generatorQRCode(ctsp, qrCodeFolderPath);
         redirectAttributes.addFlashAttribute("redirectUrl", "/chi-tiet-san-pham/list-san-pham/" + id);
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + id;

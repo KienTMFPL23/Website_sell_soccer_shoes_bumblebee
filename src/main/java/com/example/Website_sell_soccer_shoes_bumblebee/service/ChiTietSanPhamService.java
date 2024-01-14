@@ -96,4 +96,6 @@ public interface ChiTietSanPhamService {
 
     List<ChiTietSanPhamCustom> listCTSPKhuyenMai (UUID idSanPham);
 
+    ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            ChiTietSanPham ctsp);
 }
