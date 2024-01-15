@@ -813,7 +813,7 @@ public class DonHangController {
             BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
             com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-            qrCodeImage.setAbsolutePosition(400, 490);
+            qrCodeImage.setAbsolutePosition(400, 550);
 
             document.add(qrCodeImage);
             Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);

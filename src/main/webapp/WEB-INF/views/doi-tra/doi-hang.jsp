@@ -135,8 +135,8 @@
                             <option value="Giao thiếu hàng"
                                     <c:if test="${dtct.lyDoDoiTra eq 'Giao thiếu hàng'}">selected</c:if>>Giao thiếu hàng
                             </option>
-                            <option value="Khách không ưng ý"
-                                    <c:if test="${dtct.lyDoDoiTra eq 'Khách không ưng ý'}">selected</c:if>>Khách không ưng ý
+                            <option value="Khách không ứng ý"
+                                    <c:if test="${dtct.lyDoDoiTra eq 'Khách không ứng ý'}">selected</c:if>>Khách không ưng ý
                             </option>
                         </select>
                     </form>
@@ -152,5 +152,10 @@
         <strong><p style="color: red; text-align: right;font-size: 15px" id="errorLyDo"></p></strong>
     </div>
     <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Xác nhận</a>
-    <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
+    <c:if test="${idDoiTra != null}">
+        <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
+    </c:if>
+    <c:if test="${idDoiTra == null}">
+        <a href="/bumblebee/don-hang/tao-doi-tra/${maHoaDon}" type="submit" class="btn btn-danger">Quay lại</a>
+    </c:if>
 </div>

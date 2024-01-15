@@ -876,25 +876,18 @@ public class ChiTietSanPhamController {
         HinhAnh hinhAnh = new HinhAnh();
         hinhAnh.setCtsp(ctsp);
         try {
-            // Lấy đường dẫn tới thư mục lưu trữ tệp tin ảnh từ cấu hình
             String uploadPath = hinhAnhService.getImageUploadPath();
-
-            // Tạo thư mục lưu trữ nếu chưa tồn tại
             Path uploadDir = Paths.get(uploadPath);
             if (!Files.exists(uploadDir)) {
                 Files.createDirectories(uploadDir);
             }
-
-            // Lưu trữ các tệp tin ảnh và sử dụng tên tệp tin làm đường dẫn
             MultipartFile[] imageFiles = {tenanh, duongdan1, duongdan2, duongdan3};
             for (int i = 0; i < imageFiles.length; i++) {
                 MultipartFile file = imageFiles[i];
                 if (file != null && !file.isEmpty()) {
-                    String fileName = file.getOriginalFilename().toLowerCase(); // Sử dụng tên tệp tin làm đường dẫn
+                    String fileName = file.getOriginalFilename().toLowerCase();
                     Path filePath = uploadDir.resolve(fileName);
                     Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                    // Gán tên tệp tin ảnh và đường dẫn tới các thuộc tính tương ứng của đối tượng HinhAnh
                     switch (i) {
                         case 0:
                             hinhAnh.setTenanh(fileName);
@@ -908,13 +901,6 @@ public class ChiTietSanPhamController {
                         case 3:
                             hinhAnh.setDuongdan3(fileName);
                             break;
-//                        case 4:
-//                            hinhAnh.setDuongdan4(fileName);
-//                            break;
-//                        case 5:
-//                            hinhAnh.setDuongdan5(fileName);
-//                            break;
-
                         default:
                             break;
                     }

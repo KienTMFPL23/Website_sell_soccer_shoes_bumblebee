@@ -41,13 +41,16 @@
                                         <th class="col-md-3">Thành Tiền</th>
                                     </tr>
                                     <c:forEach var="item" items="${listGHCT}">
-                                        <tr style="background-color: ${item.ctsp.soLuong == 0 ? '#e8e8e8':'white'}"
+                                        <tr style="background-color: ${(item.ctsp.soLuong == 0 || item.ctsp.trangThai == 0) ? '#e8e8e8':'white'}"
                                             id="gioHangChiTiet_${item.id}">
                                             <td class="col-md-1">
                                                 <c:if test="${item.ctsp.soLuong == 0}">
                                                     <p>Hết Hàng</p>
                                                 </c:if>
-                                                <c:if test="${item.ctsp.soLuong > 0}">
+                                                <c:if test="${item.ctsp.trangThai == 0}">
+                                                    <p>Ngừng Hoạt Động</p>
+                                                </c:if>
+                                                <c:if test="${item.ctsp.soLuong > 0 and item.ctsp.trangThai == 1}">
                                                     <input class="checkCart" type="checkbox" name="idListCartDetail"
                                                            value="${item.ctsp.id}">
                                                 </c:if>
@@ -99,15 +102,15 @@
                                             </td>
                                             <td class="col-md-3">
                                                 <div class="form-group--number">
-                                                    <a style="color: white;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
+                                                    <a style="color: white;display: ${(item.ctsp.soLuong == 0 || item.ctsp.trangThai == 0) ? 'none':''}"
                                                        onclick="truSL('${item.id}')"
                                                        class="minus"><span style="color: black">-</span></a>
                                                     <input class="" id="soLuongCTSP_${item.id}" type="text"
                                                            value="${item.soLuong}"
-                                                           style="font-size: 15px;top: 0" ${item.ctsp.soLuong == 0 ? 'disabled':''}
+                                                           style="font-size: 15px;top: 0;background: transparent" ${(item.ctsp.soLuong == 0 || item.ctsp.trangThai == 0) ? 'disabled':''}
                                                            onchange="thayDoiSoLuong('${item.id}')"
                                                            oninput="chonSoLuong('${item.id}',event)">
-                                                    <a style="background-color: black;border: none;display: ${item.ctsp.soLuong == 0 ? 'none':''}"
+                                                    <a style="background-color: black;border: none;display: ${(item.ctsp.soLuong == 0 || item.ctsp.trangThai == 0) ? 'none':''}"
                                                        onclick="themSL('${item.id}')"
                                                        class="plus"><span style="color: white">+</span></a>
                                                     <input style="display: none" value="${item.ctsp.soLuong}"
@@ -292,7 +295,6 @@
                 numberOfCheckedCheckboxes++;
             }
         });
-
         if (numberOfCheckedCheckboxes === 0) {
             var toastElement = document.getElementById("toast_warring_sp");
             toastElement.style.display = "block";
@@ -315,9 +317,7 @@
         var totalFormatted = total.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
         document.getElementById("tongTien").innerHTML = totalFormatted;
     }
-
     capNhatTongTien();
-
     function truSL(itemId) {
         var soLuongHienTai = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
         if (soLuongHienTai - 1 < 1) {
@@ -371,6 +371,23 @@
     function thayDoiSoLuong(itemId) {
         var soLuongMoi = parseInt(document.getElementById("soLuongCTSP_" + itemId).value);
         var slCTSP = parseInt(document.getElementById("slCTSP_" + itemId).value);
+        if (isNaN(soLuongMoi) || soLuongMoi.toString().toLowerCase().includes('e')) {
+            alert('Vui lòng chỉ nhập số');
+            document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
+            capNhatThanhTien(itemId);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/bumblebee/update-cart?idGHCT=" + itemId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
+                    document.getElementById("thanhTien_" + itemId).textContent = response.thanhTien;
+                }
+            };
+            var data = JSON.stringify({productId: itemId, soLuong: Number(1)});
+            xhr.send(data);
+        }
         if (Number(soLuongMoi) < 0) {
             document.getElementById("soLuongCTSP_" + itemId).value = Number(1);
             capNhatThanhTien(itemId);
