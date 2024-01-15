@@ -218,11 +218,11 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
             "where ctsp.soLuong > 0 and sp.Id = ?1 and ctsp.TrangThai = 1", nativeQuery = true)
     List<ChiTietSanPhamCustom> listChiTietSanPhamKM(UUID idSanPham);
 
-    @Query(value = "select ctsp from ChiTietSanPham ctsp where ctsp.trangThai = 1 and ctsp.soLuong > 1")
+    @Query(value = "select ctsp from ChiTietSanPham ctsp where ctsp.trangThai = 1 and ctsp.soLuong > 0")
     List<ChiTietSanPham> getListCTSPByTrangThaiAndSoLuong();
 
     @Query(value = "select ctsp from ChiTietSanPham ctsp order by ctsp.ngayTao desc ")
-    Page<ChiTietSanPham>  getListSP(Pageable pageable);
+    Page<ChiTietSanPham> getListSP(Pageable pageable);
 
     boolean existsBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
             SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
@@ -250,10 +250,21 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     List<ChiTietSanPham> listCTSPByIDSP(UUID id);
 
     @Query(value = "select * from chitietsanpham where idMauSac = ?1 " +
-            "and idsp = ?2\n",nativeQuery = true)
+            "and idsp = ?2\n", nativeQuery = true)
     List<ChiTietSanPham> getCTSPBYSPAndMauSac(UUID idMS, UUID idSP);
 
     ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
             SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
     );
+
+    @Query(value = "SELECT \n" +
+            "    CSP.Id,\n" +
+            "FROM \n" +
+            "    ChiTietSanPham CSP\n" +
+            "JOIN \n" +
+            "    ChiTietKhuyenMai CTKM ON CSP.Id = CTKM.IdChiTietSanPham\n" +
+            "JOIN \n" +
+            "    KhuyenMai KM ON CTKM.IdKhuyenMai = KM.Id\n" +
+            "WHERE CSP.GiaBan * 0.7 <= ?1 AND TrangThai = 0 AND CSP.SoLuong > 0", nativeQuery = true)
+    List<ChiTietSanPham> listCTSPDuDieuKien(Integer giaTriKhuyenMai);
 }

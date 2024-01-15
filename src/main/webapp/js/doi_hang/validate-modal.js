@@ -105,21 +105,4 @@ function chonSoLuong(itemId) {
     }
 }
 
-$(document).ready(function () {
-    // Add a click event listener to checkboxes with class 'checkCart'
-    $('.checkCart').on('click', function () {
-        // Initialize total amount
-        var totalAmount = 0;
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                // Lấy ô input số lượng tương ứng với ô checkbox
-                var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra_' + checkboxes[i].value);
-                var lydoId = checkboxes[i].id.replace('checkBoxSP', 'lyDoTra_' + checkboxes[i].value);
-            }
-        }
-
-        // Update the content of the 'totalAmount' element
-        $('#totalAmount').text('Total Amount: ' + totalAmount.toFixed(2));
-    });
-});
 

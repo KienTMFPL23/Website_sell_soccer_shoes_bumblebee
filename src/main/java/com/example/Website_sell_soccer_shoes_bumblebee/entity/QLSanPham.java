@@ -56,13 +56,13 @@ public class QLSanPham {
     DeGiay deGiay;
 
     @Column(name = "Giaban")
-    @DecimalMin(value = "0.00", inclusive = false, message = "* Giá bán không hợp lệ")
+    @DecimalMin(value = "79999", inclusive = false, message = "* Giá bán không hợp lệ, nhập giá nhỏ nhất là 80000")
     @DecimalMax(value = "9999999999.99", inclusive = false, message = "* Giá bán không hợp lệ")
     @NotNull(message = "* không để trống giá bán !")
     Double giaBan;
 
     @Column(name = "Soluong")
-    @NotNull(message = "* không để trống số lượng !")
+    @Min(value = 1, message = "* Số lượng không hợp lệ, số lượng phải lớn hơn 0")
     @Min(value = 0, message = "* Số lượng không hợp lệ")
     @Max(value = 999999, message = "* Số lượng không hợp lệ")
     Integer soLuong;

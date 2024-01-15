@@ -492,7 +492,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("SP", new SanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
-        model.addAttribute("act","update");
+        model.addAttribute("act", "update");
         if (result.hasErrors()) {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
@@ -535,7 +535,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
 
-        model.addAttribute("act","update");
+        model.addAttribute("act", "update");
         UUID idSP = service.getOneToAddModal(id);
         SanPham sp2 = sanPhamRepo.findById(idSP).orElse(null);
         model.addAttribute("tensp", sp2.getTenSanPham());
@@ -560,7 +560,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("SP", new SanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
-        model.addAttribute("act","update");
+        model.addAttribute("act", "update");
         if (result.hasErrors()) {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
@@ -594,7 +594,7 @@ public class ChiTietSanPhamController {
     @RequestMapping("/chi-tiet-san-pham/view-update-ctsp/{id}")
     public String viewUpdateCTSP(@PathVariable("id") UUID id, Model model) {
         ChiTietSanPham sp = service.getOne(id);
-        model.addAttribute("act","update");
+        model.addAttribute("act", "update");
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
@@ -828,30 +828,6 @@ public class ChiTietSanPhamController {
 
     // hình ảnh
 
-    @GetMapping("/chi-tiet-san-pham/hinh-anh/view-add/{id}")
-    public String viewAdd(Model model, @ModelAttribute("hinhAnh") HinhAnh hinhAnh, @PathVariable("id") UUID id) {
-        ChiTietSanPham ctsp = service.getOne(id);
-        model.addAttribute("idctsp", id);
-
-        UUID idHinhANh = hinhAnhRepository.getIdHinhAnh(id);
-        SanPham sp = hinhAnhService.getSanPhamByIDCTSP(id);
-        if (idHinhANh != null) {
-            HinhAnh hinhAnh2 = hinhAnhService.getHinhAnh(id);
-            model.addAttribute("listHinhAnh", hinhAnh2);
-
-            model.addAttribute("action4", "/hinh-anh-spct/update/" + idHinhANh);
-            model.addAttribute("view", "../hinh-anh/add_update.jsp");
-            return "/admin/index";
-
-        } else {
-            // Các xử lý khác nếu không tìm thấy idHinhAnh
-            model.addAttribute("ctsp", ctsp);
-            model.addAttribute("action4", "/chi-tiet-san-pham/hinh-anh/add/" + ctsp.getId());
-            model.addAttribute("view", "../hinh-anh/add_update.jsp");
-            return "/admin/index";
-        }
-    }
-
     @GetMapping("/chi-tiet-san-pham/hinh-anh-sp/view-add/{id}")
     public String viewAddHinhAnh(Model model, @ModelAttribute("hinhAnh") HinhAnh hinhAnh, @PathVariable("id") UUID id,
                                  @RequestParam UUID idSP,
@@ -866,7 +842,7 @@ public class ChiTietSanPhamController {
             HinhAnh hinhAnh2 = hinhAnhService.getHinhAnh(id);
             model.addAttribute("listHinhAnh", hinhAnh2);
 
-            model.addAttribute("action4", "/hinh-anh-ctsp/update/" + idHinhANh);
+            model.addAttribute("action4", "/hinh-anh-ctsp/update/" + ctsp.getId() + "?idSP=" + idSP + "&idMS=" + idMS);
             model.addAttribute("view", "../hinh-anh/add_update.jsp");
             return "/admin/index";
 
@@ -879,6 +855,7 @@ public class ChiTietSanPhamController {
             return "/admin/index";
         }
     }
+
 
     @Autowired
     HinhAnhService hinhAnhService;
