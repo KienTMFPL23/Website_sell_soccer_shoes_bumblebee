@@ -11,6 +11,7 @@ checkedAllCheckbox.addEventListener('click', function () {
         checkbox.checked = checkedAllCheckbox.checked;
     });
 });
+
 function taoDoiTra() {
     var isChecked = false;
     var isValidQuantity = true;
@@ -18,18 +19,17 @@ function taoDoiTra() {
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             isChecked = true;
+            console.log(checkboxes[i].value);
             // Lấy ô input số lượng tương ứng với ô checkbox
-            var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra');
-            var lydoId = checkboxes[i].id.replace('checkBoxSP','lyDoTra');
-            console.log("inputId:", inputId); // In giá trị để kiểm tra
-            console.log("lydoId:", lydoId); //
+            var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra_' + checkboxes[i].value);
+            var lydoId = checkboxes[i].id.replace('checkBoxSP', 'lyDoTra_' + checkboxes[i].value);
             var quantityInput = document.getElementById(inputId);
             var lyDoSelect = document.getElementById(lydoId);
             // Kiểm tra nếu ô input không có giá trị hoặc giá trị không hợp lệ
             if (quantityInput.value.trim() === '' || parseInt(quantityInput.value) < 1) {
                 isValidQuantity = false;
             }
-            if (lyDoSelect.value === ''){
+            if (lyDoSelect.value === '') {
                 isValidLyDo = false;
             }
         }
@@ -38,7 +38,7 @@ function taoDoiTra() {
         alert('Vui lòng chọn ít nhất một sản phẩm và nhập số lượng hợp lệ.');
         return false;
     }
-    if (!isValidLyDo){
+    if (!isValidLyDo) {
         alert('Vui lòng chọn lý do đổi trả.');
         return false;
     }
@@ -53,8 +53,7 @@ function taoDoiTra() {
         var logEror = document.getElementById('logError');
         logEror.innerText = 'Vui lòng chọn sản phẩm cần trả';
         return false;
-    }
-    else {
+    } else {
         Swal.fire({
             position: "center",
             icon: "success",
@@ -64,15 +63,22 @@ function taoDoiTra() {
         });
         setTimeout(function () {
             return true;
-        },2000);
+        }, 2000);
     }
 }
-function changeSoLuong(soLuongMax,id) {
-    var slTra = document.getElementById('soLuongTra_'+ id);
-    if (slTra.value === 0 || slTra.value < 0 || slTra.value === ''){
-        slTra.value = 1;
-    }else if(slTra.value > soLuongMax ){
-        slTra.value = soLuongMax;
+
+function validSoLuong(maxSL, idValid) {
+    var newValue = event.target.value;
+    if (newValue > maxSL) {
+        document.getElementById('soLuongtra').value = 1;
+        alert('Số lượng không hợp lệ!!');
+        return false;
+    } else if (newValue < 1) {
+        alert('Số lượng phải lớn hơn 0!!');
+        document.getElementById('soLuongtra').value = 1;
+        return false;
+    } else {
+        return true;
     }
 }
 
@@ -80,20 +86,40 @@ function confirmDoiHang() {
     var result = confirm('Bạn có muốn đổi hàng không ?');
     var lyDo = document.getElementById('lyDo').value;
     var error = document.getElementById('errorLyDo');
-    if (result){
-        if (lyDo === ""){
+    if (result) {
+        if (lyDo === "") {
             error.innerText = 'Vui lòng chọn lý do!';
             return false;
         }
-        return  true;
-    }else {
-        return  false;
+        return true;
+    } else {
+        return false;
     }
 }
+
 function chonSoLuong(itemId) {
     const newValue = event.target.value;
-    if (newValue == ""){
+    if (newValue == "") {
         document.getElementById("soLuongCTSP_" + itemId).value = 1;
-        alert("Số lượng sản phẩm không được để trống");
+        alert("Số lượng sản phẩm phải > 0");
     }
 }
+
+$(document).ready(function () {
+    // Add a click event listener to checkboxes with class 'checkCart'
+    $('.checkCart').on('click', function () {
+        // Initialize total amount
+        var totalAmount = 0;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                // Lấy ô input số lượng tương ứng với ô checkbox
+                var inputId = checkboxes[i].id.replace('checkBoxSP', 'soLuongTra_' + checkboxes[i].value);
+                var lydoId = checkboxes[i].id.replace('checkBoxSP', 'lyDoTra_' + checkboxes[i].value);
+            }
+        }
+
+        // Update the content of the 'totalAmount' element
+        $('#totalAmount').text('Total Amount: ' + totalAmount.toFixed(2));
+    });
+});
+

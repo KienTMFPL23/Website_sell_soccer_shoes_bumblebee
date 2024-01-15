@@ -102,7 +102,7 @@
     </ul>
 
     <h1 style="text-align: center; font-family: Nunito; padding-top: 20px;">Quản Lý Thông Tin Nhân Viên</h1>
-    
+
 
     <div class="container">
         <table id="tableKhachHang" class="ui celled table" width="100%" cellspacing="0">

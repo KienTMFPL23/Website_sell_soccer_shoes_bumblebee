@@ -31,19 +31,19 @@ public class DoiTra {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdHoaDon")
     HoaDon hoaDon;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdNhanVien")
     private NhanVien nhanVien;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdKhachHang")
     KhachHang khachHang;
 
-    @OneToMany(mappedBy = "doiTra")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "doiTra")
     private List<DoiTraChiTiet> doiTraChiTiets;
 
 }

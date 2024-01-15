@@ -1,0 +1,164 @@
+header .top-menu {
+  background-color: yellow;
+}
+.nav-link {
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+}
+.header_menu {
+  margin-top: 20px;
+}
+.cart {
+  margin-top: 30px;
+  float: right;
+}
+.nav-link {
+  color: blue;
+}
+ul li a:hover {
+  background-color: orange;
+}
+/* home */
+.btnAddCart {
+  float: right;
+}
+.carousel-item {
+  height: 430px;
+  display: flex;
+}
+.title {
+  text-align: center;
+  color: orange;
+  margin-top: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.link_food {
+  text-decoration: none;
+  color: red;
+  font-weight: bold;
+}
+/* home- add-product */
+.list-group {
+  margin-top: 30px;
+}
+.error{
+  color: red;
+}
+/* .link_food :hover {
+  /* background-color: yellow;
+  background-image: url(/assets/carts.png); */
+/* } */
+/* detai; */
+.detail {
+  margin-top: 20px;
+  color: red;
+  font-weight: bold;
+}
+.infor {
+  color: blueviolet;
+  font-weight: bold;
+}
+.btnDetail {
+  margin-top: 20px;
+  width: 80px;
+}
+.btnDelete {
+  width: 80px;
+}
+/* prduct buy */
+.styleImg {
+  height: 100px;
+  width: 100px;
+}
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/* product */
+.card-img-top {
+  height: 270px;
+  position: relative;
+  overflow: hidden;
+  background-position: center center;
+}
+.typeOption {
+  color: red;
+  font-weight: bold;
+}
+/* login */
+.card {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card-title {
+  text-align: center;
+}
+.cardLogin {
+  display: flex;
+  justify-content: center;
+}
+.welcomeUser {
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+}
+.user {
+  text-decoration: none;
+  color: blueviolet;
+  font-weight: bold;
+  font-size: 18px;
+}
+.changeUser {
+  float: right;
+}
+/* footer */
+.footer_infor {
+  background-color: orange;
+}
+.footer_infor .row {
+  margin-top: 20px;
+}
+.footer_infor .row .col-lg-3 {
+  margin-top: 30px;
+}
+ul {
+  list-style: none;
+}
+li {
+  float: left;
+  display: block;
+  padding: 0;
+}
+ul li a {
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+.footer_content {
+  float: left;
+  display: block;
+  padding: 0;
+}
+.footer_social a {
+  display: inline-block;
+  height: 41px;
+  width: 41px;
+  font-size: 16px;
+  color: #404040;
+  border: 1px solid #ededed;
+  border-radius: 50%;
+  line-height: 38px;
+  text-align: center;
+  background: #ffffff;
+  margin-right: 10px;
+  margin-top: 30px;
+}
+.footer_social a:hover {
+  background-color: #7fad39;
+}
+.search {
+  margin-top: 30px;
+}

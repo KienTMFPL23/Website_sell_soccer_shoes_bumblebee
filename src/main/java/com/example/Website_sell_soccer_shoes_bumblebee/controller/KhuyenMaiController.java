@@ -52,6 +52,7 @@ public class KhuyenMaiController {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
+
     private UUID idKhuyenMai = null;
 
     @ModelAttribute("dsTrangThai")
@@ -82,7 +83,7 @@ public class KhuyenMaiController {
         String donHang = "khuyen-mai";
         model.addAttribute("donHang", donHang);
 
-        model.addAttribute("listCTSP", chiTietSanPhamService.getList());
+        model.addAttribute("listCTSP", chiTietSanPhamRepo.ctspConHang());
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
@@ -162,7 +163,7 @@ public class KhuyenMaiController {
                 ctkm.setCtsp(ctsp);
                 ctkm.setKhuyenMai(km);
 
-                if (km.getDonVi().equals("VNÐ")) {
+                if (km.getDonVi().equals("VNĐ")) {
                     Double giaKhuyenMai = ctsp.getGiaBan() - km.getGiaTri();
                     ctkm.setGiaKhuyenMai(giaKhuyenMai);
                 }
@@ -204,6 +205,12 @@ public class KhuyenMaiController {
 
         if (khuyenMaiService.findMa(km.getMaKhuyenMai()) != null) {
             model.addAttribute("mess_Ma", "Mã không được trùng");
+            model.addAttribute("view", "../khuyen-mai/add_update.jsp");
+            return "admin/index";
+        }
+
+        if (LocalDateTime.now().isAfter(km.getNgayKetThuc())) {
+            model.addAttribute("mess_Ngay", "Ngày kết thúc phải lớn hơn ngày hiện tại");
             model.addAttribute("view", "../khuyen-mai/add_update.jsp");
             return "admin/index";
         }
@@ -309,7 +316,6 @@ public class KhuyenMaiController {
             return "admin/index";
         }
 
-
         KhuyenMai khuyenMai = khuyenMaiService.findId(km.getId());
         khuyenMai.setTrangThai(km.getTrangThai());
         khuyenMai.setNgayKetThuc(km.getNgayKetThuc());
@@ -320,6 +326,12 @@ public class KhuyenMaiController {
         khuyenMai.setNgayBatDau(km.getNgayBatDau());
         khuyenMaiService.save(khuyenMai);
 
+
+        List<ChiTietKhuyenMai> listCTKM = chiTietKhuyenMaiRepository.findIdKhuyenMai(khuyenMai.getId());
+        for (ChiTietKhuyenMai ctkm : listCTKM) {
+            chiTietKhuyenMaiRepository.delete(ctkm);
+        }
+
         if (km.getTrangThai() == 1) {
             List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
             for (ChiTietKhuyenMai ctkm : chiTietKhuyenMai) {
@@ -329,7 +341,6 @@ public class KhuyenMaiController {
         } else {
             List<ChiTietKhuyenMai> listCTKmByIdKM = chiTietKhuyenMaiRepository.findIdKhuyenMai(km.getId());
             List<ChiTietKhuyenMai> listCTKMByTrangThai0 = chiTietKhuyenMaiRepository.ctkmByTrangThai0();
-
 
             for (ChiTietKhuyenMai ctkm1 : listCTKmByIdKM) {
                 System.out.println("aa " + ctkm1.getCtsp().getId());

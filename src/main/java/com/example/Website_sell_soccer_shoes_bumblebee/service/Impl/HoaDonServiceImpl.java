@@ -6,6 +6,8 @@ import com.example.Website_sell_soccer_shoes_bumblebee.entity.*;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.HoaDonRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.NhanVienRepository;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.ChiTietSanPhamService;
+import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonChiTietService;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.HoaDonService;
 
 import jakarta.persistence.EntityManager;
@@ -22,6 +24,7 @@ import org.apache.commons.math3.analysis.function.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -51,6 +54,12 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     HttpSession session;
+
+    @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
+
+    @Autowired
+    ChiTietSanPhamService chiTietSanPhamService;
 
 
     @Override
@@ -500,5 +509,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public void deleteHoaDonById(UUID idHoaDon) {
         hoaDonRepository.deletHoaDonById(idHoaDon);
     }
+
+
 
 }

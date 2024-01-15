@@ -492,11 +492,13 @@ public class ChiTietSanPhamController {
         model.addAttribute("SP", new SanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
+        model.addAttribute("act","update");
         if (result.hasErrors()) {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
             return "/admin/index";
         }
+
 
         UUID idSP = service.getOneToAddModal(qlSanPham.getId());
         SanPham sp2 = sanPhamRepo.findById(idSP).orElse(null);
@@ -533,7 +535,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
 
-
+        model.addAttribute("act","update");
         UUID idSP = service.getOneToAddModal(id);
         SanPham sp2 = sanPhamRepo.findById(idSP).orElse(null);
         model.addAttribute("tensp", sp2.getTenSanPham());
@@ -558,6 +560,7 @@ public class ChiTietSanPhamController {
         model.addAttribute("SP", new SanPham());
         model.addAttribute("ms", new MauSac());
         model.addAttribute("kichco", new KichCo());
+        model.addAttribute("act","update");
         if (result.hasErrors()) {
             model.addAttribute("mess", "Lỗi! Vui lòng kiểm tra các trường trên !");
             model.addAttribute("view", "../chi-tiet-san-pham/add_update.jsp");
@@ -591,7 +594,7 @@ public class ChiTietSanPhamController {
     @RequestMapping("/chi-tiet-san-pham/view-update-ctsp/{id}")
     public String viewUpdateCTSP(@PathVariable("id") UUID id, Model model) {
         ChiTietSanPham sp = service.getOne(id);
-
+        model.addAttribute("act","update");
         model.addAttribute("lg", new LoaiGiay());
         model.addAttribute("vm", new ChatLieu());
         model.addAttribute("degiay", new DeGiay());
@@ -823,7 +826,6 @@ public class ChiTietSanPhamController {
 //        return "/admin/index";
     }
 
-
     // hình ảnh
 
     @GetMapping("/chi-tiet-san-pham/hinh-anh/view-add/{id}")
@@ -851,7 +853,10 @@ public class ChiTietSanPhamController {
     }
 
     @GetMapping("/chi-tiet-san-pham/hinh-anh-sp/view-add/{id}")
-    public String viewAddHinhAnh(Model model, @ModelAttribute("hinhAnh") HinhAnh hinhAnh, @PathVariable("id") UUID id) {
+    public String viewAddHinhAnh(Model model, @ModelAttribute("hinhAnh") HinhAnh hinhAnh, @PathVariable("id") UUID id,
+                                 @RequestParam UUID idSP,
+                                 @RequestParam UUID idMS
+    ) {
         ChiTietSanPham ctsp = service.getOne(id);
         model.addAttribute("idctsp", id);
 
@@ -869,7 +874,7 @@ public class ChiTietSanPhamController {
         } else {
             // Các xử lý khác nếu không tìm thấy idHinhAnh
             model.addAttribute("ctsp", ctsp);
-            model.addAttribute("action4", "/chi-tiet-san-pham/hinh-anh-sp/add/" + ctsp.getId());
+            model.addAttribute("action4", "/chi-tiet-san-pham/hinh-anh-sp/add/" + ctsp.getId() + "?idSP=" + idSP + "&idMS=" + idMS);
             model.addAttribute("view", "../hinh-anh/add_update.jsp");
             return "/admin/index";
         }
@@ -953,63 +958,56 @@ public class ChiTietSanPhamController {
                                   @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                                   @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                                   @RequestParam(name = "duongdan3") MultipartFile duongdan3,
-//                                  @RequestParam(name = "duongdan4") MultipartFile duongdan4,
-//                                  @RequestParam(name = "duongdan5") MultipartFile duongdan5,
+                                  @RequestParam UUID idSP,
+                                  @RequestParam UUID idMS,
                                   @PathVariable UUID id,
                                   @RequestParam(name = "ctsp") ChiTietSanPham ctsp
     ) {
-        HinhAnh hinhAnh = new HinhAnh();
-        hinhAnh.setCtsp(ctsp);
+        List<ChiTietSanPham> listCTSPBYSPAndMS = chiTietSanPhamRepo.getCTSPBYSPAndMauSac(idMS, idSP);
         SanPham sp = hinhAnhService.getSanPhamByIDCTSP(id);
-        try {
-            // Lấy đường dẫn tới thư mục lưu trữ tệp tin ảnh từ cấu hình
-            String uploadPath = hinhAnhService.getImageUploadPath();
+        for (ChiTietSanPham chiTietSanPham : listCTSPBYSPAndMS) {
+            HinhAnh hinhAnh = new HinhAnh();
+            try {
+                String uploadPath = hinhAnhService.getImageUploadPath();
+                Path uploadDir = Paths.get(uploadPath);
+                if (!Files.exists(uploadDir)) {
+                    Files.createDirectories(uploadDir);
+                }
+                MultipartFile[] imageFiles = {tenanh, duongdan1, duongdan2, duongdan3};
+                for (int i = 0; i < imageFiles.length; i++) {
+                    MultipartFile file = imageFiles[i];
+                    if (file != null && !file.isEmpty()) {
+                        String fileName = file.getOriginalFilename().toLowerCase(); // Sử dụng tên tệp tin làm đường dẫn
+                        Path filePath = uploadDir.resolve(fileName);
+                        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                        switch (i) {
+                            case 0:
+                                hinhAnh.setTenanh(fileName);
+                                break;
+                            case 1:
+                                hinhAnh.setDuongdan1(fileName);
+                                break;
+                            case 2:
+                                hinhAnh.setDuongdan2(fileName);
+                                break;
+                            case 3:
+                                hinhAnh.setDuongdan3(fileName);
+                                break;
+                            default:
+                                break;
+                        }
 
-            // Tạo thư mục lưu trữ nếu chưa tồn tại
-            Path uploadDir = Paths.get(uploadPath);
-            if (!Files.exists(uploadDir)) {
-                Files.createDirectories(uploadDir);
-            }
-
-            // Lưu trữ các tệp tin ảnh và sử dụng tên tệp tin làm đường dẫn
-            MultipartFile[] imageFiles = {tenanh, duongdan1, duongdan2, duongdan3};
-            for (int i = 0; i < imageFiles.length; i++) {
-                MultipartFile file = imageFiles[i];
-                if (file != null && !file.isEmpty()) {
-                    String fileName = file.getOriginalFilename().toLowerCase(); // Sử dụng tên tệp tin làm đường dẫn
-                    Path filePath = uploadDir.resolve(fileName);
-                    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                    // Gán tên tệp tin ảnh và đường dẫn tới các thuộc tính tương ứng của đối tượng HinhAnh
-                    switch (i) {
-                        case 0:
-                            hinhAnh.setTenanh(fileName);
-                            break;
-                        case 1:
-                            hinhAnh.setDuongdan1(fileName);
-                            break;
-                        case 2:
-                            hinhAnh.setDuongdan2(fileName);
-                            break;
-                        case 3:
-                            hinhAnh.setDuongdan3(fileName);
-                            break;
-//                        case 4:
-//                            hinhAnh.setDuongdan4(fileName);
-//                            break;
-//                        case 5:
-//                            hinhAnh.setDuongdan5(fileName);
-//                            break;
-
-                        default:
-                            break;
                     }
                 }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            hinhAnh.setCtsp(chiTietSanPham);
+            hinhAnhRepository.save(hinhAnh);
         }
-        hinhAnhRepository.save(hinhAnh);
+
+
         return "redirect:/chi-tiet-san-pham/list-san-pham/" + sp.getId();
     }
 

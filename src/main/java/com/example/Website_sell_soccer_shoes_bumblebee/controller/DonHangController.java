@@ -494,7 +494,7 @@ public class DonHangController {
     // 4: đang giao
     // 5: hoàn thành
     // 6: trả hàng
-    // 7 : đã hoàn trả
+    // 7 : đổi hàng
     // 8 : đã huỷ
     // xác nhận -> đang chuẩn bị
     // loại đơn: 0:on/ 1:tại quầy

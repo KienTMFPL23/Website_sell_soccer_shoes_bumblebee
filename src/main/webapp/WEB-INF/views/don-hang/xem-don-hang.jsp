@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ page language="java" pageEncoding="UTF-8" %>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -359,14 +361,14 @@
         </c:if>
         <c:if test="${hoaDon.trangThai== 6}">
             <h1 style="color: red"><img src="../../../img/istockphoto-1707893816-612x612.jpg"
-                                        style="width: 60px; height: 60px;"> Trả hàng
+                                        style="width: 60px; height: 60px;"> Đơn hàng trả
             </h1>
             <hr class="border border-primary border-2 opacity-50">
             <%--            <a href="/don-hang/da-tra-hang/${hoaDon.id}" style="border-radius: 20px"--%>
             <%--               class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn trả hàng ?');">Xác nhận</a>--%>
         </c:if>
         <c:if test="${hoaDon.trangThai== 7}">
-            <h1 style="color: red">Đã trả hàng</h1>
+            <h1 style="color: red">Đơn hàng đổi</h1>
             <hr class="border border-primary border-2 opacity-50">
         </c:if>
         <c:if test="${hoaDon.trangThai== 8}">
@@ -431,12 +433,12 @@
 
                             </c:if>
                             <c:if test="${hoaDon.trangThai== 6 }">
-                                <button type="button" style="border-radius: 30px;" class="btn btn-warning">Trả hàng
+                                <button type="button" style="border-radius: 30px;" class="btn btn-warning">Đơn hàng trả
                                 </button>
 
                             </c:if>
                             <c:if test="${hoaDon.trangThai== 7 }">
-                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Đã hoàn trả
+                                <button type="button" style="border-radius: 30px;" class="btn btn-primary">Đơn hàng đổi
                                 </button>
 
                             </c:if>
@@ -674,7 +676,6 @@
             </div>
         </div>
 
-
         <br>
         <div class="row text-center">
             <table class="table table-striped">
@@ -750,12 +751,16 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <c:if test="${ hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
+                        <c:set var="totalProducts" value="${fn:length(hoaDon.hoaDons)}" />
+                        <c:if test="${ totalProducts > 1 && hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
                             <td>
-                                <a href="/don-hang/delete-hdct/${hdct.id}"
-                                   onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">
-                                    <img src="../../../img/delete.png">
-                                </a>
+                                <c:set var="totalProducts" value="${fn:length(hoaDon.hoaDons)}"/>
+                                <c:if test="${ totalProducts > 1 && hoaDon.phuongThucThanhToan ==1 && hoaDon.loaiHoaDon!=1 && hoaDon.trangThai<4 }">
+                                    <a href="/don-hang/delete-hdct/${hdct.id}"
+                                       onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này ?');">
+                                        <img src="../../../img/delete.png">
+                                    </a>
+                                </c:if>
                             </td>
                         </c:if>
                     </tr>
@@ -788,7 +793,69 @@
             </td>
         </div>
     </form:form>
-
+    <hr>
+    <c:if test="${hoaDon.doiTra != null}">
+        <c:if test="${hoaDon.trangThai == 6}">
+            <h1 style="color: red">Sản phẩm trả</h1>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Kích cỡ</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${hoaDon.doiTra.doiTraChiTiets}" varStatus="i" var="dt">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${dt.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${dt.chiTietSanPham.kichCo.size}</td>
+                        <td>${dt.soLuong}</td>
+                        <td> <img src="../../uploads/${dt.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
+                                  height="100px"/></td>
+                        <td>${dt.donGia}</td>
+                        <td>${dt.donGia * dt.soLuong}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+        <c:if test="${hoaDon.trangThai == 7}">
+            <h1 style="color: red">Sản phẩm đổi</h1>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Kích cỡ</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${hoaDon.doiTra.doiTraChiTiets}" varStatus="i" var="dt">
+                    <tr>
+                        <td>${i.count}</td>
+                        <td>${dt.chiTietSanPham.sanPham.tenSanPham}</td>
+                        <td>${dt.chiTietSanPham.kichCo.size}</td>
+                        <td>${dt.soLuong}</td>
+                        <td> <img src="../../uploads/${dt.chiTietSanPham.hinhAnhs.tenanh}" width="100px"
+                                  height="100px"/></td>
+                        <td>${dt.donGia}</td>
+                        <td>${dt.donGia * dt.soLuong}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+    </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

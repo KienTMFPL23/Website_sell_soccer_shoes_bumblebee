@@ -191,8 +191,8 @@
                                 <c:if test="${hd.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hd.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hd.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hd.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hd.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hd.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -280,8 +280,8 @@
                                 <c:if test="${hd1.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hd1.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hd1.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hd1.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hd1.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hd1.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -436,8 +436,8 @@
                                 <c:if test="${hdcb.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hdcb.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hdcb.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hdcb.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hdcb.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hdcb.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -591,8 +591,8 @@
                                 <c:if test="${hd3.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hd3.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hd3.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hd3.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hd3.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hd3.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -747,8 +747,8 @@
                                 <c:if test="${hdht.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hdht.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hdht.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hdht.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hdht.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hdht.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -901,8 +901,8 @@
                                 <c:if test="${donHuy.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${donHuy.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${donHuy.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${donHuy.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${donHuy.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${donHuy.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>
@@ -1055,8 +1055,8 @@
                                 <c:if test="${hdtra.trangThai== 3 }">Giao cho DVVC</c:if>
                                 <c:if test="${hdtra.trangThai== 4 }">Đang giao</c:if>
                                 <c:if test="${hdtra.trangThai== 5 }">Hoàn thành</c:if>
-                                <c:if test="${hdtra.trangThai== 6 }">Trả hàng</c:if>
-                                <c:if test="${hdtra.trangThai== 7 }">Đã hoàn trả</c:if>
+                                <c:if test="${hd.trangThai== 6 }">Đơn hàng trả</c:if>
+                                <c:if test="${hd.trangThai== 7 }">Đơn hàng đổi</c:if>
                                 <c:if test="${hdtra.trangThai== 8 }">Đã huỷ</c:if>
                             </td>
                             <td>

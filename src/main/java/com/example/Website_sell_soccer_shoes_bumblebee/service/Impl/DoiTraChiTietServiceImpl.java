@@ -1,6 +1,7 @@
 package com.example.Website_sell_soccer_shoes_bumblebee.service.Impl;
 
 import com.example.Website_sell_soccer_shoes_bumblebee.dto.DoiTraChiTietCustom;
+import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTra;
 import com.example.Website_sell_soccer_shoes_bumblebee.entity.DoiTraChiTiet;
 import com.example.Website_sell_soccer_shoes_bumblebee.repository.DoiTraChiTietRepository;
 import com.example.Website_sell_soccer_shoes_bumblebee.service.DoiTraChiTietService;
@@ -90,8 +91,62 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
     public Double getToTalDoiTra(List<DoiTraChiTiet> lstDoiTraCT) {
         Double sum = 0.0;
         for (DoiTraChiTiet doiTraChiTiet : lstDoiTraCT){
-            sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+            if (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() != 0){
+                Double phanTramGiam = 100 - (doiTraChiTiet.getHoaDonChiTiet().getDonGiaKhiGiam() / doiTraChiTiet.getHoaDonChiTiet().getDonGia() * 100);
+                if (phanTramGiam < 50){
+                    if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ứng ý"))){
+                        sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong() * 0.9;
+                    }else {
+                        sum +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+                    }
+                }
+            }else {
+                if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ưng ý"))){
+                    sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong() * 0.9;
+                }else {
+                    sum +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+                }
+            }
         }
         return sum;
+    }
+
+    @Override
+    public Double getToTalDoi(List<DoiTraChiTiet> lstDoiTraCT) {
+        Double sumMoney = 0.0;
+        for (DoiTraChiTiet doiTraChiTiet : lstDoiTraCT){
+            sumMoney +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+        }
+        return sumMoney;
+    }
+
+    @Override
+    public DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP) {
+        return doiTraCTRepo.getSanPhamInDoiTra(idDoiTra,idCTSP);
+    }
+
+    @Override
+    public Integer getSoLuongDTMax(UUID idHoaDonCT) {
+        return doiTraCTRepo.getSoLuongDoiTraMax(idHoaDonCT);
+    }
+
+    @Override
+    public Integer getSoLuongDTMaxInSP(UUID idDoiTra) {
+        Integer soLuong = 0;
+        List<DoiTraChiTiet> listDTCT = doiTraCTRepo.listDoiTraCTByID(idDoiTra);
+        for (DoiTraChiTiet lst : listDTCT){
+            soLuong += lst.getSoLuong();
+        }
+        return soLuong;
+    }
+
+    @Override
+    public Integer getMaxSLDoi(UUID idDoiTra, UUID idHDCT) {
+        Integer soLuong = 0;
+        List<DoiTraChiTiet> listDTCT = doiTraCTRepo.listDoiTraCTByDoiTraAndHoaDon(idDoiTra,idHDCT);
+        for (DoiTraChiTiet lst : listDTCT){
+            soLuong += lst.getSoLuong();
+        }
+        return soLuong;
     }
 }

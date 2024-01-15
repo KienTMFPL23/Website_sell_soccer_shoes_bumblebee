@@ -96,7 +96,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
-    public boolean isChiTietSanPhamExists(QLSanPham sp) {
+    public boolean isChiTietSanPhamExists(ChiTietSanPham sp) {
         return repo.existsBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
                 sp.getSanPham(), sp.getChatLieu(), sp.getLoaiGiay(), sp.getMauSac(), sp.getDeGiay(), sp.getKichCo()
         );
@@ -207,6 +207,24 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     @Override
     public List<ChiTietSanPhamCustom> listSPCungLoai(Double giaSP) {
         return repo.listSanPhamCungLoai(giaSP);
+    }
+
+    @Override
+
+    public List<ChiTietSanPham> listCTSPByIDSP(UUID id) {
+        return repo.listCTSPByIDSP(id);
+    }
+
+    public List<ChiTietSanPhamCustom> listCTSPKhuyenMai(UUID idSanPham) {
+        return repo.listChiTietSanPhamKM(idSanPham);
+
+    }
+
+    @Override
+    public ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(ChiTietSanPham sp) {
+        return repo.findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+                sp.getSanPham(), sp.getChatLieu(), sp.getLoaiGiay(), sp.getMauSac(), sp.getDeGiay(), sp.getKichCo()
+        );
     }
 
     @Override
