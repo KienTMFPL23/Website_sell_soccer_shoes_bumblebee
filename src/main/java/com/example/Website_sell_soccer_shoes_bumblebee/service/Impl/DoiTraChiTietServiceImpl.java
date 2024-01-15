@@ -101,7 +101,7 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
                     }
                 }
             }else {
-                if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ưng ý"))){
+                if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ứng ý"))){
                     sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong() * 0.9;
                 }else {
                     sum +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
