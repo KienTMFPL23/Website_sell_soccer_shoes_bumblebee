@@ -34,9 +34,13 @@ public interface DoiTraChiTietService {
 
     Double getToTalDoiTra(List<DoiTraChiTiet> lstDoiTraCT);
 
+    Double getToTalDoi(List<DoiTraChiTiet> lstDoiTraCT);
+
     DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP);
 
     Integer getSoLuongDTMax(UUID idHoaDonCT);
 
     Integer getSoLuongDTMaxInSP(UUID idDoiTra);
+
+    Integer getMaxSLDoi(UUID idDoiTra, UUID idHDCT);
 }

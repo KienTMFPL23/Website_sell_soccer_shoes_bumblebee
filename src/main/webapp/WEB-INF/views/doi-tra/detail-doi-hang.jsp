@@ -46,7 +46,7 @@
     <hr>
     <c:if test="${listSanPhamDoi.size() != 0}">
         <div class="infor-san-pham-mua">
-            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG TRẢ</h4>
+            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH MUỐN ĐỔI</h4>
             <table class="table table-bordered" style="margin-top: 10px">
                 <thead>
                 <tr>
@@ -55,7 +55,6 @@
                     <th scope="col">Màu sắc</th>
                     <th scope="col">Kích cỡ</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col">Đơn giá</th>
                     <th scope="col">Nhân viên thực hiện</th>
                     <th scope="col">Lý do</th>
                 </tr>
@@ -68,15 +67,10 @@
                         <td>${spTra.hoaDonChiTiet.chiTietSanPham.mauSac.ten}</td>
                         <td>${spTra.hoaDonChiTiet.chiTietSanPham.kichCo.size}</td>
                         <td>${spTra.soLuong}</td>
-                        <td><fmt:formatNumber value="${spTra.donGia}" type="number"/></td>
                         <td>${spTra.doiTra.nhanVien.ho} ${spTra.doiTra.nhanVien.tenDem} ${spTra.doiTra.nhanVien.ten}</td>
                         <td>${spTra.lyDoDoiTra}</td>
                     </tr>
                 </c:forEach>
-                <tr>
-                    <td colspan="5"><strong>Tổng tiền : </strong></td>
-                    <td colspan="2"><strong><fmt:formatNumber type="number" value="${sumSanPhamDoi}"/> </strong></td>
-                </tr>
                 </tbody>
             </table>
         </div>
@@ -84,7 +78,7 @@
     </c:if>
     <c:if test="${listSanPhamDoi.size() != 0}">
         <div class="infor-san-pham-doi">
-            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐỔI</h4>
+            <h4 style="text-align: center">DANH SÁCH SẢN PHẨM KHÁCH HÀNG ĐÃ ĐỔI</h4>
             <table class="table table-bordered" style="margin-top: 10px">
                 <thead>
                 <tr>
@@ -93,7 +87,6 @@
                     <th scope="col">Màu sắc</th>
                     <th scope="col">Kích cỡ</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col">Đơn giá</th>
                     <th scope="col">Nhân viên thực hiện</th>
                 </tr>
                 </thead>
@@ -105,14 +98,9 @@
                         <td>${hangDoi.chiTietSanPham.mauSac.ten}</td>
                         <td>${hangDoi.chiTietSanPham.kichCo.size}</td>
                         <td>${hangDoi.soLuong}</td>
-                        <td><fmt:formatNumber value="${hangDoi.donGia}" type="number"/></td>
                         <td>${hangDoi.doiTra.nhanVien.ho} ${hangDoi.doiTra.nhanVien.tenDem} ${hangDoi.doiTra.nhanVien.ten}</td>
                     </tr>
                 </c:forEach>
-                <tr>
-                    <td colspan="5"><strong>Tổng tiền :</strong></td>
-                    <td colspan="2"><strong><fmt:formatNumber type="number" value="${sumSanPhamDoi}"/> </strong></td>
-                </tr>
                 </tbody>
             </table>
         </div>

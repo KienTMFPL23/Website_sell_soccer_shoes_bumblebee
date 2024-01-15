@@ -252,4 +252,8 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
     @Query(value = "select * from chitietsanpham where idMauSac = ?1 " +
             "and idsp = ?2\n",nativeQuery = true)
     List<ChiTietSanPham> getCTSPBYSPAndMauSac(UUID idMS, UUID idSP);
+
+    ChiTietSanPham findFirstBySanPhamAndChatLieuAndLoaiGiayAndMauSacAndDeGiayAndKichCo(
+            SanPham sanPham, ChatLieu chatLieu, LoaiGiay loaiGiay, MauSac mauSac, DeGiay deGiay, KichCo kichCo
+    );
 }

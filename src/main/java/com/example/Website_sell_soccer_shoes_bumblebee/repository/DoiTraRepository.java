@@ -21,10 +21,10 @@ public interface DoiTraRepository extends JpaRepository<DoiTra, UUID> {
     @Query("select max(dt.maDoiTra) from DoiTra dt")
     String maxMaDoiTra();
 
-    @Query("select dt from DoiTra dt where dt.trangThai = 2")
+    @Query("select dt from DoiTra dt where dt.trangThai = 2 order by dt.hoaDon.maHoaDon desc ")
     Page<DoiTra> getListDoiTraThanhCong(Pageable pageable);
 
-    @Query("select dt from DoiTra dt where dt.trangThai = 1")
+    @Query("select dt from DoiTra dt where dt.trangThai = 1 order by dt.hoaDon.maHoaDon desc ")
     Page<DoiTra> getListHuyDoiTra(Pageable pageable);
 
     @Query("select dt from DoiTra dt where dt.trangThai = 0")

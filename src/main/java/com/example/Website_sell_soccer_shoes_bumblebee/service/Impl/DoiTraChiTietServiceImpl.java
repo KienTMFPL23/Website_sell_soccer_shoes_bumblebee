@@ -101,7 +101,7 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
                     }
                 }
             }else {
-                if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ưng ý"))){
+                if ((doiTraChiTiet.getLyDoDoiTra().equals("Khách không ứng ý"))){
                     sum += doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong() * 0.9;
                 }else {
                     sum +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
@@ -109,6 +109,15 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
             }
         }
         return sum;
+    }
+
+    @Override
+    public Double getToTalDoi(List<DoiTraChiTiet> lstDoiTraCT) {
+        Double sumMoney = 0.0;
+        for (DoiTraChiTiet doiTraChiTiet : lstDoiTraCT){
+            sumMoney +=  doiTraChiTiet.getDonGia() * doiTraChiTiet.getSoLuong();
+        }
+        return sumMoney;
     }
 
     @Override
@@ -125,6 +134,16 @@ public class DoiTraChiTietServiceImpl implements DoiTraChiTietService {
     public Integer getSoLuongDTMaxInSP(UUID idDoiTra) {
         Integer soLuong = 0;
         List<DoiTraChiTiet> listDTCT = doiTraCTRepo.listDoiTraCTByID(idDoiTra);
+        for (DoiTraChiTiet lst : listDTCT){
+            soLuong += lst.getSoLuong();
+        }
+        return soLuong;
+    }
+
+    @Override
+    public Integer getMaxSLDoi(UUID idDoiTra, UUID idHDCT) {
+        Integer soLuong = 0;
+        List<DoiTraChiTiet> listDTCT = doiTraCTRepo.listDoiTraCTByDoiTraAndHoaDon(idDoiTra,idHDCT);
         for (DoiTraChiTiet lst : listDTCT){
             soLuong += lst.getSoLuong();
         }

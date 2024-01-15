@@ -135,8 +135,8 @@
                             <option value="Giao thiếu hàng"
                                     <c:if test="${dtct.lyDoDoiTra eq 'Giao thiếu hàng'}">selected</c:if>>Giao thiếu hàng
                             </option>
-                            <option value="Khách không ưng ý"
-                                    <c:if test="${dtct.lyDoDoiTra eq 'Khách không ưng ý'}">selected</c:if>>Khách không ưng ý
+                            <option value="Khách không ứng ý"
+                                    <c:if test="${dtct.lyDoDoiTra eq 'Khách không ứng ý'}">selected</c:if>>Khách không ưng ý
                             </option>
                         </select>
                     </form>
