@@ -148,13 +148,13 @@ public interface ChiTietSanPhamRepo extends JpaRepository<ChiTietSanPham, UUID> 
 
     @Query(value = "select kc.size from kichCo kc join ChiTietSanPham ctsp on ctsp.IdKichCo = kc.Id\n" +
             "where ctsp.IdMauSac = ?1 \n" +
-            "and ctsp.IdSP = ?2", nativeQuery = true)
+            "and ctsp.IdSP = ?2 and ctsp.TrangThai = 1", nativeQuery = true)
     List<Integer> getKichCoByMauSacAndSanPham(UUID idMS, UUID idSP);
 
     @Query(value = "select ctsp.soLuong from ChiTietSanPham ctsp join KichCo kc on kc.Id = ctsp.IdKichCo\n" +
             "            where ctsp.IdMauSac = ?1\n" +
-            "            and ctsp.IdSP = ?2 \n" +
-            "\t\t\tand kc.size = ?3", nativeQuery = true)
+            "            and ctsp.IdSP = ?2 \n " +
+            "\t\t\tand kc.size = ?3 ", nativeQuery = true)
     String getSoLuongByKichCo(UUID idMS, UUID idSP, String size);
 
     @Query(value = "SELECT ctsp.*, kc.Id AS KichCoId FROM ChiTietSanPham ctsp " +

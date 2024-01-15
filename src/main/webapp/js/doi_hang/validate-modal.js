@@ -67,20 +67,6 @@ function taoDoiTra() {
     }
 }
 
-function validSoLuong(maxSL, idValid) {
-    var newValue = event.target.value;
-    if (newValue > maxSL) {
-        document.getElementById('soLuongtra').value = 1;
-        alert('Số lượng không hợp lệ!!');
-        return false;
-    } else if (newValue < 1) {
-        alert('Số lượng phải lớn hơn 0!!');
-        document.getElementById('soLuongtra').value = 1;
-        return false;
-    } else {
-        return true;
-    }
-}
 
 function confirmDoiHang() {
     var result = confirm('Bạn có muốn đổi hàng không ?');
@@ -104,7 +90,6 @@ function chonSoLuong(itemId) {
         alert("Số lượng sản phẩm không được để trống");
     }
 }
-
 $(document).ready(function () {
     // Add a click event listener to checkboxes with class 'checkCart'
     $('.checkCart').on('click', function () {

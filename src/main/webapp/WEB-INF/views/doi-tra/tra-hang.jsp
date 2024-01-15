@@ -103,12 +103,14 @@
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
-                                                   oninput="return validSoLuong('${hd.soLuong}','${hd.id}',event)"
-                                                   style="width:50px;"> /${hd.soLuong}
+                                                   value="1"
+                                                   onchange="checkSoLuong('${hd.chiTietSanPham.id}')"
+                                                   style="width:50px;"> / <span
+                                                id="soluongHang_${hd.chiTietSanPham.id}">${hd.soLuong}</span>
                                             <strong><p style="color: red" id="erorSluong"></p></strong>
                                         </div>
                                     </td>
-                                    <td><fmt:formatNumber  value="${hd.donGia}" type="number"/></td>
+                                    <td><fmt:formatNumber value="${hd.donGia}" type="number"/></td>
                                     <td><fmt:formatNumber value="${hd.donGiaKhiGiam}" type="number"/></td>
                                     <td>
                                         <select id="lyDoTra_${hd.chiTietSanPham.id}" class="form-control"
@@ -127,8 +129,6 @@
                         </table>
                         <strong><p style="color: red" id="logError"></p></strong>
                         <div>
-
-                            <%--                        <textarea type="text" id="lyDoTra" name="lyDoDoiTra"></textarea>--%>
                             <strong><p style="color: red" id="erorText"></p></strong>
                         </div>
                         <div class="hoan_tien">
@@ -147,4 +147,24 @@
         </div>
     </form>
 </div>
+<script>
+    function checkSoLuong(ItemID) {
+        var sltra = document.getElementById("soLuongTra_" + ItemID).value;
+        var slhang = document.getElementById("soluongHang_" + ItemID).innerText;
+        if (sltra !== Number(sltra)) {
+            alert('Số lượng phải là số');
+            document.getElementById('soLuongTra_' + ItemID).value = 1;
+        }
+        if (Number(sltra) < 0) {
+            alert('Số lượng phải lớn hơn 0!!');
+            document.getElementById('soLuongTra_' + ItemID).value = 1;
+        }
+        if (Number(sltra) > Number(slhang)) {
+            alert("số lượng phải nhỏ hơn số lượng mua");
+            document.getElementById('soLuongTra_' + ItemID).value = 1;
+        }
+    }
+
+
+</script>
 
