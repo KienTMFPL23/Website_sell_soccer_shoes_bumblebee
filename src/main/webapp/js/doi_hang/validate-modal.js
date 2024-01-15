@@ -70,12 +70,14 @@ function taoDoiTra() {
 function validSoLuong(maxSL, idValid) {
     var newValue = event.target.value;
     if (newValue > maxSL) {
-        document.getElementById('soLuongtra').value = 1;
+        let validSL =document.getElementById('soLuongtra');
+        validSL.value = "1";
         alert('Số lượng không hợp lệ!!');
         return false;
     } else if (newValue < 1) {
         alert('Số lượng phải lớn hơn 0!!');
-        document.getElementById('soLuongtra').value = 1;
+        let validSL = document.getElementById('soLuongtra');
+        validSL.value = "1";
         return false;
     } else {
         return true;
@@ -97,11 +99,22 @@ function confirmDoiHang() {
     }
 }
 
-function chonSoLuong(itemId) {
-    const newValue = event.target.value;
-    if (newValue == "") {
-        document.getElementById("soLuongCTSP_" + itemId).value = 1;
-        alert("Số lượng sản phẩm phải > 0");
+function checkSoLuong(ItemID) {
+    var sltra = document.getElementById("soLuongTra_" + ItemID).value;
+    var slhang = document.getElementById("soluongHang_" + ItemID).innerText;
+    if (sltra === ""){
+        alert("Không được để trống");
+        return;
+    }
+    if (Number(sltra) < 0) {
+        alert('Số lượng phải lớn hơn 0!!');
+        document.getElementById('soLuongTra_' + ItemID).value = 1;
+        return;
+    }
+    if (Number(sltra) > Number(slhang)) {
+        alert("số lượng phải nhỏ hơn số lượng mua");
+        document.getElementById('soLuongTra_' + ItemID).value = 1;
+        return;
     }
 }
 

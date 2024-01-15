@@ -103,8 +103,10 @@
                                                    min="1"
                                                    max="${hd.soLuong}"
                                                    name="soLuong"
-                                                   oninput="return validSoLuong('${hd.soLuong}','${hd.id}',event)"
-                                                   style="width:50px;"> /${hd.soLuong}
+                                                   value="1"
+                                                   onchange="checkSoLuong('${hd.chiTietSanPham.id}')"
+                                                   style="width:50px;"> / <span
+                                                id="soluongHang_${hd.chiTietSanPham.id}">${hd.soLuong}</span>
                                             <strong><p style="color: red" id="erorSluong"></p></strong>
                                         </div>
                                     </td>
