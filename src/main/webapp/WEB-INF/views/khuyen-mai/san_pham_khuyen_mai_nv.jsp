@@ -199,11 +199,11 @@
     <%--    </div>--%>
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}"
-               href="/bumblebee/khuyen-mai/list">Quản lý khuyến mại</a>
+            <a class="nav-link ${donHang == 'khuyen-mai-nv' ? 'active' : ''}"
+               href="/bumblebee/khuyen-mai-nv/list">Quản lý khuyến mại</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}" href="/bumblebee/san-pham-khuyen-mai/list">Sản
+            <a class="nav-link ${donHang == 'khuyen-mai-nv' ? 'active' : ''}" href="/bumblebee/san-pham-khuyen-mai-nv/list">Sản
                 phẩm khuyến mại</a>
         </li>
     </ul>
@@ -224,7 +224,6 @@
                 <th>Giá bán</th>
                 <th>Giá khuyến mại</th>
                 <th>Trạng thái CTKM</th>
-                <th></th>
             </tr>
             </thead>
 
@@ -252,8 +251,6 @@
                         <c:if test="${ctkm.trangThai == 0}">Hoạt động</c:if>
                         <c:if test="${ctkm.trangThai == 1}">Không hoạt động</c:if>
                     </td>
-                    <td><a href="/bumblebee/chi-tiet-khuyen-mai/delete/${ctkm.id}" onclick="return comfirm()"><img
-                            src="../../../img/trash.png"></a></td>
                 </tr>
             </c:forEach>
             </tbody>

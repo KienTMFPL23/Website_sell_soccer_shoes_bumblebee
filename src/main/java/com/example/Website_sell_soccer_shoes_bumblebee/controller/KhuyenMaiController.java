@@ -84,6 +84,8 @@ public class KhuyenMaiController {
         model.addAttribute("donHang", donHang);
 
         model.addAttribute("listCTSP", chiTietSanPhamRepo.ctspConHang());
+        //model.addAttribute("listCTSPĐieuKien", chiTietSanPhamRepo.listCTSPDuDieuKien());
+
         model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
         model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
         model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
@@ -102,6 +104,42 @@ public class KhuyenMaiController {
         List<ChiTietKhuyenMai> listCTKM = chiTietKhuyenMaiRepository.findAll();
         model.addAttribute("listCTKM", listCTKM);
         model.addAttribute("view", "../khuyen-mai/san_pham_khuyen_mai.jsp");
+        return "admin/index";
+    }
+
+    @GetMapping("/bumblebee/khuyen-mai-nv/list")
+    public String hienThiNV(Model model) {
+        // Quản lý khuyến mại
+
+        model.addAttribute("page", khuyenMaiService.findAll());
+        model.addAttribute("searchForm", new SearchForm());
+
+        // Check trạng thái khuyến mại
+//        List<ChiTietKhuyenMai> listChiTietKhuyenMai = chiTietKhuyenMaiRepository.updateTrangThaiByNgayKetThuc();
+        String donHang = "khuyen-mai";
+        model.addAttribute("donHang", donHang);
+
+        model.addAttribute("listCTSP", chiTietSanPhamRepo.ctspConHang());
+//        model.addAttribute("listCTSPĐieuKien", chiTietSanPhamRepo.listCTSPDuDieuKien());
+
+        model.addAttribute("listMauSac", chiTietSanPhamRepo.listMauSac());
+        model.addAttribute("listKC", chiTietSanPhamRepo.listKC());
+        model.addAttribute("listLoaiGiay", chiTietSanPhamRepo.listLoaiGiay());
+        model.addAttribute("listDeGiay", chiTietSanPhamRepo.listDeGiay());
+        model.addAttribute("listChatLieu", chiTietSanPhamRepo.lítChatLieu());
+        model.addAttribute("idKM", idKhuyenMai);
+        model.addAttribute("view", "../khuyen-mai/khuyen-mai-nv.jsp");
+        return "admin/index";
+    }
+
+    @GetMapping("/bumblebee/san-pham-khuyen-mai-nv/list")
+    public String sanPhamKhuyenMaiNV(Model model) {
+        String donHang = "san-pham-khuyen-mai";
+        model.addAttribute("donHang", donHang);
+        // Sản phẩm khuyến mại
+        List<ChiTietKhuyenMai> listCTKM = chiTietKhuyenMaiRepository.findAll();
+        model.addAttribute("listCTKM", listCTKM);
+        model.addAttribute("view", "../khuyen-mai/san_pham_khuyen_mai_nv.jsp");
         return "admin/index";
     }
 
@@ -152,13 +190,26 @@ public class KhuyenMaiController {
                 return "admin/index";
             }
 
-            if (km.getGiaTri() > ctsp.getGiaBan()){
-                model.addAttribute("error", "Không thêm được");
-                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
-                return "admin/index";
-            }
+//            if (km.getGiaTri() > ctsp.getGiaBan()){
+//                model.addAttribute("error", "Không thêm được");
+//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+//                return "admin/index";
+//            }
 
+            Double giaToiDa = ctsp.getGiaBan() * 0.7;
+            System.out.println(Double.valueOf(km.getGiaTri()));
+            System.out.println(giaToiDa);
+            model.addAttribute("giaTri", km.getGiaTri());
+            model.addAttribute("giaToiDa", giaToiDa);
+            if (km.getDonVi().equals("VNĐ") && Double.valueOf(km.getGiaTri()) >= giaToiDa){
+//                model.addAttribute("error", "Không thêm được");
+//                model.addAttribute("view", "../khuyen-mai/khuyen-mai.jsp");
+//                return "admin/index";
+                model.addAttribute("giaTri", km.getGiaTri());
+                model.addAttribute("giaToiDa", giaToiDa);
+            }
             else {
+
                 ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
                 ctkm.setCtsp(ctsp);
                 ctkm.setKhuyenMai(km);
@@ -415,6 +466,13 @@ public class KhuyenMaiController {
         ChiTietKhuyenMai ctkm = chiTietKhuyenMaiService.findID(id);
         ctkm.setTrangThai(1);
         chiTietKhuyenMaiService.save(ctkm);
+        return "redirect:/bumblebee/san-pham-khuyen-mai/list";
+    }
+
+    @RequestMapping("/bumblebee/chi-tiet-khuyen-mai/delete/{id}")
+    public String deleteCTKM(@PathVariable(name = "id") UUID id){
+        ChiTietKhuyenMai ctkm = chiTietKhuyenMaiService.findID(id);
+        chiTietKhuyenMaiRepository.delete(ctkm);
         return "redirect:/bumblebee/san-pham-khuyen-mai/list";
     }
 

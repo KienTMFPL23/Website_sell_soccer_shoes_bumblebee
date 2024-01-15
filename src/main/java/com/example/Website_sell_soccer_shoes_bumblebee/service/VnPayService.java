@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface VnPayService {
 
-    public String createOrder(Integer total, String orderInfor, String urlReturn);
+    public String createOrder(Long total, String orderInfor, String urlReturn);
 
     public int orderReturn(HttpServletRequest request);
 }

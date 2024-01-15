@@ -191,37 +191,51 @@ public class HinhAnhController {
     }
 
     //
+    @Autowired
+    ChiTietSanPhamRepo repo;
+
+    //
     @RequestMapping("/hinh-anh-ctsp/update/{id}")
     public String updateHinhAnhCTSP(@PathVariable(name = "id") UUID id,
                                     @RequestParam(name = "tenanh") MultipartFile tenanh,
+                                    @RequestParam UUID idSP,
+                                    @RequestParam UUID idMS,
                                     @RequestParam(name = "duongdan1") MultipartFile duongdan1,
                                     @RequestParam(name = "duongdan2") MultipartFile duongdan2,
                                     @RequestParam(name = "duongdan3") MultipartFile duongdan3,
 //                                    @RequestParam(name = "duongdan4") MultipartFile duongdan4,
 //                                    @RequestParam(name = "duongdan5") MultipartFile duongdan5,
                                     @RequestParam(name = "ctsp") ChiTietSanPham ctsp, Model model) {
-        HinhAnh hinhAnh = service.findById(id);
-        model.addAttribute("hinhANh", hinhAnh);
+//        HinhAnh hinhAnh = repository.findById(id).orElse(null);
+
         UUID idctsp = repository.getIdCTSP(id);
         SanPham sp = service.getSanPhamByIDCTSP(idctsp);
         model.addAttribute("idctsp", idctsp);
+        model.addAttribute("sp",sp);
+        List<ChiTietSanPham> listCTSPBYSPAndMS = repo.getCTSPBYSPAndMauSac(idMS, idSP);
+
         // Cập nhật ảnh "tenanh" nếu người dùng đã chọn
-        if (!tenanh.isEmpty()) {
-            String newTenAnh = saveImage(tenanh);
-            hinhAnh.setTenanh(newTenAnh);
-        }
-        if (!duongdan1.isEmpty()) {
-            String newDuongdan1 = saveImage(duongdan1);
-            hinhAnh.setDuongdan1(newDuongdan1);
-        }
-        if (!duongdan2.isEmpty()) {
-            String newDuongdan2 = saveImage(duongdan2);
-            hinhAnh.setDuongdan2(newDuongdan2);
-        }
-        if (!duongdan3.isEmpty()) {
-            String newDuongdan3 = saveImage(duongdan3);
-            hinhAnh.setDuongdan3(newDuongdan3);
-        }
+        for (ChiTietSanPham ct : listCTSPBYSPAndMS
+        ) {
+            HinhAnh hinhAnh=ct.getHinhAnhs();
+            model.addAttribute("hinhAnh",hinhAnh);
+            // Cập nhật ảnh "tenanh" nếu người dùng đã chọn
+            if (!tenanh.isEmpty()) {
+                String newTenAnh = saveImage(tenanh);
+                hinhAnh.setTenanh(newTenAnh);
+            }
+            if (!duongdan1.isEmpty()) {
+                String newDuongdan1 = saveImage(duongdan1);
+                hinhAnh.setDuongdan1(newDuongdan1);
+            }
+            if (!duongdan2.isEmpty()) {
+                String newDuongdan2 = saveImage(duongdan2);
+                hinhAnh.setDuongdan2(newDuongdan2);
+            }
+            if (!duongdan3.isEmpty()) {
+                String newDuongdan3 = saveImage(duongdan3);
+                hinhAnh.setDuongdan3(newDuongdan3);
+            }
 //        if (!duongdan4.isEmpty()) {
 //            String newDuongdan4 = saveImage(duongdan4);
 //            hinhAnh.setDuongdan4(newDuongdan4);
@@ -231,10 +245,10 @@ public class HinhAnhController {
 //            hinhAnh.setDuongdan5(newDuongdan5);
 //        }
 
-
-        repository.save(hinhAnh);
-
-        return "redirect:/chi-tiet-san-pham/list-san-pham/" + sp.getId();
+            repository.save(hinhAnh);
+            ct.setHinhAnhs(hinhAnh);
+        }
+        return "redirect:/chi-tiet-san-pham/list-san-pham/" + idSP;
     }
 
     //

@@ -123,11 +123,15 @@
         color: crimson;
     }
 
+    .error-row {
+        background-color: #ffcccc; /* Màu nền đỏ nhạt */
+        /* Hoặc bất kỳ kiểu hiển thị nào bạn muốn để làm nổi bật */
+    }
 
 </style>
 <body>
 <div class="container">
-
+    ${error}
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link ${donHang == 'khuyen-mai' ? 'active' : ''}" aria-current="page"
@@ -220,7 +224,7 @@
                     <td>
                         <c:if test="${km.trangThai == 0}">
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal_${i.index}"
-                                    style="border-radius: 20px;">Chọn
+                                    style="border-radius: 20px;" onclick="chonKhuyenMai('${km.giaTri}')">Chọn
                             </button>
                             <!-- Modal -->
                             <form action="/bumblebee/khuyen-mai/them-san-pham/${km.id}" method="post"
@@ -270,10 +274,13 @@
                                                             <tr>
                                                                 <td>
                                                                     <c:if test="${not empty sp.ctkm}">
-                                                                        <c:set var="allTrangThai1" value="false"/>
-                                                                        <c:forEach var="ctkm" items="${sp.ctkm}">
+                                                                        <c:set var="allTrangThai1"
+                                                                               value="false"/>
+                                                                        <c:forEach var="ctkm"
+                                                                                   items="${sp.ctkm}">
                                                                             <c:if test="${ctkm.trangThai == 0}">
-                                                                                <input disabled checked type="checkbox">
+                                                                                <input disabled checked
+                                                                                       type="checkbox">
                                                                                 <c:set var="allTrangThai1"
                                                                                        value="true"/>
                                                                             </c:if>
@@ -284,6 +291,7 @@
                                                                                     class="checkCart"
                                                                                     type="checkbox"
                                                                                     name="idListCartDetail"
+                                                                                    data-price="${sp.giaBan}"
                                                                                     value="${sp.id}">
                                                                             <c:set var="allTrangThai1"
                                                                                    value="true"/>
@@ -298,12 +306,13 @@
                                                                                 value="${sp.id}">
                                                                     </c:if>
                                                                 </td>
-                                                                <td><img src="../../../uploads/${sp.hinhAnhs.tenanh}"
-                                                                         width="50px" height="50px"></td>
+                                                                <td><img
+                                                                        src="../../../uploads/${sp.hinhAnhs.tenanh}"
+                                                                        width="50px" height="50px"></td>
                                                                 <td>${sp.sanPham.tenSanPham}</td>
                                                                 <td>${sp.soLuong}</td>
                                                                 <td>
-                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber> đ
+                                                                    <fmt:formatNumber>${sp.giaBan}</fmt:formatNumber>
                                                                 </td>
                                                                 <td>${sp.mauSac.ten}</td>
                                                                 <td>${sp.kichCo.size}</td>
@@ -313,12 +322,14 @@
                                                     </table>
                                                 </div>
                                             </div>
+
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary"
                                                         onclick="return themKhuyenMai()"
                                                 >Thêm
                                                 </button>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -332,6 +343,7 @@
                     </td>
                 </tr>
             </c:forEach>
+
             </tbody>
         </table>
     </div>
@@ -367,16 +379,19 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-
         }
     }
 
-    // checkedAllCheckbox.addEventListener('click', function () {
-    //
-    // });
+    var gtKM;
+    function chonKhuyenMai(giatri) {
+        gtKM = giatri;
+    }
 
     function themKhuyenMai() {
         var numberOfCheckedCheckboxes = 0;
+        var selectedCheckboxes = document.querySelectorAll('.checkCart:checked');
+        var pricesArray = [];
+        var checkSL = 0;
         checkboxes.forEach(function (checkbox) {
             if (checkbox.checked) {
                 numberOfCheckedCheckboxes++;
@@ -385,9 +400,30 @@
         if (numberOfCheckedCheckboxes === 0) {
             alert("chọn sản phẩm để thêm khuyến mại");
             return false;
-        } else {
+        }
+        selectedCheckboxes.forEach(function(checkbox) {
+            var row = checkbox.closest('tr');
+            var priceCell = row.querySelector('td:nth-child(5)');
+            var priceString = priceCell.innerText.trim();
+            var price = parseInt(priceString.replace(/[^\d]/g, ''));
+            if (!isNaN(price)) {
+                pricesArray.push(price);
+                if (price * 0.7 < gtKM) {
+                    row.classList.add('error-row');
+                    checkSL++;
+                } else {
+                    row.classList.remove('error-row');
+                }
+            }
+        });
+
+        if (checkSL >0){
+            alert("Giá trị của khuyến mại lớn hơn 70 % giá trị sản phẩm")
+            return false;
+        }else {
             return true;
         }
+
     }
 
     $(document).ready(function () {

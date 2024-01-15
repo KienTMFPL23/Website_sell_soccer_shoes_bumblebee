@@ -79,7 +79,7 @@
                                                                        value="${item.ctsp.giaBan}">
                                                                 <c:set var="allTrangThai1" value="true"/>
                                                             </c:if>
-                                                            <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                            <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
                                                                 <input id="donGia_${item.id}" type="hidden"
                                                                        value="${(item.ctsp.giaBan - km.khuyenMai.giaTri)}">
                                                                 <input id="donGiaChuaGiam_${item.id}" type="hidden"

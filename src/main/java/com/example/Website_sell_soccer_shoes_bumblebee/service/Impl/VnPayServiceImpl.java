@@ -15,7 +15,7 @@ import java.util.*;
 public class VnPayServiceImpl implements VnPayService {
     
     @Override
-    public String createOrder(Integer total, String orderInfor, String urlReturn){
+    public String createOrder(Long total, String orderInfor, String urlReturn){
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);

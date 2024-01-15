@@ -369,7 +369,6 @@ public class HomeController {
         if (taiKhoan == null) {
             return "redirect:/bumblebee/login";
         } else {
-            model.addAttribute("listKH", taiKhoan.getKhachHangKH());
             // Lấy list idctsp
             idCartUUIDList = Arrays.asList(idListCartDetail.split(","))
                     .stream()
@@ -533,7 +532,7 @@ public class HomeController {
     }
 
     @PostMapping("/submitOrder")
-    public String submidOrder(@RequestParam("amount") Integer orderTotal,
+    public String submidOrder(@RequestParam("amount") Long orderTotal,
                               @RequestParam("orderInfo") String orderInfo,
                               HttpServletRequest request) {
 

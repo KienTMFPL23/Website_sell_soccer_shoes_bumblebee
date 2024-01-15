@@ -528,7 +528,7 @@
                 row += '<td>' + selectedColor.text + '</td>';
                 row += '<td>' + selectedSize.text + '</td>';
                 // row += '<td><input type="number" name="giaBan" required class="form-control"></td>';
-                row += '<td><input type="number" name="soLuong" required class="form-control"></td>';
+                row += '<td><input type="number" name="soLuong" required class="form-control" min="1"></td>';
                 row += '<td><a href="#" class="btn btn-danger btn-circle delete-row" onclick="deleteRow(this)"><i class="fas fa-trash"></i></a></td>';
                 row += '</tr>';
                 table.append(row);

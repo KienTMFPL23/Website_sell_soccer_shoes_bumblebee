@@ -65,7 +65,7 @@
                             <div class="mb-3">
                                 <label class="form-label"></label>
                                 <input type="text" class="form-control" name="diaChiShip" id="diaChiShip"
-                                       value="${listKH.diaChi}"/>
+                                       value="${listKH.diaChi}" readonly/>
                             </div>
                             <div class="mb-3" id="province">
                                 <select id="city" name="thanhPho" class="filterSelect">
@@ -127,7 +127,7 @@
                                                                     value="${(sp.ctsp.giaBan - (sp.ctsp.giaBan * km.khuyenMai.giaTri/100))*sp.soLuong}"
                                                                     type="number"/> đ</label>
                                                         </c:if>
-                                                        <c:if test="${km.khuyenMai.donVi == 'VNÐ'}">
+                                                        <c:if test="${km.khuyenMai.donVi == 'VNĐ'}">
                                                             <label id="thanhTien_${sp.id}"
                                                                    class="thanhTien"><fmt:formatNumber
                                                                     value="${(sp.ctsp.giaBan - km.khuyenMai.giaTri)*sp.soLuong}"
@@ -494,6 +494,18 @@
             }, 10000);
             return false;
         }
+
+        const mainString = $("#diaChiShip").text();
+        const subString = "Hà Nội";
+        if (mainString.indexOf(subString) !== -1) {
+            var toastElement = document.getElementById("messeage_diaChiShip");
+            toastElement.style.display = "block";
+            setTimeout(function () {
+                toastElement.style.display = "none";
+            }, 10000);
+            return false;
+        }
+
         if (thanhPho.value === "") {
             return true;
         } else if (thanhPho.value !== "Thành phố Hà Nội") {

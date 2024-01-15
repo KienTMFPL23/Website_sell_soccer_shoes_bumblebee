@@ -648,6 +648,9 @@ public class DonHangController {
             if (hoaDonDB != null) {
                 hoaDonService.updateHoaDon(id, 5, hoaDonDB);
                 hoaDonDB.setGhiChu(ghiChu);
+                if (hoaDonDB.getPhuongThucThanhToan()==1){
+                    hoaDonDB.setNgayThanhToan(Calendar.getInstance().getTime());
+                }
                 hoaDonRepository.save(hoaDonDB);
             }
             return "redirect:/don-hang/list-hoan-thanh";
