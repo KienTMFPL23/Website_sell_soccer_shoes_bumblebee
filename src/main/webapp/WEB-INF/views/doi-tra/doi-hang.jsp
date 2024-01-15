@@ -152,5 +152,10 @@
         <strong><p style="color: red; text-align: right;font-size: 15px" id="errorLyDo"></p></strong>
     </div>
     <a href="/bumblebee/don-hang/xac-nhan-doi" onclick="return confirmDoiHang()" class="btn btn-success">Xác nhận</a>
-    <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
+    <c:if test="${idDoiTra != null}">
+        <a href="/bumblebee/don-hang/huy" type="submit" class="btn btn-danger">Hủy</a>
+    </c:if>
+    <c:if test="${idDoiTra == null}">
+        <a href="/bumblebee/don-hang/tao-doi-tra/${maHoaDon}" type="submit" class="btn btn-danger">Quay lại</a>
+    </c:if>
 </div>
