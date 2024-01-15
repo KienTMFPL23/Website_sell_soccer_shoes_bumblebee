@@ -8,17 +8,24 @@
         <strong style="font-size: 15px">1. Các quy định</strong>
     </div>
     <p>Khi khách hàng mua sản phẩm, cửa hàng sẽ áp dụng đổi hoặc trả hàng với điều kiện mà cửa hàng quy định:</p>
-    <p> + Đối với trả hàng: Chỉ áp dụng trả hàng với khách mua online, không áp dụng cho khách mua tại quầy, khách hàng chỉ được trả nếu như sản phẩm nhận được bị lỗi, sai kích cỡ, sai màu,. thì phía bên cửa hàng
-    sẽ chấp nhận trả hàng và hoàn tiền cho khách. Nếu sản phẩm không phải lỗi phía bên cửa hàng thì khách hàng sẽ không được trả hàng </p>
-    <p> + Đối với đổi hàng: cửa hàng chỉ áp dụng đổi sản phẩm cùng giá với sản phẩm khách hàng đã mua, không áp dụng đổi sản phẩm hơn giá hoặc giá thấp hơn
-    Đối với những sản phẩm khuyến mại, khi đổi khách hàng chỉ được đổi đúng sản phẩm mà khách hàng mua. Và chỉ được đổi nếu sản phẩm lỗi phía cửa hàng</p>
+    <p> + Đối với trả hàng:
+        Nếu quý khách hàng đổi sản phẩm với lí do không ưng ý , thay đổi nhu cầu sử dụng sản phẩm thì phí trả hàng là 10% giá trị của sản phẩm được lưu trong hóa đơn
+        Chính sách trả hàng không áp dụng cho sản phẩm giảm giá trên 50%
+    </p>
+    <p> + Đối với đổi hàng:
+        Áp dụng đối với sản phẩm nguyên giá và sản phẩm giám giá sale ít hơn 50%
+        Sản phẩm nguyên giá chỉ được đổi 1 lần duy nhất sang sản phẩm nguyên giá khác có giá bằng giá của sản phẩm trong hóa đơn và không thấp hơn giá trị sản phẩm đã mua
+        Sản phẩm giảm giá / khuyến mại ít hơn 50% được đổi 1 lần sang màu khác hoặc sz khác trên cùng 1 mã sản phẩm trong điều kiện sản phẩm còn không áp dụng nếu sản phẩm đó hết hàng
+        Chính sách chỉ áp dụng khi sản phẩm còn hóa đơn mua hàng còn nguyên tem mác , hộp đựng sản phẩm không móm méo . sản phẩm không bị bẩn , hư hỏng do cá tác động bên ngoài cửa hàng sau khi mua
+
+    </p>
    <p>+ Cửa hàng chỉ áp dụng đổi hoặc trả 1 lần duy nhất trên mỗi hóa đơn của khách hàng đã mua</p>
    <p>+ Cửa hàng chỉ áp dụng giao hàng quanh khu vực Hà Nội.</p>
     <div>
-        <strong style="font-size: 15px">2. Thời gian đổi hàng</strong>
+        <strong style="font-size: 15px">2. Thời gian đổi - trả hàng</strong>
     </div>
-    <p>+ Thời gian áp dụng đổi hàng khi khách mua tại cửa hàng là 5 ngày</p>
-    <p>+ Đối với khách hàng mua online trên website thì thời gian đổi hàng là 5 ngày kể từ khi nhận được hàng </p>
+    <p>+ Thời gian áp dụng đổi hàng khi khách mua tại cửa hàng là 3 ngày</p>
+    <p>+ Đối với khách hàng mua online trên website thì thời gian đổi hàng là 3 ngày kể từ khi nhận được hàng </p>
     <strong style="font-size: 20px">II. Điều kiện áp dụng</strong>
     <p>+ Cửa hàng gửi sai hàng khách đặt</p>
     <p>+ Hàng gửi không đủ số lượng</p>
