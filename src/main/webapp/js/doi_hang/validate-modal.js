@@ -67,6 +67,7 @@ function taoDoiTra() {
     }
 }
 
+
 function validSoLuong(maxSL, idValid) {
     var newValue = event.target.value;
     if (newValue > maxSL) {
@@ -117,7 +118,6 @@ function checkSoLuong(ItemID) {
         return;
     }
 }
-
 $(document).ready(function () {
     // Add a click event listener to checkboxes with class 'checkCart'
     $('.checkCart').on('click', function () {
