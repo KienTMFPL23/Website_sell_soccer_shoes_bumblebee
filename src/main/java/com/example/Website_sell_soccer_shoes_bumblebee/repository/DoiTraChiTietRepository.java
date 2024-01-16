@@ -51,15 +51,10 @@ public interface DoiTraChiTietRepository extends JpaRepository<DoiTraChiTiet, UU
     @Query("select dt from DoiTraChiTiet dt  where dt.lyDoDoiTra like '%Sản phẩm lỗi%' and dt.chiTietSanPham.sanPham.tenSanPham like '%1%'")
     Page<DoiTraChiTiet> searchSanPhamLoi (String tenSP, Pageable pageable);
 
-    @Query(value = "select  dt from DoiTraChiTiet  dt where dt.hoaDonChiTiet.id =?1")
-    List<DoiTraChiTiet> printDoiTra(UUID id);
-
-
     @Query("select dtct from DoiTraChiTiet dtct where dtct.doiTra.id = ?1 and dtct.chiTietSanPham.id = ?2")
     DoiTraChiTiet getSanPhamInDoiTra(UUID idDoiTra, UUID idCTSP);
 
     @Query(value = "select COUNT(idHDCT)  from doitrachitiet where  IdHDCT = ?1",nativeQuery = true)
     Integer getSoLuongDoiTraMax(UUID idHoaDonCT);
-
 
 }

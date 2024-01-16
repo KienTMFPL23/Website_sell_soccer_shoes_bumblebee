@@ -530,9 +530,9 @@ public class DoiTraController {
 
         HoaDon hoaDonDoiTra = hoaDonService.getOne(id);
         model.addAttribute("searchDT", new SearchDoiTra());
-        DoiTra doiTra = doiTraService.getOneDoiTra(hoaDonDoiTra.getMaHoaDon());
+
         List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
-        List<DoiTraChiTiet> listDoiTra = doiTraChiTietRepository.printDoiTra(id);
+        List<DoiTraChiTiet> listDoiTra = doiTraChiTietService.listDoiTraCTByIdHoaDon(id);
         try {
             Document document = new Document();
             document.setPageSize(PageSize.A4);
@@ -545,7 +545,7 @@ public class DoiTraController {
             BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
             com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-            qrCodeImage.setAbsolutePosition(400, 0);
+            qrCodeImage.setAbsolutePosition(400, 80);
             document.add(qrCodeImage);
             Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
             ////////////// hoá đơn
@@ -613,7 +613,7 @@ public class DoiTraController {
             document.add(KhoangTrang1);
 
 //            Font titleFont2 = new Font(BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 18, Font.BOLD, BaseColor.BLACK);
-            Paragraph danhSachTra = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH ĐỔI", titleFont2);
+            Paragraph danhSachTra = new Paragraph("DANH SÁCH SẢN PHẨM KHÁCH TRẢ", titleFont2);
             danhSachTra.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(danhSachTra);
             Paragraph KhoangTrang2 = new Paragraph("                                                         ");
@@ -650,14 +650,14 @@ public class DoiTraController {
                     tongTienTra += giaTriSanPham;
                 }
 
-                productTable1.addCell(createTableCell(doiTra.getNhanVien().getHo() + " " + doiTra.getNhanVien().getTenDem() + " " + doiTra.getNhanVien().getTen(), titleFont1));
+                productTable1.addCell(createTableCell(doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getHo() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTenDem() + " " + doiTraChiTiet.getHoaDonChiTiet().getHoaDon().getNhanVien().getTen(), titleFont1));
                 productTable1.addCell(createTableCell(doiTraChiTiet.getLyDoDoiTra(), titleFont1));
 
             }
 
             document.add(productTable1);
-//            Paragraph TongCong = new Paragraph("Số tiền hoàn       :    " + tongTienTra + "VNĐ", titleFont2);
-//            document.add(TongCong);
+            Paragraph TongCong = new Paragraph("Số tiền hoàn       :    " + tongTienTra + "VNĐ", titleFont2);
+            document.add(TongCong);
 //
 
             document.close();
@@ -689,7 +689,7 @@ public class DoiTraController {
         model.addAttribute("searchDT", new SearchDoiTra());
 
         List<HoaDonChiTiet> listHoaDon1 = hoaDonChiTietService.getHoaDonTheoHoaDonChiTiet(id);
-        List<DoiTraChiTiet> lstSanPhamDoi = doiTraChiTietRepository.printDoiTra(id);
+        List<DoiTraChiTiet> lstSanPhamDoi = doiTraChiTietService.listSanPhamDoi(id);
         try {
             Document document = new Document();
             document.setPageSize(PageSize.A4);
@@ -702,7 +702,7 @@ public class DoiTraController {
             BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeData, 200, 250, null);
             com.itextpdf.text.Image qrCodeImage = qrCode.getImage();
 //
-            qrCodeImage.setAbsolutePosition(400, 0);
+            qrCodeImage.setAbsolutePosition(400, 80);
             document.add(qrCodeImage);
             Font largeFont = new Font(Font.FontFamily.TIMES_ROMAN, 25f, Font.BOLD);
             ////////////// hoá đơn
@@ -740,9 +740,9 @@ public class DoiTraController {
             document.add(danhSachMua);
             Paragraph KhoangTrang = new Paragraph("                                                         ");
             document.add(KhoangTrang);
-            PdfPTable productTable = new PdfPTable(7);
+            PdfPTable productTable = new PdfPTable(6);
             productTable.setWidthPercentage(100);
-            float[] columnWidths = {3f, 3f, 2f, 2f, 2f, 2f,2f};
+            float[] columnWidths = {3f, 3f, 2f, 2f, 2f, 2f};
             productTable.setWidths(columnWidths);
 
             productTable.addCell(createTableCell("Tên sản phẩm", titleFont1));
@@ -759,7 +759,6 @@ public class DoiTraController {
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getChiTietSanPham().getKichCo().getSize()), titleFont1));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getSoLuong()), titleFont1));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia()), titleFont1));
-                productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGiaKhiGiam()), titleFont1));
                 productTable.addCell(createTableCell(String.valueOf(hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong()), titleFont1));
                 double giaTriSanPham = hoaDonChiTiet.getDonGia() * hoaDonChiTiet.getSoLuong();
                 tongTien += giaTriSanPham;

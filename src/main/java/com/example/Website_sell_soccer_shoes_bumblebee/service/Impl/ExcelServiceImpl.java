@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -166,16 +165,17 @@ public class ExcelServiceImpl {
             int SoLuong = (int) row.getCell(7).getNumericCellValue();
             String mota = row.getCell(8).getStringCellValue();
             int tt = (int) row.getCell(9).getNumericCellValue();
-            Date ngayTao = new Date();
-            ngayTao = row.getCell(10).getDateCellValue();
-
+            Date ngayTao = row.getCell(10).getDateCellValue();
+            if (ngayTao.equals("")) {
+                throw new IOException("Ngày Tạo chưa được nhập ");
+            }
             if (mota.trim().isEmpty()) {
                 throw new IOException("Mô tả chưa được nhập ");
             }
             ctsp.setGiaBan(giaBan);
             ctsp.setSoLuong(SoLuong);
             ctsp.setMoTaCT(mota);
-            ctsp.setTrangThai(1);
+            ctsp.setTrangThai(tt);
 
 
             if (isDuplicate(ctsp)) {
